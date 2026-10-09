@@ -7,6 +7,8 @@ Halo (gfx1151). Target image: `ghcr.io/peonist-ai/halogen-flash-server:0.17.3`
 
 Status: **in progress.** Architecture, network surface, and the falsifier
 question are settled with evidence; kernel-level decompilation has not started.
+`PLAN.md` = the approved autonomous completion plan (Phases 0-6); execute it
+when Peter says "run the halogen plan".
 
 ## Layout
 
