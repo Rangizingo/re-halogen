@@ -1,0 +1,8 @@
+WARN: Relocs has not been applied. Please use `-e bin.relocs.apply=true` or `-e bin.cache=true` next time
+INFO: Analyze all flags starting with sym. and entry0 (aa)
+INFO: Analyze imports (af@@@i)
+INFO: Analyze entrypoint (af@ entry0)
+INFO: Analyze symbols (af@@@s)
+INFO: Recovering variables (afva@@F)
+INFO: Analyze all functions arguments/locals (afva@@F)
+(nofunc) 0x1809b81 [STRN:r--] lea rsi, str.draft_sample:_FALSIFIER_ACTIVE:_nucleus__.4f__qoff__.4f__tskew__.4f._Every_proposal_from_this_process_is_deliberately_wrong__METHOD_37_._n

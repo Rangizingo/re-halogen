@@ -1,0 +1,283 @@
+{
+  "evidence_id": "ev_48e5d53cb13709a3bcaa1ce87244c5392222c97236b156c3459c16939259880c",
+  "subject": {
+    "name": "flash_serve",
+    "digest": {
+      "sha256": "af4f07bbe3759206013eb6f1328095ca2105cfda5127c5b9a2ab93e1aea987b7"
+    },
+    "format": "elf",
+    "architecture": "x86_64",
+    "local_path": "/home/rangizingo/re-halogen/flash_serve"
+  },
+  "provider": {
+    "id": "rea-workflow",
+    "name": "REA composed investigation workflow",
+    "version": "1"
+  },
+  "predicate_type": "rea.analysis",
+  "operation": "binary_overview",
+  "parameters": {},
+  "raw_result": null,
+  "normalized_result": {
+    "document": "target-af4f07bbe375.bin",
+    "segments": [
+      {
+        "name": "segment_2.1",
+        "start": "0x100000",
+        "end": "0x1002a8",
+        "length": 680
+      },
+      {
+        "name": ".interp",
+        "start": "0x1002a8",
+        "end": "0x1002c4",
+        "length": 28
+      },
+      {
+        "name": ".note.ABI-tag",
+        "start": "0x1002c4",
+        "end": "0x1002e4",
+        "length": 32
+      },
+      {
+        "name": ".dynsym",
+        "start": "0x1002e8",
+        "end": "0x101ef0",
+        "length": 7176
+      },
+      {
+        "name": ".gnu.version",
+        "start": "0x101ef0",
+        "end": "0x102146",
+        "length": 598
+      },
+      {
+        "name": ".gnu.version_r",
+        "start": "0x102148",
+        "end": "0x102378",
+        "length": 560
+      },
+      {
+        "name": ".gnu.hash",
+        "start": "0x102378",
+        "end": "0x102514",
+        "length": 412
+      },
+      {
+        "name": ".dynstr",
+        "start": "0x102514",
+        "end": "0x105136",
+        "length": 11298
+      },
+      {
+        "name": ".rela.dyn",
+        "start": "0x105138",
+        "end": "0x112680",
+        "length": 54600
+      },
+      {
+        "name": ".rela.plt",
+        "start": "0x112680",
+        "end": "0x113b08",
+        "length": 5256
+      },
+      {
+        "name": ".rodata",
+        "start": "0x113b10",
+        "end": "0x1490b8",
+        "length": 218536
+      },
+      {
+        "name": ".gcc_except_table",
+        "start": "0x1490b8",
+        "end": "0x151084",
+        "length": 32716
+      },
+      {
+        "name": "segment_2.17",
+        "start": "0x151084",
+        "end": "0x152000",
+        "length": 3964
+      },
+      {
+        "name": ".hip_fatbin",
+        "start": "0x152000",
+        "end": "0x17f5aa0",
+        "length": 23739040
+      },
+      {
+        "name": ".eh_frame_hdr",
+        "start": "0x17f5aa0",
+        "end": "0x17fbc24",
+        "length": 24964
+      },
+      {
+        "name": ".eh_frame",
+        "start": "0x17fbc28",
+        "end": "0x182a880",
+        "length": 191576
+      },
+      {
+        "name": ".text",
+        "start": "0x182b880",
+        "end": "0x19f4280",
+        "length": 1870336
+      },
+      {
+        "name": ".init",
+        "start": "0x19f4280",
+        "end": "0x19f4297",
+        "length": 23
+      },
+      {
+        "name": ".fini",
+        "start": "0x19f4298",
+        "end": "0x19f42a1",
+        "length": 9
+      },
+      {
+        "name": ".plt",
+        "start": "0x19f42b0",
+        "end": "0x19f5070",
+        "length": 3520
+      },
+      {
+        "name": ".init_array",
+        "start": "0x19f6070",
+        "end": "0x19f60d0",
+        "length": 96
+      },
+      {
+        "name": ".fini_array",
+        "start": "0x19f60d0",
+        "end": "0x19f60d8",
+        "length": 8
+      },
+      {
+        "name": ".data.rel.ro",
+        "start": "0x19f60e0",
+        "end": "0x19fa2f0",
+        "length": 16912
+      },
+      {
+        "name": ".dynamic",
+        "start": "0x19fa2f0",
+        "end": "0x19fa4f0",
+        "length": 512
+      },
+      {
+        "name": ".got",
+        "start": "0x19fa4f0",
+        "end": "0x19fa598",
+        "length": 168
+      },
+      {
+        "name": ".relro_padding",
+        "start": "0x19fa598",
+        "end": "0x19fb000",
+        "length": 2664
+      },
+      {
+        "name": ".data",
+        "start": "0x19fb5a0",
+        "end": "0x19fba98",
+        "length": 1272
+      },
+      {
+        "name": ".hipFatBinSegment",
+        "start": "0x19fba98",
+        "end": "0x19fbaf8",
+        "length": 96
+      },
+      {
+        "name": ".got.plt",
+        "start": "0x19fbaf8",
+        "end": "0x19fc1e8",
+        "length": 1776
+      },
+      {
+        "name": ".bss",
+        "start": "0x19fc200",
+        "end": "0x19ffc39",
+        "length": 14905
+      },
+      {
+        "name": "EXTERNAL",
+        "start": "0x1a00000",
+        "end": "0x1a007a0",
+        "length": 1952
+      },
+      {
+        "name": ".comment",
+        "start": ".comment:0x0",
+        "end": ".comment:0x13e",
+        "length": 318
+      },
+      {
+        "name": ".shstrtab",
+        "start": ".shstrtab:0x0",
+        "end": ".shstrtab:0x12c",
+        "length": 300
+      },
+      {
+        "name": "_elfSectionHeaders",
+        "start": "_elfSectionHeaders:0x0",
+        "end": "_elfSectionHeaders:0x7c0",
+        "length": 1984
+      }
+    ],
+    "segment_count": 34,
+    "procedure_count": 3794,
+    "string_count": 17774
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Derived by an REA composed workflow."
+  ],
+  "locations": [],
+  "evidence_links": [],
+  "analysis_profile": {
+    "provider": {
+      "id": "rea-workflow",
+      "name": "REA composed investigation workflow",
+      "version": "1"
+    },
+    "parameters": {
+      "upstream_analysis_profile": {
+        "provider": {
+          "id": "ghidra",
+          "name": "Ghidra",
+          "version": "12.1.2"
+        },
+        "parameters": {
+          "target_kind": "executable",
+          "target_format": "elf",
+          "architecture": "x86_64",
+          "available_architectures": [
+            "x86_64"
+          ],
+          "import_mode": "ephemeral-source-immutable",
+          "annotation_policy": "atomic-function-entry-metadata-v1",
+          "load_image_observations": "source-mappings-entry-context-v2",
+          "function_body_evidence": "complete-inclusive-ranges-v1",
+          "function_references": "complete-body-and-entry-reference-manager-v2",
+          "location_resolution": "explicit-address-exact-name-first-v2",
+          "process_launch": "inspected-jvm-launch-support-v1",
+          "jump_table_evidence": "typed-case-default-blocks-v1",
+          "decompiler_jump_loads": true,
+          "loader": "auto-from-header",
+          "language_id": "auto-from-header",
+          "compiler_spec_id": "auto-default",
+          "analyzer_preset": "ghidra-default"
+        },
+        "digest": "ba88e8d100e584e6260e624e381fcaa755b93412540d7bc571ccdca0efeeaeeb"
+      },
+      "workflow_revision": 2
+    },
+    "digest": "83ad2527175370a5213233e3f33507a0a8e64afa0d65a115ab1e2ba4c3edf344"
+  }
+}
+rea-ghidra-analyze.service: Deactivated successfully.
+rea-ghidra-analyze.service: Consumed 6min 39.624s CPU time over 2min 4.780s wall clock time, 4.8G memory peak.

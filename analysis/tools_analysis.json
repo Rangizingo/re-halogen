@@ -1,0 +1,282 @@
+Started rea-tools.service - [systemd-run] /home/rangizingo/.hermes/tools/node-26.7.0-linux-x64/bin/rea analyze halogen-tools --provider ghidra --format json.
+{
+  "evidence_id": "ev_36521f3d6d3555f5e318e04a2f203842bec34b80f2fb1fc4fa0bac5d5f06163b",
+  "subject": {
+    "name": "halogen-tools",
+    "digest": {
+      "sha256": "a79ad40c4b4fd40646dddfb32391c28e601df3ece8e6ce57c2c8cca580d58953"
+    },
+    "format": "elf",
+    "architecture": "x86_64",
+    "local_path": "/home/rangizingo/re-halogen/halogen-tools"
+  },
+  "provider": {
+    "id": "rea-workflow",
+    "name": "REA composed investigation workflow",
+    "version": "1"
+  },
+  "predicate_type": "rea.analysis",
+  "operation": "binary_overview",
+  "parameters": {},
+  "raw_result": null,
+  "normalized_result": {
+    "document": "target-a79ad40c4b4f.bin",
+    "segments": [
+      {
+        "name": "segment_2.1",
+        "start": "0x100000",
+        "end": "0x1002a8",
+        "length": 680
+      },
+      {
+        "name": ".interp",
+        "start": "0x1002a8",
+        "end": "0x1002c4",
+        "length": 28
+      },
+      {
+        "name": ".note.ABI-tag",
+        "start": "0x1002c4",
+        "end": "0x1002e4",
+        "length": 32
+      },
+      {
+        "name": ".dynsym",
+        "start": "0x1002e8",
+        "end": "0x101ab8",
+        "length": 6096
+      },
+      {
+        "name": ".gnu.version",
+        "start": "0x101ab8",
+        "end": "0x101cb4",
+        "length": 508
+      },
+      {
+        "name": ".gnu.version_r",
+        "start": "0x101cb4",
+        "end": "0x101ee4",
+        "length": 560
+      },
+      {
+        "name": ".gnu.hash",
+        "start": "0x101ee8",
+        "end": "0x102000",
+        "length": 280
+      },
+      {
+        "name": ".dynstr",
+        "start": "0x102000",
+        "end": "0x10417d",
+        "length": 8573
+      },
+      {
+        "name": ".rela.dyn",
+        "start": "0x104180",
+        "end": "0x1112f0",
+        "length": 53616
+      },
+      {
+        "name": ".rela.plt",
+        "start": "0x1112f0",
+        "end": "0x1124d8",
+        "length": 4584
+      },
+      {
+        "name": ".rodata",
+        "start": "0x1124e0",
+        "end": "0x145538",
+        "length": 208984
+      },
+      {
+        "name": ".gcc_except_table",
+        "start": "0x145538",
+        "end": "0x14d1d8",
+        "length": 31904
+      },
+      {
+        "name": "segment_2.17",
+        "start": "0x14d1d8",
+        "end": "0x14e000",
+        "length": 3624
+      },
+      {
+        "name": ".hip_fatbin",
+        "start": "0x14e000",
+        "end": "0x17f1aa0",
+        "length": 23739040
+      },
+      {
+        "name": ".eh_frame_hdr",
+        "start": "0x17f1aa0",
+        "end": "0x17f7474",
+        "length": 22996
+      },
+      {
+        "name": ".eh_frame",
+        "start": "0x17f7478",
+        "end": "0x18206f8",
+        "length": 168576
+      },
+      {
+        "name": ".text",
+        "start": "0x1821700",
+        "end": "0x19cff00",
+        "length": 1763328
+      },
+      {
+        "name": ".init",
+        "start": "0x19cff00",
+        "end": "0x19cff17",
+        "length": 23
+      },
+      {
+        "name": ".fini",
+        "start": "0x19cff18",
+        "end": "0x19cff21",
+        "length": 9
+      },
+      {
+        "name": ".plt",
+        "start": "0x19cff30",
+        "end": "0x19d0b30",
+        "length": 3072
+      },
+      {
+        "name": ".init_array",
+        "start": "0x19d1b30",
+        "end": "0x19d1b90",
+        "length": 96
+      },
+      {
+        "name": ".fini_array",
+        "start": "0x19d1b90",
+        "end": "0x19d1b98",
+        "length": 8
+      },
+      {
+        "name": ".data.rel.ro",
+        "start": "0x19d1ba0",
+        "end": "0x19d5d50",
+        "length": 16816
+      },
+      {
+        "name": ".dynamic",
+        "start": "0x19d5d50",
+        "end": "0x19d5f50",
+        "length": 512
+      },
+      {
+        "name": ".got",
+        "start": "0x19d5f50",
+        "end": "0x19d5fe0",
+        "length": 144
+      },
+      {
+        "name": ".relro_padding",
+        "start": "0x19d5fe0",
+        "end": "0x19d6000",
+        "length": 32
+      },
+      {
+        "name": ".data",
+        "start": "0x19d6fe0",
+        "end": "0x19d7428",
+        "length": 1096
+      },
+      {
+        "name": ".hipFatBinSegment",
+        "start": "0x19d7428",
+        "end": "0x19d7488",
+        "length": 96
+      },
+      {
+        "name": ".got.plt",
+        "start": "0x19d7488",
+        "end": "0x19d7a98",
+        "length": 1552
+      },
+      {
+        "name": ".bss",
+        "start": "0x19d7ac0",
+        "end": "0x19db259",
+        "length": 14233
+      },
+      {
+        "name": "EXTERNAL",
+        "start": "0x19dc000",
+        "end": "0x19dc6a8",
+        "length": 1704
+      },
+      {
+        "name": ".comment",
+        "start": ".comment:0x0",
+        "end": ".comment:0x13e",
+        "length": 318
+      },
+      {
+        "name": ".shstrtab",
+        "start": ".shstrtab:0x0",
+        "end": ".shstrtab:0x12c",
+        "length": 300
+      },
+      {
+        "name": "_elfSectionHeaders",
+        "start": "_elfSectionHeaders:0x0",
+        "end": "_elfSectionHeaders:0x7c0",
+        "length": 1984
+      }
+    ],
+    "segment_count": 34,
+    "procedure_count": 3420,
+    "string_count": 17603
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Derived by an REA composed workflow."
+  ],
+  "locations": [],
+  "evidence_links": [],
+  "analysis_profile": {
+    "provider": {
+      "id": "rea-workflow",
+      "name": "REA composed investigation workflow",
+      "version": "1"
+    },
+    "parameters": {
+      "upstream_analysis_profile": {
+        "provider": {
+          "id": "ghidra",
+          "name": "Ghidra",
+          "version": "12.1.2"
+        },
+        "parameters": {
+          "target_kind": "executable",
+          "target_format": "elf",
+          "architecture": "x86_64",
+          "available_architectures": [
+            "x86_64"
+          ],
+          "import_mode": "ephemeral-source-immutable",
+          "annotation_policy": "atomic-function-entry-metadata-v1",
+          "load_image_observations": "source-mappings-entry-context-v2",
+          "function_body_evidence": "complete-inclusive-ranges-v1",
+          "function_references": "complete-body-and-entry-reference-manager-v2",
+          "location_resolution": "explicit-address-exact-name-first-v2",
+          "process_launch": "inspected-jvm-launch-support-v1",
+          "jump_table_evidence": "typed-case-default-blocks-v1",
+          "decompiler_jump_loads": true,
+          "loader": "auto-from-header",
+          "language_id": "auto-from-header",
+          "compiler_spec_id": "auto-default",
+          "analyzer_preset": "ghidra-default"
+        },
+        "digest": "ba88e8d100e584e6260e624e381fcaa755b93412540d7bc571ccdca0efeeaeeb"
+      },
+      "workflow_revision": 2
+    },
+    "digest": "83ad2527175370a5213233e3f33507a0a8e64afa0d65a115ab1e2ba4c3edf344"
+  }
+}

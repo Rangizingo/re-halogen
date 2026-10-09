@@ -1,0 +1,35 @@
+#!/bin/bash
+# halogen-flash-server: source shipped as-is, comments stripped. The README is the documentation.
+set -u
+ENG_PORT="${HALOGEN_PORT:-8730}"
+API_PORT="${HALOGEN_API_PORT:-8731}"
+WAIT="${HALOGEN_ENGINE_PING_S:-30}"
+
+engine_ok() {
+
+  ( exec 3<>"/dev/tcp/127.0.0.1/$ENG_PORT" || exit 1
+    printf 'PING\n' >&3 || exit 1
+    read -r -t "$WAIT" reply <&3 || exit 1
+    [ "$reply" = "PONG" ] ) 2>/dev/null
+}
+
+api_ok() {
+
+  python3 -c "
+import sys, urllib.request
+try:
+    urllib.request.urlopen('http://127.0.0.1:$API_PORT/health', timeout=$WAIT)
+except Exception as e:
+    print(e, file=sys.stderr); sys.exit(1)
+" 2>/dev/null
+}
+
+case "${1:-auto}" in
+  engine) engine_ok ;;
+  api)    api_ok ;;
+  auto)
+
+    if (exec 3<>"/dev/tcp/127.0.0.1/$API_PORT") 2>/dev/null; then api_ok
+    else engine_ok; fi ;;
+  *) echo "usage: halogen-healthcheck [auto|engine|api]" >&2; exit 2 ;;
+esac
