@@ -65,6 +65,24 @@ calls. Format template: `analysis/kernels-indexer.md`.
    `gh auth setup-git` — the id_ed25519 key is deploy-key-bound, SSH
    push fails).
 
+## Licensing (2026-10-10, commit 7af991f)
+
+Project open-sourced as an open community challenge:
+
+- `image/EULA.md` revised to **v1.0**: §3 grants reverse engineering
+  without limitation (decompile/disassemble/emulate any component, any
+  purpose) and encourages it; findings, specs, disassemblies, and
+  derived implementations publishable under terms of your choosing
+  (attribution per §2). Old §3 redistribution restrictions removed;
+  §2 now grants study/modify/redistribute/extract.
+- `LICENSE` added: **CC0 1.0 Universal** dedication of all original
+  repo material (analysis, notes, specs, scripts). Vendor binaries and
+  image files stay under their own licenses.
+- `AGENTS.md` ground rules and `analysis/report.md` §4 EULA summary
+  synced to the new terms.
+- Repo stays **private** (Peter's call, 2026-10-10) — the CC0/EULA text
+  is forward-looking for when it goes public.
+
 ## Ground rules (unchanged, from AGENTS.md)
 
 - Never run `flash_serve`/`halogen-tools` beyond `verify`/`inspect` on
