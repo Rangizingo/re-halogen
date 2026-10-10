@@ -15,7 +15,7 @@ engine, or data not in this workspace.
 | U01 | HNPB header u32 at +0x08 and per-blob u32 pair at +0x50/+0xa0 | npu-engine.md s6 | writer-side decompile (`convert`, 0x1a8608 region) | OPEN-BOUNDED |
 | U02 | per-verb argument grammars of the NPU serve protocol | npu-engine.md s6 | annotate `work/npu/0x12b110.pseudo.c` per verb | OPEN-BOUNDED |
 | U03 | NPU `main:<graph>` name set | npu-engine.md s6 | analyze the shipped `.elf` graph files | OPEN-BOUNDED |
-| U04 | engine behavior for raw `GEN ... 2` (dflash2 id) | dflash2-probe.md s5 | run the engine (out of scope) or full GEN parser decompile | OPEN-BOUNDED |
+| U04 | engine behavior for raw `GEN ... 2` (dflash2 id) | dflash2-probe.md s5 | CLOSED 2026-10-10: engine refuses with `error ... asked for drafter 2 (unknown)` (analysis/runtime-run-0.17.3.md) | CLOSED |
 | U05 | future flip of the dflash2 format-string literal | dflash2-probe.md s5 | unobservable from pulled set | UNOBSERVABLE |
 | U06 | 0.14.x and 0.15.x patch-release deltas | version-deltas.md | pull the missing tags | OPEN-BOUNDED |
 | U07 | `HALOGEN_WALK_FALSIFY` effect on acceptance math | version-deltas.md | device side answered (no device change); host feeding untraced | PARTIAL, see U20 |
@@ -37,9 +37,9 @@ engine, or data not in this workspace.
 | U23 | seed and counter source of the splitmix64 draw in `k_smpg_pick`/`k_smpg_rpick`; what `s15` in the accept kernel holds | kernels-speculation.md | host caller decompile plus an engine run with a fixed seed | OPEN-BOUNDED |
 | U24 | purpose of the float-key radix select in `k_accept_prob_f32`, `k_sample_f32`, `k_resid_sample_f32` | kernels-speculation.md | trace what the digit `v_bfe_u32 ,16,8` indexes | OPEN-BOUNDED |
 | U25 | what `k_dv_quant` quantizes to (compare ladder, not round-and-clamp) | kernels-speculation.md s4 | decode the compare constants against a codebook | OPEN-BOUNDED |
-| U26 | raw `GEN` over the engine socket on the live 0.17.2 engine got no reply line within 20 s for drafter ids 0, 1 and 2 (evidence file below); GEN framing or a needed prior step is unknown | analysis/evidence/live-0.17.2-gen-drafters.txt | retry with the exact INFO/VOCAB handshake from wire-protocol.md on one connection | OPEN-BOUNDED |
+| U26 | raw `GEN` and `CSTAT` unanswered on a second connection | runtime-run-0.17.3.md | CLOSED 2026-10-10: only the first connection gets request verbs; second connections get INFO and PING | CLOSED |
 
-Totals: 26 items. 3 findings were corrected after an independent review
+Totals: 26 items, 2 closed by the 2026-10-10 engine run (U04, U26). 3 findings were corrected after an independent review
 (in-kernel RNG exists, `k_dv_scatter` is a gather, `k_dv_quant` is a different
 quantizer); see `kernels-speculation.md`. Closable by decompile: U01-U03,
 U08-U18, U20, U21, U23-U25; needing a live run: U04, U19, U26; named limits by

@@ -19,11 +19,11 @@ Acceptance claims from PLAN.md Phase 2:
 
 | claim | verdict | where |
 |---|---|---|
-| speculation can't change output | not provable from kernels alone. Greedy: report.md s3. Sampled: accept-by-probability plus residual resample is the standard scheme (inferred); the draw comes from an on-GPU splitmix64 whose seed source is untraced (U23) | kernels-speculation.md s1 |
+| speculation can't change output | observed on the live engine: greedy MTP vs serial identical (2 prompts, 64 tokens), sampled MTP vs serial with the same seed differ (valid draws, not the same sequence). Kernels alone do not prove it. Greedy: report.md s3. Sampled: accept-by-probability plus residual resample is the standard scheme (inferred); the draw comes from an on-GPU splitmix64 whose seed source is untraced (U23) | kernels-speculation.md s1 |
 | prompt cache resume is bitwise | contradicted for the in-place cache: the engine's own startup text says "a warm answer is NOT bitwise the cold one" (HALOGEN_PROMPT_CACHE=2, resume-anywhere). Not yet tested for other cache modes (U13) | analysis/evidence/live-0.17.2-startup-and-info.txt |
 | HT tensors carry a rotation plane | closed, 128-point Hadamard; kernels-moe.md corrected | kernels-dequant.md s3 |
 | n-gram table is a pure lookup | holds at kernel level (integer hash plus modulo) | kernels-speculation.md s3 |
 
-Residual: 26 bounded unknowns (`unknowns.md`). One acceptance claim is
+Residual: 24 open bounded unknowns of 26 (`unknowns.md`; U04 and U26 closed by the live run, `runtime-run-0.17.3.md`). One acceptance claim is
 contradicted by the engine itself and two are bounded by host-side or seed
 questions.
