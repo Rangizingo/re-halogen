@@ -24,7 +24,7 @@ left needs data that is not in this workspace (see "Open" below).
 | 7 | Function maps of all three binaries (3,568 / 3,222 / 1,412 functions, 1,738 kernel stubs) | `analysis/function-map*.tsv`, `analysis/function-map.md` |
 | 7 | Wire protocol, entrypoint, API layer, 31-step request trace | `analysis/wire-protocol.md`, `entrypoint-flow.md`, `api-layer.md`, `request-trace.md` |
 | 7 | Live 0.17.3 engine run on Ai-core, version compare 0.17.2 to 0.17.3 | `analysis/runtime-run-0.17.3.md`, `analysis/version-compare-0.17.2-0.17.3.md` |
-| 7 | closure reports merged into the ledger in five rounds (`analysis/closure/`, 43 files); rebuild guide; i4r decode; engine runs 2 and 3 | `analysis/closure/`, `analysis/rebuild-guide.md` |
+| 7 | closure reports merged into the ledger in five rounds (`analysis/closure/`, 48 files); kernel rewrite harness (`rewrite/`, first bitwise match); rebuild guide; i4r decode; engine runs 2 and 3 | `analysis/closure/`, `analysis/rebuild-guide.md` |
 
 ## Open
 

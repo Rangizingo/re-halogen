@@ -32,10 +32,13 @@ grep -c 'v_exp\|v_rcp\|v_mfma\|v_permlane\|v_bfe' work/kernels-spec/<slice>.s
 npx -y rea-agents@6.3.0 doctor --provider ghidra --json
 
 # Tests (pytest; 3 real-data HT tests skip unless HT_TESTDATA is set)
-python3 -m pytest -q tests                                   # 24 pass, 4 skip
+python3 -m pytest -q tests                                   # 72 pass, 4 skip
 bash scripts/fetch_ht_testdata.sh <dir>                      # ~496 MB of vendor slices by HTTP range read
-HT_TESTDATA=<dir> python3 -m pytest -q tests                 # 28 pass (derived: 24 + the 4 data skips; not re-run in s5)
+HT_TESTDATA=<dir> python3 -m pytest -q tests                 # 76 pass (derived: 72 + the 4 data skips; not re-run in s5)
 python3 -I scripts/ht_decode.py <dir>                        # HT and i4r decode scores vs q4c references
+
+# Kernel rewrite harness (U22): on Ai-core, after rsync -a --exclude __pycache__ rewrite/ ai-core:re-halogen/rewrite/
+bash rewrite/harness/build.sh && python3 -I rewrite/harness/compare.py rewrite/specs/<spec>.json --kernel <mangled> --seeds 1,2,3 --sizes 4096,100003
 ```
 
 There is no CI config. Do not add a CLAUDE.md "Stack" or web conventions here; none apply.
