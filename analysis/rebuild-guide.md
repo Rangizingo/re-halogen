@@ -267,6 +267,8 @@ Cannot rely on (PARTIAL, OPEN-BOUNDED, UNOBSERVABLE rows; what is missing):
 - U21 PARTIAL: decode and small-batch launch CLOSED; the prefill dequant-versus-fused choice, per-dtype helper reach, `lq*` epilogue id E and HT template args S, B, C, D are open.
 - U22 OPEN-BOUNDED: Ghidra has no AMDGCN module, so device code stays at disassembly level; rebuilding kernels means writing from instruction listings.
 - U23 PARTIAL: the seed-to-state copy is not located.
+- U26 PARTIAL: a second connection got `INFO` and `PING` answers and no `CSTAT` reply; its `GEN` result was not recorded, and where the engine accepts a second fd is not found.
+- U27 PARTIAL: HT gate_up experts decode (`decode_codes_gate_up`, 0.9922 measured); the i4r (dtype 23) payload in the v2 checkpoint, `k_i4r_*_gl`, and HT qparam bit 0 and bits 0x1200 are not decoded.
 - CLOSED rows (U03, U04, U08, U13, U15, U16, U17, U19, U20, U24, U25) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
 
 Other gaps a rebuild hits (request-trace.md "Gaps" and the closure reports):
