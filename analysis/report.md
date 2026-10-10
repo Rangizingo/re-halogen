@@ -128,31 +128,21 @@ layers, 8-bit draft-head projections, FP8 n-gram table, HT (rotation-plane)
 and I4R variants with strict shape/group checks. GGUF (`qwen4exp`) repacked
 losslessly in RAM at start (~20 s) or once via `convert`.
 
-## 6. Not yet done (next passes)
+## 6. Findings complete at plan scope; residual unknowns
 
-1. **gfx1151 device kernels** — DONE through disassembly: fatbin v2 carved
-   (4 code objects, `work/fatbin/`, manifest `work/fatbin-manifest.json`),
-   llvm-objdump gfx1151 disassembly complete (`analysis/kernels-disasm/`,
-   3.34M lines; 214 per-kernel slices `analysis/kernels-slices.tar.xz`).
-   Family writeups: attention, MoE, indexer DONE
-   (`analysis/kernels-attention.md`, `kernels-moe.md`, `kernels-indexer.md`).
-   Remaining: dequant + speculation writeups — slices pre-cut
-   (`work/kernels-dequant/` 1141 files, `work/kernels-spec/` 43 files,
-   stats `tmp/stats-{dequant,spec}.csv`); Ghidra pseudocode for AMDGCN
-   stays blocked — no shader-ISA module exists
-   (`analysis/ghidra-module-writeup.md`); objdump-level is the accepted path.
-2. **halogen-tools deep pass** — DONE: `analysis/hgn-format.md` +
-   acceptance matrix (`tmp/verify_matrix.tsv`) + 5-test round-trip suite
-   (`tmp/rt_roundtrip.py`, all PASS).
-3. **halogen-npu** — DONE: `analysis/npu-engine.md` (XRT call graph,
-   hnpm/hnpb formats, getaddrinfo loopback gate proven).
-4. **dflash2 drafter** — DONE: `analysis/dflash2-probe.md` (reserved wire
-   slot, hard-wired 0 in every engine 0.11.10→0.17.3).
-5. **Version deltas** — DONE: `analysis/version-deltas.md` (9 releases,
-   sha256 code-object lineage, kernel/string set diffs).
-6. **Closure (Phase 6)** — remaining: unknowns ledger + coverage table +
-   evidence bundle + this section rewritten to "Findings complete;
-   residual unknowns: <list>". Blocked on item 1's two writeups.
+All seven phases of `PLAN.md` have evidence-backed writeups: version deltas
+(`version-deltas.md`), fatbin + gfx1151 disassembly (`fatbin-inventory.md`),
+five kernel families (`kernels-attention.md`, `kernels-moe.md`,
+`kernels-indexer.md`, `kernels-dequant.md`, `kernels-speculation.md`), the
+`.hgn` format with round-trip tests (`hgn-format.md`), the NPU engine
+(`npu-engine.md`), and dflash2 (`dflash2-probe.md`). Closure artifacts:
+`unknowns.md` (22 bounded items) and `coverage.md`.
+
+Not a full reverse engineering of the product. The residual unknowns are
+mostly host-side: 16 of the 22 need a decompile of `flash_serve` or
+`halogen-npu` dispatch code (struct layouts, which kernel variant runs when,
+per-verb protocol grammars). Ghidra has no AMDGCN module, so device code
+stays at disassembly level. See `unknowns.md` for each item and what closes it.
 
 ## 7. Method notes (reproducibility)
 

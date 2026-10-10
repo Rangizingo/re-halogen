@@ -1,0 +1,310 @@
+{
+  "$schema": "https://blancoitsolutions.com/claude/autonomy.schema.json",
+  "comment": "Per-project autonomy policy. Copied into .claude/autonomy.json to tune what hooks auto-fix vs. queue vs. PR. Defaults are conservative. Most-specific path pattern wins; globals are fallback.",
+  "auto_fix": [
+    "em_dashes",
+    "whitespace"
+  ],
+  "confidence_thresholds": {
+    "auto_apply": 0.95,
+    "open_pr": 0.7
+  },
+  "paths": {
+    "comment": "Per-domain thresholds. auto_apply=minimum confidence to ship without review. open_pr=minimum confidence to open a PR (below that, queue for Claude).",
+    "docs/**": {
+      "auto_apply": 0.5,
+      "open_pr": 0.3
+    },
+    "**/*.md": {
+      "auto_apply": 0.85,
+      "open_pr": 0.5
+    },
+    "**/*.test.ts": {
+      "auto_apply": 0.85,
+      "open_pr": 0.5
+    },
+    "**/*.spec.ts": {
+      "auto_apply": 0.85,
+      "open_pr": 0.5
+    },
+    "**/finance*.ts": {
+      "auto_apply": 0.99,
+      "open_pr": 0.95
+    },
+    "**/auth/**": {
+      "auto_apply": 0.99,
+      "open_pr": 0.95
+    },
+    "**/security*.ts": {
+      "auto_apply": 0.99,
+      "open_pr": 0.95
+    },
+    "**/compliance*.ts": {
+      "auto_apply": 0.99,
+      "open_pr": 0.95
+    },
+    "**/payment*.ts": {
+      "auto_apply": 0.99,
+      "open_pr": 0.95
+    }
+  },
+  "model_source_allowed_comment": "Model sources this repo may send code to (scripts/model-source.sh names: claude, claude-local, claude-cloud-<name>; * globs). [\"*\"] or absent = all. Client-data repos: [\"claude-local\"].",
+  "model_source_allowed": [
+    "*"
+  ],
+  "test_command": "pnpm test",
+  "priorities": [
+    "security",
+    "readability",
+    "simplicity",
+    "performance"
+  ],
+  "funnel_overrides": {
+    "new-page-needs-test": "commit",
+    "tdd-gate": "commit",
+    "checklist-needs-proof": "commit",
+    "e2e-ui-gate": "push",
+    "feature-verification-gate": "push"
+  },
+  "prod_pulse": {
+    "enabled": true,
+    "threshold": 1
+  },
+  "stop_processor": {
+    "comment": "Remediation-queue processor at Stop (hooks/stop-queue-processor.sh). On by default since round 2 step 8; false here or gates.stop_processor false turns it off.",
+    "enabled": true
+  },
+  "snapshots": {
+    "comment": "Stateful-data snapshots before risky commands (checks/pretooluse-snapshot.sh, A5 2026-07-23). Opt-in: disabled by default. paths are relative to project root; empty trigger_patterns falls back to a built-in migration/infra-apply list.",
+    "enabled": false,
+    "paths": [],
+    "retention_count": 10,
+    "trigger_patterns": []
+  },
+  "deploy": {
+    "comment": "Post-deploy smoke targets for checks/deploy-verify.sh (audit 6.9/6.10). Deploy subset of the R13 done-block; warn-first. Remove this comment and fill in real targets per project. rollback_command is optional (A6, 2026-07-23): if set, deploy-verify.sh runs it once per session when the post-deploy smoke check fails. Mitigation only; the check still blocks.",
+    "targets": [],
+    "rollback_command": ""
+  },
+  "contract": {
+    "comment": "Standing answers from /warp's autonomy-contract step (2026-08-27). null = ask at the next warp; set = every later session inherits it without re-asking. Enums: merge_on_done_contract peter_only|claude_after_done_contract|ask_each_time; deploy_in_session never|additive_migrations_only|full; login_mode once_per_session|ask_each_login|none; ui_reference_policy mock_first|proposal_deck_mid_run|case_by_case. plan_path/unit_name/ui_reference_path/live_proof/external_systems/visible_surface_globs are per-project facts contract-scan.mjs reads; standing_rules holds Peter's free-text answers verbatim. W1 (Peter 2026-09-24, \"just have it work and only stop if critical\"): the switch values here are the GLOBAL standing answers; a repo that leaves a switch null, or writes a value outside its enum, reads the value here (hooks/lib/effective-contract.sh, gates.global_standing_answers), and a repo value in the enum wins. sdk_updates patch_security_auto|ask_each_time: a patch or security SDK update goes live on a client site once that site's tests and preview pass; anything bigger waits for Peter. stop_conditions and the two standing_rules are promoted from flux (plan-round3 F1).",
+    "merge_on_done_contract": "claude_after_done_contract",
+    "deploy_in_session": "additive_migrations_only",
+    "login_mode": "once_per_session",
+    "ui_reference_policy": "mock_first",
+    "stop_conditions": [
+      "a change would touch a real (non-test) record: test data only, named with the project test prefix (flux: ZZTEST)",
+      "an action would spend money or change billing",
+      "a destructive migration or deleting data is needed",
+      "the work needs a scope change"
+    ],
+    "unit_name": "task",
+    "plan_path": "plan.md",
+    "ui_reference_path": null,
+    "live_proof": null,
+    "external_systems": [],
+    "visible_surface_globs": [],
+    "standing_rules": [
+      "One adversarial refuter re-reads the evidence behind every QA PASS before a merge.",
+      "Merged, unproven is not complete: done = merged AND the proof path AND the refuter report."
+    ],
+    "sdk_updates": "patch_security_auto"
+  },
+  "model_profiles": {
+    "comment": "Optional. Per-model policy knobs, keyed by any name you choose. Resolved once per session by hooks/lib/profile.sh into session-env/<sid>/profile.json. With gates.capability_probe on, a profile that declares `requires` ({tool_json, instruction, min_context_window}) is chosen by a SessionStart probe of the active source's endpoint (lib/capability-probe.sh): the least strict profile the model qualifies for wins; a failed probe or no qualifying profile means the strictest profile. `match` (list of name substrings) is optional and only used when no probe result exists, e.g. the probe is off or the source has no key; kept here so a session that cannot be probed resolves as it did before. subagent_model is the only model a subagent may be launched on (checks/subagent-model-guard.sh); unset means the CLAUDE_CODE_SUBAGENT_MODEL default. context_window_tokens and canary.{advisory,wrapup,hard}_pct override the probe and the window-derived canary. exemplar_injection is read by hooks/exemplar-inject.sh. review_tier_floor is the minimum reviewer tier (config/reviewers.json). mcp_servers (task_type -> project .mcp.json server names, \"default\" for the rest) is applied by hooks/lib/mcp-trim.sh at SessionStart; a profile without it (frontier) is left untouched. max_concurrent_subagents is written to the session profile.json. handoff \"deterministic\" (round 2 step 8): at the canary hard tier the harness writes .claude/handoff.md from plan state, changed files, receipts and last blocks, so the model never summarises its own state. max_sessions_per_source: the rail refuses a new row on this source past the cap (1 is a conservative placeholder: the step 0 concurrency measurement was deferred with the box). loop_budget (plan-round3 L0c): an autonomous session parks its unit after this many Stop blocks of any kind, so bouncing between different checks also ends; falls back to gates.loop_budget, default 8; 0 = off.",
+    "local": {
+      "requires": {
+        "tool_json": true,
+        "instruction": true
+      },
+      "match": [
+        "ollama",
+        "qwen",
+        "gemma",
+        "llama",
+        "local"
+      ],
+      "max_task_loc": 0,
+      "require_plan_first": true,
+      "exemplar_injection": "every_turn",
+      "review_tier_floor": 2,
+      "mcp_servers": {
+        "ui": [
+          "playwright"
+        ],
+        "default": []
+      },
+      "max_concurrent_subagents": 1,
+      "handoff": "deterministic",
+      "max_sessions_per_source": 1,
+      "loop_budget": 5
+    },
+    "frontier": {
+      "requires": {
+        "tool_json": true,
+        "instruction": true,
+        "min_context_window": 150000
+      },
+      "match": [
+        "deepseek",
+        "opus",
+        "sonnet"
+      ],
+      "max_task_loc": 0,
+      "require_plan_first": false,
+      "exemplar_injection": "session_start",
+      "review_tier_floor": 1,
+      "loop_budget": 8
+    }
+  },
+  "gates": {
+    "n1_dispatcher": false,
+    "comment": "Behaviour switches read by hooks. Generated from config/autonomy.schema.json by scripts/config-map-sync.sh --write-autonomy-comment: edit the schema, not this string. A missing key takes its default; only a literal false (or true) changes a switch. scope repo = read from <repo>/.claude/autonomy.json, global = read only from this template. floor = least strict value a repo may set (none = no floor). Each entry: name (default, scope, floor, owning decision). Reader and description: the schema and the Autonomy gates block in CONFIG-MAP.md. n1_dispatcher (false, global, floor none, Round 3 N1b); token_diet (true, repo, floor none, Round 3 L4); mcp_profile_trim (true, repo, floor none, Round 3 N1); intake_interview (true, repo, floor none, Round 3 N1); regex_guess_warn (true, repo, floor none, Round 3 N1); task_type_ratchet (true, repo, floor true, Round 4 SH15); session_start_daily_stamps (true, repo, floor none, Round 2 step 3); config_sync_background (true, repo, floor none, Round 2 step 3); config_sync_stash_alert (true, repo, floor none, Round 3 L0); verify_pass_cache_no_expiry (true, repo, floor none, Round 2 step 3); incremental_declared_runner (true, repo, floor none, Round 2 step 3); stop_session_scope (true, repo, floor none, Round 2 step 3); cf_live_check_at_push (true, repo, floor none, Round 2 step 3); test_judge_at_push (true, repo, floor none, Round 2 step 3); capability_probe (false, repo, floor none, Round 2 step 5); route_auth_block (false, repo, floor false, Round 2 step 5); canspam_block (false, repo, floor false, Round 2 step 5); plan_judge_note (true, repo, floor none, Round 2 step 5); ssh_remote_writes_exempt (true, repo, floor none, Round 2 step 9); weekly_hook_doctor (true, repo, floor none, Round 2 step 9); monthly_escaped_defects (true, repo, floor none, Round 2 step 9); model_source_pin (true, repo, floor true, Round 2 step 6); model_source_env (true, repo, floor none, Round 2 step 6); hook_launched_review (true, repo, floor true, Round 2 step 8); stop_processor (true, repo, floor none, Round 2 step 8); park_after_n (3, repo, floor 3, Round 2 step 8); preview_from_deploy_targets (true, repo, floor true, Round 2 step 8); walkaway_completion (true, repo, floor true, Round 2 step 8); deterministic_handoff (true, repo, floor none, Round 2 step 8); review_tree_content (false, repo, floor none, Round 3 HF1); review_tree_source (true, repo, floor none, Round 3 HF1); review_repeat_park (true, repo, floor none, Round 3 HF1); vpc_ignore_bookkeeping (true, repo, floor none, Round 3 HF2); stop_tree_pass_cache (true, repo, floor none, Round 3 HF2); stop_reentry_verify (true, repo, floor true, Round 4 SH1); review_process_keys (false, repo, floor false, Round 3 review); reply_rules_enforce (false, repo, floor false, Round 3 reply rules); contract_freeze_full (false, repo, floor false, Round 3 contract); antipattern_format (false, repo, floor false, Round 3 anti-pattern); subagent_concurrency_cap (false, repo, floor false, Round 3 local profile); trailing_slash_block (false, repo, floor false, Round 3 step 10); proof_pass_cache (true, repo, floor none, Round 3 L2); terse_style_pi_only (true, repo, floor none, Round 3 L4); inject_once (true, repo, floor none, Round 3 L4); inject_once_floor (25, repo, floor none, Round 3 L4); config_map_autosync (true, repo, floor none, Round 3 C1); keep_it_simple (true, repo, floor none, Round 3 S1); capture_ladder (true, repo, floor none, Round 3 G2); check_auto_demote (true, repo, floor none, Round 3 G3); global_standing_answers (true, repo, floor none, Round 3 W1); walkaway_question_guard (true, repo, floor true, Round 3 W1); grant_from_question (true, repo, floor none, Round 3 L0b4); walkaway_finish_notify (true, repo, floor none, Round 3 W1); deploy_rollback_required (false, repo, floor false, Round 3 W1); worktree_gc_merged (true, repo, floor none, Round 3 F1); security_single_scan (true, repo, floor none, Round 3 L3; on by default per Peter 2026-10-08 RD4 2a (parity proven by test-l3-security-parity.sh)); pretool_fail_closed (false, repo, floor false, Round 3 L5); stop_file_pass_cache (false, repo, floor none, Round 3 L2); bits_style_pass_reuse (true, repo, floor none, Round 3 L7); scratch_path_exempt (true, repo, floor none, Round 3 N1); shellcheck_pass_reuse (true, repo, floor none, Round 3 L7); full_suite_at_push (true, repo, floor true, Round 3 L7); share_lock_result (true, repo, floor none, Round 3 L7); e2e_crawl_warn_no_server (true, repo, floor none, Round 3 L7); api_regen_on_commit (true, repo, floor true, Round 3 A1); park_peter_only_step (true, repo, floor none, Round 3 H1); walkaway_yield_to_user (true, repo, floor none, Round 3 H1); chat_continue_nudge (true, repo, floor none, Round 4 IV8. Peter ruled yes 2026-10-08 09:28 (decisions.md): one nudge per unit in a chat session, only after his go-ahead, so the default is true.); walkaway_wait_for_jobs (true, repo, floor none, Round 3 H1); review_gate_own_lines (true, repo, floor none, Round 3 H1); declared_check_commands (true, repo, floor none, Round 3 H1); language_coverage_advisory (true, repo, floor none, Round 3 H1); pii_bulk_data (true, global, floor true, Round 3 P1); semgrep_base_layer (true, global, floor true, Round 3 X1); pwsh_lint (true, repo, floor none, Round 3 X1 follow-up); stop_budget_lock_notes (true, repo, floor none, Round 3 N1); session_start_background (true, repo, floor none, Round 3 N1); session_start_one_report (true, repo, floor none, Round 3 N1); hook_health_daily (true, repo, floor none, Round 3 N1); hooks_dirty_gate_session_scope (true, repo, floor none, Round 3 N1); legacy_nudge_daily (true, repo, floor none, Round 3 N1); deploy_build_at_push (true, repo, floor true, Round 3 X2); e2e_self_crawl (true, repo, floor true, Round 3 L7); e2e_regression_watch (false, repo, floor false, Round 2); mutation_push (false, repo, floor false, Round 2); new_line_coverage (false, repo, floor false, Round 2); new_line_coverage_min_lines (20, repo, floor 20, Round 2); astro_frontmatter_cap (false, repo, floor false, Round 2); astro_frontmatter_max_lines (40, repo, floor 40, Round 2); exemplar_digest (true, global, floor none, Round 4 CV13); helper_isolation (true, repo, floor true, Round 3 L0d); hook_recursion_guard (true, repo, floor true, Round 2); loop_budget (8, repo, floor 8, Round 3 L0c); session_loop_budget (true, repo, floor none, Round 3 L0c); plan_tick (true, repo, floor none, Round 2); security_block_dedupe (true, repo, floor none, Round 3 L3); stop_tree_pass_cache_security (false, global, floor false, Round 3 HF2); style_enforce (false, repo, floor false, Round 3 L4); task_size_cap (true, repo, floor true, Round 3 local profile); question_checked_note (true, repo, floor none, Round 4 IV2); cc_version_check (true, repo, floor none, Round 4 RS6); exemplar_on_create (true, repo, floor none, Round 4 CV14); handoff_size_cap (true, repo, floor true, Round 4 WA13); kis_feedback (true, repo, floor none, Round 4 CV11); loop_breaker_message (true, repo, floor none, Round 4 IV5); manifest_content_hash (true, global, floor true, Round 4 SH7); mock_gate (true, repo, floor none, Round 4 IV6); nags_daily (true, repo, floor none, Round 4 WA11); push_failure_replay (true, repo, floor none, Round 4 WA4); reuse_by_export_block (false, repo, floor none, Round 4 CV11); signed_verdicts (true, global, floor true, Round 4 SH3); statusline_progress (true, repo, floor none, Round 4 IV1); stop_first_block_wins (true, repo, floor none, Round 4 WA7); supply_chain_floor (true, repo, floor true, Round 4 CV12); unknown_model_strict (true, repo, floor true, Round 4 RS3); standing_orders (true, repo, floor none, Round 4 IV3); semgrep_shipped_langs (true, global, floor true, Round 4 CV4); repo_gates_tighten_only (true, global, floor none, Round 4 SH6b); override_cap_per_run (3, repo, floor 3, Round 4 SH16); recent_fail_inject (true, repo, floor none, Round 4 CV15); webhook_sig (true, global, floor true, Round 4 CV1); mcp_allowlist (true, global, floor none, Round 4 SH17); precommit_hookspath_chain (true, global, floor none, Round 4 SH9); outcome_ledger (true, global, floor none, Round 4 OL1); rule_drift_probe (true, global, floor none, Round 4 RD1); rule_drift_block (false, global, floor none, Round 4 RD3); stop_failure_replay (true, repo, floor none, Round 4 WA6); reviewer_independence (true, repo, floor true, Round 4 SH19); warn_to_model (true, repo, floor none, Round 4 CV6); canary_advisory_visible (true, repo, floor none, Round 4 WA8); ups_peter_prompts_only (true, repo, floor none, Round 4 WA10); mcp_exposure_sync (true, global, floor none, Round 4 SH18); migration_safety (true, repo, floor none, Round 4 CV9); outcome_ledger_trailer (true, global, floor none, Round 4 OL2); csharp_routes (true, global, floor true, Round 4 CV5); money_idempotency_block (false, global, floor none, Round 4 CV2); shared_shell_parser (false, global, floor none, Round 4 WA2); push_dispatcher (false, global, floor none, Round 4 WA5); bola_ssrf_block (false, global, floor none, Round 4 CV7); commit_security_floor (true, global, floor true, Round 4 CV8); pci_card_data (true, global, floor true, Round 4 CV3); ledger_rank_hook_doctor (true, global, floor none, Round 4 OL4); edit_single_runner (true, repo, floor none, Round 4 WA1); exemplar_auto_bless (true, global, floor none, Round 4 CV16).",
+    "token_diet": true,
+    "mcp_profile_trim": true,
+    "intake_interview": true,
+    "regex_guess_warn": true,
+    "task_type_ratchet": true,
+    "session_start_daily_stamps": true,
+    "config_sync_background": true,
+    "config_sync_stash_alert": true,
+    "verify_pass_cache_no_expiry": true,
+    "incremental_declared_runner": true,
+    "stop_session_scope": true,
+    "cf_live_check_at_push": true,
+    "test_judge_at_push": true,
+    "capability_probe": false,
+    "route_auth_block": false,
+    "canspam_block": false,
+    "plan_judge_note": true,
+    "ssh_remote_writes_exempt": true,
+    "weekly_hook_doctor": true,
+    "monthly_escaped_defects": true,
+    "model_source_pin": true,
+    "model_source_env": true,
+    "hook_launched_review": true,
+    "stop_processor": true,
+    "park_after_n": 3,
+    "preview_from_deploy_targets": true,
+    "walkaway_completion": true,
+    "deterministic_handoff": true,
+    "review_tree_content": false,
+    "review_tree_source": true,
+    "review_repeat_park": true,
+    "vpc_ignore_bookkeeping": true,
+    "stop_tree_pass_cache": true,
+    "stop_reentry_verify": true,
+    "review_process_keys": false,
+    "reply_rules_enforce": false,
+    "contract_freeze_full": false,
+    "antipattern_format": false,
+    "subagent_concurrency_cap": false,
+    "trailing_slash_block": false,
+    "proof_pass_cache": true,
+    "terse_style_pi_only": true,
+    "inject_once": true,
+    "inject_once_floor": 25,
+    "config_map_autosync": true,
+    "keep_it_simple": true,
+    "capture_ladder": true,
+    "check_auto_demote": true,
+    "global_standing_answers": true,
+    "walkaway_question_guard": true,
+    "question_checked_note": true,
+    "grant_from_question": true,
+    "walkaway_finish_notify": true,
+    "deploy_rollback_required": false,
+    "worktree_gc_merged": true,
+    "security_single_scan": true,
+    "pretool_fail_closed": false,
+    "stop_file_pass_cache": false,
+    "bits_style_pass_reuse": true,
+    "scratch_path_exempt": true,
+    "shellcheck_pass_reuse": true,
+    "full_suite_at_push": true,
+    "share_lock_result": true,
+    "e2e_crawl_warn_no_server": true,
+    "api_regen_on_commit": true,
+    "park_peter_only_step": true,
+    "walkaway_yield_to_user": true,
+    "walkaway_wait_for_jobs": true,
+    "review_gate_own_lines": true,
+    "declared_check_commands": true,
+    "language_coverage_advisory": true,
+    "pii_bulk_data": true,
+    "semgrep_base_layer": true,
+    "pwsh_lint": true,
+    "stop_budget_lock_notes": true,
+    "session_start_background": true,
+    "session_start_one_report": true,
+    "hook_health_daily": true,
+    "hooks_dirty_gate_session_scope": true,
+    "legacy_nudge_daily": true,
+    "deploy_build_at_push": true,
+    "e2e_self_crawl": true,
+    "e2e_regression_watch": false,
+    "mutation_push": false,
+    "new_line_coverage": false,
+    "new_line_coverage_min_lines": 20,
+    "astro_frontmatter_cap": false,
+    "astro_frontmatter_max_lines": 40,
+    "exemplar_digest": true,
+    "helper_isolation": true,
+    "hook_recursion_guard": true,
+    "loop_budget": 8,
+    "session_loop_budget": true,
+    "plan_tick": true,
+    "security_block_dedupe": true,
+    "stop_tree_pass_cache_security": false,
+    "style_enforce": false,
+    "task_size_cap": true,
+    "cc_version_check": true,
+    "exemplar_on_create": true,
+    "handoff_size_cap": true,
+    "kis_feedback": true,
+    "loop_breaker_message": true,
+    "manifest_content_hash": true,
+    "mock_gate": true,
+    "nags_daily": true,
+    "push_failure_replay": true,
+    "reuse_by_export_block": false,
+    "signed_verdicts": true,
+    "statusline_progress": true,
+    "stop_first_block_wins": true,
+    "supply_chain_floor": true,
+    "unknown_model_strict": true,
+    "standing_orders": true,
+    "semgrep_shipped_langs": true,
+    "repo_gates_tighten_only": true,
+    "override_cap_per_run": 3,
+    "recent_fail_inject": true,
+    "webhook_sig": true,
+    "mcp_allowlist": true,
+    "precommit_hookspath_chain": true,
+    "outcome_ledger": true,
+    "rule_drift_probe": true,
+    "rule_drift_block": false,
+    "stop_failure_replay": true,
+    "reviewer_independence": true,
+    "warn_to_model": true,
+    "canary_advisory_visible": true,
+    "ups_peter_prompts_only": true,
+    "chat_continue_nudge": true,
+    "mcp_exposure_sync": true,
+    "migration_safety": true,
+    "outcome_ledger_trailer": true,
+    "csharp_routes": true,
+    "money_idempotency_block": false,
+    "shared_shell_parser": false,
+    "push_dispatcher": false,
+    "bola_ssrf_block": false,
+    "commit_security_floor": true,
+    "pci_card_data": true,
+    "ledger_rank_hook_doctor": true,
+    "edit_single_runner": true,
+    "exemplar_auto_bless": true
+  },
+  "auto_revert": {
+    "enabled": false
+  }
+}

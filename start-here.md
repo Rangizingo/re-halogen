@@ -3,8 +3,11 @@
 Read this first, then `PLAN.md` (the approved 7-phase plan + per-phase
 progress log), then `analysis/report.md` (the findings report).
 
-**Overall: ~85% done.** Phases 0, 1, 3, 4, 5 are closed with evidence.
-Phase 2 is 3/5 families written. Phase 6 (closure) has not started.
+**Overall: plan scope complete (2026-10-10, second pass).** All 7 phases have
+writeups. `analysis/kernels-dequant.md`, `kernels-speculation.md`,
+`unknowns.md` and `coverage.md` were added. Not a full RE: 22 bounded
+unknowns remain, 16 need host-side decompile of `flash_serve`/`halogen-npu`.
+The "Remaining to 100%" sections below are the pre-pass history.
 
 ## Done (with artifacts)
 
