@@ -32,9 +32,9 @@ grep -c 'v_exp\|v_rcp\|v_mfma\|v_permlane\|v_bfe' work/kernels-spec/<slice>.s
 npx -y rea-agents@6.3.0 doctor --provider ghidra --json
 
 # Tests (pytest; 3 real-data HT tests skip unless HT_TESTDATA is set)
-python3 -m pytest -q tests                                   # 20 pass, 4 skip
+python3 -m pytest -q tests                                   # 24 pass, 4 skip
 bash scripts/fetch_ht_testdata.sh <dir>                      # ~496 MB of vendor slices by HTTP range read
-HT_TESTDATA=<dir> python3 -m pytest -q tests                 # 24 pass
+HT_TESTDATA=<dir> python3 -m pytest -q tests                 # 28 pass (derived: 24 + the 4 data skips; not re-run in s5)
 python3 -I scripts/ht_decode.py <dir>                        # HT and i4r decode scores vs q4c references
 ```
 
