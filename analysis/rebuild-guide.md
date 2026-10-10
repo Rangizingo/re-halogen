@@ -40,6 +40,8 @@ Per-dtype payload size and shape rules are in hgn-format.md s3, measured by craf
 
 Rank-1 tensors are geometry-checked only when model_id matches a known checkpoint (hgn-format.md s3). Codebook and scale errors (non-ascending codebook, non-finite scale) are in s4.
 
+HT payload (dtype 16) [proven on real vendor data, `closure/ht-decode.md`, decoder `scripts/ht_decode.py`]: bits = `(qparam >> 1) & 0x7f` (3 or 4). The [N, K] tensor is 16x16 tiles of 8*bits u32 words, tile id `(row//128)*(8*K//16) + (col//16)*8 + (row%128)//16`. A tile's words in reverse order are one little-endian bit string U; weight j = 128h + 8r + c (tile row r, column 8h+c) reads the 16-bit window at bit `bits*(255-j) mod 256*bits`, wrapping. code = (byte sum of `(window * 0x83dcd12d) mod 2^32` - 510) / 147.8. Weight = `diag(svh) * Hout * codes * Hin * diag(suh)` with H the orthonormal 128-point Sylvester Hadamard per block; `suh` is +/-1 signs, `svh` a signed per-row scale. down_proj experts are expert-major, one [N, K] slice each with its own suh/svh row; gate_up experts share one `mlp.experts.su` and use a different, unsolved layout. Not tested: qparam bit 0 and the upper bits 0x1200. gate_up experts do NOT fit this tile map (Pearson 0.0008 measured, U27).
+
 ### 2.2 Head file, n-gram table, GGUF input
 - The MTP head is its own `.hgn`, `qwen38-flash-next-mtp.hgn`, named by `HALOGEN_MTP_HEAD`. It must carry `mtp.*` tensors; a llama.cpp MTP GGUF is refused (hgn-format.md s6; entrypoint.sh:544-565). Real table read from the shipped head (version 2, 31 tensors, data_off 0x1400, 1,523,566,720 B): `closure/mtp-head.md` s1 [proven, first 5064 B of the file]. Tensors: `mtp.fc_embedding`, `mtp.fc_hidden`, two `pre_fc_norm`, three hyper-connection modules, one `layers.0` (q8g64 attention, q4c experts 512x1280x2560 and 512x2560x640, bf16 router 512x2560, q8g64 shared expert). No embedding, lm_head or final norm in the head [proven absent].
 - `HREF` is NOT an in-.hgn record. It is the magic of the `halogen-tools ppl` reference dump (`--ref-out`, `--ref`): 0x20 B header (`HREF`, u32 version 2, u32 K, u32 vocab, u64 positions, u64 sequence length), then N records of `12*K + 16` bytes (`closure/hgn-href.md` s2; writer `halogen-tools 01825fb0.c:7606-7701`) [proven for layout; field meanings inferred]. hgn-format.md s6 body text still describes HREF the old way; its top banner carries the correction.
@@ -225,7 +227,7 @@ Sources: `analysis/npu-engine.md`, `closure/npu-closure.md`, `closure/npu-closur
 - XRT flow [proven]: `xrt::device`, `xrt::elf` plus `xrt::hw_context` (`00157940`), `xrt::ext::kernel` named `"main:" + graph name` (`00159980`), run create, set args, start, poll, wait (`00157b70`); BO flags 0x20000000.
 - A `READY` banner prints after load; one thread per connection with TCP_NODELAY; line cap and queue backpressure strings such as "ERR 0 busy: ..." (npu-engine.md s4).
 - Verb grammars (r2, U02 PARTIAL): token 0 is `VERB` or `VERB@model`, token 1 the tag. `GEN max_new temp top_k top_p min_p penalty seed K stop1..stopK M id1..idM` replies `OK tag n_prompt n_gen reason t1 t2 t3 t4 text bucket HASH_A,HASH_B,MISMATCH ids...`. Temperature <= 0 is argmax; the seed feeds a `std::mt19937_64` (recurrence constant `0x5851f42d4c957f2d`); the penalty is subtractive for ids in history; prompt plus max_new must fit a bucket of 16 positions. `DEC/EMB/SCO/CLS`: `n m`, then n groups `a c i1..ic`, then n*m ints; DEC replies `OK tag ...` (not `DEC`). Also `ELOAD tag path int`, `EFREE tag int`, `CANCEL`, `QUIT`, `INFO`, `PFX`, `LEDGER`. Errors are `ERR <tag> <text>`.
-- Open: several numeric field meanings (GEN reply field 9, DEC `a` and `c`, EMB `local_218`), handlers for LOOKUP, QHN, QLED, EDUMP, IMG arguments, the HNPB flavor u32 and per-blob tag (U01; 3 bulk and 1 streamed is inferred), and the `main:<graph>` names (U03; they need shipped `devices.hnpm` or `.elf` files, none are in this workspace).
+- Open: several numeric field meanings (GEN reply field 9, DEC `a` and `c`, EMB `local_218`), handlers for LOOKUP, QHN, QLED, EDUMP, IMG arguments, the HNPB flavor u32 (U01; the shipped consts.hnpb holds 2, the per-blob tag is now read: 4 = f32, 1 = bf16), while the `main:<graph>` names are now closed (U03, `closure/npu-shipped-files.md`).
 
 ## 10. Tools (halogen-tools)
 
@@ -238,7 +240,7 @@ Sources: `analysis/npu-engine.md`, `closure/npu-closure.md`, `closure/npu-closur
 
 ## 11. Proven versus inferred: what a rebuild can rely on
 
-Unknowns ledger counts from `analysis/unknowns.md` (26 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 9, PARTIAL 13, OPEN-BOUNDED 3, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 26.
+Unknowns ledger counts from `analysis/unknowns.md` (27 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 11, PARTIAL 12, OPEN-BOUNDED 3, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 27.
 
 Can rely on [proven]:
 - The `.hgn` container: header, table, checksums, size rules, dtype codes, `verify` and `inspect` behavior (169 vendor-checked files, round trips).
@@ -250,9 +252,8 @@ Can rely on [proven]:
 - The MTP head file layout and the host plumbing around it.
 
 Cannot rely on (PARTIAL, OPEN-BOUNDED, UNOBSERVABLE rows; what is missing):
-- U01 PARTIAL: HNPB header +0x08 and the per-blob tag are producer tags by inference; no reader uses them. Needs the entry builders or a real `.hnpw` header.
+- U01 PARTIAL: per-blob fields are now read from a shipped `consts.hnpb` (tag 4 = f32, 1 = bf16; +0x80 is the blob SHA-256; `closure/npu-shipped-files.md`). Header +0x08 is 2 there, a value no `halogen-npu` writer stores; its meaning stays inferred.
 - U02 PARTIAL: some NPU numeric field meanings; LOOKUP, QHN, QLED, EDUMP and IMG grammars.
-- U03 OPEN-BOUNDED: NPU `main:<graph>` names live in shipped `.elf` and `devices.hnpm` files not in this workspace.
 - U05 UNOBSERVABLE: a future flip of the dflash2 format literal cannot be seen from the nine pulled releases.
 - U06 OPEN-BOUNDED: 0.14.x and 0.15.x patch deltas; those tags were not pulled.
 - U07 PARTIAL: `HALOGEN_WALK_FALSIFY` has no device-side change; host feeding of acceptance not traced (U20 CLOSED covers the S2 flags and `SAMPLED_*`).
@@ -262,11 +263,11 @@ Cannot rely on (PARTIAL, OPEN-BOUNDED, UNOBSERVABLE rows; what is missing):
 - U12 PARTIAL: `scan3` args B, C, D, G; `ut4` and `ut5` flags; decode versus prefill `k_dnc_att` variant; the case-to-stub map of `019dd130` (jump table unread).
 - U14 PARTIAL: fa2 args and legacy dispatch closed; FaSel is 32 B with +0x1c patched to the indexer budget high dword; the meanings of slots +0x00 to +0x18 are open.
 - U18 PARTIAL: `k_dv_quant8` roles and geometry closed; output plane offsets, the other width path at `0x1792530` and the writers of D-line `dv_*` counters open.
-- U19 PARTIAL: the HT `v_sad_u8` decode is recovered statically (16-bit sliding windows, multiply `0x83dcd12d`, byte sum plus `0x6400`, fp16 affine `0xc931`; implied w = (S - 510)/147.8 is an inferred unit-Gaussian). A real HT checkpoint is needed for stream bit order, tile order, the exact scale `s6`, su/sv contents, any additive term and qparam bit 0. Until then a rebuild cannot read HT weights with confidence.
+- U19 is CLOSED (moved out of this list): `scripts/ht_decode.py` decodes real 3 and 4 bit HT weights, Pearson 0.98 to 0.99 against q4c references (`closure/ht-decode.md`). Not tested: qparam bit 0 and the upper bits 0x1200. gate_up experts do NOT fit this tile map (Pearson 0.0008 measured, U27).
 - U21 PARTIAL: decode and small-batch launch CLOSED; the prefill dequant-versus-fused choice, per-dtype helper reach, `lq*` epilogue id E and HT template args S, B, C, D are open.
 - U22 OPEN-BOUNDED: Ghidra has no AMDGCN module, so device code stays at disassembly level; rebuilding kernels means writing from instruction listings.
 - U23 PARTIAL: the seed-to-state copy is not located.
-- CLOSED rows (U04, U08, U13, U15, U16, U17, U20, U24, U25) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
+- CLOSED rows (U03, U04, U08, U13, U15, U16, U17, U19, U20, U24, U25) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
 
 Other gaps a rebuild hits (request-trace.md "Gaps" and the closure reports):
 - MTP head layer kernels, the fusion of `fc_embedding` and `fc_hidden`, router top-k, the greedy draft step (mtp-head.md s7).

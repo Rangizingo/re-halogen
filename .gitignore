@@ -9,3 +9,8 @@ f32report.txt
 .claude/qa-report.md
 .claude/reviewer/
 .claude/snapshots/
+
+# Auto-generated blueprints
+.claude/blueprint.md
+.claude/blueprint.hash
+.claude/rules/blueprint-*.md
