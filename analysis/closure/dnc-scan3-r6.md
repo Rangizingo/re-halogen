@@ -1,5 +1,7 @@
 # U12 round 6: what NormFold n1/n2 hold, and what makes a Tap fire (flash_serve 0.17.3)
 
+Update after run 5 (`analysis/runtime-run-0.17.3-r5.md`): the probe recipe below was run; the predicted slots fired in all 36 layers and the Tap payload (residual 1) is observed. Item 2 and residual 1 are closed there; the text below is the static analysis as written before the run.
+
 Checked: CLAUDE.md, analysis/closure/dnc-scan3-r3.md, dnc-scan3-r4.md, analysis/runtime-run-0.17.3-r4.md, the U12 row of analysis/unknowns.md, work/decomp/flash_serve/{01884460,018ab5c0,018897f0,018680b0,01860720,01895170,018fa150,01905ae0,01852ca0,0186a470,0182ea80}.c, `objdump -d` of the whole binaries/flash_serve (via `ssh ai-core`, read only; VMA = Ghidra address minus 0x100000), `objdump -R` joined with analysis/function-map-kernel-stubs.tsv, the `<2,4,1,0,1,1,0,1,0>` scan3x slice in work/kernels (called k101.s below), image/serve_api.py, scripts/engine_probe.py, scripts/engine_probe6.py, analysis/evidence/run-r4-kargs.jsonl.gz (re-read with python, matmul and launch records).
 
 ## Scope
