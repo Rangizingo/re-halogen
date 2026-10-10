@@ -11,6 +11,7 @@ Format (analysis/closure/ht-decode.md):
   (tile row r, column 8h+c) reads the 16-bit window of U at bit bits*(255-j) mod 256*bits, wrapping.
 - code = (bytesum((window * 0x83dcd12d) mod 2^32) - 510) / 147.8
 - W = diag(svh) * Hout * Wq * Hin * diag(suh), H = block-diagonal orthonormal 128-point Sylvester Hadamard.
+- gate_up experts walk tiles differently (decode_codes_gate_up) and share one input sign vector, mlp.experts.su.
 """
 import sys
 
@@ -26,18 +27,30 @@ def hadamard(n: int) -> np.ndarray:
     return h / np.sqrt(n)
 
 
-def decode_codes(raw: np.ndarray, n: int, k: int, bits: int) -> np.ndarray:
-    """Codes Wq [n, k] in the rotated basis (unit variance)."""
-    nt, nw, length = n * k // 256, 8 * bits, 256 * bits
-    words = raw[:nt * nw * 4].view('<u4').reshape(nt, nw)[:, ::-1]
+def tile_codes(raw: np.ndarray, n_tiles: int, bits: int) -> np.ndarray:
+    """Codes per stream tile [n_tiles, 256], index j = 128h + 8r + c (tile row r, column 8h+c)."""
+    nw, length = 8 * bits, 256 * bits
+    words = raw[:n_tiles * nw * 4].view('<u4').reshape(n_tiles, nw)[:, ::-1]
     ub = np.unpackbits(np.ascontiguousarray(words).view(np.uint8), axis=1, bitorder='little')
     ub = np.concatenate([ub, ub[:, :16]], 1).astype(np.uint32)
     pos = (bits * (255 - np.arange(256))) % length
     val = (ub[:, pos[:, None] + np.arange(16)[None, :]] << np.arange(16, dtype=np.uint32)).sum(-1)
     p = (val.astype(np.uint64) * np.uint64(MULT)) & np.uint64(0xffffffff)
     s = (p & 255) + ((p >> 8) & 255) + ((p >> 16) & 255) + (p >> 24)
-    c = ((s.astype(np.float32) - 510.0) / 147.8).reshape(n // 128, k // 16, 8, 2, 16, 8)
+    return (s.astype(np.float32) - 510.0) / 147.8
+
+
+def decode_codes(raw: np.ndarray, n: int, k: int, bits: int) -> np.ndarray:
+    """Codes Wq [n, k] in the rotated basis (unit variance), dense linears and down_proj experts."""
+    c = tile_codes(raw, n * k // 256, bits).reshape(n // 128, k // 16, 8, 2, 16, 8)
     return c.transpose(0, 2, 4, 1, 3, 5).reshape(n, k)
+
+
+def decode_codes_gate_up(raw: np.ndarray, n: int, k: int, bits: int) -> np.ndarray:
+    """gate_up experts [n = gate + up rows, k]: per block of 128 gate rows and the matching 128 up rows,
+    per column tile, the 8 gate tile rows then the 8 up tile rows."""
+    c = tile_codes(raw, n * k // 256, bits).reshape(n // 256, k // 16, 2, 8, 2, 16, 8)
+    return c.transpose(2, 0, 3, 5, 1, 4, 6).reshape(n, k)
 
 
 def reconstruct(wq: np.ndarray, suh: np.ndarray, svh: np.ndarray) -> np.ndarray:
@@ -83,6 +96,12 @@ def main(d: str) -> None:
         w = reconstruct(decode_codes(raw[e * per:(e + 1) * per], 2560, 640, 3), su[e], sv[e])
         report(f'layers.1.mlp.experts.down_proj expert {e} 3-bit [2560,640]', w, ref(e))
     report('negative control: expert 1 HT vs expert 0 reference', w, ref(0))
+    cb = np.fromfile(f'{d}/g0_gu_w4b_cb.bin', '<f4')
+    q = u8('g0_gu_w4b_nib_x0.bin')
+    sc = f16('g0_gu_w4b_sc_x0.f16').reshape(1280, 80)
+    gu_ref = cb[np.stack([q & 15, q >> 4], -1).reshape(-1)].reshape(1280, 2560) * np.repeat(sc, 32, 1)
+    w = reconstruct(decode_codes_gate_up(u8('g0_gu_x0.ht'), 1280, 2560, 4), f16('g0_su.f16'), f16('g0_gu_svh_x0.f16'))
+    report('layers.0.mlp.experts.gate_up_proj expert 0 4-bit [1280,2560]', w, gu_ref)
 
 
 if __name__ == '__main__':

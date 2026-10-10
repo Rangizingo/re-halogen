@@ -75,9 +75,11 @@ Wq std measured 0.9973, mean 0.0004: unit Gaussian as inferred. Windows kk=0..4 
 - Exact fp16 literal of s6 and whether the engine path (k_ht_lin with su/sv) applies sv before or after Hout in float precision (same math, rounding differs).
 - Residual error source (0.8% decorrelation) is not decomposed into HT vs q4c error.
 
-## Test C: gate_up experts (U27)
+## Test C: gate_up experts (U27 part)
 
-`layers.0.mlp.experts.gate_up_proj` expert 0, 4 bit [1280, 2560], with the shared `layers.0.mlp.experts.su` [2560] (gate_up has no per-expert suh): Pearson 0.0008 against the w4b reference with the dense tile map (measured, session author). The reference rows line up with `svh` (|svh| vs reference row std 0.998) and the decoded codes have std 0.998, so the stream decodes but the tile walk differs. Open as U27.
+`layers.0.mlp.experts.gate_up_proj` expert 0, 4 bit [1280, 2560], with the shared `layers.0.mlp.experts.su` [2560] (gate_up has no per-expert suh). Measured with `scripts/ht_decode.py`: Pearson 0.9922 overall, row min 0.9915, median 0.9922 against the w4b reference; the dense tile map gives about 0 on the same bytes (test `test_real_gate_up_expert_matches_reference_only_with_its_own_walk`).
+
+Layout (`decode_codes_gate_up`): tile contents, Hin, Hout, su and svh are as for dense tensors. Only the tile walk differs. Rows are gate 0..N/2-1 then up N/2..N-1. The stream walks blocks b of 128 gate rows plus the matching 128 up rows; inside a block, per column tile ct, the 8 gate tile rows come first, then the 8 up tile rows. Stream tile id = ((b*K/16 + ct)*2 + g)*8 + i, matrix row = g*N/2 + b*128 + i*16 + r. Found from data by the decode agent (association matrix over tile orders, then a per-tile match); the fused kernels `k_ht_gemv_gu` and `k_ht_moe_gu` were not read for it (inferred that they use this walk). Not tested: other experts (stride 1,638,400 B assumed), 3-bit gate_up, N/2 not a multiple of 128.
 
 ## Test A: 4-bit, N > K (shared_expert.down_proj [2560, 640])
 
