@@ -6,7 +6,7 @@ rebuild a compatible server from the writeups).
 
 **Overall: Phase 7 done at plan scope (2026-10-10).** All phases have
 evidence-backed writeups. Unknowns, counted from the table in
-`analysis/unknowns.md`: CLOSED 16, PARTIAL 8, OPEN-BOUNDED 2 (U06,
+`analysis/unknowns.md`: CLOSED 19, PARTIAL 5, OPEN-BOUNDED 2 (U06,
 U22), UNOBSERVABLE 1 (U05). PARTIAL rows say which half is closed. What is
 left needs data that is not in this workspace (see "Open" below).
 
@@ -28,7 +28,7 @@ left needs data that is not in this workspace (see "Open" below).
 
 ## Open
 
-- PARTIAL rows U01, U02, U11, U12, U14, U18, U21, U26: each row says
+- PARTIAL rows U02, U11, U12, U21, U26: each row says
   which half is closed and what is left (most need a runtime probe or a
   vendor file not shipped).
 - U06 old patch releases, U05 future releases, U22 no AMDGCN decompiler:
