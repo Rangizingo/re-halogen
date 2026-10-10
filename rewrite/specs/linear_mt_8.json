@@ -1,0 +1,22 @@
+{
+  "grid": [3, 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "a": {"bytes": "=24*N*2+64", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED", "lo": -2, "hi": 2}},
+    "x": {"bytes": "=8*N*2+64", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+100", "lo": -2, "hi": 2}},
+    "c": {"bytes": 624, "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "a"},
+    {"offset": 8, "buffer": "x"},
+    {"offset": 16, "buffer": "c"},
+    {"offset": 24, "type": "i64", "value": "=N"},
+    {"offset": 32, "type": "i64", "value": 31}
+  ],
+  "dump": ["c"],
+  "compare": {
+    "rewrite_src": "../kernels/linear_mt.hip",
+    "rewrite_kernel": "k_linear_mt_8",
+    "outputs": [{"buffer": "c", "dtype": "bf16"}]
+  }
+}

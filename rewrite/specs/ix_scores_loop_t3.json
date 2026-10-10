@@ -1,0 +1,99 @@
+{
+ "grid": [
+  "=ceil_div(N,128)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "q": {
+   "bytes": "=((20+40)*512)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+1",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "k": {
+   "bytes": "=(N*128)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+2",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "s": {
+   "bytes": "=(40*(N+7)+64)*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "q"
+  },
+  {
+   "offset": 8,
+   "buffer": "k"
+  },
+  {
+   "offset": 16,
+   "buffer": "s"
+  },
+  {
+   "offset": 24,
+   "type": "i64",
+   "value": "=N+7"
+  },
+  {
+   "offset": 32,
+   "type": "i32",
+   "value": 20
+  },
+  {
+   "offset": 36,
+   "type": "i32",
+   "value": 30
+  },
+  {
+   "offset": 40,
+   "type": "i32",
+   "value": 40
+  },
+  {
+   "offset": 44,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 48,
+   "type": "i32",
+   "value": 3
+  }
+ ],
+ "dump": [
+  "s"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ix.hip",
+  "rewrite_kernel": "k_ix_scores_loop",
+  "outputs": [
+   {
+    "buffer": "s",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

@@ -1,0 +1,27 @@
+{
+  "grid": ["=N", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "w": {"bytes": 2138112, "fill": {"kind": "rand", "dtype": "f16", "seed": "=SEED", "lo": 1.25, "hi": 1.5}},
+    "x": {"bytes": 4096, "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+100", "lo": -2, "hi": 2}},
+    "wm": {"bytes": 163840, "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+200", "lo": -1, "hi": 1}},
+    "y": {"bytes": 10368, "fill": {"kind": "const", "dtype": "bf16", "value": -99}},
+    "f": {"bytes": 20736, "fill": {"kind": "const", "dtype": "f32", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "w"},
+    {"offset": 8, "type": "i64", "value": 4096},
+    {"offset": 16, "type": "i64", "value": 1642496},
+    {"offset": 24, "type": "i64", "value": 48},
+    {"offset": 32, "buffer": "x"},
+    {"offset": 40, "buffer": "wm"},
+    {"offset": 48, "buffer": "y"},
+    {"offset": 56, "buffer": "f"}
+  ],
+  "dump": ["y", "f"],
+  "compare": {
+    "rewrite_src": "../kernels/hcup4.hip",
+    "rewrite_kernel": "k_hcup4_2_1",
+    "outputs": [{"buffer": "y", "dtype": "bf16"}, {"buffer": "f", "dtype": "f32"}]
+  }
+}

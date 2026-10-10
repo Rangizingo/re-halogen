@@ -1,0 +1,62 @@
+{
+ "grid": [
+  40,
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "in": {
+   "bytes": "=(N*10240+0)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+1",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "hist": {
+   "bytes": "=(10240*9+0)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+4",
+    "lo": -4,
+    "hi": 4
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "in"
+  },
+  {
+   "offset": 8,
+   "buffer": "hist"
+  },
+  {
+   "offset": 16,
+   "type": "i32",
+   "value": "=N"
+  }
+ ],
+ "dump": [
+  "hist"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ple.hip",
+  "rewrite_kernel": "k_ple_conv_state_update",
+  "outputs": [
+   {
+    "buffer": "hist",
+    "dtype": "u16"
+   }
+  ]
+ }
+}

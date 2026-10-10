@@ -1,0 +1,31 @@
+{
+  "grid": [3, 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "x": {"bytes": "=2*4*N*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED", "lo": -2, "hi": 2}},
+    "w": {"bytes": "=8*N*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED+10", "lo": -0.5, "hi": 0.5}},
+    "out": {"bytes": "=(8*2*4+16)*4", "fill": {"kind": "const", "dtype": "f32", "value": -7}},
+    "sgbuf": {"bytes": "=64+(N//32)*18+64", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+20", "lo": -1, "hi": 1}},
+    "xg": {"bytes": "=8*N*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+30", "lo": -0.03, "hi": 0.03}},
+    "sgout": {"bytes": 64, "fill": {"kind": "const", "dtype": "f32", "value": -7}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "x"},
+    {"offset": 8, "buffer": "w"},
+    {"offset": 16, "buffer": "out"},
+    {"offset": 24, "type": "i64", "value": "=N"},
+    {"offset": 32, "type": "i64", "value": 8},
+    {"offset": 40, "buffer": "sgbuf"},
+    {"offset": 48, "type": "i64", "value": 64},
+    {"offset": 56, "type": "i64", "value": "=64+(N//32)*16"},
+    {"offset": 64, "type": "i64", "value": 0},
+    {"offset": 72, "buffer": "xg"},
+    {"offset": 80, "buffer": "sgout"}
+  ],
+  "dump": ["out", "sgout"],
+  "compare": {
+    "rewrite_src": "../kernels/route_logits.hip",
+    "rewrite_kernel": "k_route_logits_rows_sg_4_8_0",
+    "outputs": [{"buffer": "out", "dtype": "f32"}, {"buffer": "sgout", "dtype": "f32"}]
+  }
+}

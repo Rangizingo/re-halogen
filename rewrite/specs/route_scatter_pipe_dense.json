@@ -1,0 +1,25 @@
+{
+  "grid": ["=ceil_div(N,1024)", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "ids": {"bytes": "=N*4", "fill": {"kind": "file", "path": "/tmp/g06/dense/h/v_2_4096/ids.bin"}},
+    "boff": {"bytes": "=ceil_div(N,1024)*2048", "fill": {"kind": "file", "path": "/tmp/g06/dense/s/v_2_4/a.bin"}},
+    "rank": {"bytes": "=(N+256)*4", "fill": {"kind": "file", "path": "/tmp/g06/dense/h/v_2_4096/rank.bin"}},
+    "perm": {"bytes": "=(N+256)*4", "fill": {"kind": "const", "dtype": "i32", "value": -7}},
+    "slot": {"bytes": "=(N+256)*4", "fill": {"kind": "const", "dtype": "i32", "value": -7}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "ids"},
+    {"offset": 8, "type": "i32", "value": "=N"},
+    {"offset": 16, "buffer": "boff"},
+    {"offset": 24, "buffer": "rank"},
+    {"offset": 32, "buffer": "perm"},
+    {"offset": 40, "buffer": "slot"}
+  ],
+  "dump": ["perm", "slot"],
+  "compare": {
+    "rewrite_src": "../kernels/route_scatter.hip",
+    "rewrite_kernel": "k_route_scatter",
+    "outputs": [{"buffer": "perm", "dtype": "i32"}, {"buffer": "slot", "dtype": "i32"}]
+  }
+}

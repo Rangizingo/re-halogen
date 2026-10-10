@@ -1,0 +1,74 @@
+{
+ "grid": [
+  3,
+  1,
+  1
+ ],
+ "block": [
+  64,
+  1,
+  1
+ ],
+ "buffers": {
+  "ids": {
+   "bytes": "=(N+4)*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED+0",
+    "lo": -50,
+    "hi": 100000
+   }
+  },
+  "tab": {
+   "bytes": 16,
+   "fill": {
+    "kind": "rand",
+    "dtype": "i64",
+    "seed": "=SEED",
+    "lo": 5,
+    "hi": 1000000
+   }
+  },
+  "out": {
+   "bytes": "=(N+8)*8",
+   "fill": {
+    "kind": "const",
+    "dtype": "i64",
+    "value": -7
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "ids"
+  },
+  {
+   "offset": 8,
+   "buffer": "tab"
+  },
+  {
+   "offset": 16,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 24,
+   "buffer": "out"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ngram.hip",
+  "rewrite_kernel": "k_ngram_hist",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "i64"
+   }
+  ]
+ }
+}

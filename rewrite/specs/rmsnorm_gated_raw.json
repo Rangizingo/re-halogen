@@ -1,0 +1,88 @@
+{
+ "grid": [
+  "=N",
+  1,
+  1
+ ],
+ "block": [
+  64,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=(N*160)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "u16",
+    "seed": "=SEED+1",
+    "lo": 0,
+    "hi": 65536
+   }
+  },
+  "w": {
+   "bytes": "=(160)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "u16",
+    "seed": "=SEED+2",
+    "lo": 0,
+    "hi": 65536
+   }
+  },
+  "z": {
+   "bytes": "=(N*160)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "u16",
+    "seed": "=SEED+3",
+    "lo": 0,
+    "hi": 65536
+   }
+  },
+  "out": {
+   "bytes": "=(N*160+64)*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x"
+  },
+  {
+   "offset": 8,
+   "buffer": "w"
+  },
+  {
+   "offset": 16,
+   "buffer": "z"
+  },
+  {
+   "offset": 24,
+   "buffer": "out"
+  },
+  {
+   "offset": 32,
+   "type": "i32",
+   "value": 160
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/rmsnorm.hip",
+  "rewrite_kernel": "k_rmsnorm_gated",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "u16"
+   }
+  ]
+ }
+}

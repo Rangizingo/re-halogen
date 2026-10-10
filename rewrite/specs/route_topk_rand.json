@@ -1,0 +1,20 @@
+{
+  "grid": ["=N", 1, 1],
+  "block": [512, 1, 1],
+  "buffers": {
+    "x": {"bytes": "=N*2048", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED", "lo": -4, "hi": 4}},
+    "idx": {"bytes": "=(N*10+16)*4", "fill": {"kind": "const", "dtype": "i32", "value": -7}},
+    "w": {"bytes": "=(N*10+16)*4", "fill": {"kind": "const", "dtype": "f32", "value": -7}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "x"},
+    {"offset": 8, "buffer": "idx"},
+    {"offset": 16, "buffer": "w"}
+  ],
+  "dump": ["idx", "w"],
+  "compare": {
+    "rewrite_src": "../kernels/route_topk.hip",
+    "rewrite_kernel": "k_route_topk",
+    "outputs": [{"buffer": "idx", "dtype": "i32"}, {"buffer": "w", "dtype": "f32"}]
+  }
+}

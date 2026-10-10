@@ -1,0 +1,73 @@
+{
+ "grid": [
+  "=N",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "in": {
+   "bytes": "=N*1280*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED",
+    "lo": -8,
+    "hi": 8
+   }
+  },
+  "slot": {
+   "bytes": "=(N+0)*4",
+   "fill": {
+    "kind": "iota",
+    "dtype": "i32",
+    "start": "=N-1",
+    "step": -1
+   }
+  },
+  "out": {
+   "bytes": "=(N*640+640)*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "in"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 16,
+   "buffer": "slot"
+  },
+  {
+   "offset": 24,
+   "buffer": "out"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/glu.hip",
+  "rewrite_kernel": "k_glu_slots",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "u16"
+   }
+  ]
+ }
+}

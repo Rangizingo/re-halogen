@@ -1,0 +1,22 @@
+{
+  "grid": ["=ceil_div(N,1)", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "w": {"bytes": "=N*2496+64", "fill": {"kind": "rand", "dtype": "f16", "seed": "=SEED", "lo": -1, "hi": 1}},
+    "x": {"bytes": "=2*2336*2+64", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+100", "lo": -2, "hi": 2}},
+    "y": {"bytes": "=(2*N+64)*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "w"},
+    {"offset": 8, "buffer": "x"},
+    {"offset": 16, "buffer": "y"},
+    {"offset": 24, "type": "i64", "value": 2336},
+    {"offset": 32, "type": "i64", "value": "=N"}
+  ],
+  "dump": ["y"],
+  "compare": {
+    "rewrite_src": "../kernels/lq8s32.hip",
+    "rewrite_kernel": "lq8s32_m2_r32_w8_f1",
+    "outputs": [{"buffer": "y", "dtype": "f32"}]
+  }
+}

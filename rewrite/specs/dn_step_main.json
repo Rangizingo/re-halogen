@@ -1,0 +1,178 @@
+{
+ "grid": [
+  "=40+N",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": 20480,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+1",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "w": {
+   "bytes": 81920,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+2",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "state": {
+   "bytes": 81920,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+3",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "y": {
+   "bytes": 20544,
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "a_in": {
+   "bytes": 96,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+4",
+    "lo": -30,
+    "hi": 30
+   }
+  },
+  "b_in": {
+   "bytes": 96,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+5",
+    "lo": -8,
+    "hi": 8
+   }
+  },
+  "A_log": {
+   "bytes": 192,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*16+6",
+    "lo": -3,
+    "hi": 3
+   }
+  },
+  "dt_bias": {
+   "bytes": 192,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*16+7",
+    "lo": -3,
+    "hi": 3
+   }
+  },
+  "beta": {
+   "bytes": 256,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  },
+  "g": {
+   "bytes": 256,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x"
+  },
+  {
+   "offset": 8,
+   "buffer": "w"
+  },
+  {
+   "offset": 16,
+   "buffer": "state"
+  },
+  {
+   "offset": 24,
+   "buffer": "y"
+  },
+  {
+   "offset": 32,
+   "buffer": "a_in"
+  },
+  {
+   "offset": 40,
+   "buffer": "b_in"
+  },
+  {
+   "offset": 48,
+   "buffer": "A_log"
+  },
+  {
+   "offset": 56,
+   "buffer": "dt_bias"
+  },
+  {
+   "offset": 64,
+   "buffer": "beta"
+  },
+  {
+   "offset": 72,
+   "buffer": "g"
+  }
+ ],
+ "dump": [
+  "y",
+  "state",
+  "beta",
+  "g"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/dn_step.hip",
+  "rewrite_kernel": "k_dn_step_pre",
+  "outputs": [
+   {
+    "buffer": "y",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "state",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "beta",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "g",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

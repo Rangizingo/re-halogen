@@ -1,0 +1,21 @@
+{
+  "grid": [256, 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "src": {"bytes": 4456512, "fill": {"kind": "iota", "dtype": "u32", "start": 0, "step": 65537}},
+    "dst": {"bytes": 8388736, "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "src"},
+    {"offset": 8, "buffer": "dst"},
+    {"offset": 16, "type": "u32", "value": 65536},
+    {"offset": 20, "type": "u32", "value": 65536},
+    {"offset": 24, "type": "i64", "value": 4194304}
+  ],
+  "dump": ["dst"],
+  "compare": {
+    "rewrite_src": "../kernels/deq_q8g64.hip",
+    "rewrite_kernel": "k_deq_q8g64",
+    "outputs": [{"buffer": "dst", "dtype": "bf16"}]
+  }
+}

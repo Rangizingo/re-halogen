@@ -1,0 +1,20 @@
+{
+  "grid": ["=ceil_div(N,256)", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "x": {"bytes": "=N*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED", "lo": -8, "hi": 8}},
+    "y": {"bytes": "=(N+64)*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "x"},
+    {"offset": 8, "buffer": "y"},
+    {"offset": 16, "type": "i64", "value": "=N"},
+    {"offset": 24, "type": "f32", "value": "=0.5+SEED*0.25"}
+  ],
+  "dump": ["y"],
+  "compare": {
+    "rewrite_src": "../kernels/inject.hip",
+    "rewrite_kernel": "k_inject_gate",
+    "outputs": [{"buffer": "y", "dtype": "f32"}]
+  }
+}

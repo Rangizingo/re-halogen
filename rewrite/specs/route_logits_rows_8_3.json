@@ -1,0 +1,22 @@
+{
+  "grid": [2, 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "x": {"bytes": "=2*8*N*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED", "lo": -2, "hi": 2}},
+    "w": {"bytes": "=3*N*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED+10", "lo": -0.5, "hi": 0.5}},
+    "out": {"bytes": "=(3*2*8+16)*4", "fill": {"kind": "const", "dtype": "f32", "value": -7}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "x"},
+    {"offset": 8, "buffer": "w"},
+    {"offset": 16, "buffer": "out"},
+    {"offset": 24, "type": "i64", "value": "=N"},
+    {"offset": 32, "type": "i64", "value": 16}
+  ],
+  "dump": ["out"],
+  "compare": {
+    "rewrite_src": "../kernels/route_logits.hip",
+    "rewrite_kernel": "k_route_logits_rows_8_3",
+    "outputs": [{"buffer": "out", "dtype": "f32"}]
+  }
+}

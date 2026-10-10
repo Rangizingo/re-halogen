@@ -1,0 +1,119 @@
+{
+ "grid": [
+  "=ceil_div(N*48,256)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "a_in": {
+   "bytes": "=N*48*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+1",
+    "lo": -30,
+    "hi": 30
+   }
+  },
+  "b_in": {
+   "bytes": "=N*48*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+2",
+    "lo": -8,
+    "hi": 8
+   }
+  },
+  "A_log": {
+   "bytes": 192,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*16+3",
+    "lo": -3,
+    "hi": 3
+   }
+  },
+  "dt_bias": {
+   "bytes": 192,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*16+4",
+    "lo": -3,
+    "hi": 3
+   }
+  },
+  "beta": {
+   "bytes": "=N*48*4+64",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  },
+  "g": {
+   "bytes": "=N*48*4+64",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "a_in"
+  },
+  {
+   "offset": 8,
+   "buffer": "b_in"
+  },
+  {
+   "offset": 16,
+   "buffer": "A_log"
+  },
+  {
+   "offset": 24,
+   "buffer": "dt_bias"
+  },
+  {
+   "offset": 32,
+   "buffer": "beta"
+  },
+  {
+   "offset": 40,
+   "buffer": "g"
+  },
+  {
+   "offset": 48,
+   "type": "i32",
+   "value": "=N"
+  }
+ ],
+ "dump": [
+  "beta",
+  "g"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/dn_gates.hip",
+  "rewrite_kernel": "k_dn_gates",
+  "outputs": [
+   {
+    "buffer": "beta",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "g",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

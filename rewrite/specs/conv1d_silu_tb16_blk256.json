@@ -1,0 +1,88 @@
+{
+ "grid": [
+  "=ceil_div(10240,256)",
+  "=ceil_div(N,16)",
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "xin": {
+   "bytes": "=N*20480",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+1",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "st": {
+   "bytes": "=3*20480",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+2",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "w": {
+   "bytes": "=10240*8",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+3",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "y": {
+   "bytes": "=(N+1)*20480",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "xin"
+  },
+  {
+   "offset": 8,
+   "buffer": "st"
+  },
+  {
+   "offset": 16,
+   "buffer": "w"
+  },
+  {
+   "offset": 24,
+   "buffer": "y"
+  },
+  {
+   "offset": 32,
+   "type": "i32",
+   "value": "=N"
+  }
+ ],
+ "dump": [
+  "y"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/conv1d.hip",
+  "rewrite_kernel": "k_conv1d_silu_tb16",
+  "outputs": [
+   {
+    "buffer": "y",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

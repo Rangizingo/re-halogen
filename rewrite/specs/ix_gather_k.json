@@ -1,0 +1,89 @@
+{
+ "grid": [
+  7,
+  1,
+  1
+ ],
+ "block": [
+  64,
+  1,
+  1
+ ],
+ "buffers": {
+  "a": {
+   "bytes": "=(64*128)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+1",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "b": {
+   "bytes": "=(400*128)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+2",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "out": {
+   "bytes": "=(N*128+64)*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "a"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": 64
+  },
+  {
+   "offset": 16,
+   "buffer": "b"
+  },
+  {
+   "offset": 24,
+   "type": "i32",
+   "value": 100
+  },
+  {
+   "offset": 32,
+   "buffer": "out"
+  },
+  {
+   "offset": 40,
+   "type": "i64",
+   "value": 40
+  },
+  {
+   "offset": 48,
+   "type": "i64",
+   "value": "=N"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ix.hip",
+  "rewrite_kernel": "k_ix_gather_k",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "u16"
+   }
+  ]
+ }
+}

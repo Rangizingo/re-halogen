@@ -1,0 +1,21 @@
+{
+  "grid": [4, 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "a": {"bytes": "=N*4", "fill": {"kind": "rand", "dtype": "u32", "seed": "=SEED", "lo": 0, "hi": 2}},
+    "b": {"bytes": "=N*4", "fill": {"kind": "rand", "dtype": "u32", "seed": "=SEED+100", "lo": 0, "hi": 2}},
+    "out": {"bytes": 16, "fill": {"kind": "const", "dtype": "u32", "value": 4294967295}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "a"},
+    {"offset": 8, "buffer": "b"},
+    {"offset": 16, "type": "i64", "value": "=N"},
+    {"offset": 24, "buffer": "out"}
+  ],
+  "dump": ["out"],
+  "compare": {
+    "rewrite_src": "../kernels/count.hip",
+    "rewrite_kernel": "k_count_diff_u32",
+    "outputs": [{"buffer": "out", "dtype": "u32"}]
+  }
+}
