@@ -64,7 +64,7 @@ Q = request record (formatter argument 3). R = per-request speculation stats obj
 | 28 dv_misses | `*(i64*)(R+0xa8)` | |
 | 29 dv_switches | `*(i64*)(R+0xb0)` | |
 
-R is passed as argument 13 (`01845e50.c:149` `plVar18 = plVar13[2]`, call at `01845e50.c:157`). In the main loop `0182ea80.c` it is `pauVar8`, so `R[2]` is `*(long*)pauVar8[1]`. That `pauVar8` is the same object as `plVar18` is inferred from identical offsets (the dv writer receives `pauVar8` as its `param_4` and increments `+0xa0..+0xb0`, which the formatter reads from `plVar18`). Callers of the formatter: normal completion `01845e50.c:157`, cancel `01847a30.c:66`, error `01848190.c:450,534`, `0182ea80.c:1161,1226,2226,3487`.
+R is passed as argument 13 (`01845e50.c:131`, `:136` and `:143` `plVar18 = (long *)plVar13[2];`, call at `01845e50.c:157`). In the main loop `0182ea80.c` it is `pauVar8`, so `R[2]` is `*(long*)pauVar8[1]`. That `pauVar8` is the same object as `plVar18` is inferred from identical offsets (the dv writer receives `pauVar8` as its `param_4` and increments `+0xa0..+0xb0`, which the formatter reads from `plVar18`). Callers of the formatter: normal completion `01845e50.c:157`, cancel `01847a30.c:66`, error `01848190.c:450,534`, `0182ea80.c:1161,1226,2226,3487`.
 
 ### shared (parts[11])
 
@@ -101,7 +101,7 @@ Single writer: `FUN_01849530(Q, token)` (`01849530.c`), the end-of-turn guard ru
 ## Evidence index
 
 - `work/decomp/flash_serve/0184c9a0.c:99` format string; `184cb1c..184cbb5` stack pushes (disassembly, capstone).
-- `01845e50.c:149-157` stats object and caller arguments.
+- `01845e50.c:131-157` stats object and caller arguments.
 - `01849530.c:40-61`, `01851580.c:51-66`, `01851210.c:48-62`, `0182ea80.c:8346-8357`, `:8624-8635`, `01882d20.c:14-30`.
 - `01854310.c:111-262` and the skip table `PTR_s_HALOGEN_ACT_STATS_019f60e0`.
 - `analysis/env-flags.md` for the 256-row table and the counting method.

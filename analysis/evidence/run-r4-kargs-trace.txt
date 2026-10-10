@@ -1,4 +1,4 @@
-trace items: 27542 (launches + matmuls); requests (gap > 1.5s): 5
+trace items: 27553 (launches + matmuls); requests (gap > 1.5s): 5
 
 request 0: seq 0..6804, 6805 items, 0.579s, 106 distinct; marked: lq4w=726 lq8=390 matmul=740 route_logits=149 route_topk_w=197
   k_embed_gather
@@ -21637,7 +21637,7 @@ request 3: seq 17908..23290, 5383 items, 1.105s, 93 distinct; marked: lq4w=484 l
   k_argmax_part
   k_argmax_final
 
-request 4: seq 23291..27541, 4251 items, 0.122s, 85 distinct; marked: lq4w=726 lq8=400 route_logits=149 route_topk_w=149
+request 4: seq 23291..27552, 4262 items, 0.125s, 85 distinct; marked: lq4w=726 lq8=402 route_logits=149 route_topk_w=149
   k_argmax_part
   k_argmax_final
   k_embed_gather
@@ -25519,3 +25519,14 @@ request 4: seq 23291..27541, 4251 items, 0.122s, 85 distinct; marked: lq4w=726 l
   [route_topk_w] k_route_topk_w
   k_exp_gu_w<16,2,0>
   k_exp_dn_w<0>
+  k_hc_scatter
+  k_rmsnorm_grouped
+  [lq8] k_lq8w<1,32,2>
+  k_scale_silu
+  [lq8] k_lq8w<1,16,1>
+  k_hc_mixed_sig
+  k_lq6k<1,16,1,1>
+  k_argmax_part
+  k_argmax_final
+  k_argmax_part
+  k_argmax_final

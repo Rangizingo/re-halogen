@@ -24,7 +24,7 @@ Tap: all Tap slots were -1 in all 108 launches, including the 1100-token extensi
 
 ## Launch trace (all kernels, in order)
 
-`kargs-trace.txt` splits the trace into the 5 requests by idle gaps. Totals over the run (python over `kargs.jsonl.gz`): 25,333 kernel launches of 106 distinct kernel instances in 73 families, plus 2,008 `hipblasLtMatmul` calls. So the default greedy path with the MTP drafter, at these prompt lengths, uses 106 of the 1,738 kernel instances.
+`kargs-trace.txt` splits the trace into the 5 requests by idle gaps. Totals over the run (python over `kargs.jsonl.gz`): 25,333 kernel launches of 106 distinct kernel instances in 73 families, plus 2,220 `hipblasLtMatmul` calls (kind counts over the committed gz: trace 25,333, matmul 2,220, kname 106, launch 108, unmatched 64). `kargs-table.txt` and `kargs-trace.txt` were regenerated from the committed gz with `scripts/capture/analyse_kargs.py` (27,553 trace items). So the default greedy path with the MTP drafter, at these prompt lengths, uses 106 of the 1,738 kernel instances.
 
 Confirmed live from the trace (request 0, 300-token prefill): routed experts run `k_route_topk_w`, `k_route_hist`, `k_route_scan`, `k_route_scatter`, `k_q4moe_items<64>`, `k_q4moe<1,0,64,0,128,0>`, `k_q4moe<1,2,64,0,128,0>`, `k_slot_moe_sum_rows`, as `closure/expert-dispatch-r5.md` predicts for 64 <= n <= 4966 with plain Q4C-P experts; dense layers run `k_deq_q4cp_v8u<2,0>` or `k_deq_q8s32` then `hipblasLtMatmul`; DeltaNet layers run `k_conv1d_silu_tb<16>`, `k_dn_gates`, `k_dnc_prep_w`, `k_dnc_ut5<1,1,3,1,1,0>`, `k_dnc_scan3x<...>`, `k_conv_state_from_prefill`.
 
@@ -32,4 +32,4 @@ The decode steps of each request (MTP drafter) are in the same trace; their read
 
 ## Limits
 
-One run, greedy only, 5 prompts. No tap fired; no disk record was written. The shim synchronizes around each scan3 launch, so timings in this run are not engine timings.
+One run, greedy only, 5 prompts. No tap fired; no disk record was written. The shim synchronizes around each scan3 launch, so timings in this run are not engine timings. Shim limit: an asynchronous engine error that first surfaces at the shim's own `hipDeviceSynchronize` on a scan3 launch would be cleared with the shim's errors; errors pending before the call are kept (selftest). No scan3 launch in attempt 3 recorded a nonzero `shim_err_pre` or `shim_err_post`.
