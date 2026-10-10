@@ -53,3 +53,34 @@ def test_gen_with_unknown_drafter_returns_error_done():
     toks, done = ep.gen(c, [5, 6, 7], 4, drafter=2, wait=5)
     assert toks == []
     assert 'error' in done
+
+
+def _pair():
+    """A Conn wired to a local socket pair; the caller writes the engine side."""
+    a, b = socket.socketpair()
+    c = ep.Conn.__new__(ep.Conn)
+    c.name, c.s, c.buf = 't', a, b''
+    return c, b
+
+
+def test_read_still_works_after_a_timeout():
+    c, engine = _pair()
+    assert c.read(0.05) is None
+    engine.sendall(b'PONG\n')
+    assert c.read(1) == 'PONG'
+
+
+def test_read_splits_lines_and_keeps_a_partial_line():
+    c, engine = _pair()
+    engine.sendall(b'T 1 785\nT 1 67')
+    assert c.read(1) == 'T 1 785'
+    assert c.read(0.05) is None
+    engine.sendall(b'22\nD 1 length\n')
+    assert c.read(1) == 'T 1 6722'
+    assert c.read(1) == 'D 1 length'
+
+
+def test_read_returns_empty_on_eof():
+    c, engine = _pair()
+    engine.close()
+    assert c.read(1) == ''

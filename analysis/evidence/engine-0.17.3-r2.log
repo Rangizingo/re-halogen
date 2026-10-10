@@ -1,0 +1,75 @@
+halogen: halogen-flash-server 0.17.3, mode engine
+halogen: /models/Swift-1.5-Qwen3.8-Flash-Next-IQ4_XS-00001-of-00003.gguf is a GGUF: it is repacked into RAM at startup, losslessly, on every start
+         (about 20 s from a cold NVMe disk on the reference machine, 9 s warm; HALOGEN_GGUF_CACHE=1 keeps
+         a copy beside it and a warm restart is then about 1 s; `convert` writes it as a standalone .hgn)
+         and served with the engine's own draft head. The quality sidecar does not apply to a GGUF trunk.
+halogen: draft head /models/qwen38-flash-next-mtp.hgn (1.5G)
+halogen: vision ON, tower /models/qwen38-flash-next-vision.hgn (857M)
+         an image costs ~1,000 tokens at 1280x800 and ~2,040 at 1080p;
+         HALOGEN_VISION_MAX_PIXELS caps it (default 2560x1440; larger is downscaled).
+halogen: KV budget 4 slot(s) over one 524288-position pool (each request up to 262144) = 14.9 GiB (~28 KiB/position incl. block scratch + ~115 MiB/slot) + 2.7 GiB prompt cache in RAM, on top of roughly 72 GiB (an 8-bit GGUF trunk, file type 30, repacked into RAM) of weights and 12.6 GiB of working memory (HALOGEN_MAX_TOK 32768). Those last two are estimates for this pre-flight check; the engine prints its measured figures once loaded, including the large lookup table it reads from disk and never holds. MemAvailable now 113.0 GiB.
+halogen: WARNING: that budget is close to or over what this host has free (the engine refuses the last pin under 16 GiB of MemAvailable).
+  If startup ends in "checkpoint: refusing to pin" or "HIP ... out of memory", lower HALOGEN_MAX_TOK to 16384 (the working memory, about 4 GiB back on the default checkpoint and 1.6 on w4b, for about 9% of prefill speed)
+  or HALOGEN_KV_POOL_POSITIONS (the pool, ~29.5 KiB a position); a 1,048,576-position pool fits only with HALOGEN_MAX_TOK=16384.
+halogen: GTT in use before this start: 0.0 GiB of 124.0 (124.0 free; this start puts about 24.0 GiB there)
+kv pool: /models/Swift-1.5-Qwen3.8-Flash-Next-IQ4_XS-00001-of-00003.gguf is a GGUF; 68.3 GiB of resident weights once repacked (plus the head)
+kv pool: vision tower configured, 1.97 GiB (0.84 resident weights + 1.14 worst-case scratch at HALOGEN_VISION_MAX_PIXELS), charged against the 1.5 GiB margin
+kv pool: host RAM 121 GiB, less 68.3 resident weights and 20.0 reserved for the n-gram page cache and the OS = 32.9 GiB for the device
+kv pool: 524288 positions, ~26.8 GiB (12.4 GiB of it for everything but the pool, at max_tok 32768)
+checkpoint: /models/Swift-1.5-Qwen3.8-Flash-Next-IQ4_XS-00001-of-00003.gguf is a GGUF (qwen4exp, file_type 30, 3 shards, 1224 tensors): 1166 repacked into 66.92 GiB (a_log 36, aff 12, cat_bf16 12, copy 105, f32_bf16 425, gate_up 48, i64 3, q4cp 411, q8s32 114), the lookup table read in place, the MTP head from /models/qwen38-flash-next-mtp.hgn
+checkpoint: repacking on 8 threads (HALOGEN_GGUF_THREADS)
+checkpoint: repacking GGUF, 8 of 1166 tensors, 7.0 of 66.9 GiB, 5 s
+checkpoint: repacking GGUF, 17 of 1166 tensors, 14.9 of 66.9 GiB, 10 s
+checkpoint: repacking GGUF, 27 of 1166 tensors, 23.7 of 66.9 GiB, 15 s
+checkpoint: repacking GGUF, 37 of 1166 tensors, 32.5 of 66.9 GiB, 20 s
+checkpoint: repacking GGUF, 49 of 1166 tensors, 41.8 of 66.9 GiB, 25 s
+checkpoint: repacking GGUF, 66 of 1166 tensors, 50.3 of 66.9 GiB, 30 s
+checkpoint: repacking GGUF, 78 of 1166 tensors, 55.7 of 66.9 GiB, 35 s
+checkpoint: repacking GGUF, 121 of 1166 tensors, 63.4 of 66.9 GiB, 40 s
+checkpoint: repacked 66.92 GiB in 41.8 s (1.72 GB/s of output)
+checkpoint: registered the 66.92 GiB arena in 0.1 s (Mapped|ReadOnly), device ptr == host ptr
+checkpoint: registered 1.5 GB in 0.0 s (53.3 GB/s, Mapped|ReadOnly), device ptr == host ptr
+checkpoint: GGUF ready in 42.0 s: 1198 tensors (1166 trunk, 1 table, 31 head)
+overlay: none (no /models/Swift-1.5-Qwen3.8-Flash-Next-IQ4_XS-00001-of-00003.gguf.overlay.hgn, HALOGEN_CK_OVERLAY unset): the bare checkpoint runs
+startup [   0.0 s] host memory: 15698 contiguous 2 MiB blocks of host memory free (31396 MiB)
+startup [   0.0 s] pinning weights (reads the checkpoint from disk when it is not already in the page cache; this is usually the slowest step)
+checkpoint: 68.34 GiB in 1197 tensor(s) already resident (the repacked arena and the head file), not registered again
+startup [   0.0 s] weights pinned: 15698 contiguous 2 MiB blocks free (31396 MiB), 0 compaction stalls during that step (0 failed)
+startup [   0.0 s] preparing weights
+startup [   0.3 s] preparing weights, layer 0 of 48
+startup [   0.4 s] preparing weights, layer 8 of 48
+startup [   0.4 s] preparing weights, layer 16 of 48
+startup [   0.4 s] preparing weights, layer 24 of 48
+startup [   0.4 s] preparing weights, layer 32 of 48
+startup [   0.5 s] preparing weights, layer 40 of 48
+affine trunk: 12 tensors staged to bf16 on the device (0.35 GiB); decode reads them at 16 bits a weight
+startup [   0.5 s] weights ready; reserving working memory
+checkpoint: mapped 0.9 GB, NOT pinned (Pin::None)
+checkpoint: pinned 0.84 GiB in 1 range(s) in 0.0 s (32.2 GB/s), 0.84 GiB of payload, MemAvailable was 33.8 GiB
+startup [   1.0 s] reserving the KV pool, 524288 positions (about 14.4 GiB)
+startup [   1.7 s] KV pool reserved: 1524 contiguous 2 MiB blocks free (3048 MiB), 0 compaction stalls during that step (0 failed)
+startup [   1.7 s] model ready
+startup [   1.7 s] reserving 3 more serving slot(s)
+slots: 1 -> 4 POOLED, 112.0 MiB each of O(1) state; the KV is ONE pool of 524288 positions (13312.0 MiB) carved into per-request regions
+startup [   1.7 s] preparing the prompt cache
+flash_serve: prompt cache ON, resume-anywhere (24 entries, snapshot every request, chunk 32768, 111 MiB each at ctx 262144): a warm answer is NOT bitwise the cold one
+flash_serve: prompt cache keeps the KV in place (HALOGEN_CACHE_INPLACE=1): the entry is the O(1) state, the KV rows are never copied; a follow-up turn prefills only its new tokens
+flash_serve: prompt cache on DISK at /cache/d19a28430273f25c (HALOGEN_CACHE_DIR): 0 records in 0 lineages, 0.00 GiB held, budget 64 GiB (HALOGEN_CACHE_DISK_GIB); every store's new rows are written behind the request and a restart restores from them
+startup [   1.8 s] memory: 69.2 GiB of weights locked in RAM (0.8 of them the vision tower's), 14.4 GiB of KV pool, 13.2 GiB of working memory, 96.8 GiB in all; the tower's scratch is added at the first image
+startup [   1.8 s] memory: the model's 26.8 GiB lookup table is NOT held in RAM. It is read from disk through the file cache as each request needs it, which is why this server holds less than the checkpoint is large
+startup [   1.8 s] memory: 2.0 GiB of this machine's RAM is carved out for the iGPU in firmware. That is not free memory the OS can lend to the file cache above, and it does not appear anywhere in /proc/meminfo: the machine simply reports itself smaller
+startup [   1.8 s] host memory left for everything else: 1302 contiguous 2 MiB blocks (15.8 GiB total, most of it not contiguous)
+startup [   1.8 s] free(1) and MemAvailable will report about 17.2 GiB instead: the kernel counts this server's locked weights as reclaimable file cache, and they cannot be reclaimed
+startup [   1.8 s] opening the socket
+flash_serve: a prompt admitted beside active streams prefills in pieces of 32768 tokens with a decode tick between them (HALOGEN_ADMIT_CHUNK; 0 = the engine's own chunk, which keeps the admitted prompt bitwise its alone self; -1 = the whole prompt at once)
+flash_serve: listening on 127.0.0.1:8730, 4 slots over ONE 524288-position KV pool, each request up to 262144 (it reserves prompt + max_tokens), max_tok 32768, BATCHED greedy or sampled; MTP depth-2 (up to 3) selectable (drafter 1, speculates while alone)
+halogen: engine listening after 46s
+halogen: engine watchdog on, 180s of silence takes the container down
+flash_serve: req 900002 generated 2 tokens, 0.1 s
+flash_serve: req 900001 generated 2 tokens, 0.1 s
+flash_serve: req 900003 generated 2 tokens, 0.1 s
+flash_serve: req 900005 generated 2 tokens, 0.0 s
+flash_serve: req 900006 generated 2 tokens, 0.0 s
+flash_serve: req 900007 generated 2 tokens, 0.0 s
+flash_serve: req 900008 generated 2 tokens, 0.0 s
+flash_serve: req 900009 generated 2 tokens, 0.0 s
