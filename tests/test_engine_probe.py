@@ -84,3 +84,22 @@ def test_read_returns_empty_on_eof():
     c, engine = _pair()
     engine.close()
     assert c.read(1) == ''
+
+
+def _sent_gen(**kw):
+    """The GEN line ep.gen writes for ids [5, 6, 7] with the given keyword args."""
+    c, engine = _pair()
+    engine.sendall(b'D 1 length 3 0 0 0\n')
+    ep.gen(c, [5, 6, 7], 4, wait=2, **kw)
+    return engine.recv(4096).decode().strip()
+
+
+def test_gen_appends_snap_fields_after_sample_in_serve_api_order():
+    line = _sent_gen(sample=(0.7, 20, 0.9, 0.0, 42), snap=(1000, 500, 800))
+    assert line.endswith(' 5 6 7 SAMPLE 0.7 20 0.9 0 42 SNAP 1000 SNAP2 500 SNAP3 800')
+
+
+def test_gen_omits_zero_snap_fields_like_serve_api():
+    assert _sent_gen(snap=(1000, 0, 0)).endswith(' 5 6 7 SNAP 1000')
+    assert _sent_gen(snap=(0, 0, 0)).endswith(' 5 6 7')
+    assert _sent_gen().endswith(' 5 6 7')

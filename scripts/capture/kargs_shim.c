@@ -342,6 +342,9 @@ static void json_tap(sb_t *s, const unsigned char *k, tap_t t[3]) {
             if (got == t[j].n) {
                 sb_add(s, ",\"post_hash\":\"%016llx\",\"words_changed\":%zu",
                        (unsigned long long)fnv(post_b, got), diff_words(t[j].pre, post_b, got));
+                sb_add(s, ",\"post_head\":\"");
+                sb_hex(s, post_b, got < 64 ? got : 64);
+                sb_add(s, "\"");
                 /* compare with each remembered layer-state copy */
                 sb_add(s, ",\"vs_state\":[");
                 int f2 = 1;
