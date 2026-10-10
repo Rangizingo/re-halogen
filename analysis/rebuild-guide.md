@@ -62,7 +62,7 @@ Source: `analysis/wire-protocol.md`, written from `image/serve_api.py`, so it de
 
 Handshake [proven from client code, wire-protocol.md s1]: open one stream; `INFO\n`, up to 3 attempts, 5 s each; accept a line starting `I` with at least 6 fields; if INFO says `grammar=1`, send `VOCAB`. A second short connection sends `PING\n` and expects `PONG` (used by `/health` and the healthcheck, hc:8-11).
 
-Engine side [proven, S6, `main_pseudo.c:1070-1135`]: `main` binds and loops `accept`; each connection is served to completion in `FUN_0182ea80` before the next accept. Observed on 0.17.3 (run 2, `runtime-run-0.17.3-r2.md`): a second connection's `GEN` and every line after it wait while the first connection is open, then are all answered in order within 0.1 s of the first closing; a third waited behind the second. That is the accept loop [U26 CLOSED]. Not explained: a waiting connection's first `INFO` (both runs) and, in run 1, a `PING` sent before any `GEN` were answered while the first was open; `main` keeps a pending-fd vector (`main_pseudo.c:1080-1103`) [inferred: light verbs on pending fds are answered there].
+Engine side [proven, S6, `main_pseudo.c:1070-1135`]: `main` binds and loops `accept`; each connection is served to completion in `FUN_0182ea80` before the next accept. Observed on 0.17.3 (run 2, `runtime-run-0.17.3-r2.md`): a second connection's `GEN` and every line after it wait while the first connection is open, then are all answered in order within 0.1 s of the first closing; a third waited behind the second. That is the accept loop [U26 GEN half closed, CSTAT open]. Not explained: a waiting connection's first `INFO` (both runs) and, in run 1, a `PING` sent before any `GEN` were answered while the first was open; `main` keeps a pending-fd vector (`main_pseudo.c:1080-1103`) [inferred: light verbs on pending fds are answered there].
 
 Verbs the client sends: `PING`, `INFO`, `VOCAB`, `VIMG`, `GEN`, `X`, `CSTAT`.
 - `VOCAB <n> <base64 blob>`: blob is `HGV1`, LE u32 n, then per id a `<BH` record (flag, u16 length) plus bytes. Flag 0 is an ordinary token (GPT-2 byte-level decode), flag 1 a special token (UTF-8), missing id is flag 1 length 0 (wire-protocol.md s2, `serve_api.py:479-501`). Reply `V ok`.
@@ -242,7 +242,7 @@ Sources: `analysis/npu-engine.md`, `closure/npu-closure.md`, `closure/npu-closur
 
 ## 11. Proven versus inferred: what a rebuild can rely on
 
-Unknowns ledger counts from `analysis/unknowns.md` (27 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 19, PARTIAL 5, OPEN-BOUNDED 2, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 27.
+Unknowns ledger counts from `analysis/unknowns.md` (27 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 16, PARTIAL 8, OPEN-BOUNDED 2, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 27.
 
 Can rely on [proven]:
 - The `.hgn` container: header, table, checksums, size rules, dtype codes, `verify` and `inspect` behavior (169 vendor-checked files, round trips).
@@ -260,18 +260,18 @@ Cannot rely on (PARTIAL, OPEN-BOUNDED, UNOBSERVABLE rows; what is missing):
 - U06 OPEN-BOUNDED: 0.14.x and 0.15.x patch deltas; those tags were not pulled.
 - U07 is CLOSED (moved out of this list): `HALOGEN_WALK_FALSIFY` is a host-only test mode that perturbs the RNG counter and residual-sample inputs, never the accept formula or a kernel argument (`closure/walk-falsify-r3.md`).
 - U09 is CLOSED (moved out of this list): HtItem = {expert, tile, begin, end}, 16 B, written on the GPU by `k_ht_items_group` (`closure/htitem-r3.md`).
-- U10 is CLOSED (moved out of this list): `k_ht_tg` and `k_ht_tg_sum` are launched by slot in FUN_01928680; tg_sum is split-K sum plus inverse Hadamard plus scales to bf16 (`closure/ht-tg-r3.md`).
+- U10 is CLOSED (moved out of this list): `k_ht_tg` and `k_ht_tg_sum` are launched by slot in FUN_01928680, by default on the n >= 9 prefill path; tg_sum is split-K sum plus inverse Hadamard plus scales to bf16 (`closure/ht-tg-r3.md`).
 - U11 PARTIAL: 3 taps for every template arg, arg N is a timing-probe index, most format biases read (`closure/dnftaps-r3.md`); per-probe regions, the N supplier and q5_0/q5_1/q8_0 biases are open.
 - U12 PARTIAL: ut4/ut5, scan3 A/E/F, case-to-stub maps, Tap and NormFold layouts and the `dnc` name are closed (`closure/dnc-scan3-r3.md`); labels for scan3 B, C, D, G, NormFold pointer roles and the n == 1 decode stub are open.
-- U14 is CLOSED (moved out of this list): FaSel slots are tile bitmask, selected-block ids, per-row counts, mask stride and block_topk (`closure/fasel-r3.md`).
-- U18 is CLOSED (moved out of this list): `k_dv_quant8` rows are A int8 quants then A/16 bytes of f16 scales; FUN_01882d20 writes the dv_* counters (`closure/dv-quant-r3.md`).
+- U14 PARTIAL: FaSel stores and sources are proven (bitmask, per-row id list, per-row value, mask stride, block_topk; `closure/fasel-r3.md`); the unit of the ids and the role of +0x10 are open.
+- U18 PARTIAL: `k_dv_quant8` rows are A int8 quants then A/16 bytes of f16 scales; FUN_01882d20 and two inlined copies write the dv_* counters (`closure/dv-quant-r3.md`); the consumer of the int8 rows and the 4-bit branch are open.
 - U19 is CLOSED (moved out of this list): `scripts/ht_decode.py` decodes real 3 and 4 bit HT weights, Pearson 0.98 to 0.99 against q4c references (`closure/ht-decode.md`). qparam is a fixed tag 0x1200 plus bits << 1 (loader check). gate_up experts use their own tile walk (`decode_codes_gate_up`, 0.9922 measured).
 - U21 PARTIAL: dense Linear dispatch is closed, dtype to decode and prefill kernel (`closure/dequant-dispatch-r3.md`); routed-expert prefill kernels by token count and the dtype 23 binder path are open.
 - U22 OPEN-BOUNDED: Ghidra has no AMDGCN module, so device code stays at disassembly level; rebuilding kernels means writing from instruction listings.
 - U23 is CLOSED (moved out of this list): the wire seed reaches SampleRow+0x10 unchanged; the splitmix64 counter is the token's sequence position (`closure/sampler-seed-r3.md`).
-- U26 is CLOSED (moved out of this list): a second connection's GEN waits until the first connection closes, then is served in order (`runtime-run-0.17.3-r2.md`). A rebuild must serve one client connection at a time for GEN.
+- U26 PARTIAL: a second connection's GEN waits until the first connection is done and closed, then is served in order (`runtime-run-0.17.3-r2.md`); a rebuild should serve one client connection at a time for GEN. CSTAT on a waiting connection and the code answering INFO/PING there are open.
 - U27 is CLOSED (moved out of this list): i4r (dtype 23) decodes as planar signed nibbles times one fp16 scale per 128, then the HT rotation (`decode_codes_i4r`, 0.9876 and 0.9885 measured, `closure/ht-decode.md`).
-- CLOSED rows (U03, U04, U07, U08, U09, U10, U13, U14, U15, U16, U17, U18, U19, U20, U23, U24, U25, U26, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
+- CLOSED rows (U03, U04, U07, U08, U09, U10, U13, U15, U16, U17, U19, U20, U23, U24, U25, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
 
 Other gaps a rebuild hits (request-trace.md "Gaps" and the closure reports):
 - MTP head layer kernels, the fusion of `fc_embedding` and `fc_hidden`, router top-k, the greedy draft step (mtp-head.md s7).

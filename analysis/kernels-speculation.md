@@ -79,9 +79,9 @@ the splitmix64 constants 0x9e3779b97f4a7c15, 0xbf58476d1ce4e5b9 and
 0x94d049bb133111eb (12 hits each by grep, scalar `s_mul_i32`, `s_mul_hi_u32`,
 `s_xor_b64`, shifts 30 and 27). The first pass of this writeup grepped vector
 ops only and missed them; the independent review caught it. So the sampled draw
-is generated on the GPU from a seed. Where the seed and counter come from
-(`SampleRow`, `SmpScratch`, or a kernel argument) is not traced (U23), so what
-`s15` in the accept kernel holds is also open.
+is generated on the GPU from a seed. Update 2026-10-10 (U23 CLOSED, `closure/sampler-seed-r3.md`): the seed is
+SampleRow+0x10, copied unchanged from the wire; the counter at +0x18 is the
+token position; `s15` in the accept kernel is SampleRow+0xc, min_p clamped.
 
 The other xors are not a divide expansion either. `k_smpg_level<1..3>` each
 have one non-sign xor (level1 slice line 697). `k_accept_prob_f32` (lines
@@ -95,7 +95,8 @@ Consequence for "speculation can't change output": the kernels alone do not
 prove it. Greedy: see report.md section 3. Sampled: accept-by-probability plus
 residual resample (`k_resid_sample_f32`) is the standard distribution-preserving
 scheme and the instruction chain is consistent with it (inferred). Bitwise
-reproducibility of sampled runs rests on the splitmix64 seed source (U23).
+reproducibility of sampled runs rests on the splitmix64 seed source (U23,
+now closed: seed plus token position; same-seed repeats matched in run 2).
 
 ## 2. Sampler / SMPG structure
 
@@ -211,7 +212,7 @@ host-side and untraced (bounded open item 6).
 2. Per-lane n-gram order in `k_ngram_ids`.
 3. `k_dv_quant`/`k_dv_quant8` output block layout and argument roles.
 4. What consumes the `k_dv_*` output (host dispatch not traced).
-5. Seed and counter source of the splitmix64 draw (U23); what `s15` holds.
+5. Seed and counter source of the splitmix64 draw and what `s15` holds: closed (U23, `closure/sampler-seed-r3.md`).
 6. Host feeding of acceptance inputs under `HALOGEN_WALK_FALSIFY`.
 7. Purpose of the float-key radix select in the accept and sample kernels (U24).
 8. What `k_dv_quant` quantizes to (compare-ladder codebook, U25).

@@ -16,19 +16,19 @@ authenticated application Evidence (see `unknowns.md` header).
 | 6 | ledger, coverage, report | unknowns.md, coverage.md, report.md s6 | this file | closed |
 | 7 | function maps of all three binaries | function-map.tsv, function-map-halogen-tools.tsv, function-map-halogen-npu.tsv, function-map-kernel-stubs.tsv | 3,568 / 3,222 / 1,412 / 1,738 data rows (`wc -l` minus header) | closed |
 | 7 | protocol, front end, request path | wire-protocol.md, entrypoint-flow.md, api-layer.md, request-trace.md | 31 steps, each tagged proven or inferred with file:line | closed (inferred steps listed in its Gaps) |
-| 7 | live engine runs | runtime-run-0.17.3.md, runtime-run-0.17.3-r2.md, evidence/ | 0.17.3 engine on Ai-core, U04 closed; run 2 closed U26 (second connection waits for the first to close) and measured serial seed determinism | closed |
+| 7 | live engine runs | runtime-run-0.17.3.md, runtime-run-0.17.3-r2.md, evidence/ | 0.17.3 engine on Ai-core, U04 closed; run 2 closed the GEN half of U26 (second connection waits for the first to close) and measured serial seed determinism | closed |
 | 7 | closure rounds and rebuild guide | closure/ (17 reports), unknowns.md, rebuild-guide.md | two rounds merged into the ledger | closed at plan scope |
 
 Acceptance claims from PLAN.md Phase 2:
 
 | claim | verdict | where |
 |---|---|---|
-| speculation can't change output | observed on the live engine: greedy MTP vs serial identical (2 prompts, 64 tokens), sampled MTP vs serial with the same seed differ (valid draws, not the same sequence). Kernels alone do not prove it. Greedy: report.md s3. Sampled: accept-by-probability plus residual resample is the standard scheme (inferred); the draw comes from an on-GPU splitmix64 whose seed path is half traced (U23 PARTIAL: the wire seed parse is closed, the copy into the per-request params is not located, `closure/sampling-host-r2.md`) | kernels-speculation.md s1 |
+| speculation can't change output | observed on the live engine: greedy MTP vs serial identical (2 prompts, 64 tokens), sampled MTP vs serial with the same seed differ (valid draws, not the same sequence). Kernels alone do not prove it. Greedy: report.md s3. Sampled: accept-by-probability plus residual resample is the standard scheme (inferred); the draw comes from an on-GPU splitmix64 whose seed path is half traced (U23 CLOSED: the wire seed reaches SampleRow+0x10 unchanged and the counter is the token position, `closure/sampler-seed-r3.md`; serial same-seed repeat measured identical in `runtime-run-0.17.3-r2.md`) | kernels-speculation.md s1 |
 | prompt cache resume is bitwise | contradicted for the in-place cache: the engine's own startup text says "a warm answer is NOT bitwise the cold one" (HALOGEN_PROMPT_CACHE=2, resume-anywhere). Not yet tested for other cache modes (U13) | analysis/evidence/live-0.17.2-startup-and-info.txt |
 | HT tensors carry a rotation plane | closed, 128-point Hadamard; kernels-moe.md corrected | kernels-dequant.md s3 |
 | n-gram table is a pure lookup | holds at kernel level (integer hash plus modulo) | kernels-speculation.md s3 |
 
-Residual (counted from the table in `unknowns.md`): CLOSED 19, PARTIAL 5,
+Residual (counted from the table in `unknowns.md`): CLOSED 16, PARTIAL 8,
 OPEN-BOUNDED 2 (U06, U22), UNOBSERVABLE 1 (U05), 27 rows. U03 closed from the
 shipped decider-0.8b NPU files (`closure/npu-shipped-files.md`); U19 closed by
 decoding real HT weights against q4c references (`closure/ht-decode.md`); U27 closed by decoding v2 i4r experts the same way. The prompt cache claim stays contradicted by
