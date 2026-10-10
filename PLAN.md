@@ -22,6 +22,67 @@ report.md's §6 "Not yet done" is empty.
 
 ---
 
+## Phase 7: Complete reverse engineering (added 2026-10-10, Peter's goal)
+
+**Goal (Peter, verbatim intent):** 100% reverse engineering, a full, proven
+understanding of how halogen-flash-server 0.17.3 works from start to finish:
+formats, protocol, which kernel runs when, what each one computes. Someone
+could rebuild it from our writeups. Target is the latest release (0.17.3)
+only.
+
+**Definition of 100%:**
+1. Every function in `flash_serve` (~2,100) and `halogen-npu` has a role label;
+   any function we cannot explain is listed by name, not skipped.
+2. One request traced end to end with proof at each step: network call in,
+   loading, scheduling, prefill, decode, GPU kernels, sampling, streamed reply.
+3. The 19 closable unknowns in `analysis/unknowns.md` closed with proof.
+4. A rebuild guide (`analysis/rebuild-guide.md`) plus known-good test data
+   recorded from a real engine run, so a rebuild can be checked against it.
+5. Three named limits stay, by decision: U05 (future releases, unobservable),
+   U06 (0.14.x/0.15.x patch releases, dropped by Peter: only history, not the
+   latest), U22 (no Ghidra AMDGCN module; GPU code stays at assembly level,
+   explained by hand in the five kernel writeups).
+
+**Done already (second pass, branch `phase6-closure`):** all five kernel-family
+writeups, `unknowns.md` (22 items), `coverage.md`, report s6, CLAUDE.md.
+
+**Work, in order:**
+1. Mac Ghidra: install build tools, build the macOS decompiler for Ghidra
+   12.1.4 (`~/tools/ghidra_12.1.4_PUBLIC`, release ships linux/win only).
+   Peter picked this Mac for the decompile (the 4090 does not help Ghidra;
+   Ai-core is busy serving Hermes). REA (`rea-agents` 6.3.0, registered at
+   user scope) drives Ghidra: `GHIDRA_INSTALL_DIR`, PIE base +0x100000.
+2. Function map: REA binary overview, then classify all functions by role
+   (loading, scheduling, KV cache, sampling, protocol, GPU dispatch, runtime).
+   Send Peter the group list for approval before deep passes.
+3. Decompile the main path and close the 16 host-code unknowns (U01-U03,
+   U08-U18, U20, U21). Grep-driven, targeted windows; context overflow killed
+   two earlier subagent runs.
+4. End-to-end request trace and rebuild guide.
+5. Ai-core run (needs Peter's go and a window): confirm the model file is
+   complete, look for an HT checkpoint, run the engine once, record inputs and
+   outputs, close U04 and U19.
+6. Refresh unknowns, coverage, report; commit.
+
+**Delegation (superseded by Peter's pick, Sonnet agents in parallel, no
+DeepSeek spend):** the earlier idea was the DeepSeek lane
+(`bits-engine/lab/tools/ds_draft.py`, task file in, reply out, no tools). It
+spends Azure credit (stops at $950 or 2026-10-18), and this repo's stop
+condition says spending needs Peter's yes. Nothing it returns counts as proof:
+every claim is re-checked by grep or a disassembly window before it is written.
+
+**Gates (answered by Peter 2026-10-10):** running the engine allowed; AGENTS.md
+edits allowed; full Ai-core access granted now (Peter does not need it for
+anything, Hermes may go down); branch push approved; no DeepSeek, use Sonnet
+agents in parallel (Haiku only if the subagent-model guard allows it).
+
+**Ai-core facts (read-only survey 2026-10-10):** ssh works; both engine
+services inactive; Ghidra 12.1.2 (Linux) and ~/re-halogen present;
+`/srv/models/halogen-swift/qwen38-flash-next-mtp.hgn` and the Swift GGUFs
+exist; sizes and completeness not yet checked.
+
+---
+
 ## Progress log (updated 2026-10-10)
 
 Evidence lives in `analysis/` and `work/`; decompiles in `work/hgn/*.c`
