@@ -62,7 +62,7 @@ Source: `analysis/wire-protocol.md`, written from `image/serve_api.py`, so it de
 
 Handshake [proven from client code, wire-protocol.md s1]: open one stream; `INFO\n`, up to 3 attempts, 5 s each; accept a line starting `I` with at least 6 fields; if INFO says `grammar=1`, send `VOCAB`. A second short connection sends `PING\n` and expects `PONG` (used by `/health` and the healthcheck, hc:8-11).
 
-Engine side [proven, S6, `main_pseudo.c:1070-1135`]: `main` binds and loops `accept`; each connection is served to completion in `FUN_0182ea80` before the next accept. Observed on 0.17.3 (run 2, `runtime-run-0.17.3-r2.md`): a second connection's `GEN` and every line after it wait while the first connection is open, then are all answered in order within 0.1 s of the first closing; a third waited behind the second. That is the accept loop [U26 GEN half closed, CSTAT open]. Not explained: a waiting connection's first `INFO` (both runs) and, in run 1, a `PING` sent before any `GEN` were answered while the first was open; `main` keeps a pending-fd vector (`main_pseudo.c:1080-1103`) [inferred: light verbs on pending fds are answered there].
+Engine side [proven, S6, `main_pseudo.c:1070-1135`]: `main` binds and loops `accept`; each connection is served to completion in `FUN_0182ea80` before the next accept. Observed on 0.17.3 (runs 2 and 3, `runtime-run-0.17.3-r2.md`, `runtime-run-0.17.3-r3.md`): a waiting connection's `CSTAT`, `GEN` and every line after them wait while another connection is served, and are answered in order when that connection closes, not when its `GEN` ends; a third connection is released when the second closes [U26 CLOSED]. Leading `INFO\n` and `PING\n` lines on a waiting connection are answered inline by `FUN_01844d50`, which peeks 5 bytes of each queued fd between commands and queues the fd on main's pending vector (`closure/serve-pending-fd-r4.md`) [proven].
 
 Verbs the client sends: `PING`, `INFO`, `VOCAB`, `VIMG`, `GEN`, `X`, `CSTAT`.
 - `VOCAB <n> <base64 blob>`: blob is `HGV1`, LE u32 n, then per id a `<BH` record (flag, u16 length) plus bytes. Flag 0 is an ordinary token (GPT-2 byte-level decode), flag 1 a special token (UTF-8), missing id is flag 1 length 0 (wire-protocol.md s2, `serve_api.py:479-501`). Reply `V ok`.
@@ -242,7 +242,7 @@ Sources: `analysis/npu-engine.md`, `closure/npu-closure.md`, `closure/npu-closur
 
 ## 11. Proven versus inferred: what a rebuild can rely on
 
-Unknowns ledger counts from `analysis/unknowns.md` (27 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 19, PARTIAL 5, OPEN-BOUNDED 2, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 27.
+Unknowns ledger counts from `analysis/unknowns.md` (27 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 20, PARTIAL 4, OPEN-BOUNDED 2, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 27.
 
 Can rely on [proven]:
 - The `.hgn` container: header, table, checksums, size rules, dtype codes, `verify` and `inspect` behavior (169 vendor-checked files, round trips).
@@ -269,9 +269,9 @@ Cannot rely on (PARTIAL, OPEN-BOUNDED, UNOBSERVABLE rows; what is missing):
 - U21 PARTIAL: dense Linear dispatch (`closure/dequant-dispatch-r3.md`), the expert dtype binder and routed-expert prefill kernels by token count (k_q4moe for i4r from n >= 9 and plain Q4C-P from n >= 64, tile 64 up to n = 4966 then 128; HT gu3/dn3 with 128-row tiles from n = 4096 and 16384; `closure/expert-dispatch-r4.md`) are closed. Open: HT_MOE_V2 mode 2, the kernel choice in the plain path below 64 tokens, k_q4moe template-arg names.
 - U22 OPEN-BOUNDED: Ghidra has no AMDGCN module, so device code stays at disassembly level; rebuilding kernels means writing from instruction listings.
 - U23 is CLOSED (moved out of this list): the wire seed reaches SampleRow+0x10 unchanged; the splitmix64 counter is the token's sequence position (`closure/sampler-seed-r3.md`).
-- U26 PARTIAL: a second connection's GEN waits until the first connection is done and closed, then is served in order (`runtime-run-0.17.3-r2.md`); a rebuild should serve one client connection at a time for GEN. CSTAT on a waiting connection and the code answering INFO/PING there are open.
+- U26 is CLOSED (moved out of this list): one connection is served at a time; a waiting connection gets only exact `INFO\n`/`PING\n` first lines answered inline (FUN_01844d50), everything else waits and is released in order when the served connection closes, not when its GEN ends (`runtime-run-0.17.3-r3.md`, `closure/serve-pending-fd-r4.md`).
 - U27 is CLOSED (moved out of this list): i4r (dtype 23) decodes as planar signed nibbles times one fp16 scale per 128, then the HT rotation (`decode_codes_i4r`, 0.9876 and 0.9885 measured, `closure/ht-decode.md`).
-- CLOSED rows (U01, U03, U04, U07, U08, U09, U10, U13, U14, U15, U16, U17, U18, U19, U20, U23, U24, U25, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
+- CLOSED rows (U01, U03, U04, U07, U08, U09, U10, U13, U14, U15, U16, U17, U18, U19, U20, U23, U24, U25, U26, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
 
 Other gaps a rebuild hits (request-trace.md "Gaps" and the closure reports):
 - MTP head layer kernels, the fusion of `fc_embedding` and `fc_hidden`, router top-k, the greedy draft step (mtp-head.md s7).
@@ -304,7 +304,7 @@ Test data and expected outputs [observed]:
 3. Greedy MTP, cold versus warm cache: identical 64 tokens. Greedy MTP versus serial (drafter 0): identical on P and Q. Speculation did not change greedy output.
 4. Sampling at temperature 1.2, top_k 0, top_p 1.0, min_p 0: MTP seed 111 twice gives identical tokens; seed 222 differs; MTP seed 111 differs from serial seed 111. Run 2: serial seed 111 twice gives identical tokens (32 of 32), seed 222 differs; MTP seed 111 repeats too. A rebuild that hashes seed and token position the same way (U23) reproduces draws per drafter; serial and MTP draws under one seed differ.
 5. A raw `GEN ... 2` is refused: `D <req> error 0 0 0 0 asked for drafter 2 (unknown)`; the engine log says "request refused: asked for drafter 2 (unknown)". The error line has 12 whitespace parts.
-6. A second connection gets `INFO` (and in run 1 `PING`) answers; its `GEN` waits until the first connection closes, then is served in order (run 2, U26).
+6. A waiting connection gets only leading `INFO`/`PING` lines answered; its `CSTAT`, `GEN` and later lines wait until the served connection closes, then are served in order (runs 2 and 3, U26).
 7. Startup: GGUF repack 35.6 s, ready about 36 s after container start, 1198 tensors (1166 trunk, 1 table, 31 head), listening on 8730 with 4 slots over one 524,288 position pool.
 8. Cache banner to compare: "prompt cache ON, resume-anywhere (24 entries, snapshot every request, chunk 32768, 111 MiB each at ctx 262144): a warm answer is NOT bitwise the cold one".
 9. Unexplained: the engine log says `generated 2 tokens, 0.0 s` per request while 64 tokens were delivered.

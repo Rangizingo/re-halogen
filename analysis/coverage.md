@@ -16,7 +16,7 @@ authenticated application Evidence (see `unknowns.md` header).
 | 6 | ledger, coverage, report | unknowns.md, coverage.md, report.md s6 | this file | closed |
 | 7 | function maps of all three binaries | function-map.tsv, function-map-halogen-tools.tsv, function-map-halogen-npu.tsv, function-map-kernel-stubs.tsv | 3,568 / 3,222 / 1,412 / 1,738 data rows (`wc -l` minus header) | closed |
 | 7 | protocol, front end, request path | wire-protocol.md, entrypoint-flow.md, api-layer.md, request-trace.md | 31 steps, each tagged proven or inferred with file:line | closed (inferred steps listed in its Gaps) |
-| 7 | live engine runs | runtime-run-0.17.3.md, runtime-run-0.17.3-r2.md, evidence/ | 0.17.3 engine on Ai-core, U04 closed; run 2 closed the GEN half of U26 (second connection waits for the first to close) and measured serial seed determinism | closed |
+| 7 | live engine runs | runtime-run-0.17.3.md, runtime-run-0.17.3-r2.md, runtime-run-0.17.3-r3.md, evidence/ | 0.17.3 engine on Ai-core, U04 closed; run 2 measured serial seed determinism; runs 2 and 3 closed U26 (waiting connections get only leading INFO/PING answered, the rest is released in order when the served connection closes, not when its GEN ends) | closed |
 | 7 | closure rounds and rebuild guide | closure/ (17 reports), unknowns.md, rebuild-guide.md | two rounds merged into the ledger | closed at plan scope |
 
 Acceptance claims from PLAN.md Phase 2:
@@ -28,7 +28,7 @@ Acceptance claims from PLAN.md Phase 2:
 | HT tensors carry a rotation plane | closed, 128-point Hadamard; kernels-moe.md corrected | kernels-dequant.md s3 |
 | n-gram table is a pure lookup | holds at kernel level (integer hash plus modulo) | kernels-speculation.md s3 |
 
-Residual (counted from the table in `unknowns.md`): CLOSED 19, PARTIAL 5,
+Residual (counted from the table in `unknowns.md`): CLOSED 20, PARTIAL 4,
 OPEN-BOUNDED 2 (U06, U22), UNOBSERVABLE 1 (U05), 27 rows. U03 closed from the
 shipped decider-0.8b NPU files (`closure/npu-shipped-files.md`); U19 closed by
 decoding real HT weights against q4c references (`closure/ht-decode.md`); U27 closed by decoding v2 i4r experts the same way. The prompt cache claim stays contradicted by
