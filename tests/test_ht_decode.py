@@ -100,3 +100,27 @@ def test_real_gate_up_expert_matches_reference_only_with_its_own_walk():
     ref = cb[np.stack([q & 15, q >> 4], -1).reshape(-1)].reshape(1280, 2560) * np.repeat(sc, 32, 1)
     assert _corr(ht.reconstruct(ht.decode_codes_gate_up(raw, 1280, 2560, 4), su, sv), ref) > 0.98
     assert abs(_corr(ht.reconstruct(ht.decode_codes(raw, 1280, 2560, 4), su, sv), ref)) < 0.1
+
+
+def test_i4r_codes_are_signed_nibbles_times_group_scale():
+    n, k = 2, 256
+    nib = np.array([0x80] * (n * k // 2), np.uint8)  # low nibble 0 -> -8, high nibble 8 -> 0
+    scales = np.array([1.0, 2.0, 0.5, -1.0], np.float16)
+    wq = ht.decode_codes_i4r(nib, scales, n, k)
+    assert np.allclose(wq[0, :128:2], -8.0) and np.allclose(wq[0, 1::2], 0.0)
+    assert np.allclose(wq[0, 128:256:2], -16.0) and np.allclose(wq[1, 128:256:2], 8.0)
+
+
+@_needs_data
+def test_real_i4r_experts_match_reference_and_wrong_expert_does_not():
+    d = os.environ["HT_TESTDATA"]
+    u8 = lambda name: np.fromfile(f"{d}/{name}", np.uint8)
+    cb = np.fromfile(f"{d}/g0_gu_w4b_cb.bin", "<f4")
+    q = u8("g0_gu_w4b_nib_x0.bin")
+    ref = cb[np.stack([q & 15, q >> 4], -1).reshape(-1)].reshape(1280, 2560) * np.repeat(_f16("g0_gu_w4b_sc_x0.f16").reshape(1280, 80), 32, 1)
+    su, sv = _f16("i4r_gu_su.f16"), _f16("i4r_gu_svh.f16")
+    gu = lambda e: ht.reconstruct(ht.decode_codes_i4r(u8(f"i4r_gu_nib_x{e}.bin"), _f16(f"i4r_gu_sc_x{e}.f16"), 1280, 2560), su, sv)
+    assert _corr(gu(0), ref) > 0.97
+    assert abs(_corr(gu(1), ref)) < 0.1
+    dn = ht.reconstruct(ht.decode_codes_i4r(u8("i4r_dn_nib_x0.bin"), _f16("i4r_dn_sc_x0.f16"), 2560, 640), _f16("i4r_dn_suh.f16"), _f16("i4r_dn_svh.f16"))
+    assert _corr(dn, ht.load_q4c(f"{d}/d0_dn_w4b_x0.q4c", 2560, 640, sc_per_row=24)) > 0.97

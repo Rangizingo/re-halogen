@@ -108,3 +108,27 @@ Run `python3 -I scripts/ht_decode.py <dir>` to reproduce k_proj, A and B scores 
 - Hout for MoE tensors with N=512 per-expert is not tested (here N=2560).
 - 2-bit or other K; the real engine's fp16 rounding.
 - Closed form was derived from scan results at 3 bit and checked end to end (0.984), not read off the kernel instruction by instruction.
+
+## i4r (dtype 23), U27 closed
+
+Date 2026-10-10. Data: range reads of `qwen38-flash-next-v2.hgn` (table: 2,015 tensors, data_off 322,560; 96 i4r tensors at qparam 128, 48 `experts.gate_up_proj` plus 48 `experts.down_proj`, counted from its table; the earlier note "all gate_up" was wrong) and the w4b q4c references for layers.0. Slices are in `scripts/fetch_ht_testdata.sh` (`i4r_*`, `d0_dn_w4b_*`).
+
+Layout, from sizes and the loader check (decomp `01996d90.c:215-223`, Ghidra 0x1996d90): i4r needs qparam 0x80, rank 3, dims [512, 1280, 2560] or [512, 2560, 640], and nbytes = K/2·N·E + K/128·N·E·2. So 4.125 bits per weight, not 4.25 (`hgn-format.md` s3 corrected): all experts' nibbles first (expert e at e·N·K/2), then all experts' fp16 scales (expert e at E·N·K/2 + e·N·K/128·2), one scale per 128 weights along K. No per-row term in the payload; `svh` is a separate tensor and holds only +1 and -1 for i4r.
+
+Decode (`decode_codes_i4r`): Wq[n, k] = (nibble - 8) · scale[n, k // 128], nibbles row-major, low nibble first; scales are signed (50.3% negative in expert 0, measured). Then the HT `reconstruct()` unchanged: input and output 128-point Hadamard, rows times `svh`, columns times `su` (gate_up: the shared `mlp.experts.su`; down_proj: `experts.down_proj.suh`/`.svh`).
+
+Measured with `python3 -I scripts/ht_decode.py <dir>` on this Mac:
+
+```
+v2 i4r layers.0.mlp.experts.gate_up_proj expert 0 [1280,2560] overall 0.9876 row min 0.9843 median 0.9877
+negative control: i4r expert 1 vs expert 0 reference overall -0.0002 row min -0.0680 median 0.0004
+v2 i4r layers.0.mlp.experts.down_proj expert 0 [2560,640] overall 0.9885 row min 0.9743 median 0.9882
+```
+
+Mutants scored on expert 0 gate_up (scratch run): high nibble first 0.0094; offset 7.5 instead of 8 drops to 0.9724; scales as [K/128, N] 0.0084; input-only or output-only Hadamard below 0.001; no rotation 0.0003. Only the both-side rotation with row-major nibbles and [N, K/128] scales scores.
+
+qparam bits (U27 part 3): the same loader validates HT qparam at `01996d90.c:236-238`: `if (((0x1fff < uVar12) || (uVar12 < 0x1000)) || (((uVar12 & 0xf00) != 0x200 || (((char)uVar12 != '\x06' && ((uVar12 & 0xff) != 8)))))) goto LAB_019976c2;` then `uVar12 = uVar12 >> 1 & 0x7f;`. So HT qparam is exactly 0x1206 (3 bit) or 0x1208 (4 bit): 0x1200 is a fixed format tag the decoder never reads, and bit 0 must be 0. The binder at `0190e330.c:357` reads only `uVar1 >> 1 & 0x7f`.
+
+`k_i4r_*_gl`: all 9 `_gl` slices carry the HT multiply-bytesum decode (`0x83dcd12d` 64 times and `v_sad_u8` 64 times each; `k_i4r_rows_fl` has neither), counted by grep over `work/kernels*/`. Their weight decode is the U19 rule. Which tensors reach them is a dispatch question under U21.
+
+Not proven: experts other than 0 and 1 (offsets assumed linear in e, consistent with the loader size rule); layers other than 0; the engine's own fp16 rounding.

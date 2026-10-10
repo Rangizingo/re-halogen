@@ -103,7 +103,7 @@ For dims `[N, K]` (row-major, K contiguous) — measured by crafting
 | q8_0 | N·K + 2·N·(K/32) (34,816 for [128,256] = 32,768 + 2,048) | K % 32 == 0 |
 | q5_0 | 22,528 for [128,256] = 20,480 (5b) + 2,048 (fp16 scales) | K % 32 == 0 |
 | q5_1 | 24,576 for [128,256] = 20,480 + 4,096 | K % 32 == 0 |
-| i4r | 865,075,200 for [512,1280,2560] = 512·1280·2560·4.25/8 (4.25 bpw: 4b nibbles + fp16 group-128 scales + per-row term) | qparam must be 128; rank 3 with gate_up [512,1280,2560] / down [512,2560,640] ("i4r needs group 128 and the routed experts' gate_up [512, 1280, 2560] / down [512, 2560, 640]") |
+| i4r | 865,075,200 for [512,1280,2560] = 512·1280·2560·4.125/8 (4.125 bpw: all experts' 4b nibbles, then all experts' fp16 scales, one per 128 along K; loader rule nbytes = K/2·N·E + K/128·N·E·2 at decomp 01996d90.c:223; decode in closure/ht-decode.md) | qparam must be 128; rank 3 with gate_up [512,1280,2560] / down [512,2560,640] ("i4r needs group 128 and the routed experts' gate_up [512, 1280, 2560] / down [512, 2560, 640]") |
 | q6g64 | 26,624 for [128,256] = 24,576 + 2,048 | rank ≥ 2, K % 64 == 0, qparam == 64 |
 | i4l | K/2 + K/qparam·2 per row (qparam 32 → 18,432; 64 → 17,408; 128 → 16,896 for [128,256]) | K % qparam == 0 ("i4l needs K % qparam == 0") |
 | fp8g | N·K + 4·ceil(N·K/32768) (32,772 for [128,256] = 32,768 + 4) | one f32 global scale per 32,768 elements |

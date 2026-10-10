@@ -1,4 +1,4 @@
-"""CPU decoder for halogen HT weights (dtype 16), 3 and 4 bit, checked against q4c references.
+"""CPU decoder for halogen HT weights (dtype 16, 3 and 4 bit) and i4r weights (dtype 23), checked against q4c references.
 
 usage: python3 -I scripts/ht_decode.py <data_dir>
 <data_dir> holds the test slices fetched by scripts/fetch_ht_testdata.sh. Prints Pearson scores of the
@@ -12,6 +12,11 @@ Format (analysis/closure/ht-decode.md):
 - code = (bytesum((window * 0x83dcd12d) mod 2^32) - 510) / 147.8
 - W = diag(svh) * Hout * Wq * Hin * diag(suh), H = block-diagonal orthonormal 128-point Sylvester Hadamard.
 - gate_up experts walk tiles differently (decode_codes_gate_up) and share one input sign vector, mlp.experts.su.
+
+i4r (dtype 23, qparam 128, v2 checkpoint, routed experts only), analysis/closure/ht-decode.md "i4r":
+- Tensor [E, N, K] = all experts' nibbles (E*N*K/2 B, row-major, low nibble first), then all experts'
+  fp16 scales (E*N*K/128, one per 128 weights along K). 4.125 bits per weight.
+- Wq = (nibble - 8) * scale[n, k // 128], then the same reconstruct() as HT (here svh is +/-1).
 """
 import sys
 
@@ -51,6 +56,12 @@ def decode_codes_gate_up(raw: np.ndarray, n: int, k: int, bits: int) -> np.ndarr
     per column tile, the 8 gate tile rows then the 8 up tile rows."""
     c = tile_codes(raw, n * k // 256, bits).reshape(n // 256, k // 16, 2, 8, 2, 16, 8)
     return c.transpose(2, 0, 3, 5, 1, 4, 6).reshape(n, k)
+
+
+def decode_codes_i4r(nib: np.ndarray, scales: np.ndarray, n: int, k: int) -> np.ndarray:
+    """i4r expert codes Wq [n, k] in the rotated basis from its nibble block and its fp16 scale block."""
+    q = np.stack([nib & 15, nib >> 4], -1).reshape(n, k).astype(np.float32) - 8.0
+    return q * np.repeat(scales.astype(np.float32).reshape(n, k // 128), 128, 1)
 
 
 def reconstruct(wq: np.ndarray, suh: np.ndarray, svh: np.ndarray) -> np.ndarray:
@@ -102,6 +113,15 @@ def main(d: str) -> None:
     gu_ref = cb[np.stack([q & 15, q >> 4], -1).reshape(-1)].reshape(1280, 2560) * np.repeat(sc, 32, 1)
     w = reconstruct(decode_codes_gate_up(u8('g0_gu_x0.ht'), 1280, 2560, 4), f16('g0_su.f16'), f16('g0_gu_svh_x0.f16'))
     report('layers.0.mlp.experts.gate_up_proj expert 0 4-bit [1280,2560]', w, gu_ref)
+    su0 = f16('i4r_gu_su.f16')
+    w = reconstruct(decode_codes_i4r(u8('i4r_gu_nib_x0.bin'), f16('i4r_gu_sc_x0.f16'), 1280, 2560), su0, f16('i4r_gu_svh.f16'))
+    report('v2 i4r layers.0.mlp.experts.gate_up_proj expert 0 [1280,2560]', w, gu_ref)
+    w1 = reconstruct(decode_codes_i4r(u8('i4r_gu_nib_x1.bin'), f16('i4r_gu_sc_x1.f16'), 1280, 2560), su0, f16('i4r_gu_svh.f16'))
+    report('negative control: i4r expert 1 vs expert 0 reference', w1, gu_ref)
+    w = reconstruct(decode_codes_i4r(u8('i4r_dn_nib_x0.bin'), f16('i4r_dn_sc_x0.f16'), 2560, 640),
+                    f16('i4r_dn_suh.f16'), f16('i4r_dn_svh.f16'))
+    report('v2 i4r layers.0.mlp.experts.down_proj expert 0 [2560,640]', w,
+           load_q4c(f'{d}/d0_dn_w4b_x0.q4c', 2560, 640, sc_per_row=24))
 
 
 if __name__ == '__main__':
