@@ -354,3 +354,4 @@ finding. Total: ≤15 lines.
 ## Autonomy contract rulings
 
 1. (s3, 2026-10-10) SCOPE: Peter chose "Everything, incl. Ai-core runs" for the next session: finish p7-5 (i4r), then close half-solved unknowns by decompile (p7-6) and by Ai-core engine runs (p7-7), with Hermes allowed to go down during runs. Binds the next session's scope; switches in .claude/autonomy.json unchanged.
+2. (s4, 2026-10-10) SCOPE: Peter chose "Proceed as scoped": next session runs p7-8 (static round 4 on U01, U02, U11, U12, U14, U18, U21) then p7-9 (Ai-core run 3 for U26 CSTAT). HERMES: "Allowed, post start/end": Ai-core run windows may take Hermes down without asking, with own cache dir, prune off, auto-restore and a /health check, each window posted at start and end. Binds the next session; switches in .claude/autonomy.json unchanged.
