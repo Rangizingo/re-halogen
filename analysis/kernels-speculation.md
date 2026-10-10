@@ -1,5 +1,7 @@
 # Speculation / sampling / acceptance kernel family: objdump-level analysis
 
+> **Corrections (2026-10-10, after host-side passes, see analysis/closure/sampling-host.md and sampling-host-r2.md).** (1) `SampleRow` offset 0xc is `min_p`, not a host-supplied uniform; section 1's reading of `s15` as a uniform threshold is withdrawn. (2) The `mode` argument of `k_smpg_accept_final` (the `s13 == 3` compare) is the value of `HALOGEN_S3_FALSIFY` (default 0), not a greedy-versus-sampled switch. (3) The on-GPU splitmix64 draw in `k_smpg_pick` and `k_smpg_rpick` is derived from the per-request seed; the copy from the parsed wire seed into the params is not yet located (U23). (4) `k_dv_quant` uses a codebook compare ladder, read as NF4 (inferred), see closure/ngram-dv-host.md.
+
 Phase 2, family 5 of 5 (speculation). Evidence: 43 per-kernel slices in
 `work/kernels-spec/` (llvm-objdump 21, `--mattr=+gfx1151`), instruction-class
 counts in `tmp/stats-spec.csv`, demangled signatures (`c++filt`), host strings

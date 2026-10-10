@@ -1,5 +1,7 @@
 # The `.hgn` checkpoint container — format spec
 
+> **Correction (2026-10-10, see analysis/closure/hgn-href.md).** `HREF` is not an in-table reference to a side file. It is the magic of the `halogen-tools ppl` reference-dump file (`--ref-out`, `--ref`). No .hgn record, dtype or tensor uses it; the n-gram table is located by other means (closure/hgn-href.md section 4).
+
 Reverse-engineered from `halogen-tools` 0.17.3 (`verify`/`inspect` paths,
 Ghidra decompiles `work/hgn/gf_0x1847710.c` (verify), `gf_0x18441a0.c`
 (inspect --json), `gs_0x19af350.c` (flash_serve's GGUF→.hgn repack driver))

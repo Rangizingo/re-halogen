@@ -1,5 +1,7 @@
 # Dequant / quantized-GEMM kernel family: objdump-level analysis
 
+> **Corrections (2026-10-10, see analysis/closure/dequant-host.md and dequant-host-r2.md).** The `v_exp_f32` calls in the `_grp` and `hc*` kernels are sigmoid epilogues, not power-of-two group scales; the u64 outputs of `k_hc6_fused` and `k_hc8_fused` are a completion counter. The `k_ht` decode recovered statically: 16-bit sliding windows, multiply by 0x83dcd12d, `v_sad_u8` byte sum plus 0x6400, fp16 affine 0xc931 (needs a real HT checkpoint to confirm).
+
 Phase 2, family 4 of 5. Evidence: 1141 per-kernel slices in
 `work/kernels-dequant/` (llvm-objdump 21, `--mattr=+gfx1151`), instruction
 classes in `tmp/stats-dequant.csv`, demangled signatures (`c++filt`), format
