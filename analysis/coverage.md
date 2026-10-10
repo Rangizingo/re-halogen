@@ -28,7 +28,7 @@ Acceptance claims from PLAN.md Phase 2:
 | HT tensors carry a rotation plane | closed, 128-point Hadamard; kernels-moe.md corrected | kernels-dequant.md s3 |
 | n-gram table is a pure lookup | holds at kernel level (integer hash plus modulo) | kernels-speculation.md s3 |
 
-Residual (counted from the table in `unknowns.md`): CLOSED 20, PARTIAL 4,
+Residual (counted from the table in `unknowns.md`): CLOSED 19, PARTIAL 5,
 OPEN-BOUNDED 2 (U06, U22), UNOBSERVABLE 1 (U05), 27 rows. U03 closed from the
 shipped decider-0.8b NPU files (`closure/npu-shipped-files.md`); U19 closed by
 decoding real HT weights against q4c references (`closure/ht-decode.md`); U27 closed by decoding v2 i4r experts the same way. The prompt cache claim stays contradicted by

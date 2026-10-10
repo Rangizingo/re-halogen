@@ -2,7 +2,7 @@
 
 Scope: everything shipped or pulled in this workspace that could write or read an HNPB v1 header: `binaries/{flash_serve,halogen-tools,halogen-npu}`, `image/*` (entrypoint.sh, serve_api.py, halogen_tools.py, npu-models.txt), `work/versions/{0.11.10..0.17.2}/*`, and the decompiles in `work/decomp/`. Static only, nothing executed. Address convention: r2 VMA = file offset here; Ghidra = VMA + 0x100000. "proof" = read from bytes or code; "inference" is labelled.
 
-## Verdict: OPEN-BOUNDED
+## Verdict: CLOSED (revised in section 7; OPEN-BOUNDED before the vendor headers were read)
 
 No shipped or pulled artifact contains a producer that stores 2 at HNPB header +0x08. The reader gives the field no behavior. Closing needs one of the files in section 6, none of which is in this workspace.
 
