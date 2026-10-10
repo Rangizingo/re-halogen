@@ -1,0 +1,1413 @@
+addr	role	label	confidence	evidence
+00107000	crt-runtime	_DT_INIT	high	calls __gmon_start__ if non-null
+00107020	crt-runtime	plt_resolver_stub	med	same body as flash_serve 019f42b0
+00107030	crt-runtime	__errno_location	low	tiny stub or thunk (PLT/GOT style)
+00107040	crt-runtime	printf	low	tiny stub or thunk (PLT/GOT style)
+00107050	cxx-stl	_ZNSt8__detail15_List_node_base7_M_hookEPS0_	high	mangled libstdc++ or operator new/delete name
+00107060	crt-runtime	syscall	low	tiny stub or thunk (PLT/GOT style)
+00107070	crt-runtime	bind	low	tiny stub or thunk (PLT/GOT style)
+00107080	cxx-stl	_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS	high	mangled libstdc++ or operator new/delete name
+00107090	crt-runtime	_ZN3xrt2bo4syncE18xclBOSyncDirectionmm	low	tiny stub or thunk (PLT/GOT style)
+001070a0	cxx-stl	_ZNKSt10filesystem7__cxx114path16lexically_normalEv	high	mangled libstdc++ or operator new/delete name
+001070b0	cxx-stl	_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE	high	mangled libstdc++ or operator new/delete name
+001070c0	crt-runtime	socket	low	tiny stub or thunk (PLT/GOT style)
+001070d0	cxx-stl	_ZNKSt10filesystem7__cxx114path5_List13_Impl_deleterclEPNS2_	high	mangled libstdc++ or operator new/delete name
+001070e0	cxx-stl	_ZNSt10filesystem7__cxx114path5_ListC1Ev	high	mangled libstdc++ or operator new/delete name
+001070f0	crt-runtime	_ZN3xrt2boC1ERKS0_mm	low	tiny stub or thunk (PLT/GOT style)
+00107100	cxx-stl	_ZSt9terminatev	high	mangled libstdc++ or operator new/delete name
+00107110	cxx-stl	_ZNSt18condition_variable4waitERSt11unique_lockISt5mutexE	high	mangled libstdc++ or operator new/delete name
+00107120	cxx-stl	_ZNSt8ios_baseC2Ev	high	mangled libstdc++ or operator new/delete name
+00107130	crt-runtime	nanosleep	low	tiny stub or thunk (PLT/GOT style)
+00107140	crt-runtime	accept	low	tiny stub or thunk (PLT/GOT style)
+00107150	crt-runtime	recv	low	tiny stub or thunk (PLT/GOT style)
+00107160	cxx-stl	_ZNSt8ios_baseD2Ev	high	mangled libstdc++ or operator new/delete name
+00107170	cxx-stl	_ZNSt10filesystem7__cxx1118directory_iteratorppEv	high	mangled libstdc++ or operator new/delete name
+00107180	crt-runtime	write	low	tiny stub or thunk (PLT/GOT style)
+00107190	cxx-stl	_ZSt17__throw_bad_allocv	high	mangled libstdc++ or operator new/delete name
+001071a0	cxx-stl	_ZNSo9_M_insertIxEERSoT_	high	mangled libstdc++ or operator new/delete name
+001071b0	cxx-stl	_ZSt25__throw_bad_function_callv	high	mangled libstdc++ or operator new/delete name
+001071c0	cxx-stl	_ZNSt10filesystem6statusERKNS_7__cxx114pathE	high	mangled libstdc++ or operator new/delete name
+001071d0	crt-runtime	__cxa_begin_catch	high	crt, init or libc runtime symbol
+001071e0	cxx-stl	_ZNKSt10filesystem7__cxx114path17_M_find_extensionEv	high	mangled libstdc++ or operator new/delete name
+001071f0	crt-runtime	sincosf	low	tiny stub or thunk (PLT/GOT style)
+00107200	crt-runtime	strlen	low	tiny stub or thunk (PLT/GOT style)
+00107210	crt-runtime	memcmp	low	tiny stub or thunk (PLT/GOT style)
+00107220	crt-runtime	_ZN3xrt3runD1Ev	low	tiny stub or thunk (PLT/GOT style)
+00107230	cxx-stl	_ZNSt6thread6_StateD2Ev	high	mangled libstdc++ or operator new/delete name
+00107240	cxx-stl	_ZNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEE	high	mangled libstdc++ or operator new/delete name
+00107250	crt-runtime	strncmp	low	tiny stub or thunk (PLT/GOT style)
+00107260	crt-runtime	__isoc23_fscanf	low	tiny stub or thunk (PLT/GOT style)
+00107270	cxx-stl	_ZNSt18condition_variable10notify_oneEv	high	mangled libstdc++ or operator new/delete name
+00107280	crt-runtime	send	low	tiny stub or thunk (PLT/GOT style)
+00107290	crt-runtime	__isoc23_strtoll	low	tiny stub or thunk (PLT/GOT style)
+001072a0	cxx-stl	_ZNSt8__detail15_List_node_base11_M_transferEPS0_S1_	high	mangled libstdc++ or operator new/delete name
+001072b0	cxx-stl	_ZSt20__throw_length_errorPKc	high	mangled libstdc++ or operator new/delete name
+001072c0	crt-runtime	memset	low	tiny stub or thunk (PLT/GOT style)
+001072d0	crt-runtime	getrusage	low	tiny stub or thunk (PLT/GOT style)
+001072e0	crt-runtime	munmap	low	tiny stub or thunk (PLT/GOT style)
+001072f0	cxx-stl	_ZSt8to_charsPcS_dSt12chars_format	high	mangled libstdc++ or operator new/delete name
+00107300	cxx-stl	_ZSt28_Rb_tree_rebalance_for_erasePSt18_Rb_tree_node_baseRS_	high	mangled libstdc++ or operator new/delete name
+00107310	cxx-stl	_ZSt24__throw_invalid_argumentPKc	high	mangled libstdc++ or operator new/delete name
+00107320	crt-runtime	sincos	low	tiny stub or thunk (PLT/GOT style)
+00107330	crt-runtime	_ZNK3xrt3run4waitERKNSt6chrono8durationIlSt5ratioILl1ELl1000	low	tiny stub or thunk (PLT/GOT style)
+00107340	crt-runtime	rename	low	tiny stub or thunk (PLT/GOT style)
+00107350	crt-runtime	_ZNK3xrt3run5stateEv	low	tiny stub or thunk (PLT/GOT style)
+00107360	cxx-stl	_ZNKSt10filesystem7__cxx114path5_List3endEv	high	mangled libstdc++ or operator new/delete name
+00107370	crt-runtime	__cxa_guard_release	high	crt, init or libc runtime symbol
+00107380	cxx-stl	_ZSt20__throw_system_errori	high	mangled libstdc++ or operator new/delete name
+00107390	crt-runtime	_ZN3xrt6deviceD1Ev	low	tiny stub or thunk (PLT/GOT style)
+001073a0	cxx-stl	_ZNSo9_M_insertImEERSoT_	high	mangled libstdc++ or operator new/delete name
+001073b0	cxx-stl	_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base	high	mangled libstdc++ or operator new/delete name
+001073c0	cxx-stl	_ZSt19__throw_logic_errorPKc	high	mangled libstdc++ or operator new/delete name
+001073d0	crt-runtime	_ZN3xrt2boC1ERKNS_6deviceEmNS0_5flagsEj	low	tiny stub or thunk (PLT/GOT style)
+001073e0	crt-runtime	open	low	tiny stub or thunk (PLT/GOT style)
+001073f0	crt-runtime	aligned_alloc	low	tiny stub or thunk (PLT/GOT style)
+00107400	crt-runtime	_ZNKRSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3s	low	tiny stub or thunk (PLT/GOT style)
+00107410	crt-runtime	pthread_mutex_unlock	low	tiny stub or thunk (PLT/GOT style)
+00107420	crt-runtime	strtod	low	tiny stub or thunk (PLT/GOT style)
+00107430	cxx-stl	_ZSt28__throw_bad_array_new_lengthv	high	mangled libstdc++ or operator new/delete name
+00107440	cxx-stl	_ZNSt10filesystem7__cxx114path14_M_split_cmptsEv	high	mangled libstdc++ or operator new/delete name
+00107450	crt-runtime	sqrt	low	tiny stub or thunk (PLT/GOT style)
+00107460	crt-runtime	memcpy	low	tiny stub or thunk (PLT/GOT style)
+00107470	crt-runtime	__cxa_atexit	high	crt, init or libc runtime symbol
+00107480	crt-runtime	pthread_self	low	tiny stub or thunk (PLT/GOT style)
+00107490	cxx-stl	_ZNSt6thread15_M_start_threadESt10unique_ptrINS_6_StateESt14	high	mangled libstdc++ or operator new/delete name
+001074a0	crt-runtime	clock_gettime	low	tiny stub or thunk (PLT/GOT style)
+001074b0	crt-runtime	_ZN3xrt6kernelD2Ev	low	tiny stub or thunk (PLT/GOT style)
+001074c0	cxx-stl	_ZNKSt10filesystem7__cxx114path7compareERKS1_	high	mangled libstdc++ or operator new/delete name
+001074d0	crt-runtime	_ZN3xrt3run5startEv	low	tiny stub or thunk (PLT/GOT style)
+001074e0	crt-runtime	fclose	low	tiny stub or thunk (PLT/GOT style)
+001074f0	cxx-stl	_Znwm	high	mangled libstdc++ or operator new/delete name
+00107500	cxx-stl	_ZdlPvm	high	mangled libstdc++ or operator new/delete name
+00107510	cxx-stl	_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base	high	mangled libstdc++ or operator new/delete name
+00107520	crt-runtime	_ZN3xrt10hw_contextC1ERKNS_6deviceERKNS_3elfE	low	tiny stub or thunk (PLT/GOT style)
+00107530	crt-runtime	fseek	low	tiny stub or thunk (PLT/GOT style)
+00107540	crt-runtime	memchr	low	tiny stub or thunk (PLT/GOT style)
+00107550	crt-runtime	fputs	low	tiny stub or thunk (PLT/GOT style)
+00107560	crt-runtime	listen	low	tiny stub or thunk (PLT/GOT style)
+00107570	cxx-stl	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostrea	high	mangled libstdc++ or operator new/delete name
+00107580	cxx-stl	_ZNKSt5ctypeIcE13_M_widen_initEv	high	mangled libstdc++ or operator new/delete name
+00107590	cxx-stl	_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base	high	mangled libstdc++ or operator new/delete name
+001075a0	crt-runtime	fflush	low	tiny stub or thunk (PLT/GOT style)
+001075b0	crt-runtime	fopen	low	tiny stub or thunk (PLT/GOT style)
+001075c0	crt-runtime	signal	low	tiny stub or thunk (PLT/GOT style)
+001075d0	crt-runtime	free	low	tiny stub or thunk (PLT/GOT style)
+001075e0	crt-runtime	getenv	low	tiny stub or thunk (PLT/GOT style)
+001075f0	crt-runtime	_ZN3xrt10hw_contextD1Ev	low	tiny stub or thunk (PLT/GOT style)
+00107600	crt-runtime	fputc	low	tiny stub or thunk (PLT/GOT style)
+00107610	crt-runtime	__isoc23_strtoul	low	tiny stub or thunk (PLT/GOT style)
+00107620	crt-runtime	getaddrinfo	low	tiny stub or thunk (PLT/GOT style)
+00107630	cxx-stl	_ZSt16__throw_bad_castv	high	mangled libstdc++ or operator new/delete name
+00107640	cxx-stl	_ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_	high	mangled libstdc++ or operator new/delete name
+00107650	crt-runtime	prctl	low	tiny stub or thunk (PLT/GOT style)
+00107660	crt-runtime	freeaddrinfo	low	tiny stub or thunk (PLT/GOT style)
+00107670	cxx-stl	_ZNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE7_M_	high	mangled libstdc++ or operator new/delete name
+00107680	cxx-stl	_ZNKSt8__detail20_Prime_rehash_policy14_M_need_rehashEmmm	high	mangled libstdc++ or operator new/delete name
+00107690	cxx-stl	_ZNSt6chrono3_V212steady_clock3nowEv	high	mangled libstdc++ or operator new/delete name
+001076a0	cxx-stl	_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streamb	high	mangled libstdc++ or operator new/delete name
+001076b0	cxx-stl	_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE	high	mangled libstdc++ or operator new/delete name
+001076c0	crt-runtime	ldexpf	low	tiny stub or thunk (PLT/GOT style)
+001076d0	crt-runtime	pipe	low	tiny stub or thunk (PLT/GOT style)
+001076e0	crt-runtime	__isoc23_strtoull	low	tiny stub or thunk (PLT/GOT style)
+001076f0	crt-runtime	shutdown	low	tiny stub or thunk (PLT/GOT style)
+00107700	crt-runtime	sched_getcpu	low	tiny stub or thunk (PLT/GOT style)
+00107710	cxx-stl	_ZNSt6thread20hardware_concurrencyEv	high	mangled libstdc++ or operator new/delete name
+00107720	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_re	high	mangled libstdc++ or operator new/delete name
+00107730	crt-runtime	strcmp	low	tiny stub or thunk (PLT/GOT style)
+00107740	cxx-stl	_ZNSt18condition_variableC1Ev	high	mangled libstdc++ or operator new/delete name
+00107750	cxx-stl	_ZNSt6localeD1Ev	high	mangled libstdc++ or operator new/delete name
+00107760	crt-runtime	fprintf	low	tiny stub or thunk (PLT/GOT style)
+00107770	crt-runtime	read	low	tiny stub or thunk (PLT/GOT style)
+00107780	cxx-stl	_ZSt20__throw_out_of_rangePKc	high	mangled libstdc++ or operator new/delete name
+00107790	crt-runtime	__cxa_rethrow	high	crt, init or libc runtime symbol
+001077a0	crt-runtime	sched_yield	low	tiny stub or thunk (PLT/GOT style)
+001077b0	crt-runtime	pthread_mutex_lock	low	tiny stub or thunk (PLT/GOT style)
+001077c0	crt-runtime	fread	low	tiny stub or thunk (PLT/GOT style)
+001077d0	crt-runtime	poll	low	tiny stub or thunk (PLT/GOT style)
+001077e0	cxx-stl	_ZSt24__throw_out_of_range_fmtPKcz	high	mangled libstdc++ or operator new/delete name
+001077f0	crt-runtime	ldexp	low	tiny stub or thunk (PLT/GOT style)
+00107800	crt-runtime	puts	low	tiny stub or thunk (PLT/GOT style)
+00107810	crt-runtime	strnlen	low	tiny stub or thunk (PLT/GOT style)
+00107820	crt-runtime	fgets	low	tiny stub or thunk (PLT/GOT style)
+00107830	crt-runtime	tanhf	low	tiny stub or thunk (PLT/GOT style)
+00107840	crt-runtime	_ZN3xrt6deviceC1Ej	low	tiny stub or thunk (PLT/GOT style)
+00107850	cxx-stl	_ZNSt10filesystem8absoluteERKNS_7__cxx114pathE	high	mangled libstdc++ or operator new/delete name
+00107860	crt-runtime	snprintf	low	tiny stub or thunk (PLT/GOT style)
+00107870	crt-runtime	memmove	low	tiny stub or thunk (PLT/GOT style)
+00107880	cxx-stl	_ZNSt8__detail15_List_node_base9_M_unhookEv	high	mangled libstdc++ or operator new/delete name
+00107890	crt-runtime	__cxa_end_catch	high	crt, init or libc runtime symbol
+001078a0	crt-runtime	expf	low	tiny stub or thunk (PLT/GOT style)
+001078b0	crt-runtime	fstat	low	tiny stub or thunk (PLT/GOT style)
+001078c0	crt-runtime	_ZN3xrt2bo3mapEv	low	tiny stub or thunk (PLT/GOT style)
+001078d0	crt-runtime	_ZN3xrt3runC1ERKNS_6kernelE	low	tiny stub or thunk (PLT/GOT style)
+001078e0	cxx-stl	_ZNSt18condition_variable10notify_allEv	high	mangled libstdc++ or operator new/delete name
+001078f0	cxx-stl	_ZNSt6thread4joinEv	high	mangled libstdc++ or operator new/delete name
+00107900	cxx-stl	_ZNSolsEi	high	mangled libstdc++ or operator new/delete name
+00107910	crt-runtime	pow	low	tiny stub or thunk (PLT/GOT style)
+00107920	cxx-stl	_ZNSt10filesystem7__cxx1118directory_iteratorC1ERKNS0_4pathE	high	mangled libstdc++ or operator new/delete name
+00107930	crt-runtime	_ZN3xrt2boD1Ev	low	tiny stub or thunk (PLT/GOT style)
+00107940	crt-runtime	pthread_setaffinity_np	low	tiny stub or thunk (PLT/GOT style)
+00107950	crt-runtime	_Unwind_Resume	low	tiny stub or thunk (PLT/GOT style)
+00107960	crt-runtime	mmap	low	tiny stub or thunk (PLT/GOT style)
+00107970	crt-runtime	setsockopt	low	tiny stub or thunk (PLT/GOT style)
+00107980	crt-runtime	_ZN3xrt3ext6kernelC1ERKNS_10hw_contextERKNSt7__cxx1112basic_	low	tiny stub or thunk (PLT/GOT style)
+00107990	crt-runtime	exp	low	tiny stub or thunk (PLT/GOT style)
+001079a0	crt-runtime	remove	low	tiny stub or thunk (PLT/GOT style)
+001079b0	crt-runtime	__cxa_guard_acquire	high	crt, init or libc runtime symbol
+001079c0	cxx-stl	_ZNSt18condition_variableD1Ev	high	mangled libstdc++ or operator new/delete name
+001079d0	crt-runtime	sqrtf	low	tiny stub or thunk (PLT/GOT style)
+001079e0	cxx-stl	_ZNKSt10filesystem7__cxx1118directory_iteratordeEv	high	mangled libstdc++ or operator new/delete name
+001079f0	cxx-stl	_ZSt7getlineIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T	high	mangled libstdc++ or operator new/delete name
+00107a00	crt-runtime	logf	low	tiny stub or thunk (PLT/GOT style)
+00107a10	crt-runtime	_ZN3xrt3elfC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIc	low	tiny stub or thunk (PLT/GOT style)
+00107a20	crt-runtime	ferror	low	tiny stub or thunk (PLT/GOT style)
+00107a30	crt-runtime	_ZN3xrt3run16set_arg_at_indexEiRKNS_2boE	low	tiny stub or thunk (PLT/GOT style)
+00107a40	crt-runtime	_ZNK3xrt2bo4sizeEv	low	tiny stub or thunk (PLT/GOT style)
+00107a50	crt-runtime	fwrite	low	tiny stub or thunk (PLT/GOT style)
+00107a60	cxx-stl	_ZNSt10filesystem7__cxx114path5_ListC1ERKS2_	high	mangled libstdc++ or operator new/delete name
+00107a70	crt-runtime	close	low	tiny stub or thunk (PLT/GOT style)
+00107a80	crt-runtime	__isoc23_strtol	low	tiny stub or thunk (PLT/GOT style)
+00107a90	cxx-stl	_ZNSt6localeC1Ev	high	mangled libstdc++ or operator new/delete name
+00107aa0	crt-runtime	__cxa_finalize	high	crt, init or libc runtime symbol
+00107ac0	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append', 1 callee
+00107acc	crt-runtime	FUN_00107acc	low	tiny stub or thunk (PLT/GOT style)
+00107ad4	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+00107ae0	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+00107aec	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+00107af8	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00107b9b	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00107ba8	cxx-stl	EH cleanup free then resume	med	frees ptr, _Unwind_Resume
+00107bc8	cxx-stl	EH cleanup free two ptrs	med	two conditional frees, _Unwind_Resume
+00107bf6	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00107c3e	cxx-stl	_ZSt9terminatev	high	mangled libstdc++ or operator new/delete name
+00107c43	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+00107c6f	crt-runtime	FUN_00107c6f	low	tiny stub or thunk (PLT/GOT style)
+00107c76	cxx-stl	EH cleanup string dispose and delete	med	string _M_dispose, operator delete, resume
+00107cec	cxx-stl	EH catch rethrow range destroy	med	__cxa_begin_catch, delete, rethrow
+00107dba	cxx-stl	EH catch rethrow range destroy	med	same shape as 00107cec
+00107e88	cxx-stl	EH cleanup destroy range	med	one destroy call, _Unwind_Resume
+00107e9c	cxx-stl	EH cleanup destroy range	med	one destroy call, _Unwind_Resume
+00107eb0	cxx-stl	EH catch destroy 0x98-byte element range	low	loop stride 0x13 longs, catch, rethrow
+00108163	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+00108242	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010826c	crt-runtime	FUN_0010826c	low	tiny stub or thunk (PLT/GOT style)
+0010828e	cxx-stl	string _M_replace_cold tail	med	calls _M_replace_cold then sets size and NUL
+001082b8	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+001082c4	cxx-stl	EH cleanup ostringstream teardown	med	string dispose, locale dtor, basic_ostringstream VTT
+00108381	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+001083bb	cxx-stl	throw vector range_insert cold stub	high	string 'vector::_M_range_insert'
+001083df	cxx-stl	_ZSt25__throw_bad_function_callv	high	mangled libstdc++ or operator new/delete name
+00108453	cxx-stl	EH cleanup strings and vector free	med	string dispose, vector delete, resume
+0010853a	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+001085de	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+001086b6	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+001086f0	cxx-stl	EH cleanup three strings	med	three string _M_dispose, resume
+0010879f	cxx-stl	EH cleanup strings	med	six string dispose calls, resume
+00108c85	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+00108d13	cxx-stl	EH cleanup large frame	low	431 bytes, many stack vars, dispose calls
+00108f7e	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+001094e5	cxx-stl	_ZSt20__throw_system_errori	high	mangled libstdc++ or operator new/delete name
+00109730	cxx-stl	EH cleanup strings and vector	med	two string dispose, vector delete, resume
+00109785	cxx-stl	EH cleanup large frame with map erase	med	string dispose, FUN_0011cb90 tree erase calls
+00109d22	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00109db1	cxx-stl	EH cleanup tree erase and string	med	FUN_0013ad80 erase, string dispose, resume
+00109dd4	cxx-stl	_ZSt9terminatev	high	mangled libstdc++ or operator new/delete name
+0010a29d	logging-diag	catch std::exception, print and return 1	high	fprintf(stderr,"halogen-npu: %s\n", what()), return 1
+0010a2fa	cxx-stl	EH cleanup large frame	low	559 bytes, string dispose, FUN_00139cf0 frees, resume
+0010a500	cxx-stl	throw system_error(1) cold stub	high	calls __throw_system_error(1)
+0010a8f4	util	catch sets worker error flag	med	catch-all stores 1 to byte at obj+8 (atomic)
+0010a914	util	catch sets worker error flag	med	catch-all stores 1 to byte at obj+0x10 (atomic)
+0010a934	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010a940	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010a94c	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010a958	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010a964	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+0010a970	cxx-stl	EH cleanup string	med	one string dispose, resume
+0010a996	cxx-stl	EH cleanup strings	med	three string dispose, resume
+0010a9d8	cxx-stl	EH catch rethrow delete	med	begin_catch, operator delete, rethrow
+0010aa06	cxx-stl	EH catch rethrow delete	med	begin_catch, operator delete, rethrow
+0010aa34	cxx-stl	EH catch rethrow delete	med	begin_catch, operator delete, rethrow
+0010aa62	cxx-stl	EH cleanup string	med	one string dispose, resume
+0010aa90	xrt-device	cold fragment scanning string for 'xdna'	low	memchr 'x' then compares 0x616e6478 ('xdna'), ':' split; callers none
+0010aad8	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010ab04	cxx-stl	EH catch rethrow tree erase	med	catch, delete, rethrow, FUN_0013cd40
+0010abd2	cxx-stl	EH catch rethrow tree erase	med	catch, delete, rethrow, FUN_0013cda0
+0010aca0	cxx-stl	string _M_replace_cold tail	med	calls _M_replace_cold then NUL terminate
+0010acbc	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010acd4	cxx-stl	EH catch destroy string range	med	loop stride 0x20 string dispose, rethrow
+0010ae0f	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010ae49	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010ae83	cxx-stl	string _M_replace_cold tail with move ctor	low	replace_cold, NUL, string move ctor
+0010aede	cxx-stl	string _M_replace_cold tail with move ctor	low	replace_cold, move ctor, FUN_0013c290, returns 0
+0010af4b	cxx-stl	string _M_replace_cold tail	med	replace_cold then NUL terminate
+0010afa2	xrt-device	EH cleanup destroy engine object incl xrt::device	med	calls xrt::device dtor, frees members at +0x2d8..0x378
+0010b0f6	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010b1a8	cxx-stl	EH cleanup strings	med	six string dispose, resume
+0010b1f8	cxx-stl	EH cleanup strings, free 0x90 obj	med	string dispose, operator delete size 0x90
+0010b4b0	xrt-device	catch builds 'a buffer for <name>: <what>' error	med	string 'a buffer for ', append ': ', exception what() virtual call
+0010b590	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+0010b5be	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010c728	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010c93e	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010cba7	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010cc1e	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010cd56	cxx-stl	EH cleanup end_catch and free	med	__cxa_end_catch, FUN_00139ab0, resume
+0010cea2	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010cf0c	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010cf18	cxx-stl	EH cleanup conditional free	med	frees ptr at obj+8, resume
+0010cf36	xrt-device	EH cleanup destroy xrt::bo holder	med	calls xrt::bo dtor, frees vector and string
+0010cf70	cxx-stl	string _M_replace_cold tail with SSO copy	low	replace_cold then 8-byte SSO copy loop
+0010cfcf	cxx-stl	throw string append length_error	high	string 'basic_string::append'
+0010cfe5	cxx-stl	throw string _M_replace length_error	high	string 'basic_string::_M_replace'
+0010d007	cxx-stl	throw string _M_create length_error	high	string 'basic_string::_M_create'
+0010d041	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010d04e	cxx-stl	throw string append length_error	high	string 'basic_string::append'
+0010d064	cxx-stl	string _M_replace_cold tail with SSO copy	low	same shape as 0010cf70
+0010d085	cxx-stl	throw string _M_create length_error	high	string 'basic_string::_M_create'
+0010d0eb	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010d103	cxx-stl	throw string _M_replace length_error	high	string 'basic_string::_M_replace'
+0010d12c	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010d1a0	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010d206	xrt-device	EH cleanup destroy xrt::bo	med	calls xrt::bo dtor then resume
+0010d21c	crt-runtime	FUN_0010d21c	low	tiny stub or thunk (PLT/GOT style)
+0010d221	crt-runtime	FUN_0010d221	low	tiny stub or thunk (PLT/GOT style)
+0010d226	cxx-stl	_ZSt9terminatev	high	mangled libstdc++ or operator new/delete name
+0010d22c	cxx-stl	_ZSt25__throw_bad_function_callv	high	mangled libstdc++ or operator new/delete name
+0010d232	cxx-stl	_ZSt9terminatev	high	mangled libstdc++ or operator new/delete name
+0010d238	crt-runtime	FUN_0010d238	low	tiny stub or thunk (PLT/GOT style)
+0010d23d	cxx-stl	EH cleanup invoke manager fn ptr	med	calls std::function manager if non-null, resume
+0010d264	cxx-stl	EH cleanup invoke std::function destroy (op 3)	med	calls fn(&x,&x,3), resume
+0010d2b4	cxx-stl	EH cleanup invoke manager fn ptr	med	calls std::function manager if non-null, resume
+0010d354	cxx-stl	EH cleanup invoke manager fn ptr	med	calls std::function manager if non-null, resume
+0010d37b	cxx-stl	EH cleanup conditional delete	med	operator delete if non-null, resume
+0010d3ae	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010d412	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010d476	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010d482	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010d48e	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010d4ed	cxx-stl	throw substr out_of_range cold stub	high	string 'basic_string::substr __pos > size()'
+0010d525	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010d577	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010d5ce	cxx-stl	EH cleanup large frame	med	string dispose, delete, FUN_0016a110 dtor, resume
+0010d67f	cxx-stl	throw substr out_of_range cold stub	high	string 'basic_string::substr __pos > size()'
+0010d6ba	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010d753	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010d83b	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010d8d4	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010d940	cxx-stl	throw string _M_replace cold stub	high	string 'basic_string::_M_replace'
+0010db78	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010db84	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+0010db90	gguf-repack	gguf_repack_helper	med	same body as flash_serve 019b0410
+0010dbc4	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010dbf7	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+0010dc1c	model-compute	EH cleanup free 0x198000 and 0x100000 byte buffers	low	deletes sized 0x198000/0x100000 buffers, four strings
+0010dc82	cxx-stl	throw map::at cold stub	high	string 'map::at'
+0010dca6	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010dd54	cxx-stl	EH cleanup delete	med	operator delete, resume
+0010dd8c	cxx-stl	string _M_replace_cold tail	med	replace_cold then NUL terminate
+0010dda8	cxx-stl	throw string _M_replace cold stub	high	string 'basic_string::_M_replace'
+0010dddb	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010de15	cxx-stl	EH cleanup string	med	one string dispose, resume
+0010de28	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010de62	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+0010df09	cxx-stl	EH cleanup string	med	one string dispose, resume
+0010e088	cxx-stl	EH cleanup destroy 0x48-byte element range	low	loop stride 9 longs, string dispose, delete
+0010e2e4	cxx-stl	throw string _M_replace cold stub	high	string 'basic_string::_M_replace'
+0010e497	cxx-stl	throw string _M_replace cold stub	high	string 'basic_string::_M_replace'
+0010e4f6	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010e525	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010e6e5	xrt-device	EH cleanup destroy xrt::device and strings	med	calls xrt::device dtor, string dispose, FUN_00139cf0
+0010e826	cxx-stl	EH cleanup delete	med	operator delete, resume
+0010e83e	cxx-stl	EH cleanup conditional free	med	FUN_00139cf0 if non-null, resume
+0010e85d	cxx-stl	EH cleanup strings and frees	med	string dispose x4, FUN_00139cf0
+0010e9ad	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010ebd8	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010ef20	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f101	cxx-stl	EH cleanup string	med	one string dispose, resume
+0010f14a	cxx-stl	_ZSt25__throw_bad_function_callv	high	mangled libstdc++ or operator new/delete name
+0010f150	cxx-stl	vector storage deallocate (16-byte elems)	med	operator delete(p, n<<4)
+0010f15a	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f18d	cxx-stl	destroy vector range (24-byte elems)	med	loop stride 3 longs, delete each buffer
+0010f1ba	cxx-stl	vector of vectors destructor	med	frees members at +0x20 and range of 3-long elems
+0010f21a	cxx-stl	throw vector range_insert cold stub	high	string 'vector::_M_range_insert'
+0010f226	cxx-stl	EH cleanup virtual dtor and delete	med	virtual dtor call, delete, loop
+0010f2ad	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f346	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f3ab	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f3b8	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010f3c4	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+0010f3dc	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+0010f3e8	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010f444	cxx-stl	destroy vector of 0x78-byte elements	low	loop stride 0xf longs, frees element members
+0010f4a9	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010f523	cxx-stl	throw vector default_append cold stub	high	string 'vector::_M_default_append'
+0010f52f	cxx-stl	throw vector default_append cold stub	high	string 'vector::_M_default_append'
+0010f53b	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f594	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f5ed	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f646	cxx-stl	string _M_replace_cold tail	med	calls _M_replace_cold, returns
+0010f662	cxx-stl	throw string _M_replace cold stub	high	string 'basic_string::_M_replace'
+0010f696	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010f6a2	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010f6ae	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010f6ba	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010f6c6	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010f742	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010f770	cxx-stl	EH cleanup filesystem::path list and string	med	path::_List::_Impl_deleter, string dispose, resume
+0010f79a	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010f823	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+0010f8a3	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010f90d	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010f91a	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010f957	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010f963	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010f99e	cxx-stl	EH cleanup string	med	one string dispose, resume
+0010f9b2	cxx-stl	EH cleanup string	med	one string dispose, resume
+0010f9c6	cxx-stl	EH cleanup two deletes	med	two operator delete, resume
+0010f9eb	cxx-stl	EH cleanup string	med	string dispose, resume
+0010faa0	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+0010faf4	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010fb2e	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+0010fb69	cxx-stl	EH cleanup strings and vector	med	string dispose, delete, FUN_001ac3d0
+0010ff4c	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0011001a	cxx-stl	EH cleanup five strings	med	five string dispose, resume
+00110133	cxx-stl	EH cleanup string	med	one string dispose, resume
+00110150	cxx-stl	EH cleanup strings and FUN_001812a0	med	two string dispose, FUN_001812a0, resume
+00110174	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+001101be	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0011020c	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0011025e	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0011055e	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+00110a2f	cxx-stl	throw string _M_replace cold stub	high	string 'basic_string::_M_replace'
+00110a52	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+00110b9e	cxx-stl	throw string append length_error	high	string 'basic_string::append'
+00110c78	cxx-stl	_ZSt25__throw_bad_function_callv	high	mangled libstdc++ or operator new/delete name
+00110c7d	cxx-stl	EH cleanup strings	med	string dispose, resume
+00111949	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+00111a3e	cxx-stl	EH cleanup strings and FUN_001aaa50	low	string dispose, FUN_00139cf0 frees, FUN_001aaa50
+00111e20	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00112ebe	cxx-stl	throw vector<bool> insert_aux cold stub	high	string 'vector<bool>::_M_insert_aux'
+00113e56	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00113ed5	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+00114594	cxx-stl	throw map::at cold stub	high	string 'map::at'
+00114cdb	cxx-stl	EH cleanup string and vector free	med	string dispose, delete, resume
+00114e3b	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+001153d8	cxx-stl	throw vector range_insert cold stub	high	string 'vector::_M_range_insert'
+001153e4	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+001153f0	cxx-stl	string _M_replace_cold tail	med	calls _M_replace_cold, returns
+0011540c	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0011543d	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00115449	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+00115464	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+001154b8	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+001154e8	cxx-stl	throw map::at cold stub	high	string 'map::at'
+0011550c	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0011555e	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+00115685	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00115912	cxx-stl	EH cleanup strings	med	five string dispose, resume
+00115b97	cxx-stl	throw vector default_append cold stub	high	string 'vector::_M_default_append'
+00115c55	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0011601f	cxx-stl	_ZSt25__throw_bad_function_callv	high	mangled libstdc++ or operator new/delete name
+001162fc	cxx-stl	string _M_replace_cold tail with move ctor	low	replace_cold, string move ctor
+00116360	cxx-stl	string _M_replace_cold tail	low	replace_cold then NUL at +0x21
+00116380	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+001163a7	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+001163f7	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+00116447	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+00116497	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+001164e7	crt-runtime	FUN_001164e7	low	tiny stub or thunk (PLT/GOT style)
+001164ec	cxx-stl	_ZSt25__throw_bad_function_callv	high	mangled libstdc++ or operator new/delete name
+0011651e	cxx-stl	_ZSt20__throw_system_errori	high	mangled libstdc++ or operator new/delete name
+00116524	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+00116530	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+0011653c	cxx-stl	EH cleanup resume	low	only _Unwind_Resume
+00116586	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+001165d6	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+00116626	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+00116676	cxx-stl	throw string _M_replace cold stub	high	string 'basic_string::_M_replace'
+001166a9	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+001166b5	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+001166d0	cxx-stl	EH cleanup string	med	one string dispose, resume
+001166f6	cxx-stl	EH cleanup string	med	one string dispose, resume
+0011671c	cxx-stl	EH cleanup string	med	one string dispose, resume
+0011672f	cxx-stl	EH cleanup string	med	one string dispose, resume
+00116742	cxx-stl	throw map::at cold stub	high	string 'map::at'
+0011677a	cxx-stl	throw map::at cold stub	high	string 'map::at'
+001167bf	cxx-stl	throw map::at cold stub	high	string 'map::at'
+001167cb	cxx-stl	throw map::at cold stub	high	string 'map::at'
+00116808	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+00116824	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+00116840	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+0011685b	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+00116895	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+001168d0	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+00116934	cxx-stl	throw_string_append	high	12 bytes, string literal basic_string::append
+001169d8	cxx-stl	throw_string_append	high	12 bytes, string literal basic_string::append
+00116b74	cxx-stl	eh_cleanup_engine_obj	med	landing pad, destroys members at offsets 0x1270-0x12d8, Unwind
+00116c5f	cxx-stl	_ZSt9terminatev	high	mangled libstdc++ or operator new/delete name
+00116c64	cxx-stl	_ZSt9terminatev	high	mangled libstdc++ or operator new/delete name
+00116c69	cxx-stl	throw_vector_default_append	high	12 bytes, literal vector::_M_default_append
+00116cfa	cxx-stl	eh_cleanup_strings	med	landing pad, repeated string _M_dispose
+0011721f	cxx-stl	throw_string_append	high	12 bytes, literal basic_string::append
+0011724a	cxx-stl	throw_string_create	high	literal basic_string::_M_create
+001173d8	cxx-stl	eh_cleanup_string	high	string dispose then _Unwind_Resume
+0011740c	cxx-stl	eh_cleanup_string	high	string dispose then _Unwind_Resume
+0011742a	cxx-stl	eh_cleanup_fn	high	calls stored functor then _Unwind_Resume
+00117478	cxx-stl	eh_cleanup_string	high	string dispose then _Unwind_Resume
+0011748c	cxx-stl	throw_string_substr	high	literal basic_string::substr, __pos message
+001175a8	cxx-stl	eh_cleanup_string	high	string dispose, Unwind
+001175fa	cxx-stl	eh_cleanup_string	high	string dispose, Unwind
+001176cc	cxx-stl	eh_cleanup_string	high	string dispose, Unwind
+00117730	cxx-stl	eh_cleanup_string	high	string dispose, Unwind
+001177de	cxx-stl	eh_cleanup_string_vec_fn	high	string dispose, vector free, functor manager call
+00117e1c	cxx-stl	eh_cleanup_string	med	string dispose plus one PLT call
+00117e5a	cxx-stl	eh_cleanup_vectors	high	string dispose, vector frees, Unwind
+00117fc5	cxx-stl	throw_map_at	high	literal map::at
+0011817a	cxx-stl	throw_map_at	high	literal map::at
+001181d0	cxx-stl	throw_map_at	high	literal map::at
+001183c4	cxx-stl	throw_vector_max_size	high	literal cannot create std::vector larger than max_size()
+001184a2	cxx-stl	throw_vector_max_size	high	literal cannot create std::vector larger than max_size()
+0011853e	cxx-stl	throw_string_null	high	literal construction from null is not valid
+0011854a	cxx-stl	throw_vector_default_append	high	literal vector::_M_default_append
+00118556	cxx-stl	throw_string_create	high	literal basic_string::_M_create
+001189ef	cxx-stl	throw_vector_max_size	high	literal cannot create std::vector larger than max_size()
+00118c8a	crt-runtime	FUN_00118c8a	low	tiny stub or thunk (PLT/GOT style)
+00118c8f	cxx-stl	_ZSt25__throw_bad_function_callv	high	mangled libstdc++ or operator new/delete name
+00118d24	cxx-stl	throw_vector_max_size	high	literal cannot create std::vector larger than max_size()
+00118d80	cxx-stl	throw_vector_max_size	high	literal cannot create std::vector larger than max_size()
+00118e0c	cxx-stl	throw_vector_max_size	high	literal cannot create std::vector larger than max_size()
+00118f68	cxx-stl	throw_string_append	high	literal basic_string::append
+00118fba	cxx-stl	throw_vector_default_append	high	literal vector::_M_default_append
+0011900e	cxx-stl	throw_string_append	high	literal basic_string::append
+0011904a	cxx-stl	eh_cleanup_string_vec	high	string dispose, vector free, Unwind
+001190d4	cxx-stl	throw_string_replace	high	literal basic_string::_M_replace
+001194b0	crt-runtime	thunk_018f4b90	med	same body as flash_serve 01906040
+001194d0	crt-runtime	static_init_1	med	_INIT_1 registers vector<string> dtor via FUN_00139710
+001194f0	util	register_static_callback	low	swaps 4 words, calls PLT and FUN_00178f30; used by _INIT_2
+00119560	logging-diag	static_init_store_hit_counters	med	_INIT_2 registers names STORE and HIT via FUN_0016a880
+00119880	crt-runtime	entry	high	crt, init or libc runtime symbol
+001198b0	crt-runtime	empty_stub	low	body is only return; no callers in index
+001198e0	crt-runtime	empty_stub	low	body is only return
+00119920	crt-runtime	_FINI_0	high	crt, init or libc runtime symbol
+00119960	crt-runtime	_INIT_0	high	crt, init or libc runtime symbol
+00119980	crt-runtime	padding_ret	med	same body as flash_serve 0185c7a6
+00119990	crt-runtime	nop_ret	med	same body as flash_serve 018b4742
+001199a0	cxx-stl	sized_delete_0xf0	med	operator delete(p,0xf0) only, deleting dtor tail
+001199b0	cxx-stl	sized_delete_stub	med	10 bytes, same shape as 001199a0
+001199c0	cxx-stl	sized_delete_stub	med	10 bytes, same shape as 001199a0
+001199d0	cxx-stl	sized_delete_stub	med	10 bytes, same shape as 001199a0
+001199e0	npu-protocol	signal_wake_pipe_write	med	sets flag DAT_00213700, write 1 byte to pipe fd DAT_0021354c
+00119a20	cxx-stl	insertion_sort_double	med	loops over doubles with memmove
+00119b00	cxx-stl	std_function_manager	med	op 1 and 2 clone, _Znwm(0x20)
+00119b80	cxx-stl	deque_iter_advance_0xf8	med	divides by 0xf8 element size, deque iterator add
+00119c20	cxx-stl	vector_u32_assign	med	memmove of 4-byte elements, vector operator=
+00119de0	cxx-stl	string_move_assign	med	SSO check, memcpy, pointer steal
+00119ec0	config-env	parse_next_int_arg	low	strtoll on args vector, 0x20 stride
+00119f30	util	write_file_wb	high	fopen wb, fwrite, fclose
+00119f90	cxx-stl	string_compare	high	memcmp then length difference clamp
+00119ff0	cxx-stl	sp_get_deleter	med	strcmp on St19_Sp_make_shared_tag
+0011a040	cxx-stl	sp_get_deleter	med	strcmp on St19_Sp_make_shared_tag
+0011a090	cxx-stl	vector_u32_push_back	med	append or realloc of 4-byte element
+0011a1a0	util	locked_flag_read	low	mutex lock, read byte at +0x30, unlock
+0011a1e0	cxx-stl	string_construct_range	high	literal _M_create, 14 callers
+0011a280	cxx-stl	string_ctor_cstr	high	literal construction from null, strlen memcpy
+0011a310	cxx-stl	string_replace_helper	low	_M_create literal, memcpy, 4 callees
+0011a430	cxx-stl	rbtree_erase_nested	med	unrolled node walk at +0x18, no strings
+0011a600	cxx-stl	vector_vector_string_dtor	med	nested vector walk with frees
+0011a6c0	xrt-device	map_erase_bo	med	rb-tree erase calling xrt::bo dtor
+0011a900	cxx-stl	rbtree_erase_string_key	high	recursion, frees string at +0x20, node 0x48
+0011a960	cxx-stl	rbtree_erase_string_key	high	21 lines, same shape as 0011a900
+0011a9c0	cxx-stl	vector_struct_dtor_0x70	med	loops stride 0xe longs freeing strings
+0011ab60	cxx-stl	introsort_double	med	heap/partition on doubles, size 0x80 cutoff
+0011b010	cxx-stl	sort_double_wrapper	med	calls 0011ab60 and 00119a20
+0011b0e0	cxx-stl	rbtree_erase_unrolled	high	deep nested walk at +0x18
+0011b4c0	cxx-stl	vector_struct_dtor	med	loops freeing string fields
+0011b5e0	hgn-loader	checkpoint_overlay_path_build	med	same body as flash_serve 01995c30
+0011bd50	cxx-stl	rbtree_erase_vec_string	med	recursion, calls vector<string> dtor at +0xe0,+0xf8
+0011be70	cxx-stl	map_lower_bound	med	tree descent from +0x10, header +8
+0011bf70	cxx-stl	map_get_insert_pos	high	Rb_tree_decrement use
+0011c0b0	npu-protocol	parse_request_fields	med	strtoll over token vector, callers 0012b110 and 0012e9d0
+0011cb90	cxx-stl	rbtree_erase_unrolled	high	975 bytes, same as 0011b0e0
+0011cf70	cxx-stl	thread_state_dtor	med	calls std::thread::_State dtor
+0011cfa0	cxx-stl	thread_state_dtor	med	calls std::thread::_State dtor
+0011cfe0	cxx-stl	thread_state_run	low	calls 00139ab0 and shared release; called by 0011e670
+0011d060	cxx-stl	thread_state_run	med	calls stored fn at +0x20 then release
+0011d0b0	cxx-stl	thread_state_helper	low	only calls refcount release 00139cf0
+0011d120	cxx-stl	std_function_manager_16	med	op 2 clones 0x10 bytes
+0011d1e0	cxx-stl	std_function_manager_16	med	same shape as 0011d120
+0011d2a0	cxx-stl	thread_state_dtor	med	calls std::thread::_State dtor
+0011d2e0	cxx-stl	thread_state_dtor	med	calls std::thread::_State dtor
+0011d320	npu-protocol	job_queue_dtor	low	destroys deque of 0x1f0 records, condvar dtor, no callers
+0011d8e0	cxx-stl	deque_copy_0xf8	med	element size 0xf8 divide constant
+0011dfb0	cxx-stl	deque_move_0xf8	med	same shape as 0011d8e0
+0011e670	npu-protocol	schedule_requests	low	called by serve loop 001362d0; merges 0xf8 request deque
+001201b0	cxx-stl	vector_vector_dtor	low	loops frees, caller 00133090
+00120280	util	read_file_to_bytes	med	calls FUN_00163c50 then copies into vector<byte>
+00120bd0	util	global_string_set_lookup	med	mutex DAT_00213740, memcmp scan of string vector
+00120f50	config-env	parse_cli_args	med	literal --model, vector push, called by 00133090
+00121580	xrt-device	map_erase_run	med	rb-tree erase calling xrt::run dtor
+00121640	cxx-stl	map_emplace_hint_string	med	node 0x48, string copy via 0011a1e0
+00121940	cxx-stl	map_emplace_hint_string	med	same shape as 00121640
+00121c30	xrt-device	map_erase_bo	med	erase calls 0011a6c0 and xrt::bo dtor
+00121d10	cxx-stl	rbtree_erase_unrolled	high	deep nested walk at +0x18
+00121f70	cxx-stl	rbtree_erase_unrolled	high	same shape
+00122230	cxx-stl	rbtree_erase_vec_string	med	calls 00139710 vector<string> dtor
+001224f0	xrt-device	map_erase_kernel	med	rb-tree erase calling xrt::kernel dtor
+00122790	cxx-stl	map_get_insert_pos	high	330 bytes, calls erase helpers
+001228f0	cxx-stl	rbtree_erase_unrolled	high	deep nested walk
+00122b50	cxx-stl	dtor_thunk	med	9 bytes, jumps to 0013a310
+00122b60	cxx-stl	map_get_insert_pos	med	same shape as 00122790
+00122cc0	xrt-device	engine_state_dtor	med	destroys kernel, hw_context, bo, nested maps
+00123250	xrt-device	engine_state_dtor	med	mirrors 0013b150, calls bo dtor and 00122cc0
+00123a40	cxx-stl	vector_struct_assign	low	copy-assign with realloc, bad_array_new_length throw
+00124560	npu-protocol	format_text_ostringstream	low	ostringstream build; callers 00133090 and 0012e9d0
+00124b10	util	json_escape_string	high	literal \u%04x, appends escaped chars
+00124e10	npu-protocol	send_reply_line	high	mutex, appends newline, send() loop
+00124f60	npu-protocol	send_reply_line_thunk	high	11 bytes, jumps to 00124e10
+00124f70	cxx-stl	string_assign_cstr	med	strlen, _M_replace, memmove
+00125080	cxx-stl	string_append	high	append literal, 7 callers
+00125240	npu-protocol	format_reply_numbers	med	ostringstream with ints and doubles; callers dispatcher and serve loop
+001256c0	cxx-stl	string_append_cstr	high	strlen then append, 11 callers
+00125930	npu-protocol	build_gen_text	low	called by GEN parser 0012a4a0; appends numbers via 0013a710
+00125f60	model-compute	load_embedding_rows	med	strings rows or fnorm, sizes do not match H
+00126440	npu-protocol	info_model_entry_json	low	uses json escape 00124b10, string builds
+00126dd0	npu-protocol	info_capability_text	med	strings embedding score classify PFX
+00127670	cxx-stl	string_append_cstr	high	strlen, append
+001278f0	config-env	engine_env_config	med	HALOGEN_NPU_CONTEXTS, FLUX_THREADS, taef2.safetensors
+00127ec0	npu-protocol	info_models_json_build	med	strings model files proto name; map::at
+00129cb0	npu-protocol	info_reply_models_json	high	literal ,"models":[
+0012a4a0	npu-protocol	parse_gen_line	high	literal a malformed GEN line
+0012b110	npu-protocol	dispatch_verb	high	unknown verb, PFX, LEDGER, INFO strings; per earlier decompile
+0012e9d0	npu-protocol	connection_loop	high	recv, QUIT and INFO compares, ERR 0 line longer than
+001307b0	util	load_path_helper	low	calls read-file 00120280, string ops; caller 00133090
+00130a20	hnp-format	replay_hnpm_run	med	strings /replay.hnpm, no elf record; calls hnpm parser 00164090
+00133090	npu-protocol	main_listen	high	modes selftest cache probe convert replay; listen
+001362d0	npu-protocol	serve_loop	high	literal shutting down, tokens; earlier decompile
+001396f0	cxx-stl	_ZNKSt5ctypeIcE8do_widenEc	high	mangled libstdc++ or operator new/delete name
+00139700	cxx-stl	empty_ret	med	same body as flash_serve 01981976
+00139710	cxx-stl	vector_string_dtor	high	frees strings stride 0x20, 37 callers
+00139780	cxx-stl	map_get_insert_pos	high	Rb_tree_decrement use
+001398c0	cxx-stl	map_get_insert_pos	high	same shape as 00139780
+00139a00	cxx-stl	string_equal	high	length compare then memcmp
+00139a40	cxx-stl	mutex_lock	med	25 bytes, pthread_mutex_lock
+00139a60	cxx-stl	string_equal_cstr	high	strlen compare, 31 callers
+00139ab0	npu-protocol	request_record_dtor	low	frees functor at +0xa8, string +0x70, vector +0x50
+00139ba0	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC1EOS4_	high	mangled libstdc++ or operator new/delete name
+00139ca0	cxx-stl	shared_count_release_part	med	uses __libc_single_threaded
+00139cf0	cxx-stl	shared_ptr_release	med	calls 00139ca0, 40 callers
+00139d70	cxx-stl	shared_count_add_ref	high	atomic increment at +8
+00139da0	cxx-stl	vector_ctor_n_zero	med	max_size throw, memset
+00139e60	cxx-stl	vector_ctor_n_zero	med	same shape as 00139da0
+00139f10	cxx-stl	vector_struct_dtor_0x48	low	loops elements freeing sub-vectors
+0013a040	xrt-device	map_erase_bo	med	calls 0011a6c0 and xrt::bo dtor
+0013a0e0	xrt-device	run_holder_dtor	med	calls xrt::run dtor
+0013a150	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_di	high	mangled libstdc++ or operator new/delete name
+0013a180	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_ass	high	mangled libstdc++ or operator new/delete name
+0013a290	xrt-device	kernel_hwctx_map_dtor	med	erase calls kernel and hw_context dtors
+0013a310	cxx-stl	rbtree_erase_composite	med	calls erase helpers 0011a900 and 0011a960
+0013a470	cxx-stl	to_string_unsigned	med	digit table 00..99 constant
+0013a710	cxx-stl	to_string_int	med	sign handling, digit table, 38 callers
+0013a9b0	cxx-stl	to_string_long	med	digit table constant
+0013ac80	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserv	high	mangled libstdc++ or operator new/delete name
+0013ad80	cxx-stl	vector_struct_dtor	low	loops freeing string fields
+0013ae10	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mut	high	mangled libstdc++ or operator new/delete name
+0013afe0	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6append	high	mangled libstdc++ or operator new/delete name
+0013b0a0	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6append	high	mangled libstdc++ or operator new/delete name
+0013b150	xrt-device	engine_state_dtor	med	bo dtor, 15e1b0, 15dc40, 00122cc0 calls
+0013b720	xrt-device	engine_state_dtor_thunk	med	33 bytes, calls 0013b150
+0013b750	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_re	high	mangled libstdc++ or operator new/delete name
+0013b890	cxx-stl	string_append	high	append literal, 35 callers
+0013b9f0	cxx-stl	map_emplace_string_0x58	low	_Znwm(0x58), string copy, insert
+0013bcb0	cxx-stl	map_emplace_run_node	low	node 0x48, calls xrt::run dtor on dup
+0013bf80	unknown	small_helper	low	84 bytes, 1 callee, 1 caller; body not identified
+0013bfe0	xrt-device	bo_sync_wrapper	high	calls xrt::bo::sync via 00155dc0
+0013c070	xrt-device	bo_sync_wrapper	high	same shape, sync other direction
+0013c110	cxx-stl	std_function_manager	med	op 1 and 2 clone
+0013c140	cxx-stl	string_find_char	high	memchr wrapper, returns offset or -1
+0013c180	cxx-stl	std_function_manager_0x30	med	_Znwm(0x30) clone
+0013c210	cxx-stl	std_function_manager_0x18	med	_Znwm(0x18) clone
+0013c270	cxx-stl	function_clone_tail	low	_Znwm, copies 3 words
+0013c290	cxx-stl	string_move_assign	med	SSO check, steal pointer
+0013c370	cxx-stl	string_compare	high	memcmp then length difference clamp
+0013c3d0	cxx-stl	vector_u32_push_back	med	append or realloc of 4-byte element
+0013c4e0	cxx-stl	vector_copy_assign	med	max_size throw, memcpy memmove
+0013c640	cxx-stl	vector_u32_assign	med	memmove memcpy 4-byte elements
+0013c7e0	cxx-stl	vector_copy_assign	med	same shape as 0013c4e0
+0013c940	cxx-stl	string_construct_range	high	_M_create literal, 20 callers
+0013c9e0	cxx-stl	string_ctor_cstr	high	construction from null, strlen memcpy
+0013ca70	xrt-device	map_erase_bo	med	erase with xrt::bo dtor
+0013ccb0	cxx-stl	vector_move_assign	med	steals 3 pointers
+0013cd40	cxx-stl	rbtree_erase_string_key	high	21 lines, string at +0x20
+0013cda0	cxx-stl	rbtree_erase_string_key	high	21 lines, string at +0x20
+0013ce00	cxx-stl	map_find_string	med	tree descent, header +8
+0013cf00	cxx-stl	map_find_string	med	same shape as 0013ce00
+0013d000	cxx-stl	map_find_string	med	same shape as 0013ce00
+0013d100	cxx-stl	map_find_string	med	same shape as 0013ce00
+0013d200	cxx-stl	map_get_insert_pos	high	Rb_tree_decrement use
+0013d340	cxx-stl	map_get_insert_pos	high	same shape
+0013d480	cxx-stl	map_get_insert_pos	high	same shape
+0013d5c0	cxx-stl	map_get_insert_pos	high	same shape
+0013d700	cxx-stl	map_get_insert_pos	high	same shape
+0013d840	cxx-stl	rbtree_erase_unrolled	high	deep nested walk
+0013dc20	xrt-device	map_erase_run_vectors	med	erase frees vectors, xrt::run dtor
+0013dcf0	cxx-stl	rbtree_erase_unrolled	high	deep nested walk
+0013dfe0	cxx-stl	rbtree_erase_unrolled	high	same shape as 0013dcf0
+0013e2d0	crt-runtime	FUN_0013e2d0	low	tiny stub or thunk (PLT/GOT style)
+0013e2e0	util	global_table_accessor	low	calls 0014f5a0; used by static init and dispatcher
+0013e380	cxx-stl	map_find_thunk	low	13 lines, calls 0013d100
+0013e3c0	xrt-device	bucket_clear_busy_flags	low	walks buckets map at +0x288, clears byte +0x2c8
+0013e470	xrt-device	count_loaded_buckets	low	counts buckets whose +0x1d8 pointer set
+0013e540	xrt-device	sum_bucket_counters	low	sums int at +0x268 across buckets
+0013e610	xrt-device	count_loaded_buckets	low	counts buckets whose +0x1d8 set, no early path
+0013e660	xrt-device	sum_bucket_sizes	low	sums sizes over bucket vectors
+0013e700	xrt-device	find_bucket_by_name	low	tree search at +0x218 with memcmp
+0013e8b0	xrt-device	lookup_bucket	low	literal bucket, uses 0013c9e0 and 00162ac0
+0013ea60	xrt-device	lookup_bucket_or_throw	low	literal bucket, 6 callees
+0013ed30	cxx-stl	map_emplace_hint_string	med	node 0x48, string copy 0013c940
+0013ef80	cxx-stl	map_emplace_hint_string	med	same shape as 0013ed30
+0013f1d0	cxx-stl	map_emplace_hint_string	med	same shape as 0013ed30
+0013f420	xrt-device	find_output_buffer_o	low	compares name to "o", map lookup at +0x178
+0013f7e0	xrt-device	read_proc_interrupts	med	fopen /proc/interrupts, fgets 64KB; matches NPU irq lines
+0013fc70	config-env	host_tuning_env	med	HALOGEN_NPU_HOST_THREADS, HOST_SPIN, calls 0013f7e0
+0013fff0	config-env	parse_cpu_list	med	strtol loop, values under 0x400, vector push
+00140350	cxx-stl	map_emplace_hint_string	med	node 0x48, string copy
+00140650	cxx-stl	map_emplace_hint_string	med	same shape as 00140350
+00140950	xrt-device	bucket_release_runs	low	walks map at +0x248, run dtor
+00140ec0	xrt-device	kernel_hwctx_holder_dtor	med	calls kernel and hw_context dtors
+00141170	xrt-device	context_reset	med	frees run, kernel, hw_context maps, resets tree headers
+001414e0	xrt-device	has_free_context	low	scans buckets for idle loaded entry
+001415a0	xrt-device	pick_free_context	low	scans buckets, flag +0x2c8, +0x1d8
+00141720	cxx-stl	string_assign_cstr	med	strlen, SSO threshold 0xf
+00141860	cxx-stl	string_append_cstr_n	med	literal basic_string::append, length check
+00141b40	cxx-stl	struct_copy_assign	low	string _M_assign at five offsets, vector copy
+001420f0	cxx-stl	string_append_cstr	high	strlen then append, 6 callers
+00142370	cxx-stl	string_append_cstr	high	strlen then append, 7 callers
+001425e0	cxx-stl	string_replace	med	literal basic_string::replace, __pos message
+00142820	model-compute	prefix_store_kv_copy	med	strings the prefix store: K / V read, copy at layer
+00142bf0	util	name_with_two_digit_index	med	snprintf %02d then string insert
+00142e90	cxx-stl	rbtree_erase_unrolled	high	deep nested walk
+00143270	xrt-device	open_device	high	xrt::device ctor; reads HALOGEN_NPU_WAIT_MS, SHORT_PATH
+00143660	logging-diag	format_timing_line	high	snprintf wall device flush pull embed fused minflt
+001441d0	hnp-format	verify_blob_checksum	high	strings no blob, checksum fails, bytes its buffer
+00144430	hnp-format	load_bucket_blobs_patches	med	strings blob, consts, layer; doc says patch records here
+00145af0	kv-cache-prefix	kv_snapshot_to_host_thunk	med	same body as flash_serve 018fed70
+00145b20	xrt-device	acquire_bucket_context	med	strings no NPU context free, loaded buckets in use
+00145eb0	hnp-format	load_model_dir_manifest	high	devices.hnpm, consts.hnpb, calls 00164090 and 00167960
+00149720	xrt-device	run_bucket_layers	med	strings no buffer at layer, has no kernel
+0014a6f0	model-compute	run_request_route	med	strings no route for B, token outside vocabulary, malformed request
+0014d2b0	model-compute	run_resume_record	med	token id outside vocabulary, resume record bind buffer
+0014e0f0	hnp-format	check_bucket_bind_order	low	strings binds buffers in another order, att kvp roles
+0014ef40	cxx-stl	map_get_insert_pos	high	Rb_tree_decrement use
+0014efe0	cxx-stl	rbtree_erase_unrolled	high	deep nested walk
+0014f1b0	cxx-stl	rbtree_erase_unrolled	high	deep nested walk
+0014f5a0	cxx-stl	static_map_dtor	med	105 bytes, calls erase 0014f1b0, no callers
+0014f610	cxx-stl	map_get_insert_pos	high	Rb_tree_decrement use
+0014f750	cxx-stl	map_get_insert_pos	high	same shape
+0014f890	cxx-stl	map_get_insert_pos	high	same shape
+0014f9d0	cxx-stl	map_get_insert_pos	high	same shape
+0014fb10	cxx-stl	map_get_insert_pos	high	same shape
+0014fc50	cxx-stl	rbtree_erase_vectors	med	recursion, frees vectors at +0xf8
+0014fe10	cxx-stl	struct_dtor_strings	low	frees many string members
+0014fef0	cxx-stl	vector_string_dtor	med	loops frees strings stride 0x20
+00150050	cxx-stl	rbtree_erase_composite	med	calls 0013cda0 and 0013cd40
+001500f0	cxx-stl	_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6subst	high	mangled libstdc++ or operator new/delete name
+001501d0	xrt-device	map_erase_bo	med	calls 0013ca70 and xrt::bo dtor
+00150360	xrt-device	map_erase_bo	med	calls 0013ca70 and xrt::bo dtor
+00150460	cxx-stl	vector_u32_resize	med	literal vector::_M_default_append
+001505f0	util	alloc_zeroed_0x2e0	low	_Znwm(0x2e0) then zero fill 0x5c words
+00150710	cxx-stl	map_emplace_unique_0x50	med	_Znwm(0x50), called by 00145eb0
+00150930	cxx-stl	rbtree_erase_unrolled	high	deep nested walk
+00150c10	cxx-stl	rbtree_erase_vec_string	med	deep walk, calls 00139710
+00150f50	cxx-stl	map_string_find_or_emplace	low	rb-tree walk with memcmp on string key
+001512f0	cxx-stl	map_string_emplace_0x58	low	rb-tree insert, node alloc 0x58, memcmp keys
+00151620	cxx-stl	map_string_find_or_emplace	low	rb-tree walk with memcmp on string key
+00151930	cxx-stl	nested_container_dtor	low	loops destroying nested nodes via FUN_0013ca70
+00151a50	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insert	high	mangled libstdc++ or operator new/delete name
+00151dc0	cxx-stl	state_struct_dtor_0x2e0	low	destroys strings and maps of 0x2e0-byte object
+001524e0	cxx-stl	unique_ptr_dtor_0x2e0	med	calls 151dc0 then operator delete 0x2e0
+00152510	cxx-stl	map_string_find_or_emplace	low	rb-tree walk with memcmp on string key
+00152800	cxx-stl	vector_u32_assign_n	med	max_size throw, fills n copies of 4-byte value
+00152c80	cxx-stl	vector_u32_assign_n	med	max_size throw, fills n copies of 4-byte value
+00153100	model-compute	model_kind_name_rewrite	low	compares kind to "qwen3_dense", substr on name
+00153400	cxx-stl	struct_copy_ctor_string_vec	low	string copy plus vector alloc, memcpy
+00153830	cxx-stl	vector_realloc_append_struct	med	vector::_M_realloc_append string
+00153d70	cxx-stl	struct_copy_ctor_6strings	low	copies consecutive std::string fields
+00153f20	cxx-stl	vector_emplace_back_0xf0	med	realloc_append of 0xf0-byte elements via 153d70
+001548e0	cxx-stl	map_node_construct_0x48	low	allocs 0x48 node with string key, rb insert
+00154bb0	cxx-stl	vector_of_vector_dtor_range	med	frees each inner buffer in range
+00154c10	cxx-stl	vector_of_vector_fill_ctor	low	copies source vector into n slots, memmove
+00154d40	cxx-stl	vector_of_vector_assign	low	max_size throw, 24-byte elements, memmove
+00155500	cxx-stl	rbtree_erase_nested	med	nested while loops freeing child nodes
+00155740	cxx-stl	introsort_32byte_elems	med	size threshold 0x100, 32-byte AVX moves
+00155dc0	config-env	env_sync_narrow	high	getenv HALOGEN_NPU_SYNC_NARROW cached
+00155e50	config-env	env_sync_whole	high	getenv HALOGEN_NPU_SYNC_WHOLE cached
+00155ee0	util	now_seconds	high	steady_clock::now divided to double, 21 callers
+00155f00	xrt-device	bo_range_aligned_check	low	checks 64-byte alignment against size at +0x20
+00155f30	xrt-device	bo_mark_dirty_range	med	range check, merges dirty ranges vector
+001568e0	xrt-device	bo_sync_dirty_to_device	high	uses sync env flags, per-range bo::sync TO_DEVICE
+00156cb0	xrt-device	bo_sync_range_to_device	high	64-byte aligned range, sync env flags, timing
+00157140	xrt-device	bo_sync_whole_to_device	high	xrt::bo::sync dir 0 full size, clears dirty list
+00157180	xrt-device	bo_sync_dispatch	med	reads both sync env flags, picks sync mode
+00157490	xrt-device	bo_sync_narrow	med	narrow env flag, steady_clock timing
+00157640	xrt-device	run_set_arg_bo	high	xrt::run::set_arg_at_index with bo arg
+001578a0	xrt-device	run_sync_args_and_start	high	syncs args via 1568e0 then xrt::run::start
+00157940	xrt-device	elf_hw_context_ctor	high	xrt::elf then hw_context ctor, per npu-engine.md
+001579a0	xrt-device	bo_alloc_host_buffer	high	npu-engine.md: xrt::bo::bo flags 0x20000000, memset
+00157b70	xrt-device	run_start_poll	high	xrt run start and state poll loop, timeout code
+00158a20	xrt-device	run_wait	high	xrt::run::wait with ms duration, returns on 4
+00159830	util	sleep_until_deadline	med	steady_clock delta then nanosleep
+00159980	xrt-device	kernel_create_main_graph	high	builds "main:"+name, xrt kernel ctor, memcmp map
+00159fc0	xrt-device	run_create_set_args	high	contains 0x15a022 run create per npu-engine.md
+0015a3a0	xrt-device	bo_subview_alloc	high	contains 0x15a422 subview bo ctor, rb-tree by size
+0015a5b0	cxx-stl	map_string_lookup	low	rb-tree decrement, memcmp key
+0015a6f0	cxx-stl	map_u64_lookup	low	rb-tree decrement, u64 key compare
+0015a7b0	cxx-stl	map_string_emplace_0x50	low	alloc 0x50 node, string key copy
+0015ace0	cxx-stl	map_pair_u64_insert_pos	low	compares (u64,u64) keys, rb insert hint
+0015ae40	util	bitmask_build	low	shifts by 6 and 0x3f into 8-qword mask
+0015b110	model-compute	bf16_to_f32_worker	med	vpmovzxwd+vpslld widen, pool task callback
+0015b340	cxx-stl	thread_state_dtor	high	vtable plus std::thread::_State dtor
+0015b350	cxx-stl	thread_state_deleting_dtor	high	std::thread::_State dtor then delete 0x18
+0015b380	cxx-stl	thread_state_dtor	high	std::thread::_State dtor
+0015b390	cxx-stl	thread_state_deleting_dtor	high	std::thread::_State dtor then delete 0x18
+0015b3c0	cxx-stl	function_manager	med	op 0..2 typeinfo, ptr, copy switch
+0015b3d0	cxx-stl	function_manager_trivial	med	copies 16 bytes on op 2
+0015b3f0	cxx-stl	function_manager	med	op switch with typeinfo ptr
+0015b420	cxx-stl	function_manager_heap_0x18	med	clones 0x18-byte functor on op 2
+0015b4a0	cxx-stl	function_manager_heap_0x18	med	clones 0x18-byte functor on op 2
+0015b520	cxx-stl	function_manager_heap_0x30	med	clones 0x30-byte functor on op 2
+0015b5b0	util	thread_pin_and_run	med	pthread_setaffinity_np, sched_yield, syscall
+0015b730	model-compute	f32_to_bf16_worker	med	AVX pack, blend, round bias, pool task
+0015bbc0	model-compute	f32_to_bf16_stream	low	AVX bf16 convert with vmovntdq
+0015c2b0	model-compute	bf16_f32_convert_kernel	low	AVX widen and pack, no callees
+0015c930	model-compute	convert_task_thunk	low	forwards unpacked args to 15bbc0
+0015c960	model-compute	bf16_f32_convert_kernel	low	AVX widen and pack, no callees
+0015cf50	model-compute	f32_sum_pairwise	low	recursive unrolled float add for n<=8, halves above
+0015dc40	util	pool_wake_futex	low	atomic inc then futex wake syscall 0xca
+0015dd10	util	pool_partition_range	low	splits range into 1024-unit chunks by thread count
+0015ddc0	util	pool_job_setup	low	sets job range, generation counter
+0015de80	util	pool_futex_wake	med	atomic inc, futex syscall
+0015deb0	util	pool_worker_loop	med	prctl then spin/futex wait loop
+0015e0f0	util	pool_worker_thunk	low	forwards to 15deb0
+0015e100	util	pool_set_active_threads	low	clamps thread count into field
+0015e170	util	pool_job_publish	low	atomic counters then futex
+0015e1b0	util	pool_lock_acquire	low	lock-slot indexing, atomic inc
+0015e2a0	util	pool_flag_set	low	sets flag, lock-slot addressing
+0015e310	util	parallel_for_dispatch	low	runs inline unless n above 0x7ffff
+0015e360	model-compute	bf16_to_f32_rows	low	widen loop over rows, no callees
+0015e570	model-compute	parallel_bf16_to_f32	med	parallel dispatch with 15b110 callback
+0015e830	util	parallel_for_wrapper	low	packs args into functor, std::function zeroed
+0015e950	util	parallel_for_wrapper	low	packs args into functor, std::function zeroed
+0015eb40	model-compute	parallel_f32_to_bf16	med	parallel dispatch with 15b730 callback
+0015f080	model-compute	f32_to_bf16_rows	low	AVX pack loop, 8-wide blocks
+0015f350	model-compute	f32_to_bf16_2d	low	AVX pack, rows x cols strides
+0015f830	model-compute	parse_layout_kind	low	strcmp "c16", "c8", "seq" to enum
+0015f8d0	model-compute	layout_kind_name	low	enum to short constant string
+0015f920	model-compute	f32_vector_kernel	low	SIMD float shuffles, vector alloc, 5.9KB
+00161060	model-compute	rms_norm_scale	low	sum/n plus eps then sqrt, uses 15f920
+00161260	model-compute	f32_row_kernel	low	zeroed local array, shifts, no callees
+00161840	model-compute	f32_scale_ldexp_kernel	low	ldexp and vdivpd in loop
+00161f20	model-compute	quant_params_init	low	vpminsd/vpmaxsd clamp into struct
+001621a0	cxx-stl	vector_copy_struct	low	copies int ranges into 2-vector struct
+001623e0	cxx-stl	vector_unique_ptr_dtor	med	terminate if element non-null, then free
+00162440	cxx-stl	string_compare	med	memcmp on min length
+001624a0	cxx-stl	string_assign_move	med	SSO buffer swap
+00162580	cxx-stl	string_assign_range	med	length <0x10 SSO path, memcpy
+00162620	cxx-stl	map_lookup	low	rb-tree decrement and memcmp
+00162760	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+00162a50	hnp-format	record_has_key	low	scans key vector at +0x38 with memcmp
+00162ac0	hnp-format	record_key_lookup	med	npu-engine.md names key-lookup, 13 callers
+00162ba0	hnp-format	record_int_get	med	npu-engine.md names int-get, 15 callers
+00162c40	hnp-format	xor32_compute	med	word XOR with vpsrldq reduce, size<4 tail
+00162e00	hnp-format	container_dtor_munmap	med	munmap base, frees record map
+00162ec0	hnp-format	manifest_find_blob	high	npu-engine.md: FUN_00162ec0(devices,"manifest")
+00162fd0	hnp-format	blob_xor32_verify	high	npu-engine.md: xor32 check, compares record +0x24
+001631b0	hnp-format	record_list_get	med	npu-engine.md names list-get, memchr split
+001637c0	util	string_concat_cstr	low	strlen on arg, builds joined string
+00163c50	hnp-format	hnpm_file_read	high	npu-engine.md: fopen rb, 64 KiB reads
+00164090	hnp-format	hnpm_parser	high	npu-engine.md: line-oriented manifest parser
+00167960	hnp-format	hnpb_reader	high	npu-engine.md: HNPB-v1 mmap reader
+0016a110	hnp-format	record_dtor	low	frees strings in vector at +0x38/+0x40
+0016a240	hnp-format	token_int_get	med	strtoll of next 32-byte token
+0016a290	cxx-stl	map_lookup	low	rb-tree decrement
+0016a340	cxx-stl	string_assign_move	med	SSO swap path
+0016a420	cxx-stl	vector_u32_assign	med	copies range, realloc on overflow
+0016a5e0	cxx-stl	string_compare	med	memcmp on min length
+0016a640	cxx-stl	vector_assign	med	copies range, realloc on overflow
+0016a7e0	cxx-stl	string_assign_range	med	length <0x10 SSO path, memcpy
+0016a880	cxx-stl	string_ctor_cstr	high	"construction from null is not valid", strlen
+0016a910	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+0016ab50	cxx-stl	map_find_or_insert	low	rb-tree walk
+0016ac50	cxx-stl	map_lookup	low	rb-tree decrement
+0016ad90	model-compute	buffer_copy_transform_0x198000	low	memcpy 0x198000 bytes then nested loops
+0016b090	model-compute	slice_bounds_check	low	index and offset bounds against table vector
+0016b1a0	model-compute	cache_bytes_estimate	low	size arithmetic with 0x1200 factor
+0016b1f0	util	hash_bytes	low	init const 0x6a09e667f3bcc909 (Blake2b IV)
+0016b4b0	util	hash_and_lookup	low	calls 16b1f0 then map lookup at +0x38
+0016b6d0	config-env	cache_registry_singleton	med	getenv HALOGEN_NPU_CACHE_ENTRIES, guarded static
+0016bae0	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+0016bd90	util	cache_entry_dtor	low	frees strings, maps, memset
+0016bf50	hnp-format	find_bucket_by_name	low	string "bucket", scans vector with memcmp
+0016c0e0	logging-diag	selftest_report	med	"halogen-npu: selftest gx: sizes %zu %zu %zu" fprintf
+0016c410	cxx-stl	map_string_emplace_0x60	low	alloc 0x60 node, string move key
+0016c630	unknown	label_lookup	low	tried head: string build then rb-tree walk at +0x150
+0016c770	unknown	label_select_16byte_cmp	low	tried head: compares 16 bytes, picks one of two names
+0016c7f0	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+0016ca50	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+0016ccb0	cxx-stl	map_holder_dtor	low	erases tree at +0x26 via 16c7f0
+0016cea0	util	arena_init	low	string "arena", vector setup, memcpy
+0016d490	unknown	alloc_0x30_struct	low	tried head: allocs 0x30 struct with const fields
+0016d620	cxx-stl	string_replace_cstr	med	_M_replace path with strlen
+0016d760	cxx-stl	string_replace_cstr	med	"basic_string::_M_replace" length check
+0016d9c0	cxx-stl	string_concat_cstr_str	med	strlen plus append into new string
+0016dc30	hnp-format	blob_check_msg	high	"has the wrong size or checksum", "is missing"
+0016dd50	cxx-stl	string_concat	med	strlen plus append into new string
+0016dfd0	model-compute	layer_name_builder	low	snprintf "%02d", substr on name
+0016e270	model-compute	bucket_state_resume	low	"this bucket kind takes no state store", resume
+0016eab0	hnp-format	bucket_lookup_or_error	low	builds "no bucket " message, else 145b20
+0016eb50	hnp-format	probe_printer	low	contains 0x16ebde printer per npu-engine.md, fwrite
+00170cc0	hnp-format	blob_xor32_fail_msg	high	" fails its xor32", ": blob " strings
+00170ea0	unknown	large_loader	low	tried head: errno, snprintf, 33 callees, no strings
+00171ca0	npu-protocol	cli_cache_ecopy	med	usage: halogen-npu cache ecopy IN OUT CAP
+00172050	unknown	cache_iter	low	tried head: iterates entries at +0xc, no strings
+00172370	util	cache_registry_insert	low	gets singleton 16b6d0 then rb-tree insert
+00172600	npu-protocol	cache_verb_handler	med	strings LOOKUP and EFREE, uses 16b6d0
+001734f0	npu-protocol	request_handler	med	"a malformed request", 50 callees
+00175f10	npu-protocol	request_handler_variant	low	same size-check prologue as 1734f0, no callers
+00177e00	npu-protocol	request_handler_variant	low	same size-check prologue as 1734f0, no callers
+00178f30	cxx-stl	function_invoke_thunk	low	calls stored fn pointer
+00178f40	crt-runtime	empty_stub	med	same body as flash_serve 019bae34
+00178f50	crt-runtime	empty_stub	med	same body as flash_serve 019c517c
+00178f60	cxx-stl	sized_delete_0x30	low	operator delete 0x30
+00178f70	cxx-stl	sized_delete_0x70	low	operator delete 0x70
+00178f80	cxx-stl	sized_delete_0x30	low	operator delete 0x30
+00178f90	cxx-stl	sized_delete_0x70	low	operator delete 0x70
+00178fa0	cxx-stl	function_manager_trivial	med	op switch copy
+00178fd0	cxx-stl	sp_get_deleter	high	St19_Sp_make_shared_tag strcmp
+00179020	cxx-stl	sp_get_deleter	high	St19_Sp_make_shared_tag strcmp
+00179070	cxx-stl	nested_container_dtor	low	loops over vector of owned pointers
+00179170	xrt-device	bo_host_write	med	memcpy into host buffer then 155f30 dirty mark
+001791c0	logging-diag	variadic_format	low	variadic args, string create, callback param
+001792f0	cxx-stl	struct_dtor	low	frees vectors at +0x28/+0x40
+00179350	cxx-stl	map_at	med	"map::at" throw, memcmp
+00179450	cxx-stl	vector_dtor_loop	low	iterates elements freeing inner pointers
+00179530	cxx-stl	map_find	low	rb-tree walk with memcmp
+00179660	cxx-stl	vector_u16_resize	med	max_size check, 2-byte elements
+00179bd0	cxx-stl	hashtable_insert_node	med	_Prime_rehash_policy::_M_need_rehash
+00179d90	cxx-stl	hashtable_erase	low	bucket modulo, unlink node
+00179e40	model-compute	u8_u16_deinterleave	low	AVX byte masks 0xff00ff, shifts
+0017a1f0	util	skip_whitespace	med	advances while byte <= 0x20
+0017a230	crt-runtime	pad_stub	med	same body as flash_serve 019e6238
+0017a240	cxx-stl	function_manager	med	typeinfo and ptr op switch
+0017a270	model-compute	bf16_scaled_reduce	low	ushort<<16 to float, times scale, loop
+0017a2f0	logging-diag	convert_progress_print	high	"halogen-npu convert: layer %d / %d (%.0f s)"
+0017a380	model-compute	quant_row_kernel	low	ldexp, vroundsd, max reduce
+0017a890	util	atomic_work_loop	low	LOCK fetch-add on shared counter
+0017a8e0	cxx-stl	thread_state_dtor	high	std::thread::_State dtor
+0017a8f0	cxx-stl	thread_state_deleting_dtor	high	std::thread::_State dtor then delete 0x20
+0017a920	hnp-format	container_write_aligned	low	fwrite pad to 8, ferror, fseek
+0017ab90	cxx-stl	function_manager	med	op switch copy 16 bytes
+0017abc0	cxx-stl	map_lookup	low	rb-tree decrement
+0017ac60	cxx-stl	map_lookup	low	rb-tree decrement
+0017ad00	cxx-stl	function_manager_heap_0x20	med	clones 0x20-byte functor
+0017ad80	cxx-stl	function_manager_heap_0x28	med	clones 0x28-byte functor
+0017ae10	cxx-stl	string_assign_move	med	SSO swap path
+0017aef0	cxx-stl	vector_assign	med	copies range, realloc on overflow
+0017b0a0	cxx-stl	string_compare	med	memcmp on min length
+0017b100	cxx-stl	vector_u64_ctor_n	med	max_size throw, 8-byte elements, memcpy
+0017b1c0	cxx-stl	rbtree_erase_recursive	med	recursive erase, 0x2a-qword nodes
+0017b2a0	util	json_object_get	low	checks type 5, scans member vector
+0017b330	cxx-stl	vector_u32_insert_range	med	range insert, memmove
+0017b6f0	util	thread_pool_create	low	hardware_concurrency picks thread count
+0017b9c0	model-compute	block512_kernel	low	size>>9 blocks, memset, max_size
+0017bbc0	model-compute	block_tensor_alloc	low	max_size, memset, size fields from struct
+0017bd30	model-compute	matrix_alloc_rows	low	divides length by dim, max_size, memset
+0017bf50	cxx-stl	string_assign_range	med	length <0x10 SSO path, memcpy
+0017bff0	cxx-stl	string_ctor_ptr_len	high	"construction from null is not valid"
+0017c0a0	cxx-stl	string_ctor_cstr	high	"construction from null is not valid", strlen
+0017c130	model-compute	dtype_buffer_alloc	low	size table lookup, rounds up to 256
+0017c750	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+0017c920	cxx-stl	map_holder_dtor	low	erases tree at +0x50 via 17c750
+0017c980	cxx-stl	struct_swap	low	moves three fields between structs
+0017cae0	unknown	large_struct_init	low	tried head: zeroes 0x2d qwords, memcpy, no strings
+0017d810	model-compute	vector_set_and_copy	low	copies int ranges, stores param at +0x18
+0017dbc0	model-compute	vector_set_and_copy	low	copies int ranges, stores param at +0x18
+0017e000	util	hash_update	low	64-byte block buffer, shifts and ors
+0017e3b0	util	hash_final	low	pads 0x80, length at 56
+0017e820	model-compute	block512_row_kernel	low	size>>9 blocks, memset, vmovhpd
+0017ec70	model-compute	block512_row_kernel	low	size>>9 blocks, memset, vmovhpd
+0017f110	model-compute	block512_row_kernel	low	size>>9 blocks, memset, vmovhpd
+0017f730	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+0017f900	cxx-stl	map_find	low	rb-tree walk
+0017fa00	cxx-stl	map_lookup	low	rb-tree decrement
+0017fb40	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+00180020	cxx-stl	insertion_sort_32byte	med	moves 4-qword elements, shifts down
+001806a0	cxx-stl	map_int_find	low	rb-tree walk comparing int keys
+00180930	cxx-stl	map_int_emplace_400	low	alloc 400-byte node, zero 0x2d qwords
+00180bd0	cxx-stl	string_replace_cstr	med	strlen, SSO threshold paths
+00180d30	cxx-stl	string_replace_cstr	med	"basic_string::_M_replace" length check
+00180fe0	cxx-stl	string_concat	med	strlen plus append into new string
+00181140	cxx-stl	string_concat	med	strlen plus append into new string
+001812a0	cxx-stl	vector_elem_dtor	low	destroys elements at +0x40..+0x48
+00181a10	cxx-stl	vector_realloc_append	med	"vector::_M_realloc_append" 64-byte elems
+00181d80	cxx-stl	vector_realloc_append	med	"vector::_M_realloc_append" 32-byte elems
+00182080	cxx-stl	vector_realloc_append	med	"vector::_M_realloc_append" 56-byte elems
+00182440	util	text_scan_next	low	advances char pointer to end, loop
+00182b30	cxx-stl	vector_copy_ctor_0x30	med	max_size throw, 48-byte elements
+00182c90	util	hex_encode	med	"0123456789abcdef", 32-byte input
+00182fa0	cxx-stl	string_copy_ctor	med	SSO copy path
+001830c0	cxx-stl	introsort_64byte_elems	med	threshold 0x200, depth limit param
+00184240	cxx-stl	sort_wrapper	med	calls 1830c0 then insertion sort 180020
+00184650	hnp-format	container_write_page_aligned	low	fwrite pad to 0xfff boundary, pack AVX
+001854f0	cxx-stl	string_ctor_ptr_len	high	"construction from null is not valid"
+001857c0	cxx-stl	string_vec_copy	low	string init then range copy
+00185ed0	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+00186180	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+00186550	model-compute	safetensors_file_dtor	low	munmap, frees maps, near 18a5b0 reader
+001867d0	util	json_parse_value	med	whitespace skip, strncmp "false", realloc_append
+00186fd0	cxx-stl	string_append	high	"basic_string::append" length check
+00187190	cxx-stl	string_concat	med	strlen plus append into new string
+00187490	model-compute	text_encoder_tensor_check	med	"the text encoder's", " is not bf16"
+00187650	model-compute	transformer_tensor_lookup	med	"the transformer's", " is not bf16"
+00187810	model-compute	tensor_convert_kernel	low	looks up tensor via 187650, AVX 64-bit multiplies
+00187c30	model-compute	time_guidance_embed_load	high	time_guidance_embed weights, exp and sincos
+00188210	util	int_to_string	med	digit-pair table 293949..., sign handling
+001887d0	cxx-stl	string_concat	med	strlen plus append into new string
+00188a90	util	name_suffix_join	low	builds name via 1887d0 and 13b890
+00188bf0	model-compute	image_model_weight_load	low	"/text_encoder" path, bf16 AVX, max_size, 41 callees
+0018a5b0	model-compute	safetensors_open	med	mmap, "dtype", "data_offsets", "is not a safetensors file"
+0018b1d0	util	json_value_dump	low	2339B, string append/create, no other strings
+0018bbb0	util	json_parse_error_throw	med	string ' is not valid JSON'
+0018bce0	model-compute	flux_model_index_load	high	/model_index.json, Flux2KleinPipeline strings
+0018bf30	util	json_string_escape	low	string append only, 856B
+0018c2c0	util	json_escape_hex	med	'\x%02x' format, push_back
+0018c730	util	json_build_vector_string	low	vector size check plus string append
+0018d040	model-compute	classifier_weights_load	med	strings score, classify, L%02d/
+00190460	hnp-format	hnp_manifest_vocab_files	low	strings vocab, 0x%08x, source, files
+00193a30	model-compute	qwen35_linear_attn_tensor_names	med	linear_attn, conv1d.weight, dt_bias strings
+00194620	model-compute	weight_name_assembly	low	string/vector inserts, 8870B, near weight loaders
+00196980	model-compute	flux_dit_config_load	high	/transformer/config.json, num_attention_heads strings
+0019b610	model-compute	hf_checkpoint_config_load	high	holds no config.json, Qwen3.5-0.8B, text_config strings
+0019ffb0	cxx-stl	rb_tree_emplace_node	med	_Znwm 0x30 node insert
+001a01e0	model-compute	float_kernel_3290	low	float math params, no strings
+001a0f20	model-compute	layer_weights_load	med	L%02d/, input_layernorm.weight strings
+001a6890	model-compute	score_head_load	low	string score, vector size check
+001a7be0	util	string_split_parse	low	substr range checks, 65 callees
+001aa8c0	crt-runtime	FUN_001aa8c0	low	tiny stub or thunk (PLT/GOT style)
+001aa8d0	crt-runtime	FUN_001aa8d0	low	tiny stub or thunk (PLT/GOT style)
+001aa8e0	cxx-stl	vector_dtor_free	med	same body as flash_serve 018d00d0
+001aa910	util	bytes_compare_ref	low	memcmp on span, no strings
+001aaa50	cxx-stl	fs_path_dtor	high	calls filesystem path _List deleter
+001aaa90	cxx-stl	tree_node_free_or_wrapper_019c7860	med	same body as flash_serve 019c7860
+001aaad0	util	json_skip_ws	med	whitespace mask 0x100002600
+001aab10	cxx-stl	string_create_helper	med	basic_string::_M_create string
+001aaf00	cxx-stl	vector_realloc_append	high	vector::_M_realloc_append string
+001ab190	cxx-stl	string_vector_dtor	med	frees string and vector buffers
+001ab1d0	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapER	high	mangled libstdc++ or operator new/delete name
+001ab790	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_b	high	mangled libstdc++ or operator new/delete name
+001ab8d0	util	json_parse_token	low	byte scan on cursor pair
+001abb60	cxx-stl	fs_path_copy	med	filesystem path _List ctor
+001abcd0	util	json_parse_helper	low	749B, 10 callees, no strings
+001ac000	cxx-stl	rb_tree_erase	med	node loop, offset 0x18 children
+001ac3d0	model-compute	safetensors_file_dtor	med	munmap loop over mapped ranges
+001ac4a0	cxx-stl	fs_path_substr	med	path _M_find_extension, substr
+001ac740	cxx-stl	vector_realloc_append	high	vector::_M_realloc_append string
+001ac9a0	cxx-stl	string_create_helper	med	basic_string::_M_create string
+001acb00	cxx-stl	vector_copy	med	vector size check plus memcpy
+001acbe0	cxx-stl	vector_helper	low	143B small, no strings
+001acc80	cxx-stl	vector_helper	low	123B small, no strings
+001acd40	cxx-stl	vector_string_dtor	high	frees each 48B string element
+001acdc0	model-compute	safetensors_open_map	high	strings is not a safetensors file, cannot map
+001adf00	model-compute	safetensors_helper	low	callee of safetensors region, no strings
+001ae120	model-compute	safetensors_helper	low	241B, near safetensors reader
+001ae240	cxx-stl	string_create_helper	low	basic_string::_M_create string
+001ae360	util	small_helper	low	161B single callee
+001ae440	model-compute	dtype_convert_kernel	low	float/double SIMD math, 669B
+001ae700	cxx-stl	memcpy_wrapper	low	135B one callee
+001ae7a0	cxx-stl	memcpy_wrapper	med	only memcpy call
+001ae880	util	small_helper	low	103B 2 callees
+001ae900	model-compute	tensor_helper	low	880B in weight-loader region
+001aecc0	cxx-stl	string_ctor_cstr	high	construction from null, strlen, memcpy
+001aed50	xrt-device	bo_holder_dtor	high	calls xrt::bo::~bo
+001aef90	model-compute	dtype_convert_kernel	low	loop kernel 974B
+001af400	model-compute	dtype_convert_kernel	low	float loop kernel 1434B
+001af9d0	xrt-device	xrt_obj_dtor	low	called by hw_context holder dtor 001b1e10
+001afdb0	xrt-device	xrt_obj_dtor	low	called by hw_context holder dtor 001b1e10
+001afe60	xrt-device	xrt_obj_dtor	low	called by hw_context holder dtor 001b1e10
+001aff40	cxx-stl	container_helper	low	742B 5 callees no strings
+001b0290	cxx-stl	rb_tree_erase	med	same node loop shape as 001ac000
+001b0580	cxx-stl	rb_tree_erase	med	same node loop shape as 001ac000
+001b0870	cxx-stl	string_replace	med	_M_replace_cold, strlen, memcpy
+001b09d0	xrt-device	kernel_holder_dtor	high	calls xrt::kernel::~kernel
+001b0d20	cxx-stl	rb_tree_insert	high	Rb_tree_insert_and_rebalance
+001b0fb0	cxx-stl	rb_tree_insert	low	565B similar to 001b0d20
+001b1230	model-compute	tensor_op	low	1620B, 4 callees, no strings
+001b18b0	model-compute	tensor_op	low	1326B, 4 callees, no strings
+001b1e10	xrt-device	device_ctx_bundle_dtor	high	frees hw_context, bo, kernel
+001b2280	xrt-device	bundle_map_erase	low	tree erase near xrt bundle dtors
+001b24c0	xrt-device	bundle_map_dtor	med	loops nodes calling 001b1e10 bundle dtor
+001b2510	util	small_dtor	low	calls 00162ec0 then free
+001b2620	hnp-format	blob_size_checksum_check	high	strings wrong size or checksum, is missing
+001b2f40	util	map_lookup_throw	med	map::at, memcmp
+001b3100	util	string_concat	low	string append/create
+001b3590	model-compute	decode_kv_setup	med	strings decode/KV
+001b43c0	model-compute	tokenizer_or_prompt_parse	low	substr, realloc_append, 9485B
+001b6940	model-compute	decode_plan_load	med	strings decode, kinds, vocab
+001b8540	model-compute	softmax_sampling	low	calls exp, vector reserve
+001ba230	model-compute	token_ids_validate_embed	med	string token id outside vocabulary
+001be540	cxx-stl	struct_dtor	low	frees vector and string members
+001be580	cxx-stl	to_string_digits	med	00..99 digit pair table string
+001be890	util	small_helper	low	106B one callee
+001be910	model-compute	simd_kernel	low	556B AVX float, no callees
+001beb40	model-compute	parallel_task_kernel	low	float loops, no callers (indirect)
+001bec70	model-compute	parallel_task_kernel	low	120B no callees, no callers
+001becf0	model-compute	parallel_task_kernel	low	54B no callees, no callers
+001bed30	model-compute	parallel_task_kernel	low	185B no callees, no callers
+001bedf0	model-compute	parallel_task_kernel	low	332B no callees, no callers
+001bef50	util	parallel_for	med	12 callers, shifts <<12, calls FUN_0015e310 with fn
+001befc0	util	parallel_for_wrapper	low	215B calls 001bef50
+001bf0b0	util	parallel_for_task_alloc	med	_Znwm, calls 001bef50
+001bf1c0	util	now_ms	high	clock_gettime(2) returns double
+001bf200	cxx-stl	std_function_manager	high	op 0/1/2 type_info manager
+001bf230	cxx-stl	std_function_manager	high	op 0/1/2 manager, 43B
+001bf260	cxx-stl	std_function_manager	high	op 0/1/2 manager, 43B
+001bf290	util	parallel_for_task_alloc	med	_Znwm, calls 001bef50
+001bf390	util	parallel_for_task_alloc	med	_Znwm, calls 001bef50, 001beb40
+001bf480	model-compute	simd_kernel	low	1901B SSE loop, no strings
+001bfbf0	model-compute	parallel_task_kernel	low	float loops, no callers
+001bfeb0	util	thunk	low	39B one callee
+001bfee0	cxx-stl	std_function_manager	med	117B op switch pattern
+001bff60	cxx-stl	std_function_manager	med	117B op switch pattern
+001bffe0	cxx-stl	std_function_manager	high	16B op manager
+001bfff0	util	small_helper	low	82B 2 callees
+001c0060	cxx-stl	std_function_manager	med	op 1/2 clone pattern
+001c00e0	cxx-stl	std_function_manager	med	op 1/2 clone pattern
+001c0180	cxx-stl	std_function_manager	med	op switch pattern
+001c0200	cxx-stl	std_function_manager	med	op switch pattern
+001c02a0	cxx-stl	std_function_manager	med	op switch pattern
+001c0330	cxx-stl	std_function_manager	med	op switch pattern
+001c03c0	cxx-stl	std_function_manager	med	op switch pattern
+001c0450	cxx-stl	std_function_manager	med	op switch pattern
+001c04e0	cxx-stl	std_function_manager	med	op switch pattern
+001c0570	cxx-stl	std_function_manager	med	op switch pattern
+001c05f0	cxx-stl	std_function_manager	med	op switch pattern
+001c0680	cxx-stl	std_function_manager	med	op switch pattern
+001c0710	cxx-stl	std_function_manager	med	op switch pattern
+001c07a0	cxx-stl	std_function_manager	med	op switch pattern
+001c0830	cxx-stl	std_function_manager	med	op switch pattern
+001c08c0	cxx-stl	std_function_manager	med	op switch pattern
+001c0950	cxx-stl	std_function_manager	med	op switch pattern
+001c09e0	cxx-stl	std_function_manager	med	op switch pattern
+001c0a70	cxx-stl	std_function_manager	med	op switch pattern
+001c0b10	cxx-stl	std_function_manager	med	op switch pattern
+001c0bb0	cxx-stl	std_function_manager	med	op switch pattern
+001c0c50	cxx-stl	std_function_manager	med	op switch pattern
+001c0cd0	cxx-stl	std_function_manager	med	op switch pattern
+001c0d50	cxx-stl	vector_assign	high	vector<uint> copy assign
+001c0f10	cxx-stl	string_move_assign	high	SSO buffer compare, memcpy
+001c0ff0	util	small_helper	low	74B one callee, no callers
+001c1050	util	noop_stub	low	61B no callees
+001c1090	cxx-stl	string_compare	high	memcmp then length diff
+001c10f0	model-compute	threaded_tensor_kernel	low	4962B, pthread_mutex, float math
+001c2470	util	thunk_deref_args	high	forwards to 001c10f0
+001c2480	cxx-stl	string_move_ctor	med	138B, 5 callers
+001c2520	cxx-stl	string_ctor_cstr	high	construction from null, strlen, 21 callers
+001c25b0	model-compute	tensor_kernel	low	4276B, 3 callees, no strings
+001c3670	util	thunk	low	12B one callee
+001c3680	xrt-device	bo_map_dtor	low	tree erase, called by bo holder dtor
+001c36f0	util	small_helper	low	449B 3 callees
+001c38c0	model-compute	tensor_kernel	low	12030B, 5 callees, no strings
+001c6870	util	thunk	low	12B one callee
+001c6880	model-compute	norm_kernel	med	sqrt, vsubps, memset
+001c6a70	model-compute	norm_kernel	med	sqrt, vsubps AVX
+001c7660	util	thunk	low	12B one callee
+001c7670	cxx-stl	map_find_string	med	memcmp key compare
+001c7770	cxx-stl	map_find_string	med	Rb_tree_decrement, memcmp
+001c78b0	cxx-stl	map_find_string	med	same 288B shape as 001c7770
+001c79f0	cxx-stl	map_find_string	med	same 288B shape as 001c7770
+001c7b30	cxx-stl	map_find_string	med	same 288B shape as 001c7770
+001c7c70	cxx-stl	map_find_string	med	same 288B shape as 001c7770
+001c7db0	cxx-stl	map_find_string	med	same 288B shape as 001c7770
+001c7ef0	cxx-stl	container_dtor	low	975B frees nodes, no strings
+001c82d0	xrt-device	bo_holder_dtor	high	calls xrt::bo::~bo
+001c83c0	cxx-stl	rb_tree_erase	med	node loop 736B
+001c86b0	util	parallel_for_task_alloc	med	_Znwm, calls 001bef50, 001beb40
+001c87d0	util	small_helper	low	32B no callees
+001c87f0	cxx-stl	map_insert_string	med	Rb_tree incr/decr, string compare 001c1090
+001c8960	util	parallel_for_task_alloc	med	_Znwm, calls 001bef50, 001bf390
+001c8ab0	util	parallel_for_task_alloc	med	same 317B shape as 001c8960
+001c8c00	cxx-stl	rb_tree_navigate	med	Rb_tree incr/decr
+001c8e30	cxx-stl	rb_tree_navigate	med	Rb_tree incr/decr
+001c8eb0	util	small_helper	low	21B no callees
+001c9048	crt-runtime	FUN_001c9048	low	tiny stub or thunk (PLT/GOT style)
+001c9050	cxx-stl	string_replace	med	_M_replace_cold, memcpy
+001c9300	model-compute	simd_quant_kernel	low	AVX pack/ldexp kernel
+001ca170	model-compute	tensor_kernel	low	3840B, 3 callees, no strings
+001cb110	model-compute	tensor_kernel	low	4632B, 3 callees, no strings
+001cc390	model-compute	vector_kernel	low	AVX, sqrt, memset, calls 001cb110
+001ccc10	logging-diag	flux_timing_report	high	string total %.0f ms: text, dit (device, host
+001ccd60	model-compute	activation_ctx_lookup	low	string Actx2, calls 001e2ce0
+001cce80	model-compute	activation_ctx_helper	low	249B same callee set as 001ccd60
+001ccf90	model-compute	activation_ctx_helper	low	258B same callee set as 001ccd60
+001cd0b0	model-compute	activation_ctx_helper	low	154B near 001ccd60
+001cd160	model-compute	activation_ctx_helper	low	161B near 001ccd60
+001cd210	util	small_helper	low	96B no callees
+001cd270	model-compute	tensor_kernel	low	5063B, map::at, ldexp
+001ce700	model-compute	tensor_op	low	map::at, memcmp, calls 001ca170
+001cea20	model-compute	tensor_op	low	750B near 001ce700
+001ced30	model-compute	tensor_op	low	240B calls 001bf0b0, 001e2ce0
+001cee40	model-compute	tensor_op	low	239B near 001ced30
+001cef50	cxx-stl	map_insert_string	med	string compare, move ctor
+001cf250	xrt-device	kernel_holder_dtor	high	calls xrt::kernel::~kernel
+001cf540	cxx-stl	string_holder_dtor	med	_M_dispose, 677B
+001cf7f0	cxx-stl	string_holder_dtor	med	same 677B shape
+001cfaa0	cxx-stl	string_holder_dtor	med	same 677B shape
+001cfd50	util	string_concat	low	string append/create
+001d0010	util	string_concat	low	string append/create
+001d0310	util	string_concat	low	string append/create
+001d0890	hnp-format	hnpm_devices_path	med	strings flux2 and /devices.hnpm
+001d0e40	npu-protocol	reply_json_proto_model	med	string {"proto":1,"model":{"name":
+001d1bd0	xrt-device	bundle_dtor_wrapper	low	calls 001e38b0 bundle dtor
+001d1f30	config-env	flux_env_read	high	HALOGEN_NPU_FLUX_WAKE, LEDGER, REUSE, HOST
+001d2540	xrt-device	engine_teardown	med	xrt::device dtor, thread join
+001d29f0	model-compute	vector_resize_fill	low	vector::_M_default_append, calls 001bef50
+001d3010	util	small_helper	low	73B one callee
+001d3060	util	small_helper	low	73B one callee
+001d30b0	model-compute	tokenizer_encode	low	12549B, substr, realloc_append
+001d6480	model-compute	tokenizer_family_load	med	strings tokenizer, family, vocab checks
+001d74e0	model-compute	te_stage_put	med	te put, now_ms timing
+001d76a0	model-compute	te_put	med	string 'te put'
+001d7840	model-compute	dit_stage_pull	med	timing, calls 00156cb0
+001d7a10	model-compute	dit_pull	med	string 'dit pull'
+001d7ac0	model-compute	tensor_name_resolve	low	map::at, substr
+001d88b0	xrt-device	run_wait	low	string 'wait '
+001d9000	util	thunk	low	51B calls 001d88b0
+001d9040	model-compute	te_pull_conv_resid	med	strings te pull, te conv, te resid
+001d9aa0	model-compute	te_pull_conv	med	strings te pull, te conv
+001da390	model-compute	dit_resid_norm	med	string dit resid norm
+001da680	model-compute	dit_xemb_put	med	strings dit xemb in/out, k_xemb
+001dcbf0	xrt-device	device_required_check	med	string no device set at
+001dcda0	model-compute	te_embed_norm	med	strings te embed, te norm in
+001df900	model-compute	dit_euler_decode	med	strings dit euler, decode, te ctx alloc
+001e1700	util	thunk	low	15B one callee
+001e1710	util	thunk	low	33B calls 2
+001e1740	util	worker_thread_loop	med	setaffinity, nanosleep, sched_yield
+001e1970	cxx-stl	vector_helper	low	240B small
+001e1a60	cxx-stl	map_find_string	low	288B same shape as 001c7770
+001e1ba0	cxx-stl	map_find_string	low	288B same shape as 001c7770
+001e1ce0	xrt-device	run_holder_dtor	high	calls xrt::run::~run
+001e1db0	model-compute	simd_kernel	med	vmaxps, vminps, vpackusdw, no callees
+001e1f80	model-compute	sincos_embedding	med	logf, sincosf, sqrtf
+001e2a10	util	small_helper	low	541B one callee
+001e2c40	util	small_helper	low	151B one callee
+001e2ce0	util	map_at_wrapper	med	map::at, 17 callers
+001e2de0	util	thread_pool_dtor	med	thread join, terminate
+001e2e80	cxx-stl	container_dtor	low	849B string dispose
+001e31e0	cxx-stl	container_dtor	low	1476B 3 callees
+001e37b0	util	map_at_wrapper	med	map::at
+001e38b0	xrt-device	engine_bundle_dtor	high	hw_context, kernel dtors, bundle dtors
+001e3c70	cxx-stl	map_insert_string	med	Rb_tree insert, string compare
+001e3fb0	cxx-stl	map_insert_string	med	Rb_tree insert, same shape
+001e4300	cxx-stl	map_find_string	med	memcmp, 11 callers
+001e4430	util	timed_call_wrapper	low	bad_function_call, now_ms, 001e4300
+001e4530	util	small_helper	low	131B 3 callees
+001e45c0	util	small_helper	low	82B 3 callees
+001e4620	util	file_read_all	med	fopen, fread, fclose
+001e47f0	config-env	cli_subcommand_main	med	usage: halogen-npu flux noise SEED RES OUT
+001e7940	model-compute	simd_kernel	low	4807B, no callees
+001e8c10	util	thunk	low	119B one callee
+001e8c90	model-compute	parallel_task_kernel	low	399B no callees no callers
+001e8e20	model-compute	parallel_task_kernel	low	388B no callees no callers
+001e8fb0	util	memcpy_wrapper	low	224B memcpy
+001e9090	model-compute	simd_kernel	low	1820B no callees no callers
+001e97b0	util	thunk	low	15B one callee
+001e97c0	util	thunk	low	33B 2 callees
+001e97f0	util	small_helper	low	43B no callees
+001e9820	cxx-stl	std_function_manager	low	122B op switch pattern
+001e98b0	cxx-stl	std_function_manager	low	122B op switch pattern
+001e9940	cxx-stl	std_function_manager	low	110B op switch pattern
+001e99c0	cxx-stl	std_function_manager	low	119B op switch pattern
+001e9a50	util	small_helper	low	96B no callees
+001e9ab0	util	thread_pool_start	med	std::thread start, realloc_append
+001e9e60	util	thread_pool_ctor	low	vector alloc, calls 001e9ab0
+001ea080	util	small_helper	low	1283B 2 callees
+001ea590	model-compute	tensor_vector_op	low	vector alloc, calls 001e8c90, 001e8e20
+001eb490	util	string_concat	low	string append/create
+001eb920	model-compute	weight_check_dtype_shape	high	strings unexpected dtype or shape, is missing
+001ec5f0	model-compute	weight_load_bias	med	strings .bias, .weight
+001ecb90	model-compute	conv_weights_load	med	strings conv.0, conv.4, pool.0
+001eebb0	crt-runtime	_DT_FINI	med	same body as flash_serve 019f4298
+00215000	crt-runtime	got___errno_location	med	same body as flash_serve 01a00100
+00215008	crt-runtime	got_printf	med	same body as flash_serve 01a00060
+00215010	cxx-stl	_ZNSt8__detail15_List_node_base7_M_hookEPS0_	high	mangled libstdc++ or operator new/delete name
+00215018	crt-runtime	syscall	low	tiny stub or thunk (PLT/GOT style)
+00215028	crt-runtime	got_bind	med	same body as flash_serve 01a000b0
+00215030	cxx-stl	got__ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS	med	same body as flash_serve 01a00238
+00215038	crt-runtime	_ZN3xrt2bo4syncE18xclBOSyncDirectionmm	low	tiny stub or thunk (PLT/GOT style)
+00215040	cxx-stl	_ZNKSt10filesystem7__cxx114path16lexically_normalEv	high	mangled libstdc++ or operator new/delete name
+00215048	cxx-stl	_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE	high	mangled libstdc++ or operator new/delete name
+00215050	crt-runtime	got_socket	med	same body as flash_serve 01a00098
+00215058	cxx-stl	_ZNKSt10filesystem7__cxx114path5_List13_Impl_deleterclEPNS2_	high	mangled libstdc++ or operator new/delete name
+00215060	cxx-stl	_ZNSt10filesystem7__cxx114path5_ListC1Ev	high	mangled libstdc++ or operator new/delete name
+00215068	crt-runtime	_ZN3xrt2boC1ERKS0_mm	low	tiny stub or thunk (PLT/GOT style)
+00215070	cxx-stl	got__ZSt9terminatev	med	same body as flash_serve 01a002e8
+00215078	cxx-stl	got__ZNSt18condition_variable4waitERSt11unique_lockISt5mutexE	med	same body as flash_serve 01a003d0
+00215080	cxx-stl	got__ZNSt8ios_baseC2Ev	med	same body as flash_serve 01a001b8
+00215088	crt-runtime	nanosleep	low	tiny stub or thunk (PLT/GOT style)
+00215090	crt-runtime	got_accept	med	same body as flash_serve 01a00110
+00215098	crt-runtime	got_recv	med	same body as flash_serve 01a00250
+002150a0	cxx-stl	got__ZNSt8ios_baseD2Ev	med	same body as flash_serve 01a00220
+002150a8	cxx-stl	_ZNSt10filesystem7__cxx1118directory_iteratorppEv	high	mangled libstdc++ or operator new/delete name
+002150b0	crt-runtime	write	low	tiny stub or thunk (PLT/GOT style)
+002150b8	cxx-stl	got__ZSt17__throw_bad_allocv	med	same body as flash_serve 01a002b8
+002150c0	cxx-stl	_ZNSo9_M_insertIxEERSoT_	high	mangled libstdc++ or operator new/delete name
+002150c8	cxx-stl	got__ZSt25__throw_bad_function_callv	med	same body as flash_serve 01a00518
+002150d0	cxx-stl	_ZNSt10filesystem6statusERKNS_7__cxx114pathE	high	mangled libstdc++ or operator new/delete name
+002150d8	crt-runtime	got___cxa_begin_catch	med	same body as flash_serve 01a002c0
+002150e0	cxx-stl	_ZNKSt10filesystem7__cxx114path17_M_find_extensionEv	high	mangled libstdc++ or operator new/delete name
+002150e8	crt-runtime	sincosf	low	tiny stub or thunk (PLT/GOT style)
+002150f0	crt-runtime	got_strlen	med	same body as flash_serve 01a00058
+002150f8	crt-runtime	got_memcmp	med	same body as flash_serve 01a003a8
+00215100	crt-runtime	_ZN3xrt3runD1Ev	low	tiny stub or thunk (PLT/GOT style)
+00215108	cxx-stl	got__ZNSt6thread6_StateD2Ev	med	same body as flash_serve 01a003c8
+00215110	cxx-stl	got__ZNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEE	med	same body as flash_serve 01a002d8
+00215118	crt-runtime	got_strncmp	med	same body as flash_serve 01a00420
+00215120	crt-runtime	got___isoc23_fscanf	med	same body as flash_serve 01a00580
+00215128	cxx-stl	got__ZNSt18condition_variable10notify_oneEv	med	same body as flash_serve 01a00650
+00215130	crt-runtime	got_send	med	same body as flash_serve 01a001f8
+00215138	crt-runtime	got___isoc23_strtoll	med	same body as flash_serve 01a00050
+00215140	cxx-stl	_ZNSt8__detail15_List_node_base11_M_transferEPS0_S1_	high	mangled libstdc++ or operator new/delete name
+00215148	cxx-stl	got__ZSt20__throw_length_errorPKc	med	same body as flash_serve 01a00190
+00215150	crt-runtime	got_memset	med	same body as flash_serve 01a00028
+00215158	crt-runtime	getrusage	low	tiny stub or thunk (PLT/GOT style)
+00215160	crt-runtime	got_munmap	med	same body as flash_serve 01a006b8
+00215168	cxx-stl	_ZSt8to_charsPcS_dSt12chars_format	high	mangled libstdc++ or operator new/delete name
+00215170	cxx-stl	got__ZSt28_Rb_tree_rebalance_for_erasePSt18_Rb_tree_node_baseRS_	med	same body as flash_serve 01a00268
+00215178	cxx-stl	_ZSt24__throw_invalid_argumentPKc	high	mangled libstdc++ or operator new/delete name
+00215180	crt-runtime	sincos	low	tiny stub or thunk (PLT/GOT style)
+00215188	crt-runtime	_ZNK3xrt3run4waitERKNSt6chrono8durationIlSt5ratioILl1ELl1000	low	tiny stub or thunk (PLT/GOT style)
+00215190	crt-runtime	got_rename	med	same body as flash_serve 01a00340
+00215198	crt-runtime	_ZNK3xrt3run5stateEv	low	tiny stub or thunk (PLT/GOT style)
+002151a0	crt-runtime	got_vsnprintf	med	same body as flash_serve 01a004e0
+002151a8	cxx-stl	_ZNKSt10filesystem7__cxx114path5_List3endEv	high	mangled libstdc++ or operator new/delete name
+002151b0	crt-runtime	got___cxa_guard_release	med	same body as flash_serve 01a00138
+002151b8	cxx-stl	got__ZSt20__throw_system_errori	med	same body as flash_serve 01a00180
+002151c0	crt-runtime	_ZN3xrt6deviceD1Ev	low	tiny stub or thunk (PLT/GOT style)
+002151c8	cxx-stl	_ZNSo9_M_insertImEERSoT_	high	mangled libstdc++ or operator new/delete name
+002151d0	cxx-stl	got__ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base	med	same body as flash_serve 01a00230
+002151e0	cxx-stl	got__ZSt19__throw_logic_errorPKc	med	same body as flash_serve 01a00128
+002151e8	crt-runtime	_ZN3xrt2boC1ERKNS_6deviceEmNS0_5flagsEj	low	tiny stub or thunk (PLT/GOT style)
+002151f0	crt-runtime	got_open	med	same body as flash_serve 01a00150
+002151f8	crt-runtime	aligned_alloc	low	tiny stub or thunk (PLT/GOT style)
+00215200	crt-runtime	_ZNKRSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3s	low	tiny stub or thunk (PLT/GOT style)
+00215208	crt-runtime	got___libc_start_main	med	same body as flash_serve 01a00000
+00215210	crt-runtime	pthread_mutex_unlock	low	tiny stub or thunk (PLT/GOT style)
+00215218	crt-runtime	got_strtod	med	same body as flash_serve 01a00168
+00215220	cxx-stl	got__ZSt28__throw_bad_array_new_lengthv	med	same body as flash_serve 01a002b0
+00215228	cxx-stl	_ZNSt10filesystem7__cxx114path14_M_split_cmptsEv	high	mangled libstdc++ or operator new/delete name
+00215230	crt-runtime	got_sqrt	med	same body as flash_serve 01a00528
+00215238	crt-runtime	got_memcpy	med	same body as flash_serve 01a00068
+00215240	crt-runtime	got___cxa_atexit	med	same body as flash_serve 01a00470
+00215248	crt-runtime	pthread_self	low	tiny stub or thunk (PLT/GOT style)
+00215250	cxx-stl	got__ZNSt6thread15_M_start_threadESt10unique_ptrINS_6_StateESt14	med	same body as flash_serve 01a00378
+00215258	crt-runtime	clock_gettime	low	tiny stub or thunk (PLT/GOT style)
+00215260	crt-runtime	_ZN3xrt6kernelD2Ev	low	tiny stub or thunk (PLT/GOT style)
+00215268	cxx-stl	_ZNKSt10filesystem7__cxx114path7compareERKS1_	high	mangled libstdc++ or operator new/delete name
+00215270	crt-runtime	_ZN3xrt3run5startEv	low	tiny stub or thunk (PLT/GOT style)
+00215278	crt-runtime	got_fclose	med	same body as flash_serve 01a00308
+00215280	cxx-stl	got__Znwm	med	same body as flash_serve 01a00070
+00215288	cxx-stl	got__ZdlPvm	med	same body as flash_serve 01a00030
+00215290	cxx-stl	got__ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base	med	same body as flash_serve 01a00228
+00215298	crt-runtime	_ZN3xrt10hw_contextC1ERKNS_6deviceERKNS_3elfE	low	tiny stub or thunk (PLT/GOT style)
+002152a0	crt-runtime	got_fseek	med	same body as flash_serve 01a004e8
+002152a8	crt-runtime	got_memchr	med	same body as flash_serve 01a00670
+002152b0	crt-runtime	fputs	low	tiny stub or thunk (PLT/GOT style)
+002152b8	crt-runtime	got_listen	med	same body as flash_serve 01a000b8
+002152c0	cxx-stl	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostrea	high	mangled libstdc++ or operator new/delete name
+002152c8	cxx-stl	got__ZNKSt5ctypeIcE13_M_widen_initEv	med	same body as flash_serve 01a005d0
+002152d0	cxx-stl	got__ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base	med	same body as flash_serve 01a00260
+002152d8	crt-runtime	got_fflush	med	same body as flash_serve 01a000e0
+002152e0	crt-runtime	got_fopen	med	same body as flash_serve 01a002f8
+002152e8	crt-runtime	signal	low	tiny stub or thunk (PLT/GOT style)
+002152f0	crt-runtime	free	low	tiny stub or thunk (PLT/GOT style)
+002152f8	crt-runtime	got_getenv	med	same body as flash_serve 01a00040
+00215308	crt-runtime	_ZN3xrt10hw_contextD1Ev	low	tiny stub or thunk (PLT/GOT style)
+00215310	crt-runtime	got_fputc	med	same body as flash_serve 01a00208
+00215318	crt-runtime	__isoc23_strtoul	low	tiny stub or thunk (PLT/GOT style)
+00215320	crt-runtime	getaddrinfo	low	tiny stub or thunk (PLT/GOT style)
+00215328	cxx-stl	got__ZSt16__throw_bad_castv	med	same body as flash_serve 01a005c8
+00215330	cxx-stl	got__ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_	med	same body as flash_serve 01a001e0
+00215340	crt-runtime	prctl	low	tiny stub or thunk (PLT/GOT style)
+00215348	crt-runtime	freeaddrinfo	low	tiny stub or thunk (PLT/GOT style)
+00215350	cxx-stl	got__ZNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE7_M_	med	same body as flash_serve 01a001d8
+00215358	cxx-stl	got__ZNKSt8__detail20_Prime_rehash_policy14_M_need_rehashEmmm	med	same body as flash_serve 01a00298
+00215360	cxx-stl	got__ZNSt6chrono3_V212steady_clock3nowEv	med	same body as flash_serve 01a00200
+00215368	cxx-stl	got__ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streamb	med	same body as flash_serve 01a001c0
+00215370	cxx-stl	_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE	high	mangled libstdc++ or operator new/delete name
+00215378	crt-runtime	ldexpf	low	tiny stub or thunk (PLT/GOT style)
+00215380	crt-runtime	pipe	low	tiny stub or thunk (PLT/GOT style)
+00215388	crt-runtime	__isoc23_strtoull	low	tiny stub or thunk (PLT/GOT style)
+00215390	crt-runtime	shutdown	low	tiny stub or thunk (PLT/GOT style)
+00215398	crt-runtime	sched_getcpu	low	tiny stub or thunk (PLT/GOT style)
+002153a0	cxx-stl	_ZNSt6thread20hardware_concurrencyEv	high	mangled libstdc++ or operator new/delete name
+002153a8	cxx-stl	got__ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_re	med	same body as flash_serve 01a006c0
+002153b0	crt-runtime	got_strcmp	med	same body as flash_serve 01a00328
+002153b8	cxx-stl	got__ZNSt18condition_variableC1Ev	med	same body as flash_serve 01a00330
+002153c0	cxx-stl	got__ZNSt6localeD1Ev	med	same body as flash_serve 01a00218
+002153c8	crt-runtime	got_fprintf	med	same body as flash_serve 01a00088
+002153d0	crt-runtime	read	low	tiny stub or thunk (PLT/GOT style)
+002153d8	cxx-stl	_ZSt20__throw_out_of_rangePKc	high	mangled libstdc++ or operator new/delete name
+002153e0	crt-runtime	got___cxa_rethrow	med	same body as flash_serve 01a002c8
+002153e8	crt-runtime	sched_yield	low	tiny stub or thunk (PLT/GOT style)
+002153f0	crt-runtime	got_pthread_mutex_lock	med	same body as flash_serve 01a00170
+002153f8	crt-runtime	got_fread	med	same body as flash_serve 01a00300
+00215400	crt-runtime	poll	low	tiny stub or thunk (PLT/GOT style)
+00215408	cxx-stl	got__ZSt24__throw_out_of_range_fmtPKcz	med	same body as flash_serve 01a00458
+00215410	crt-runtime	ldexp	low	tiny stub or thunk (PLT/GOT style)
+00215418	crt-runtime	got_puts	med	same body as flash_serve 01a00090
+00215420	crt-runtime	got_strnlen	med	same body as flash_serve 01a00570
+00215428	cxx-stl	got__ZSt21ios_base_library_initv	med	same body as flash_serve 01a00700
+00215430	crt-runtime	got_fgets	med	same body as flash_serve 01a00578
+00215438	crt-runtime	tanhf	low	tiny stub or thunk (PLT/GOT style)
+00215440	crt-runtime	_ZN3xrt6deviceC1Ej	low	tiny stub or thunk (PLT/GOT style)
+00215450	cxx-stl	_ZNSt10filesystem8absoluteERKNS_7__cxx114pathE	high	mangled libstdc++ or operator new/delete name
+00215458	crt-runtime	got_snprintf	med	same body as flash_serve 01a000d0
+00215460	crt-runtime	got_memmove	med	same body as flash_serve 01a00108
+00215468	cxx-stl	_ZNSt8__detail15_List_node_base9_M_unhookEv	high	mangled libstdc++ or operator new/delete name
+00215470	crt-runtime	got___cxa_end_catch	med	same body as flash_serve 01a002d0
+00215478	crt-runtime	got___gxx_personality_v0	med	same body as flash_serve 01a00490
+00215480	crt-runtime	got_expf	med	same body as flash_serve 01a00540
+00215488	crt-runtime	got_fstat	med	same body as flash_serve 01a00678
+00215490	crt-runtime	_ZN3xrt2bo3mapEv	low	tiny stub or thunk (PLT/GOT style)
+00215498	crt-runtime	_ZN3xrt3runC1ERKNS_6kernelE	low	tiny stub or thunk (PLT/GOT style)
+002154a0	cxx-stl	_ZNSt18condition_variable10notify_allEv	high	mangled libstdc++ or operator new/delete name
+002154a8	cxx-stl	got__ZNSt6thread4joinEv	med	same body as flash_serve 01a00390
+002154b0	cxx-stl	_ZNSolsEi	high	mangled libstdc++ or operator new/delete name
+002154b8	crt-runtime	got_pow	med	same body as flash_serve 01a00598
+002154c0	cxx-stl	_ZNSt10filesystem7__cxx1118directory_iteratorC1ERKNS0_4pathE	high	mangled libstdc++ or operator new/delete name
+002154c8	crt-runtime	_ZN3xrt2boD1Ev	low	tiny stub or thunk (PLT/GOT style)
+002154d0	crt-runtime	pthread_setaffinity_np	low	tiny stub or thunk (PLT/GOT style)
+002154d8	crt-runtime	_ITM_deregisterTMCloneTable	low	tiny stub or thunk (PLT/GOT style)
+002154e0	crt-runtime	got__Unwind_Resume	med	same body as flash_serve 01a00148
+002154e8	crt-runtime	mmap	low	tiny stub or thunk (PLT/GOT style)
+002154f0	crt-runtime	got_setsockopt	med	same body as flash_serve 01a000a0
+002154f8	crt-runtime	_ZN3xrt3ext6kernelC1ERKNS_10hw_contextERKNSt7__cxx1112basic_	low	tiny stub or thunk (PLT/GOT style)
+00215500	crt-runtime	got_exp	med	same body as flash_serve 01a002a8
+00215508	crt-runtime	remove	low	tiny stub or thunk (PLT/GOT style)
+00215510	crt-runtime	got___cxa_guard_acquire	med	same body as flash_serve 01a00130
+00215518	cxx-stl	got__ZNSt18condition_variableD1Ev	med	same body as flash_serve 01a00380
+00215520	crt-runtime	sqrtf	low	tiny stub or thunk (PLT/GOT style)
+00215528	cxx-stl	_ZNKSt10filesystem7__cxx1118directory_iteratordeEv	high	mangled libstdc++ or operator new/delete name
+00215530	cxx-stl	_ZSt7getlineIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T	high	mangled libstdc++ or operator new/delete name
+00215538	crt-runtime	logf	low	tiny stub or thunk (PLT/GOT style)
+00215540	crt-runtime	_ZN3xrt3elfC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIc	low	tiny stub or thunk (PLT/GOT style)
+00215548	crt-runtime	ferror	low	tiny stub or thunk (PLT/GOT style)
+00215558	crt-runtime	_ZN3xrt3run16set_arg_at_indexEiRKNS_2boE	low	tiny stub or thunk (PLT/GOT style)
+00215560	crt-runtime	got___gmon_start__	med	same body as flash_serve 01a00008
+00215568	crt-runtime	_ITM_registerTMCloneTable	low	tiny stub or thunk (PLT/GOT style)
+00215570	crt-runtime	_ZNK3xrt2bo4sizeEv	low	tiny stub or thunk (PLT/GOT style)
+00215578	crt-runtime	got_fwrite	med	same body as flash_serve 01a00120
+00215580	cxx-stl	_ZNSt10filesystem7__cxx114path5_ListC1ERKS2_	high	mangled libstdc++ or operator new/delete name
+00215588	crt-runtime	got_close	med	same body as flash_serve 01a000f8
+00215590	crt-runtime	got___isoc23_strtol	med	same body as flash_serve 01a00048
+00215598	cxx-stl	got__ZNSt6localeC1Ev	med	same body as flash_serve 01a001d0
+002155a0	crt-runtime	got___cxa_finalize	med	same body as flash_serve 01a00018

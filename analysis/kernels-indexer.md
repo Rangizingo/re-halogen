@@ -1,5 +1,8 @@
 # Indexer (sparse-attention) kernel family — objdump-level analysis
 
+> **Correction (2026-10-10).** Sections 1-5 below read the `k_dnc_*` family (`scan`, `scan3`, `prep`, `ut`, `att*`) as the indexer's block-select and sparse-attention pipeline. That attribution is wrong or at least unproven. Evidence for the better reading: all `k_dnc_*` kernels are registered by one block (function `019e0890`, `_INIT_7`, 350 `k_dnc_` name mentions in `work/decomp/flash_serve/019e0890.c`) that belongs to the `dn_chunk` object with `dn_chunk_forward` (`019d7b70`), and the host flags that steer them are `HALOGEN_DN_SCAN`, `HALOGEN_DN_UT5`, `HALOGEN_DN_UT_MP`, `HALOGEN_DN_FUSED_GRAM` (DeltaNet, the linear-attention layers), not `HALOGEN_IX_*`. The indexer's own kernels are the two `k_ix_scores_*` kernels (section 1) plus host top-k logic. So `dnc` most likely means DeltaNet chunk. See `analysis/closure/indexer-attn-host.md`, which reached the same conclusion independently. The kernel-level facts below (instruction mix, signatures, counts) are still correct; the family label and the sparse-attention story are not.
+
+
 Phase 2, indexer path. Evidence: per-kernel slices in `work/kernels/`
 (llvm-objdump 21 `--mattr=+gfx1151`), AMDGPU metadata from the four code
 objects (`llvm-readelf --notes work/fatbin/*.hsaco`), demangled signatures

@@ -1,0 +1,301 @@
+addr	role	label	confidence	evidence
+0191d340	gpu-dispatch	kernel_launch_stub_0191d340	high	__hipPopCallConfiguration stub, no logic
+0191d400	gpu-dispatch	kernel_launch_stub_0191d400	high	__hipPopCallConfiguration stub, no logic
+0191d4c0	gpu-dispatch	kernel_launch_stub_0191d4c0	high	__hipPopCallConfiguration stub, no logic
+0191d580	gpu-dispatch	kernel_launch_stub_0191d580	high	__hipPopCallConfiguration stub, no logic
+0191d640	gpu-dispatch	kernel_launch_stub_0191d640	high	__hipPopCallConfiguration stub, no logic
+0191d700	gpu-dispatch	kernel_launch_stub_0191d700	high	__hipPopCallConfiguration stub, no logic
+0191d7b0	gpu-dispatch	kernel_launch_stub_0191d7b0	high	__hipPopCallConfiguration stub, no logic
+0191d860	gpu-dispatch	kernel_launch_stub_0191d860	high	__hipPopCallConfiguration stub, no logic
+0191d910	gpu-dispatch	kernel_launch_stub_0191d910	high	__hipPopCallConfiguration stub, no logic
+0191d9c0	gpu-dispatch	kernel_launch_stub_0191d9c0	high	__hipPopCallConfiguration stub, no logic
+0191da70	gpu-dispatch	kernel_launch_stub_0191da70	high	__hipPopCallConfiguration stub, no logic
+0191db20	gpu-dispatch	kernel_launch_stub_0191db20	high	__hipPopCallConfiguration stub, no logic
+0191dc10	gpu-dispatch	kernel_launch_stub_0191dc10	high	__hipPopCallConfiguration stub, no logic
+0191dcf0	gpu-dispatch	kernel_launch_stub_0191dcf0	high	__hipPopCallConfiguration stub, no logic
+0191ddd0	gpu-dispatch	kernel_launch_stub_0191ddd0	high	__hipPopCallConfiguration stub, no logic
+0191deb0	gpu-dispatch	kernel_launch_stub_0191deb0	high	__hipPopCallConfiguration stub, no logic
+0191df90	gpu-dispatch	kernel_launch_stub_0191df90	high	__hipPopCallConfiguration stub, no logic
+0191e070	gpu-dispatch	kernel_launch_stub_0191e070	high	__hipPopCallConfiguration stub, no logic
+0191e150	gpu-dispatch	kernel_launch_stub_0191e150	high	__hipPopCallConfiguration stub, no logic
+0191e230	gpu-dispatch	kernel_launch_stub_0191e230	high	__hipPopCallConfiguration stub, no logic
+0191e310	gpu-dispatch	kernel_launch_stub_0191e310	high	__hipPopCallConfiguration stub, no logic
+0191e3f0	gpu-dispatch	kernel_launch_stub_0191e3f0	high	__hipPopCallConfiguration stub, no logic
+0191e4d0	gpu-dispatch	kernel_launch_stub_0191e4d0	high	__hipPopCallConfiguration stub, no logic
+0191e680	gpu-dispatch	kernel_launch_stub_0191e680	high	__hipPopCallConfiguration stub, no logic
+0191e7c0	gpu-dispatch	kernel_launch_stub_0191e7c0	high	__hipPopCallConfiguration stub, no logic
+0191e870	gpu-dispatch	kernel_launch_stub_0191e870	high	__hipPopCallConfiguration stub, no logic
+0191e920	gpu-dispatch	kernel_launch_stub_0191e920	high	__hipPopCallConfiguration stub, no logic
+0191e9d0	gpu-dispatch	kernel_launch_stub_0191e9d0	high	__hipPopCallConfiguration stub, no logic
+0191ea80	gpu-dispatch	kernel_launch_stub_0191ea80	high	__hipPopCallConfiguration stub, no logic
+0191eb30	gpu-dispatch	kernel_launch_stub_0191eb30	high	__hipPopCallConfiguration stub, no logic
+0191ebe0	gpu-dispatch	kernel_launch_stub_0191ebe0	high	__hipPopCallConfiguration stub, no logic
+0191ec90	gpu-dispatch	kernel_launch_stub_0191ec90	high	__hipPopCallConfiguration stub, no logic
+0191ed40	gpu-dispatch	kernel_launch_stub_0191ed40	high	__hipPopCallConfiguration stub, no logic
+0191edf0	gpu-dispatch	kernel_launch_stub_0191edf0	high	__hipPopCallConfiguration stub, no logic
+0191eea0	gpu-dispatch	kernel_launch_stub_0191eea0	high	__hipPopCallConfiguration stub, no logic
+0191ef50	gpu-dispatch	kernel_launch_stub_0191ef50	high	__hipPopCallConfiguration stub, no logic
+0191f000	gpu-dispatch	kernel_launch_stub_0191f000	high	__hipPopCallConfiguration stub, no logic
+0191f0b0	gpu-dispatch	kernel_launch_stub_0191f0b0	high	__hipPopCallConfiguration stub, no logic
+0191f160	gpu-dispatch	kernel_launch_stub_0191f160	high	__hipPopCallConfiguration stub, no logic
+0191f210	gpu-dispatch	kernel_launch_stub_0191f210	high	__hipPopCallConfiguration stub, no logic
+0191f2c0	gpu-dispatch	kernel_launch_stub_0191f2c0	high	__hipPopCallConfiguration stub, no logic
+0191f370	gpu-dispatch	kernel_launch_stub_0191f370	high	__hipPopCallConfiguration stub, no logic
+0191f420	gpu-dispatch	kernel_launch_stub_0191f420	high	__hipPopCallConfiguration stub, no logic
+0191f4d0	gpu-dispatch	kernel_launch_stub_0191f4d0	high	__hipPopCallConfiguration stub, no logic
+0191f580	gpu-dispatch	kernel_launch_stub_0191f580	high	__hipPopCallConfiguration stub, no logic
+0191f630	gpu-dispatch	kernel_launch_stub_0191f630	high	__hipPopCallConfiguration stub, no logic
+0191f6e0	gpu-dispatch	kernel_launch_stub_0191f6e0	high	__hipPopCallConfiguration stub, no logic
+0191f790	gpu-dispatch	kernel_launch_stub_0191f790	high	__hipPopCallConfiguration stub, no logic
+0191f840	gpu-dispatch	kernel_launch_stub_0191f840	high	__hipPopCallConfiguration stub, no logic
+0191f8f0	gpu-dispatch	kernel_launch_stub_0191f8f0	high	__hipPopCallConfiguration stub, no logic
+0191f9a0	gpu-dispatch	kernel_launch_stub_0191f9a0	high	__hipPopCallConfiguration stub, no logic
+0191fa50	gpu-dispatch	kernel_launch_stub_0191fa50	high	__hipPopCallConfiguration stub, no logic
+0191fb00	gpu-dispatch	kernel_launch_stub_0191fb00	high	__hipPopCallConfiguration stub, no logic
+0191fbb0	gpu-dispatch	kernel_launch_stub_0191fbb0	high	__hipPopCallConfiguration stub, no logic
+0191fc60	gpu-dispatch	kernel_launch_stub_0191fc60	high	__hipPopCallConfiguration stub, no logic
+0191fd10	gpu-dispatch	kernel_launch_stub_0191fd10	high	__hipPopCallConfiguration stub, no logic
+0191fed0	hip-runtime	init_stream_and_events	high	hipStreamCreateWithFlags plus 4 hipEventCreateWithFlags, flash_model.hip error print
+01920180	gpu-dispatch	kernel_launch_stub_01920180	high	__hipPopCallConfiguration stub, no logic
+01920230	gpu-dispatch	kernel_launch_stub_01920230	high	__hipPopCallConfiguration stub, no logic
+01921030	gpu-dispatch	kernel_launch_stub_01921030	high	__hipPopCallConfiguration stub, no logic
+01921120	gpu-dispatch	kernel_launch_stub_01921120	high	__hipPopCallConfiguration stub, no logic
+01921210	gpu-dispatch	kernel_launch_stub_01921210	high	__hipPopCallConfiguration stub, no logic
+01921300	gpu-dispatch	kernel_launch_stub_01921300	high	__hipPopCallConfiguration stub, no logic
+01921780	gpu-dispatch	kernel_launch_stub_01921780	high	__hipPopCallConfiguration stub, no logic
+01921860	gpu-dispatch	kernel_launch_stub_01921860	high	__hipPopCallConfiguration stub, no logic
+019218f0	gpu-dispatch	kernel_launch_stub_019218f0	high	__hipPopCallConfiguration stub, no logic
+01921980	gpu-dispatch	kernel_launch_stub_01921980	high	__hipPopCallConfiguration stub, no logic
+01921ba0	logging-diag	print_decode_section_timing	high	string "sect: %d decode steps, ms a step over the 48 layers"
+01921e00	gpu-dispatch	kernel_launch_stub_01921e00	high	__hipPopCallConfiguration stub, no logic
+01922040	gpu-dispatch	kernel_launch_stub_01922040	high	__hipPopCallConfiguration stub, no logic
+019221c0	gpu-dispatch	kernel_launch_stub_019221c0	high	__hipPopCallConfiguration stub, no logic
+01922280	gpu-dispatch	kernel_launch_stub_01922280	high	__hipPopCallConfiguration stub, no logic
+01922340	gpu-dispatch	kernel_launch_stub_01922340	high	__hipPopCallConfiguration stub, no logic
+019223e0	hip-runtime	hip_host_malloc_checked	high	hipHostMalloc with HIP error print and exit
+01922450	hip-runtime	vision_free_buffers_checked	low	hipFree, getenv, printf, flash_vision.h error string
+01922a90	gpu-dispatch	vision_encoder_forward	med	9KB, visual.patch_embed/blocks strings, 17 launch configs, HALOGEN_VISION_TIMING
+01925370	gpu-dispatch	vision_linear_launch_named_weight	med	builds .weight/.bias names, launch config, HIP error exit
+01925720	gpu-dispatch	kernel_launch_stub_01925720	high	__hipPopCallConfiguration stub, no logic
+019257d0	gpu-dispatch	vision_launch_with_weight_bias	med	.weight/.bias strings, flash_vision.h HIP error
+01925b80	gpu-dispatch	kernel_launch_stub_01925b80	high	__hipPopCallConfiguration stub, no logic
+01925c00	gpu-dispatch	launch_then_getlasterror	med	launch config pop then hipGetLastError and exit
+01925d90	gpu-dispatch	vision_norm_launch_named_weight	med	.weight/.bias names, launch config, HIP error exit
+019261f0	gpu-dispatch	kernel_launch_stub_019261f0	high	__hipPopCallConfiguration stub, no logic
+01926360	gpu-dispatch	kernel_launch_stub_01926360	high	__hipPopCallConfiguration stub, no logic
+01926620	gpu-dispatch	kernel_launch_stub_01926620	high	__hipPopCallConfiguration stub, no logic
+01926860	gpu-dispatch	kernel_launch_stub_01926860	high	__hipPopCallConfiguration stub, no logic
+019268f0	gpu-dispatch	kernel_launch_stub_019268f0	high	__hipPopCallConfiguration stub, no logic
+01926980	gpu-dispatch	kernel_launch_stub_01926980	high	__hipPopCallConfiguration stub, no logic
+01926d20	gpu-dispatch	kernel_launch_stub_01926d20	high	__hipPopCallConfiguration stub, no logic
+01926dd0	gpu-dispatch	kernel_launch_stub_01926dd0	high	__hipPopCallConfiguration stub, no logic
+01926e80	gpu-dispatch	kernel_launch_stub_01926e80	high	__hipPopCallConfiguration stub, no logic
+01926fe0	gpu-dispatch	kernel_launch_stub_01926fe0	high	__hipPopCallConfiguration stub, no logic
+01927090	gpu-dispatch	kernel_launch_stub_01927090	high	__hipPopCallConfiguration stub, no logic
+01927140	gpu-dispatch	kernel_launch_stub_01927140	high	__hipPopCallConfiguration stub, no logic
+019271f0	gpu-dispatch	kernel_launch_stub_019271f0	high	__hipPopCallConfiguration stub, no logic
+019272a0	gpu-dispatch	kernel_launch_stub_019272a0	high	__hipPopCallConfiguration stub, no logic
+01927400	gpu-dispatch	kernel_launch_stub_01927400	high	__hipPopCallConfiguration stub, no logic
+019274b0	gpu-dispatch	kernel_launch_stub_019274b0	high	__hipPopCallConfiguration stub, no logic
+01927560	gpu-dispatch	kernel_launch_stub_01927560	high	__hipPopCallConfiguration stub, no logic
+019276c0	gpu-dispatch	kernel_launch_stub_019276c0	high	__hipPopCallConfiguration stub, no logic
+01927770	gpu-dispatch	kernel_launch_stub_01927770	high	__hipPopCallConfiguration stub, no logic
+01927820	gpu-dispatch	kernel_launch_stub_01927820	high	__hipPopCallConfiguration stub, no logic
+019278d0	gpu-dispatch	kernel_launch_stub_019278d0	high	__hipPopCallConfiguration stub, no logic
+01927980	gpu-dispatch	kernel_launch_stub_01927980	high	__hipPopCallConfiguration stub, no logic
+01927ae0	gpu-dispatch	kernel_launch_stub_01927ae0	high	__hipPopCallConfiguration stub, no logic
+01927b90	gpu-dispatch	kernel_launch_stub_01927b90	high	__hipPopCallConfiguration stub, no logic
+01927c40	gpu-dispatch	kernel_launch_stub_01927c40	high	__hipPopCallConfiguration stub, no logic
+01927cf0	gpu-dispatch	kernel_launch_stub_01927cf0	high	__hipPopCallConfiguration stub, no logic
+01927da0	gpu-dispatch	kernel_launch_stub_01927da0	high	__hipPopCallConfiguration stub, no logic
+01927e50	gpu-dispatch	kernel_launch_stub_01927e50	high	__hipPopCallConfiguration stub, no logic
+01927f00	gpu-dispatch	kernel_launch_stub_01927f00	high	__hipPopCallConfiguration stub, no logic
+01927fb0	gpu-dispatch	kernel_launch_stub_01927fb0	high	__hipPopCallConfiguration stub, no logic
+01928060	gpu-dispatch	kernel_launch_stub_01928060	high	__hipPopCallConfiguration stub, no logic
+01928110	gpu-dispatch	kernel_launch_stub_01928110	high	__hipPopCallConfiguration stub, no logic
+019281c0	gpu-dispatch	kernel_launch_stub_019281c0	high	__hipPopCallConfiguration stub, no logic
+01928970	gpu-dispatch	kernel_launch_stub_01928970	high	__hipPopCallConfiguration stub, no logic
+01928c70	gpu-dispatch	kernel_launch_stub_01928c70	high	__hipPopCallConfiguration stub, no logic
+01929570	gpu-dispatch	kernel_launch_stub_01929570	high	__hipPopCallConfiguration stub, no logic
+01929970	gpu-dispatch	kernel_launch_stub_01929970	high	__hipPopCallConfiguration stub, no logic
+01929b70	gpu-dispatch	kernel_launch_stub_01929b70	high	__hipPopCallConfiguration stub, no logic
+0192ac70	gpu-dispatch	kernel_launch_stub_0192ac70	high	__hipPopCallConfiguration stub, no logic
+0192b070	gpu-dispatch	kernel_launch_stub_0192b070	high	__hipPopCallConfiguration stub, no logic
+0192c2c0	cxx-stl	std_function_manager	med	38B, op switch 0/1/2 over type_info and functor ptr
+0192c420	cxx-stl	std_function_manager	med	38B, op switch 0/1/2 over type_info and functor ptr
+0192c650	gpu-dispatch	kernel_launch_stub_0192c650	high	__hipPopCallConfiguration stub, no logic
+0192cb50	gpu-dispatch	kernel_launch_stub_0192cb50	high	__hipPopCallConfiguration stub, no logic
+0192d250	gpu-dispatch	kernel_launch_stub_0192d250	high	__hipPopCallConfiguration stub, no logic
+0192d350	gpu-dispatch	kernel_launch_stub_0192d350	high	__hipPopCallConfiguration stub, no logic
+0192d550	gpu-dispatch	kernel_launch_stub_0192d550	high	__hipPopCallConfiguration stub, no logic
+0192e450	gpu-dispatch	kernel_launch_stub_0192e450	high	__hipPopCallConfiguration stub, no logic
+0192e750	gpu-dispatch	kernel_launch_stub_0192e750	high	__hipPopCallConfiguration stub, no logic
+0192e950	gpu-dispatch	kernel_launch_stub_0192e950	high	__hipPopCallConfiguration stub, no logic
+0192ec50	gpu-dispatch	kernel_launch_stub_0192ec50	high	__hipPopCallConfiguration stub, no logic
+0192f150	gpu-dispatch	kernel_launch_stub_0192f150	high	__hipPopCallConfiguration stub, no logic
+0192fb50	gpu-dispatch	kernel_launch_stub_0192fb50	high	__hipPopCallConfiguration stub, no logic
+01930050	gpu-dispatch	kernel_launch_stub_01930050	high	__hipPopCallConfiguration stub, no logic
+01930250	gpu-dispatch	kernel_launch_stub_01930250	high	__hipPopCallConfiguration stub, no logic
+01930850	gpu-dispatch	kernel_launch_stub_01930850	high	__hipPopCallConfiguration stub, no logic
+01930950	gpu-dispatch	kernel_launch_stub_01930950	high	__hipPopCallConfiguration stub, no logic
+01930e50	gpu-dispatch	kernel_launch_stub_01930e50	high	__hipPopCallConfiguration stub, no logic
+01931050	gpu-dispatch	kernel_launch_stub_01931050	high	__hipPopCallConfiguration stub, no logic
+01931250	gpu-dispatch	kernel_launch_stub_01931250	high	__hipPopCallConfiguration stub, no logic
+01931650	gpu-dispatch	kernel_launch_stub_01931650	high	__hipPopCallConfiguration stub, no logic
+01931950	gpu-dispatch	kernel_launch_stub_01931950	high	__hipPopCallConfiguration stub, no logic
+01931c50	gpu-dispatch	kernel_launch_stub_01931c50	high	__hipPopCallConfiguration stub, no logic
+01932250	gpu-dispatch	kernel_launch_stub_01932250	high	__hipPopCallConfiguration stub, no logic
+01932350	gpu-dispatch	kernel_launch_stub_01932350	high	__hipPopCallConfiguration stub, no logic
+01932f50	gpu-dispatch	kernel_launch_stub_01932f50	high	__hipPopCallConfiguration stub, no logic
+01933050	gpu-dispatch	kernel_launch_stub_01933050	high	__hipPopCallConfiguration stub, no logic
+01933450	gpu-dispatch	kernel_launch_stub_01933450	high	__hipPopCallConfiguration stub, no logic
+01933750	gpu-dispatch	kernel_launch_stub_01933750	high	__hipPopCallConfiguration stub, no logic
+01934150	gpu-dispatch	kernel_launch_stub_01934150	high	__hipPopCallConfiguration stub, no logic
+01934a50	gpu-dispatch	kernel_launch_stub_01934a50	high	__hipPopCallConfiguration stub, no logic
+01934b50	gpu-dispatch	kernel_launch_stub_01934b50	high	__hipPopCallConfiguration stub, no logic
+01934e50	gpu-dispatch	kernel_launch_stub_01934e50	high	__hipPopCallConfiguration stub, no logic
+01935050	gpu-dispatch	kernel_launch_stub_01935050	high	__hipPopCallConfiguration stub, no logic
+01935250	gpu-dispatch	kernel_launch_stub_01935250	high	__hipPopCallConfiguration stub, no logic
+01935950	gpu-dispatch	kernel_launch_stub_01935950	high	__hipPopCallConfiguration stub, no logic
+01936050	gpu-dispatch	kernel_launch_stub_01936050	high	__hipPopCallConfiguration stub, no logic
+01936150	gpu-dispatch	kernel_launch_stub_01936150	high	__hipPopCallConfiguration stub, no logic
+01936550	gpu-dispatch	kernel_launch_stub_01936550	high	__hipPopCallConfiguration stub, no logic
+01936a50	gpu-dispatch	kernel_launch_stub_01936a50	high	__hipPopCallConfiguration stub, no logic
+01936b50	gpu-dispatch	kernel_launch_stub_01936b50	high	__hipPopCallConfiguration stub, no logic
+01936c50	gpu-dispatch	kernel_launch_stub_01936c50	high	__hipPopCallConfiguration stub, no logic
+01936d50	gpu-dispatch	kernel_launch_stub_01936d50	high	__hipPopCallConfiguration stub, no logic
+01937d50	gpu-dispatch	kernel_launch_stub_01937d50	high	__hipPopCallConfiguration stub, no logic
+019387b0	gpu-dispatch	kernel_launch_stub_019387b0	high	__hipPopCallConfiguration stub, no logic
+019389f0	gpu-dispatch	kernel_launch_stub_019389f0	high	__hipPopCallConfiguration stub, no logic
+01938bf0	gpu-dispatch	kernel_launch_stub_01938bf0	high	__hipPopCallConfiguration stub, no logic
+019395f0	gpu-dispatch	kernel_launch_stub_019395f0	high	__hipPopCallConfiguration stub, no logic
+019399f0	gpu-dispatch	kernel_launch_stub_019399f0	high	__hipPopCallConfiguration stub, no logic
+01939af0	gpu-dispatch	kernel_launch_stub_01939af0	high	__hipPopCallConfiguration stub, no logic
+01939cf0	gpu-dispatch	kernel_launch_stub_01939cf0	high	__hipPopCallConfiguration stub, no logic
+01939df0	gpu-dispatch	kernel_launch_stub_01939df0	high	__hipPopCallConfiguration stub, no logic
+01939ef0	gpu-dispatch	kernel_launch_stub_01939ef0	high	__hipPopCallConfiguration stub, no logic
+01939ff0	gpu-dispatch	kernel_launch_stub_01939ff0	high	__hipPopCallConfiguration stub, no logic
+0193a4f0	gpu-dispatch	kernel_launch_stub_0193a4f0	high	__hipPopCallConfiguration stub, no logic
+0193a5f0	gpu-dispatch	kernel_launch_stub_0193a5f0	high	__hipPopCallConfiguration stub, no logic
+0193a7f0	gpu-dispatch	kernel_launch_stub_0193a7f0	high	__hipPopCallConfiguration stub, no logic
+0193abf0	gpu-dispatch	kernel_launch_stub_0193abf0	high	__hipPopCallConfiguration stub, no logic
+0193b0f0	gpu-dispatch	kernel_launch_stub_0193b0f0	high	__hipPopCallConfiguration stub, no logic
+0193b2f0	gpu-dispatch	kernel_launch_stub_0193b2f0	high	__hipPopCallConfiguration stub, no logic
+0193b5f0	gpu-dispatch	kernel_launch_stub_0193b5f0	high	__hipPopCallConfiguration stub, no logic
+0193b6f0	gpu-dispatch	kernel_launch_stub_0193b6f0	high	__hipPopCallConfiguration stub, no logic
+0193c1f0	gpu-dispatch	kernel_launch_stub_0193c1f0	high	__hipPopCallConfiguration stub, no logic
+0193e5f0	gpu-dispatch	kernel_launch_stub_0193e5f0	high	__hipPopCallConfiguration stub, no logic
+0193ebf0	gpu-dispatch	kernel_launch_stub_0193ebf0	high	__hipPopCallConfiguration stub, no logic
+0193edf0	gpu-dispatch	kernel_launch_stub_0193edf0	high	__hipPopCallConfiguration stub, no logic
+0193eff0	gpu-dispatch	kernel_launch_stub_0193eff0	high	__hipPopCallConfiguration stub, no logic
+0193f1f0	gpu-dispatch	kernel_launch_stub_0193f1f0	high	__hipPopCallConfiguration stub, no logic
+0193f2f0	gpu-dispatch	kernel_launch_stub_0193f2f0	high	__hipPopCallConfiguration stub, no logic
+0193f6f0	gpu-dispatch	kernel_launch_stub_0193f6f0	high	__hipPopCallConfiguration stub, no logic
+0193f8f0	gpu-dispatch	kernel_launch_stub_0193f8f0	high	__hipPopCallConfiguration stub, no logic
+019405f0	gpu-dispatch	kernel_launch_stub_019405f0	high	__hipPopCallConfiguration stub, no logic
+019406f0	gpu-dispatch	kernel_launch_stub_019406f0	high	__hipPopCallConfiguration stub, no logic
+019407f0	gpu-dispatch	kernel_launch_stub_019407f0	high	__hipPopCallConfiguration stub, no logic
+019408f0	gpu-dispatch	kernel_launch_stub_019408f0	high	__hipPopCallConfiguration stub, no logic
+019409f0	cxx-stl	introsort_float_loop	med	std::sort on float range, depth limit, size>16 partition
+01940e10	cxx-stl	introsort_float_loop	med	same shape as 019409f0, float range sort
+019424d0	cxx-stl	thread_state_delete_0x48	high	thread::_State dtor then operator delete 0x48
+019425d0	cxx-stl	vector_realloc_append	high	vector::_M_realloc_append string
+019426e0	cxx-stl	std_function_manager	med	op switch over type_info vtable
+019427b0	cxx-stl	std_function_manager	med	op switch, copies 16 bytes of functor
+019427e0	cxx-stl	vector_realloc_append	high	vector::_M_realloc_append string
+01942900	cxx-stl	std_function_manager	med	op switch over type_info vtable
+01942930	cxx-stl	vector_realloc_append	high	vector::_M_realloc_append string
+01942ba0	cxx-stl	std_function_manager_heap	med	op switch, clone allocs 0x18, delete on op 3
+01942c10	cxx-stl	thread_state_delete_0x20	high	thread::_State dtor then operator delete 0x20
+01942c30	util	thread_worker_loop	med	condition_variable notify_one, mutex lock/unlock, steady_clock
+019540a0	cxx-stl	regex_traits_ctor	low	locale ctor, strlen, shared refcount calls
+019541b0	cxx-stl	locale_release	low	locale dtor plus refcount release
+019542d0	cxx-stl	static_init_guarded	low	__cxa_guard_acquire/release on a cached global
+01954460	cxx-stl	vector16_resize	med	resize of 2-byte element vector, calls grow helper
+019544b0	cxx-stl	vector_ctor_n	high	max_size error string, new plus memset
+019545c0	gpu-dispatch	kernel_launch_stub_019545c0	high	__hipPopCallConfiguration stub, no logic
+01954690	gpu-dispatch	kernel_launch_stub_01954690	high	__hipPopCallConfiguration stub, no logic
+01954c40	gpu-dispatch	kernel_launch_stub_01954c40	high	__hipPopCallConfiguration stub, no logic
+01954d60	gpu-dispatch	kernel_launch_stub_01954d60	high	__hipPopCallConfiguration stub, no logic
+01954dc0	gpu-dispatch	kernel_launch_stub_01954dc0	high	__hipPopCallConfiguration stub, no logic
+01954e20	gpu-dispatch	kernel_launch_stub_01954e20	high	__hipPopCallConfiguration stub, no logic
+01954e80	gpu-dispatch	kernel_launch_stub_01954e80	high	__hipPopCallConfiguration stub, no logic
+01954f20	unknown	versioned_file_reader	low	fopen, 64KB fread, errors: version 1, another model, damaged file; purpose unproven
+019555b0	cxx-stl	container_destroy	low	operator delete loop, one callee
+019556a0	cxx-stl	vector_copy_assign	low	new, memmove, bad_array_new_length
+01955d60	cxx-stl	container_destroy	low	operator delete loop, 5 callers
+01955ec0	cxx-stl	shared_ptr_release	high	virtual dispose, atomic dec, libc_single_threaded
+01956070	cxx-stl	hashtable_op	low	new, calls bucket allocator 01956220
+01956220	cxx-stl	hashtable_alloc_buckets	med	new, memset, bad_alloc
+019563d0	cxx-stl	vector_container_op	low	max_size error, new/delete, 11 callees
+019568e0	cxx-stl	vector_default_construct	med	max_size error, new, memset
+01956b20	cxx-stl	container_destroy	low	delete[] and delete loops
+01956c80	cxx-stl	container_destroy	low	48B, operator delete
+01956cb0	cxx-stl	container_clone	low	new and delete, 2 callees
+01956de0	cxx-stl	vector_container_op	low	max_size error, new/delete
+019570d0	cxx-stl	container_destroy	low	operator delete, one callee
+01957130	cxx-stl	regex_compile_step	low	new, memset, calls regex helpers 01957400
+01957400	cxx-stl	regex_compile_dispatch	low	calls 8 regex helpers 019579a0..01958630
+019577a0	cxx-stl	vector_realloc_append	high	vector::_M_realloc_append string
+019579a0	cxx-stl	std_function_assign	low	bad_function_call, new
+01957ba0	cxx-stl	regex_helper	low	126B, wraps 01957400
+01957c20	cxx-stl	regex_traits_use_facet	med	locale id, bad_cast
+01957cf0	cxx-stl	regex_traits_ctype_widen	med	ctype widen_init, bad_cast
+01958270	cxx-stl	regex_compile_step	low	8 callees in regex block
+01958530	cxx-stl	regex_traits_compare	low	locale, bad_cast, bcmp
+01958630	cxx-stl	regex_executor_step	low	bad_function_call, 4 callees
+019587e0	cxx-stl	regex_executor_step	low	bad_function_call, calls 01958630 family
+01958cd0	cxx-stl	regex_traits_use_facet	med	locale id, bad_cast
+01958da0	cxx-stl	regex_traits_ctype_widen	med	ctype widen_init, bad_cast
+01958f70	cxx-stl	regex_vector_grow	low	max_size error, new/delete
+01959350	cxx-stl	container_destroy	low	operator delete, 2 callees
+01959580	cxx-stl	container_alloc	low	new, bad_alloc
+019596e0	cxx-stl	container_destroy	low	748B, delete loops, 1 callee
+01959c20	cxx-stl	deque_construct	high	std::deque larger than max_size string
+01959dc0	cxx-stl	vector_alloc_copy	low	new, memmove, bad_alloc
+0195a240	cxx-stl	vector_alloc_copy	low	new, memcpy
+0195a330	cxx-stl	vector_alloc_fill	low	new, memset
+0195a470	cxx-stl	vector_container_op	med	max_size error string
+0195a6f0	cxx-stl	vector_range_insert	high	vector::_M_range_insert string
+0195a9d0	cxx-stl	vector_realloc_append	high	vector::_M_realloc_append string
+0195ad30	gpu-dispatch	kernel_launch_stub_0195ad30	high	__hipPopCallConfiguration stub, no logic
+0195add0	cxx-stl	shared_ptr_release_wrap	med	calls 01955ec0 with lock/unlock
+0195b290	cxx-stl	shared_ptr_release_wrap	med	delete plus 01955ec0 refcount
+0195b3d0	cxx-stl	regex_traits_use_facet	low	dynamic_cast, locale id, bad_cast
+0195b520	cxx-stl	regex_vector_push	low	length_error, new/delete, regex helpers
+0195b790	cxx-stl	regex_compiler_finish	low	calls 0195d560, string assign
+0195ba80	cxx-stl	regex_helper	low	48B tail wrapper, 4 callers
+0195bdf0	cxx-stl	shared_ptr_release_wrap	med	calls 01955ec0 with lock/unlock
+0195be60	cxx-stl	throw_regex_error	high	__cxa_allocate_exception, __cxa_throw, 35 callers
+0195beb0	cxx-stl	runtime_error_ctor	high	runtime_error ctor
+0195bee0	cxx-stl	regex_scanner_init_table	high	regex special chars string, fills token table
+0195c420	cxx-stl	regex_scanner_escape	med	__throw_regex_error, strchr
+0195c520	cxx-stl	regex_scanner_state	med	throw_regex_error, string mutate
+0195ccf0	cxx-stl	regex_scanner_state	med	throw_regex_error, string mutate
+0195cec0	cxx-stl	regex_scanner_state	med	throw_regex_error call
+0195cfe0	cxx-stl	regex_compiler_ctor	med	locale ctor/assign, new
+0195d220	cxx-stl	regex_helper	low	15B, new
+0195d390	cxx-stl	regex_state_vector_push	med	realloc_append string, 8 callers
+0195d560	cxx-stl	regex_compiler_run	med	calls 5 parse stage functions
+0195d770	cxx-stl	regex_parse_stage	low	calls throw_regex_error helper
+0195d9e0	cxx-stl	regex_parse_stage	low	142B, one callee
+0195de30	cxx-stl	regex_parse_alternative	low	calls 6 parse helpers 019600e0..01961690
+0195e5a0	cxx-stl	regex_parse_stage	low	175B, one callee
+0195f7b0	cxx-stl	regex_nfa_check_limit	high	Number of NFA states exceeds limit string
+0195f960	cxx-stl	regex_insert_matcher	low	calls 01961780 nfa push and 0196c560
+0195fb40	cxx-stl	regex_insert_matcher	low	calls 01961780 nfa push and 0196c560
+0195fc30	cxx-stl	regex_insert_matcher	low	calls 01961780 nfa push and 0196c560
+0195ff00	cxx-stl	regex_insert_matcher	low	calls 01961780 nfa push and 0196c560
+019600e0	cxx-stl	regex_helper	low	132B, 9 callers
+019603e0	cxx-stl	regex_insert_matcher	low	calls 01961780 and 0196c560
+019604e0	cxx-stl	regex_insert_matcher	low	calls 01961780 and 0196c560
+019605e0	cxx-stl	regex_insert_matcher_locale	low	locale id, bad_cast, nfa push
+01960720	cxx-stl	regex_insert_matcher_locale	low	locale id, bad_cast, nfa push
+01960ae0	cxx-stl	regex_bracket_matcher_build	high	Invalid character class string
+01960e10	cxx-stl	regex_bracket_matcher_build	high	Invalid character class string
+019610b0	cxx-stl	regex_bracket_matcher_build	high	Invalid character class string
+019613f0	cxx-stl	regex_bracket_matcher_build	high	Invalid character class string
+01961690	cxx-stl	regex_helper	low	53B in regex block, one callee
+01961780	cxx-stl	regex_nfa_push_state	high	NFA states exceeds limit string, 20 callers
+019619b0	cxx-stl	regex_helper	low	41B no callee in regex block
+01961a30	cxx-stl	regex_helper	low	38B no callee in regex block

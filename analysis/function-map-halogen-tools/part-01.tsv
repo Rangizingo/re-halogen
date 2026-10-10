@@ -1,0 +1,300 @@
+addr	role	label	confidence	evidence
+018217c0	ppl-niah	paired-nll compare tool main	med	strings verify|paired|--ids|--chunk, 14.7KB
+01825e90	util	read_file_exact	med	short read / cannot open strings, 8 callees
+01825fb0	ppl-niah	ppl tool main (chunked perplexity)	high	ppl: engine, prefill/decode kernels, ppl: chunk %d
+01838fc0	util	write_file_or_die	med	cannot write %s
+01839040	util	small helper (unresolved)	low	108 bytes, no strings, 3 callees
+018390b0	util	json_escape_string	high	\u%04x and string append
+01839360	ppl-niah	paired nll vector compare	med	lengths differ, paired: no positions
+0183c2a0	cxx-stl	vector storage dtor	med	4 operator delete calls only
+0183c390	cxx-stl	std::thread::_State dtor+delete(0x28)	high	_ZNSt6thread6_StateD2Ev then delete
+0183c3b0	ppl-niah	softmax/logsumexp nll CPU	med	9 exp, 2 log calls
+0183d220	cxx-stl	stable_sort helper	low	memmove, calls sibling 0183e200
+0183d450	cxx-stl	sort/merge helper	med	13 memmove, 1 callee
+0183dff0	cxx-stl	sort/merge helper	low	memmove, 3 callers
+0183e200	cxx-stl	sort/merge helper	low	sibling of 0183d220 family
+0183e3e0	cxx-stl	sort/merge helper	low	sibling of 0183d220 family
+0183e5f0	cxx-stl	vector realloc_append	high	vector::_M_realloc_append string
+0183ea60	ppl-niah	emit paired json record	high	{"n":, a_nll, b_nll, %.17g
+0183fab0	cxx-stl	sort/merge helper (2nd instantiation)	low	size and shape match 0183d220 family
+0183fbf0	cxx-stl	sort/merge helper (2nd instantiation)	low	size and shape match 0183d220 family
+0183fcd0	cxx-stl	sort/merge helper (2nd instantiation)	low	2763 bytes, 1 callee, matches 0183d450
+01840840	cxx-stl	sort/merge helper (2nd instantiation)	low	matches 0183dff0
+01840a50	cxx-stl	sort/merge helper (2nd instantiation)	low	matches 0183e200
+01840c30	cxx-stl	sort/merge helper (2nd instantiation)	low	matches 0183e3e0
+01840ef0	util	open_file_or_die	med	cannot open %s
+01841000	cxx-stl	std::string ctor from cstr	high	construction from null is not valid
+01841640	cxx-stl	vector default_append	high	_M_default_append string
+01841960	cxx-stl	vector default_append	high	_M_default_append string
+01841ab0	cxx-stl	vector range ctor (max_size check)	med	cannot create std::vector larger than max_size
+01841d20	cxx-stl	vector default_append	high	_M_default_append string
+01841f90	cxx-stl	container helper	low	602 bytes, calls 018423f0
+01842220	cxx-stl	vector insert helper	low	2 memmove
+018423f0	cxx-stl	leaf helper (comparator or swap)	low	382 bytes, no callees
+01842e20	cxx-stl	vector storage dtor	med	2 operator delete
+01842e90	cxx-stl	vector<string> realloc_append	high	realloc_append, string _M_create
+01843070	util	stat+open file helper	med	cannot stat / cannot open
+01844180	util	tiny thunk	low	12 bytes, 1 callee
+018441a0	verify-inspect	inspect tool main	med	--json, --no-hash, norms / conv / misc, W4A4 plane
+01847120	cxx-stl	std::string ctor	med	construction from null string
+018472a0	cxx-stl	std::string ctor	med	construction from null string
+0184741a	cxx-stl	dtor fragment	low	60 bytes, operator delete
+01847460	util	json_escape_string (copy)	high	\u%04x and string append
+01847710	verify-inspect	verify tool main	high	usage: verify FILE.hgn, FAIL %s, header checks
+0184f790	gguf-repack	quantize tensor by dtype	high	unknown dtype, affine K%32, q8_0/q5_0/q4c checks
+01850300	gguf-repack	linear_attn tensor name map/pack	med	linear_attn.in_proj_qkv/z/a/b names
+01853f20	verify-inspect	check HT rotation plane present and f16	high	HT tensor without rotation plane, must be f16
+018547d0	cxx-stl	leaf helper	low	153 bytes, no callees
+01854870	cxx-stl	std::string create helper	med	basic_string::_M_create
+01854910	cxx-stl	std::string create helper	med	basic_string::_M_create, 762 bytes
+01854c90	cxx-stl	vector storage dtor	med	2 operator delete
+01854cf0	cxx-stl	sort helper (insertion)	low	calls 01857af0, 018574e0
+01854d80	cxx-stl	stable_sort helper	low	calls 01855000, 01858960
+01854e70	cxx-stl	element move/copy helper	low	memcpy, 5 callers in sort family
+01855000	cxx-stl	std::stable_sort merge sort	med	chunk 0x268 insertion sort, merge loops
+01857200	cxx-stl	sort merge helper	low	9 calls to 01854e70
+018574e0	cxx-stl	insertion sort chunk	low	memcpy, called by 01855000 for runs
+01857af0	cxx-stl	sort helper	low	calls 01857e10, 01857cf0
+01857cf0	cxx-stl	sort helper	low	285 bytes, in sort family
+01857e10	cxx-stl	merge helper	low	12 memcpy, in sort family
+01858960	cxx-stl	sort merge helper	low	calls 01854e70 x6
+01858e40	cxx-stl	std::thread::_State dtor+delete(0x20)	high	_ZNSt6thread6_StateD2Ev then delete
+01858e60	cxx-stl	container copy/assign helper	low	memcpy, memset, calls 0185ca50
+01859260	cxx-stl	std::thread::_State dtor+delete	high	same as 01858e40
+01859280	verify-inspect	check quantized payload scales finite	med	scale not finite at payload byte
+0185b680	verify-inspect	check scale finite (per block)	med	scale not finite at payload byte
+0185bb50	cxx-stl	vector range ctor (max_size check)	med	max_size string, calls 0185c610
+0185bbd0	cxx-stl	vector dtor	low	calls 0185c610 and delete
+0185bc80	cxx-stl	string reserve wrapper	med	basic_string::reserve call
+0185bee0	cxx-stl	vector copy ctor	low	memcpy, new, 3 calls to 0185ca50
+0185c1b0	cxx-stl	vector storage dtor	med	4 operator delete
+0185c250	cxx-stl	map<string,..> find/lower_bound	low	memcmp, calls rb insert path
+0185c3b0	cxx-stl	map<string,..> find/lower_bound	low	same shape as 0185c250
+0185c610	cxx-stl	vector default_append	high	_M_default_append string
+0185cc80	cxx-stl	rb-tree erase subtree (string key)	med	recursive, delete 0x48
+0185cd20	cxx-stl	rb-tree erase subtree (string key)	med	same as 0185cc80
+0185cd90	cxx-stl	map insert unique	med	memcmp, _Rb_tree_insert_and_rebalance
+0185ced0	cxx-stl	map iteration/copy	low	memcmp, _Rb_tree_increment
+0185d1a0	cxx-stl	std::string create helper	med	basic_string::_M_create
+0185d3b0	cxx-stl	map insert unique	med	copy of 0185cd90
+0185d4f0	cxx-stl	map iteration/copy	low	copy of 0185ced0
+0185d7c0	cxx-stl	std::string create helper	med	basic_string::_M_create
+0185d9d0	gpu-dispatch	engine ctor param check, pin trunk env	med	HALOGEN_FLASH_PIN_TRUNK, max_tok/max_seq check
+0185dbf0	util	engine member thunk (+0x160)	low	12 bytes, calls FUN_018e0990
+0185dc00	util	engine member thunk	low	12 bytes, 1 callee
+0185dc10	util	engine member thunk	low	12 bytes, 1 callee
+0185dc20	util	engine member thunk	low	14 bytes, calls FUN_018d89a0
+0185dc40	util	engine member thunk	low	12 bytes, 1 callee
+0185dc70	hgn-loader	load model, pin trunk	med	gguf-cache, tensors trunk pinned
+0185e570	crt-runtime	static init (flash_engine.cpp build stamp)	high	_INIT_1, source path and build date
+0186cb00	tokenizer-vocab	draft vocab file/Q8 load	med	HALOGEN_DRAFT_VOCAB_FILE/Q8 env
+0186dfd0	unknown	driver call chain	low	1499 bytes, 5 calls to FUN_01970000, no strings
+0186e5b0	gpu-dispatch	flash_model.hip device alloc helper	low	HIP error check, flash_model.hip
+0186ea20	cxx-stl	model struct dtor (frees)	med	22 operator delete
+0186f6e0	gpu-dispatch	flash_model.hip device helper	low	HIP error check, 12 callees
+0186fb30	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+0186fc80	gpu-dispatch	buffer arena init (memset, new)	low	12 memset, 3 new
+01870120	gpu-dispatch	flash_model.hip device helper	low	HIP error check, 1431 bytes
+018707e0	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+01870b50	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018711d0	gpu-dispatch	kernel launch stub	med	hipPush/PopCallConfiguration
+01871340	gpu-dispatch	flash_model.hip device helper	low	HIP error check, 10 callees
+01871840	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+01871d50	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+01871e10	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+01871ef0	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+01872190	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018727f0	gpu-dispatch	kernel launch wrapper	med	hipPush/PopCallConfiguration
+018735d0	cxx-stl	object dtor fragment	low	delete, calls FUN_018d93a0
+018737b0	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+01873920	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018740f0	hgn-loader	resolve MoE shared_expert tensors	med	shared_expert.*, experts.* names
+018749f0	hgn-loader	upload tensor to device	med	flash_ops.h HIP check, max_size
+01874c70	hgn-loader	check/upload bf16 or Q4C-P tensor	med	expected bf16 or Q4C-P, size != table nbytes
+01875180	cxx-stl	string builder helper	low	null-string check, 14 callees
+01875430	hgn-loader	validate/upload HT plane	med	HT plane must be f16, ht_ops.h
+01875a90	gpu-dispatch	prefill forward (GEMM path)	med	39KB, 113 callees, HALOGEN_FLASH_PREFILL_GEMM
+01880110	gpu-dispatch	kernel launch stub	med	hipPopCallConfiguration
+01880410	gpu-dispatch	flash_ops.h launch helper	low	HIP error check
+01880df0	gpu-dispatch	kernel launch template (8 launches)	med	8 hipPush, FUN_0191b570
+01884650	gpu-dispatch	kernel launch template (8 launches)	med	identical size to 01880df0
+01885f50	gpu-dispatch	kernel launch sequence	low	2 hipPush, 9 callees
+01886470	gpu-dispatch	DeltaNet layer forward with checks	med	HALOGEN_DN_AB/NORM_FOLD/ROWS, DN_FUSED
+0188bcf0	gpu-dispatch	HT linear dispatch	med	HALOGEN_HT_LIN_GRP/DIRECT, ht_ops.h
+0188f600	logging-diag	ix_select old/new compare check	med	[ix_select check], FIRST ROW DIFFERS
+01890da0	logging-diag	ix_scores compare check	med	[ix_scores check], differing float
+01893580	gpu-dispatch	sparse attention (QSA) forward	med	HALOGEN_QSA_DENSE/FORCE_SEL
+01898190	gpu-dispatch	kernel launch sequence	low	3 hipPush, 5 hipPop
+01899240	gpu-dispatch	MoE layer forward (router, experts)	med	moe: router produced expert id
+018a56c0	logging-diag	arena sizing abort	low	flash_serve internal sizing error string
+018ad2e0	gpu-dispatch	decode layer forward (I4R fuse)	med	HALOGEN_I4R_FUSE, 12KB
+018b1e10	gpu-dispatch	kernel launch sequence	low	arena sizing string, 3 hipPush
+018b23c0	gpu-dispatch	decode/speculative forward (wave, tree)	med	wave:, tree:, experts.gate_up, 172 callees
+018c07f0	gpu-dispatch	kernel launch template (8 launches)	med	identical size to 01880df0
+018c3750	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018c3a40	gpu-dispatch	kernel launch via FUN_019414xx	low	4 callees in 0194xxxx range
+018c3ba0	gpu-dispatch	flash_ops.h device helper	low	HIP error check, 11 callees
+018c4030	gpu-dispatch	kernel launch wrapper	low	hipPush/Pop
+018c4480	gpu-dispatch	multi-kernel launch (7 callers)	low	7 hipPush, 4 hipPop
+018c5d50	gpu-dispatch	kernel launch stub	med	hipPush/Pop
+018c8ce0	hgn-loader	read PLE lookup table rows	med	lookup table: rows for tokens took s to read
+018cbbf0	gpu-dispatch	kernel launch wrapper	low	3 hipPush/Pop
+018ccf10	gpu-dispatch	flash_model.hip layer helper	low	HIP error check, 17 callees
+018cda70	hgn-loader	resolve MoE shared_expert tensors	med	same strings and size as 018740f0
+018cfa40	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018d0330	gpu-dispatch	HT dequant dispatch	med	HALOGEN_HT_DEQ_KFAST/PRE/W16
+018d0b30	gpu-dispatch	kernel launch sequence	low	8 hipPush, 16 hipPop
+018d18a0	logging-diag	draft check summary (argmax agree)	med	draft check: passes, argmax agree %
+018d1c30	gpu-dispatch	kernel launch template (batched)	med	8 hipPush, 16 FUN_0191b570
+018d47f0	gpu-dispatch	HIP-checked wrapper	low	small, HIP error check
+018d4870	gpu-dispatch	HIP-checked wrapper	low	small, HIP error check
+018d4920	gpu-dispatch	HIP-checked wrapper	low	small, HIP error check
+018d49c0	gpu-dispatch	HIP-checked wrapper	low	HIP error check
+018d4b10	gpu-dispatch	HIP-checked wrapper	low	HIP error check
+018d4c70	gpu-dispatch	HIP-checked wrapper	low	HIP error check
+018d4f30	gpu-dispatch	HIP-checked wrapper	low	small, HIP error check
+018d5000	gpu-dispatch	forward pass with per-layer timing	med	layer %2d %.2f s, forward(%d) -> pos
+018d7690	ppl-niah	nll_rows (lm_head GEMM chunks)	high	nll_rows strings, lm_head GEMM scratch
+018d86f0	gpu-dispatch	kernel launch stub	med	hipPush/Pop
+018d9900	gpu-dispatch	slot buffer helper	low	new, calls 0186fc80 and 018d93a0
+018d9aa0	cxx-stl	object dtor fragment	low	delete, calls 018d93a0
+018d9c30	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018da620	gpu-dispatch	HIP-checked wrapper	low	small, HIP error check
+018da680	gpu-dispatch	HIP-checked wrapper	low	small, HIP error check
+018da6e0	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018dabb0	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018daec0	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018db3c0	gpu-dispatch	slots_alloc (private KV per slot)	high	slots_alloc strings, MiB each
+018db950	gpu-dispatch	slots_alloc_pooled	high	slots_alloc_pooled strings, POOLED
+018de3a0	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018de7f0	cxx-stl	vector reserve/realloc	med	realloc_append, reserve strings
+018df490	util	steady_clock timer helper	low	chrono now x2, system_error
+018dff70	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018e0190	gpu-dispatch	vision encoder forward (pixel_values)	med	pixel_values, flash_vision.h
+018e0f30	util	engine member thunk	low	79 bytes, calls FUN_018e7f20
+018e2410	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018e29f0	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018e2ea0	ppl-niah	set target rows for nll	med	target_rows_: pen out of range
+018e3ae0	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018e3ea0	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018e6510	gpu-dispatch	flash_model.hip device helper	low	HIP error check
+018e71c0	cxx-stl	std::locale dtor + delete	med	_ZNSt6localeD1Ev, delete
+018e7260	cxx-stl	std::thread::_State dtor+delete	high	_ZNSt6thread6_StateD2Ev
+018e7740	cxx-stl	type_info __do_catch fragment	med	class_type_info vtable, 0/1 case
+018e7760	config-env	activation stats env check	med	HALOGEN_ACT_STATS
+018e7ad0	cxx-stl	engine member dtor (frees)	low	22 operator delete
+018e8140	hgn-loader	check/upload weight by dtype	med	expected bf16, Q4C-P, Q8G64, Q6K..., K%256
+018e8e70	gpu-dispatch	kernel launch stub	med	hipPush/Pop
+018e8fa0	gpu-dispatch	kernel launch stub	med	hipPush/Pop
+018e91e0	hgn-loader	tensor to bf16 conversion/read	low	.bf16, max_size, HIP check
+018eb7e0	gpu-dispatch	q6_ops.h launch helper	low	q6_ops.h HIP check
+018ed460	gpu-dispatch	kernel launch wrapper (args memcpy)	med	4 memcpy, 4 hipPop, clone x8
+018ed7e0	gpu-dispatch	kernel launch wrapper (args memcpy)	med	clone of 018ed460
+018edb60	gpu-dispatch	kernel launch wrapper (args memcpy)	med	clone of 018ed460
+018edee0	gpu-dispatch	kernel launch wrapper (args memcpy)	med	clone of 018ed460
+018ee260	gpu-dispatch	kernel launch wrapper (args memcpy)	med	clone of 018ed460
+018ee5e0	gpu-dispatch	kernel launch wrapper (args memcpy)	med	clone of 018ed460
+018ee960	gpu-dispatch	kernel launch wrapper (args memcpy)	med	clone of 018ed460
+018eece0	gpu-dispatch	kernel launch wrapper (args memcpy)	med	clone of 018ed460
+018f0460	gpu-dispatch	kernel launch wrapper (8 memcpy)	med	8 memcpy, 8 hipPop
+018f08b0	gpu-dispatch	kernel launch wrapper (8 memcpy)	med	clone of 018f0460
+018f24c0	hgn-loader	validate/upload HT linear weight	med	HT linear without rotation planes, weight shape
+018f3030	gpu-dispatch	large kernel launch sequence (8 launches)	med	48 hipPop, 32 FUN_0191b570
+018f7be0	gpu-dispatch	large kernel launch sequence	med	33 hipPop
+018f97a0	gpu-dispatch	large kernel launch sequence	med	32 hipPop, 8 hipPush
+018fb1c0	gpu-dispatch	large kernel launch sequence	med	clone of 018f7be0
+018fcd80	gpu-dispatch	large kernel launch sequence	med	similar to 018f97a0
+019025b0	gpu-dispatch	multi-kernel launch	low	2 hipPush, calls 019183f0.. stubs
+01903530	gpu-dispatch	ht_ops.h HT helper	low	HIP error check, ht_ops.h
+01903df0	gpu-dispatch	HT linear (split scratch)	med	needs more split scratch than armed
+01906720	gpu-dispatch	kernel launch helper	low	353 bytes, 3 callees
+01906920	gpu-dispatch	kernel launch stub	med	hipPop
+01906ca0	gpu-dispatch	kernel launch stub	med	hipPop
+01906d80	gpu-dispatch	kernel launch stub	med	hipPop
+01906e60	gpu-dispatch	kernel launch stub	med	hipPop
+01906f40	gpu-dispatch	kernel launch stub	med	hipPop
+01907080	gpu-dispatch	HT linear (split scratch, direct)	med	HALOGEN_HT_LIN_DIRECT, ht_ops.h
+019085b0	gpu-dispatch	HT linear (split scratch, direct)	med	clone of 01907080
+0190b850	gpu-dispatch	kernel host stub	med	hipPopCallConfiguration, 213 bytes
+0190b960	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190ba70	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190bb80	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190bc90	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190bda0	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190beb0	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190bfc0	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190c0d0	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190c1e0	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190c2f0	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190c400	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190c510	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190c620	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190c730	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190c840	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190c950	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190ca60	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190cb70	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190cc80	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190cd90	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190cea0	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190cfb0	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190d0c0	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190d1d0	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190d2e0	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190d3f0	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190d500	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190d610	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190d720	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190d830	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190d940	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190da50	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190db60	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190dc70	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190dd80	gpu-dispatch	kernel host stub	med	clone of 0190b850
+0190de90	gpu-dispatch	kernel host stub	med	clone of 0190b850
+01918130	gpu-dispatch	kernel host stub	med	hipPopCallConfiguration, 110 bytes
+019181e0	gpu-dispatch	kernel host stub	med	clone of 01918130
+01918290	gpu-dispatch	kernel host stub	med	clone of 01918130
+01918340	gpu-dispatch	kernel host stub	med	clone of 01918130
+019183f0	gpu-dispatch	kernel host stub	med	clone of 01918130
+019184a0	gpu-dispatch	kernel host stub	med	clone of 01918130
+01918550	gpu-dispatch	kernel host stub	med	clone of 01918130
+01918600	gpu-dispatch	kernel host stub	med	clone of 01918130
+019186b0	gpu-dispatch	kernel host stub	med	clone of 01918130
+01919110	gpu-dispatch	kernel host stub	med	hipPopCallConfiguration, 158 bytes
+019191f0	gpu-dispatch	kernel host stub	med	hipPopCallConfiguration, 158 bytes
+019192d0	gpu-dispatch	kernel host stub	med	clone of 01918130
+01919380	gpu-dispatch	kernel host stub	med	clone of 01918130
+01919430	gpu-dispatch	kernel host stub	med	clone of 01918130
+019194e0	gpu-dispatch	kernel host stub	med	clone of 01918130
+01919590	gpu-dispatch	kernel host stub	med	clone of 01918130
+01919640	gpu-dispatch	kernel host stub	med	clone of 01918130
+019196f0	gpu-dispatch	kernel host stub	med	clone of 01918130
+019197a0	gpu-dispatch	kernel host stub	med	clone of 01918130
+01919850	gpu-dispatch	kernel host stub	med	clone of 01918130
+01919900	gpu-dispatch	kernel host stub	med	clone of 01918130
+019199b0	gpu-dispatch	kernel host stub	med	clone of 01918130
+01919a60	gpu-dispatch	kernel host stub	med	clone of 01918130
+01919b10	gpu-dispatch	kernel host stub	med	clone of 01918130
+01919bc0	gpu-dispatch	kernel host stub	med	clone of 01918130
+01919c70	gpu-dispatch	kernel host stub	med	clone of 01918130
+01919d20	gpu-dispatch	kernel host stub	med	clone of 01918130
+0191abd0	gpu-dispatch	kernel host stub	med	hipPopCallConfiguration, 115 bytes
+0191ac80	gpu-dispatch	kernel host stub	med	clone of 0191abd0
+0191ad30	gpu-dispatch	kernel host stub	med	clone of 0191abd0
+0191ade0	gpu-dispatch	kernel host stub	med	clone of 0191abd0
+0191ae90	gpu-dispatch	kernel host stub	med	clone of 0191abd0
+0191af40	gpu-dispatch	kernel host stub	med	clone of 0191abd0
+0191aff0	gpu-dispatch	kernel host stub	med	clone of 0191abd0
+0191b0a0	gpu-dispatch	kernel host stub	med	clone of 0191abd0
+0191b150	gpu-dispatch	kernel host stub	med	clone of 0191abd0
+0191b200	gpu-dispatch	kernel host stub	med	clone of 0191abd0
+0191b2b0	gpu-dispatch	kernel host stub	med	clone of 0191abd0
+0191b360	gpu-dispatch	kernel host stub	med	clone of 0191abd0
+0191b410	gpu-dispatch	kernel host stub	med	clone of 0191abd0
+0191b4c0	gpu-dispatch	kernel host stub	med	clone of 0191abd0
+0191bb50	gpu-dispatch	kernel host stub	med	hipPop, 109 bytes
+0191d040	gpu-dispatch	kernel host stub	med	hipPopCallConfiguration, 126 bytes
+0191d100	gpu-dispatch	kernel host stub	med	clone of 0191d040
+0191d1c0	gpu-dispatch	kernel host stub	med	clone of 0191d040
+0191d280	gpu-dispatch	kernel host stub	med	clone of 0191d040
