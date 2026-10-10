@@ -12,6 +12,9 @@ w4b=qwen38-flash-next-w4b.hgn
 
 get() { # name offset length file
   curl -sSfL -r "$2-$(($2 + $3 - 1))" -o "$out/$1" "$base/$4"
+  local got
+  got=$(wc -c < "$out/$1" | tr -d ' ')
+  [ "$got" = "$3" ] || { echo "fetch_ht_testdata: $1 is $got bytes, expected $3" >&2; exit 1; }
 }
 
 get k3_weight.ht            4050329344    655360 "$ht"

@@ -13,7 +13,7 @@ the `.hgn` format with passing round trips, the NPU engine, version deltas,
 dflash2, five kernel-family writeups, function maps of all three binaries,
 the wire protocol, a 31-step request trace and a live 0.17.3 engine run.
 Unknowns (`analysis/unknowns.md`, counted from its table): CLOSED 11,
-PARTIAL 12, OPEN-BOUNDED 2 (U06, U22), UNOBSERVABLE 1 (U05).
+PARTIAL 12, OPEN-BOUNDED 3 (U06, U22, U27), UNOBSERVABLE 1 (U05).
 
 ## Layout
 

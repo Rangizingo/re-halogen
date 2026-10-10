@@ -66,7 +66,7 @@ Wq std measured 0.9973, mean 0.0004: unit Gaussian as inferred. Windows kk=0..4 
 - Hout: the output-side 128-point Hadamard is REAL (rows in blocks of 128): the model needs both Hin and Hout; the targets with only Hin gave noise (peak 0.04). Open on the engine side: whether the engine does Hout as `k_ht_rot_out` on the result (it should; consistent with k_ht_rot_out existing). SETTLED for the format.
 - Hadamard order: Sylvester natural order, no sequency permutation, orthonormal 1/sqrt(128). SETTLED.
 
-## Not proven
+## Not proven (written before Tests A and B; 3-bit and N > K are settled below)
 
 - 3-bit HT (template K=3): not tested; window step and pair layout for K=3 (768 B per 2048 weights) are untested.
 - qparam bit 0 (=0 here) and the upper bits 0x1200 (=0x1200 >> 8 = 18): the decode needed no input from them; the binder only reads bits 1..7. Whether 0x1200 encodes tile shape, group size or a version stays unknown with one tensor. Suggest decoding a tensor with a different qparam.
@@ -74,6 +74,10 @@ Wq std measured 0.9973, mean 0.0004: unit Gaussian as inferred. Windows kk=0..4 
 - Whether HT tensors with a different transpose/orientation (e.g. down_proj [2560, K]) use the same lane map.
 - Exact fp16 literal of s6 and whether the engine path (k_ht_lin with su/sv) applies sv before or after Hout in float precision (same math, rounding differs).
 - Residual error source (0.8% decorrelation) is not decomposed into HT vs q4c error.
+
+## Test C: gate_up experts (U27)
+
+`layers.0.mlp.experts.gate_up_proj` expert 0, 4 bit [1280, 2560], with the shared `layers.0.mlp.experts.su` [2560] (gate_up has no per-expert suh): Pearson 0.0008 against the w4b reference with the dense tile map (measured, session author). The reference rows line up with `svh` (|svh| vs reference row std 0.998) and the decoded codes have std 0.998, so the stream decodes but the tile walk differs. Open as U27.
 
 ## Test A: 4-bit, N > K (shared_expert.down_proj [2560, 640])
 

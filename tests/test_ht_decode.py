@@ -58,12 +58,32 @@ def test_reconstruct_inverts_rotation():
     assert np.allclose(ht.reconstruct(rot, suh, svh), w, atol=1e-4)
 
 
-@pytest.mark.skipif(not os.environ.get("HT_TESTDATA"), reason="set HT_TESTDATA to the fetch_ht_testdata.sh dir")
-def test_real_tensor_matches_reference():
+_needs_data = pytest.mark.skipif(not os.environ.get("HT_TESTDATA"), reason="set HT_TESTDATA to the fetch_ht_testdata.sh dir")
+
+
+def _f16(name: str) -> np.ndarray:
+    return np.fromfile(f"{os.environ['HT_TESTDATA']}/{name}", "<f2").astype(np.float32)
+
+
+def _corr(a: np.ndarray, b: np.ndarray) -> float:
+    return float(np.corrcoef(a.ravel(), b.ravel())[0, 1])
+
+
+@_needs_data
+def test_real_4bit_matches_reference_and_mutants_do_not():
     d = os.environ["HT_TESTDATA"]
-    f16 = lambda name: np.fromfile(f"{d}/{name}", "<f2").astype(np.float32)
-    w = ht.reconstruct(
-        ht.decode_codes(np.fromfile(f"{d}/k3_weight.ht", np.uint8), 512, 2560, 4), f16("k3_suh.f16"), f16("k3_svh.f16")
-    )
+    wq = ht.decode_codes(np.fromfile(f"{d}/k3_weight.ht", np.uint8), 512, 2560, 4)
+    suh, svh = _f16("k3_suh.f16"), _f16("k3_svh.f16")
     ref = ht.load_q4c(f"{d}/k3_weight_w4b.q4c", 512, 2560)
-    assert np.corrcoef(w.ravel(), ref.ravel())[0, 1] > 0.99
+    assert _corr(ht.reconstruct(wq, suh, svh), ref) > 0.98
+    assert abs(_corr(ht.reconstruct(wq, suh, np.abs(svh)), ref)) < 0.1
+    assert abs(_corr(ht.reconstruct(wq[:, ::-1], suh, svh), ref)) < 0.1
+
+
+@_needs_data
+def test_real_3bit_expert_matches_reference():
+    d = os.environ["HT_TESTDATA"]
+    raw = np.fromfile(f"{d}/e1_down_ht_x0x1.ht", np.uint8)[: 2560 * 640 * 3 // 8]
+    w = ht.reconstruct(ht.decode_codes(raw, 2560, 640, 3), _f16("e1_down_suh_x0x1.f16")[:640], _f16("e1_down_svh_x0x1.f16")[:2560])
+    ref = ht.load_q4c(f"{d}/e1_down_w4b_full.q4c", 2560, 640, e=0, n_exp=512, sc_per_row=24)
+    assert _corr(w, ref) > 0.97

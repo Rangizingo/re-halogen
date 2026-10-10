@@ -146,7 +146,7 @@ dflash2 (`dflash2-probe.md`). Phase 7: function maps of all three binaries
 (`closure/`) and a rebuild guide (`rebuild-guide.md`).
 
 Residual unknowns, counted from the table in `unknowns.md`: CLOSED 11,
-PARTIAL 12, OPEN-BOUNDED 2, UNOBSERVABLE 1 (26 rows). The PARTIAL rows
+PARTIAL 12, OPEN-BOUNDED 3, UNOBSERVABLE 1 (27 rows). The PARTIAL rows
 (U01, U02, U07, U09, U10, U11, U12, U14, U18, U21, U23, U26) each say
 which half is closed and which is not. What stays open and why:
 
@@ -156,6 +156,8 @@ which half is closed and which is not. What stays open and why:
   at disassembly level.
 - U05 a future flip of the dflash2 literal: not observable from shipped
   releases.
+- U27 HT gate_up expert layout and the i4r (dtype 23) decode: data is
+  reachable by range read; the dense HT tile map does not fit gate_up.
 
 Closed late from vendor files fetched with Peter's approval: U03 NPU graph
 names (`closure/npu-shipped-files.md`) and U19 HT weight decode, confirmed
