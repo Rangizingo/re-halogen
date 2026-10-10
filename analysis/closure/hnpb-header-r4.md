@@ -4,7 +4,7 @@ Scope: everything shipped or pulled in this workspace that could write or read a
 
 ## Verdict: CLOSED (revised in section 7; OPEN-BOUNDED before the vendor headers were read)
 
-No shipped or pulled artifact contains a producer that stores 2 at HNPB header +0x08. The reader gives the field no behavior. Closing needs one of the files in section 6, none of which is in this workspace.
+No shipped or pulled artifact contains a producer that stores 2 at HNPB header +0x08. The reader gives the field no behavior. The agent's pass ended OPEN-BOUNDED pending the files in section 6; section 7 reads residuals 1 and 2 from the vendor files and closes the row.
 
 ## 1. Producers outside halogen-npu: none (proof)
 
