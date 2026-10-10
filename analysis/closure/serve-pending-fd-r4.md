@@ -2,7 +2,7 @@
 
 ## Scope
 
-Question: while connection A is served by FUN_0182ea80, what code accepts other connections, answers INFO and PING inline, and queues the rest? Static only. Ghidra address = file/r2 VMA + 0x100000. Decomp paths are under `work/decomp/flash_serve/`. Struct base `P` = `param_1` of FUN_0182ea80 = `&local_1458` in main (`analysis/main_pseudo.c:1103`).
+Question: while connection A is served by FUN_0182ea80, what code accepts other connections, answers INFO and PING inline, and queues the rest? Static only. Ghidra address = file/r2 VMA + 0x100000. Decomp paths are under `work/decomp/flash_serve/`. Struct base `P` = `param_1` of FUN_0182ea80 = `&local_1458` in main (`analysis/main_pseudo.c:1111`, `FUN_0182ea80(&local_1458);`).
 
 Short answer: the code is not in FUN_0182ea80 itself. It is the separate function `FUN_01844d50(P)`, called from the top of FUN_0182ea80's command loop and from a per-step engine callback.
 
