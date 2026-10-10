@@ -8,7 +8,7 @@ Method: launch sites were attributed by `leaq <handle>(%rip), %rdi` before `hipL
 
 R4 section 7 open items 1 to 3: (1) `HT_MOE_V2` mode 2 and the down kernel `HT_MOE_DNX` picks per tile width; (2) which instance runs for which token count on the plain Q4C-P path when the q4moe GEMM is not taken (`k_exp_gu_w<R,K,E>`, `HALOGEN_EXP_LPR`, `HALOGEN_EXP_PF`, cell 0x18fe7c0, grouped versus per-token, `HALOGEN_MOE_GPU_ROUTE`, down kernel); (3) meaning of `k_q4moe` template args A, B, E.
 
-## Verdict: PARTIAL
+## Verdict: PARTIAL (residuals 1, 2 and 4 closed in `expert-dispatch-r5b.md`; the row is CLOSED with the remaining residuals bounded as naming or untested-equality items)
 
 Items 1, 2 and 3 are answered from code. R4 section 5 needed one structural correction: the q4moe condition lives in gate G1, not in the `$0x40` compare (section 2.1). What stays open is bounded: the library-GEMM arm internals, the `CSORT=0` counting arm, and the numeric meaning of `E` (section 6).
 
