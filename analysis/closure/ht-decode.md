@@ -127,8 +127,10 @@ v2 i4r layers.0.mlp.experts.down_proj expert 0 [2560,640] overall 0.9885 row min
 
 Mutants scored on expert 0 gate_up (scratch run): high nibble first 0.0094; offset 7.5 instead of 8 drops to 0.9724; scales as [K/128, N] 0.0084; input-only or output-only Hadamard below 0.001; no rotation 0.0003. Only the both-side rotation with row-major nibbles and [N, K/128] scales scores.
 
+Refuter mutants on PR #7 (expert 0 gate_up): nibbles shuffled within each 128-group 0.0075; random nibbles with true scales 0.0031; expert 0 nibbles with expert 1 scales 0.0083; scales with signs dropped -0.0065; constant scale -0.0064; scales permuted 0.0009. The score needs the right nibbles in the right order with the right signed scales.
+
 qparam bits (U27 part 3): the same loader validates HT qparam at `01996d90.c:236-238`: `if (((0x1fff < uVar12) || (uVar12 < 0x1000)) || (((uVar12 & 0xf00) != 0x200 || (((char)uVar12 != '\x06' && ((uVar12 & 0xff) != 8)))))) goto LAB_019976c2;` then `uVar12 = uVar12 >> 1 & 0x7f;`. So HT qparam is exactly 0x1206 (3 bit) or 0x1208 (4 bit): 0x1200 is a fixed format tag the decoder never reads, and bit 0 must be 0. The binder at `0190e330.c:357` reads only `uVar1 >> 1 & 0x7f`.
 
-`k_i4r_*_gl`: all 9 `_gl` slices carry the HT multiply-bytesum decode (`0x83dcd12d` 64 times and `v_sad_u8` 64 times each; `k_i4r_rows_fl` has neither), counted by grep over `work/kernels*/`. Their weight decode is the U19 rule. Which tensors reach them is a dispatch question under U21.
+`k_i4r_*_gl`: the 8 `_gl` slices in `work/kernels/` (`rows_gl<1|2>`, `rows_gl_g<1|2,2|4>`, `rows_gl_o<1|2>`) each carry the HT multiply-bytesum decode (`0x83dcd12d` 64 times, `v_sad_u8` 64 times, grep); no other `k_i4r_*` slice has the literal (0 in `rows<2560|640>`, `rows_rot`, `rows_epi`, `rows_fl`, `rows_fl_g`, `rows_fl_o`, `fold`, `fold_rows`, `gu_epi`). So the `_gl` weight decode is the U19 rule at kernel level (static, not run on data). The plain i4r payload above is what the nibble kernels (`v_perm_b32` expansion) read. Which tensors the host routes to `_gl` is a dispatch question under U21, not claimed here.
 
 Not proven: experts other than 0 and 1 (offsets assumed linear in e, consistent with the loader size rule); layers other than 0; the engine's own fp16 rounding.
