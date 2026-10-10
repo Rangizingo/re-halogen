@@ -1,0 +1,254 @@
+addr	role	label	confidence	evidence
+00150f50	cxx-stl	map_string_find_or_emplace	low	rb-tree walk with memcmp on string key
+001512f0	cxx-stl	map_string_emplace_0x58	low	rb-tree insert, node alloc 0x58, memcmp keys
+00151620	cxx-stl	map_string_find_or_emplace	low	rb-tree walk with memcmp on string key
+00151930	cxx-stl	nested_container_dtor	low	loops destroying nested nodes via FUN_0013ca70
+00151dc0	cxx-stl	state_struct_dtor_0x2e0	low	destroys strings and maps of 0x2e0-byte object
+001524e0	cxx-stl	unique_ptr_dtor_0x2e0	med	calls 151dc0 then operator delete 0x2e0
+00152510	cxx-stl	map_string_find_or_emplace	low	rb-tree walk with memcmp on string key
+00152800	cxx-stl	vector_u32_assign_n	med	max_size throw, fills n copies of 4-byte value
+00152c80	cxx-stl	vector_u32_assign_n	med	max_size throw, fills n copies of 4-byte value
+00153100	model-compute	model_kind_name_rewrite	low	compares kind to "qwen3_dense", substr on name
+00153400	cxx-stl	struct_copy_ctor_string_vec	low	string copy plus vector alloc, memcpy
+00153830	cxx-stl	vector_realloc_append_struct	med	vector::_M_realloc_append string
+00153d70	cxx-stl	struct_copy_ctor_6strings	low	copies consecutive std::string fields
+00153f20	cxx-stl	vector_emplace_back_0xf0	med	realloc_append of 0xf0-byte elements via 153d70
+001548e0	cxx-stl	map_node_construct_0x48	low	allocs 0x48 node with string key, rb insert
+00154bb0	cxx-stl	vector_of_vector_dtor_range	med	frees each inner buffer in range
+00154c10	cxx-stl	vector_of_vector_fill_ctor	low	copies source vector into n slots, memmove
+00154d40	cxx-stl	vector_of_vector_assign	low	max_size throw, 24-byte elements, memmove
+00155500	cxx-stl	rbtree_erase_nested	med	nested while loops freeing child nodes
+00155740	cxx-stl	introsort_32byte_elems	med	size threshold 0x100, 32-byte AVX moves
+00155dc0	config-env	env_sync_narrow	high	getenv HALOGEN_NPU_SYNC_NARROW cached
+00155e50	config-env	env_sync_whole	high	getenv HALOGEN_NPU_SYNC_WHOLE cached
+00155ee0	util	now_seconds	high	steady_clock::now divided to double, 21 callers
+00155f00	xrt-device	bo_range_aligned_check	low	checks 64-byte alignment against size at +0x20
+00155f30	xrt-device	bo_mark_dirty_range	med	range check, merges dirty ranges vector
+001568e0	xrt-device	bo_sync_dirty_to_device	high	uses sync env flags, per-range bo::sync TO_DEVICE
+00156cb0	xrt-device	bo_sync_range_to_device	high	64-byte aligned range, sync env flags, timing
+00157140	xrt-device	bo_sync_whole_to_device	high	xrt::bo::sync dir 0 full size, clears dirty list
+00157180	xrt-device	bo_sync_dispatch	med	reads both sync env flags, picks sync mode
+00157490	xrt-device	bo_sync_narrow	med	narrow env flag, steady_clock timing
+00157640	xrt-device	run_set_arg_bo	high	xrt::run::set_arg_at_index with bo arg
+001578a0	xrt-device	run_sync_args_and_start	high	syncs args via 1568e0 then xrt::run::start
+00157940	xrt-device	elf_hw_context_ctor	high	xrt::elf then hw_context ctor, per npu-engine.md
+001579a0	xrt-device	bo_alloc_host_buffer	high	npu-engine.md: xrt::bo::bo flags 0x20000000, memset
+00157b70	xrt-device	run_start_poll	high	xrt run start and state poll loop, timeout code
+00158a20	xrt-device	run_wait	high	xrt::run::wait with ms duration, returns on 4
+00159830	util	sleep_until_deadline	med	steady_clock delta then nanosleep
+00159980	xrt-device	kernel_create_main_graph	high	builds "main:"+name, xrt kernel ctor, memcmp map
+00159fc0	xrt-device	run_create_set_args	high	contains 0x15a022 run create per npu-engine.md
+0015a3a0	xrt-device	bo_subview_alloc	high	contains 0x15a422 subview bo ctor, rb-tree by size
+0015a5b0	cxx-stl	map_string_lookup	low	rb-tree decrement, memcmp key
+0015a6f0	cxx-stl	map_u64_lookup	low	rb-tree decrement, u64 key compare
+0015a7b0	cxx-stl	map_string_emplace_0x50	low	alloc 0x50 node, string key copy
+0015ace0	cxx-stl	map_pair_u64_insert_pos	low	compares (u64,u64) keys, rb insert hint
+0015ae40	util	bitmask_build	low	shifts by 6 and 0x3f into 8-qword mask
+0015b110	model-compute	bf16_to_f32_worker	med	vpmovzxwd+vpslld widen, pool task callback
+0015b340	cxx-stl	thread_state_dtor	high	vtable plus std::thread::_State dtor
+0015b350	cxx-stl	thread_state_deleting_dtor	high	std::thread::_State dtor then delete 0x18
+0015b380	cxx-stl	thread_state_dtor	high	std::thread::_State dtor
+0015b390	cxx-stl	thread_state_deleting_dtor	high	std::thread::_State dtor then delete 0x18
+0015b3c0	cxx-stl	function_manager	med	op 0..2 typeinfo, ptr, copy switch
+0015b3d0	cxx-stl	function_manager_trivial	med	copies 16 bytes on op 2
+0015b3f0	cxx-stl	function_manager	med	op switch with typeinfo ptr
+0015b420	cxx-stl	function_manager_heap_0x18	med	clones 0x18-byte functor on op 2
+0015b4a0	cxx-stl	function_manager_heap_0x18	med	clones 0x18-byte functor on op 2
+0015b520	cxx-stl	function_manager_heap_0x30	med	clones 0x30-byte functor on op 2
+0015b5b0	util	thread_pin_and_run	med	pthread_setaffinity_np, sched_yield, syscall
+0015b730	model-compute	f32_to_bf16_worker	med	AVX pack, blend, round bias, pool task
+0015bbc0	model-compute	f32_to_bf16_stream	low	AVX bf16 convert with vmovntdq
+0015c2b0	model-compute	bf16_f32_convert_kernel	low	AVX widen and pack, no callees
+0015c930	model-compute	convert_task_thunk	low	forwards unpacked args to 15bbc0
+0015c960	model-compute	bf16_f32_convert_kernel	low	AVX widen and pack, no callees
+0015cf50	model-compute	f32_sum_pairwise	low	recursive unrolled float add for n<=8, halves above
+0015dc40	util	pool_wake_futex	low	atomic inc then futex wake syscall 0xca
+0015dd10	util	pool_partition_range	low	splits range into 1024-unit chunks by thread count
+0015ddc0	util	pool_job_setup	low	sets job range, generation counter
+0015de80	util	pool_futex_wake	med	atomic inc, futex syscall
+0015deb0	util	pool_worker_loop	med	prctl then spin/futex wait loop
+0015e0f0	util	pool_worker_thunk	low	forwards to 15deb0
+0015e100	util	pool_set_active_threads	low	clamps thread count into field
+0015e170	util	pool_job_publish	low	atomic counters then futex
+0015e1b0	util	pool_lock_acquire	low	lock-slot indexing, atomic inc
+0015e2a0	util	pool_flag_set	low	sets flag, lock-slot addressing
+0015e310	util	parallel_for_dispatch	low	runs inline unless n above 0x7ffff
+0015e360	model-compute	bf16_to_f32_rows	low	widen loop over rows, no callees
+0015e570	model-compute	parallel_bf16_to_f32	med	parallel dispatch with 15b110 callback
+0015e830	util	parallel_for_wrapper	low	packs args into functor, std::function zeroed
+0015e950	util	parallel_for_wrapper	low	packs args into functor, std::function zeroed
+0015eb40	model-compute	parallel_f32_to_bf16	med	parallel dispatch with 15b730 callback
+0015f080	model-compute	f32_to_bf16_rows	low	AVX pack loop, 8-wide blocks
+0015f350	model-compute	f32_to_bf16_2d	low	AVX pack, rows x cols strides
+0015f830	model-compute	parse_layout_kind	low	strcmp "c16", "c8", "seq" to enum
+0015f8d0	model-compute	layout_kind_name	low	enum to short constant string
+0015f920	model-compute	f32_vector_kernel	low	SIMD float shuffles, vector alloc, 5.9KB
+00161060	model-compute	rms_norm_scale	low	sum/n plus eps then sqrt, uses 15f920
+00161260	model-compute	f32_row_kernel	low	zeroed local array, shifts, no callees
+00161840	model-compute	f32_scale_ldexp_kernel	low	ldexp and vdivpd in loop
+00161f20	model-compute	quant_params_init	low	vpminsd/vpmaxsd clamp into struct
+001621a0	cxx-stl	vector_copy_struct	low	copies int ranges into 2-vector struct
+001623e0	cxx-stl	vector_unique_ptr_dtor	med	terminate if element non-null, then free
+00162440	cxx-stl	string_compare	med	memcmp on min length
+001624a0	cxx-stl	string_assign_move	med	SSO buffer swap
+00162580	cxx-stl	string_assign_range	med	length <0x10 SSO path, memcpy
+00162620	cxx-stl	map_lookup	low	rb-tree decrement and memcmp
+00162760	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+00162a50	hnp-format	record_has_key	low	scans key vector at +0x38 with memcmp
+00162ac0	hnp-format	record_key_lookup	med	npu-engine.md names key-lookup, 13 callers
+00162ba0	hnp-format	record_int_get	med	npu-engine.md names int-get, 15 callers
+00162c40	hnp-format	xor32_compute	med	word XOR with vpsrldq reduce, size<4 tail
+00162e00	hnp-format	container_dtor_munmap	med	munmap base, frees record map
+00162ec0	hnp-format	manifest_find_blob	high	npu-engine.md: FUN_00162ec0(devices,"manifest")
+00162fd0	hnp-format	blob_xor32_verify	high	npu-engine.md: xor32 check, compares record +0x24
+001631b0	hnp-format	record_list_get	med	npu-engine.md names list-get, memchr split
+001637c0	util	string_concat_cstr	low	strlen on arg, builds joined string
+00163c50	hnp-format	hnpm_file_read	high	npu-engine.md: fopen rb, 64 KiB reads
+00164090	hnp-format	hnpm_parser	high	npu-engine.md: line-oriented manifest parser
+00167960	hnp-format	hnpb_reader	high	npu-engine.md: HNPB-v1 mmap reader
+0016a110	hnp-format	record_dtor	low	frees strings in vector at +0x38/+0x40
+0016a240	hnp-format	token_int_get	med	strtoll of next 32-byte token
+0016a290	cxx-stl	map_lookup	low	rb-tree decrement
+0016a340	cxx-stl	string_assign_move	med	SSO swap path
+0016a420	cxx-stl	vector_u32_assign	med	copies range, realloc on overflow
+0016a5e0	cxx-stl	string_compare	med	memcmp on min length
+0016a640	cxx-stl	vector_assign	med	copies range, realloc on overflow
+0016a7e0	cxx-stl	string_assign_range	med	length <0x10 SSO path, memcpy
+0016a880	cxx-stl	string_ctor_cstr	high	"construction from null is not valid", strlen
+0016a910	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+0016ab50	cxx-stl	map_find_or_insert	low	rb-tree walk
+0016ac50	cxx-stl	map_lookup	low	rb-tree decrement
+0016ad90	model-compute	buffer_copy_transform_0x198000	low	memcpy 0x198000 bytes then nested loops
+0016b090	model-compute	slice_bounds_check	low	index and offset bounds against table vector
+0016b1a0	model-compute	cache_bytes_estimate	low	size arithmetic with 0x1200 factor
+0016b1f0	util	hash_bytes	low	init const 0x6a09e667f3bcc909 (Blake2b IV)
+0016b4b0	util	hash_and_lookup	low	calls 16b1f0 then map lookup at +0x38
+0016b6d0	config-env	cache_registry_singleton	med	getenv HALOGEN_NPU_CACHE_ENTRIES, guarded static
+0016bae0	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+0016bd90	util	cache_entry_dtor	low	frees strings, maps, memset
+0016bf50	hnp-format	find_bucket_by_name	low	string "bucket", scans vector with memcmp
+0016c0e0	logging-diag	selftest_report	med	"halogen-npu: selftest gx: sizes %zu %zu %zu" fprintf
+0016c410	cxx-stl	map_string_emplace_0x60	low	alloc 0x60 node, string move key
+0016c630	unknown	label_lookup	low	tried head: string build then rb-tree walk at +0x150
+0016c770	unknown	label_select_16byte_cmp	low	tried head: compares 16 bytes, picks one of two names
+0016c7f0	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+0016ca50	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+0016ccb0	cxx-stl	map_holder_dtor	low	erases tree at +0x26 via 16c7f0
+0016cea0	util	arena_init	low	string "arena", vector setup, memcpy
+0016d490	unknown	alloc_0x30_struct	low	tried head: allocs 0x30 struct with const fields
+0016d620	cxx-stl	string_replace_cstr	med	_M_replace path with strlen
+0016d760	cxx-stl	string_replace_cstr	med	"basic_string::_M_replace" length check
+0016d9c0	cxx-stl	string_concat_cstr_str	med	strlen plus append into new string
+0016dc30	hnp-format	blob_check_msg	high	"has the wrong size or checksum", "is missing"
+0016dd50	cxx-stl	string_concat	med	strlen plus append into new string
+0016dfd0	model-compute	layer_name_builder	low	snprintf "%02d", substr on name
+0016e270	model-compute	bucket_state_resume	low	"this bucket kind takes no state store", resume
+0016eab0	hnp-format	bucket_lookup_or_error	low	builds "no bucket " message, else 145b20
+0016eb50	hnp-format	probe_printer	low	contains 0x16ebde printer per npu-engine.md, fwrite
+00170cc0	hnp-format	blob_xor32_fail_msg	high	" fails its xor32", ": blob " strings
+00170ea0	unknown	large_loader	low	tried head: errno, snprintf, 33 callees, no strings
+00171ca0	npu-protocol	cli_cache_ecopy	med	usage: halogen-npu cache ecopy IN OUT CAP
+00172050	unknown	cache_iter	low	tried head: iterates entries at +0xc, no strings
+00172370	util	cache_registry_insert	low	gets singleton 16b6d0 then rb-tree insert
+00172600	npu-protocol	cache_verb_handler	med	strings LOOKUP and EFREE, uses 16b6d0
+001734f0	npu-protocol	request_handler	med	"a malformed request", 50 callees
+00175f10	npu-protocol	request_handler_variant	low	same size-check prologue as 1734f0, no callers
+00177e00	npu-protocol	request_handler_variant	low	same size-check prologue as 1734f0, no callers
+00178f30	cxx-stl	function_invoke_thunk	low	calls stored fn pointer
+00178f60	cxx-stl	sized_delete_0x30	low	operator delete 0x30
+00178f70	cxx-stl	sized_delete_0x70	low	operator delete 0x70
+00178f80	cxx-stl	sized_delete_0x30	low	operator delete 0x30
+00178f90	cxx-stl	sized_delete_0x70	low	operator delete 0x70
+00178fa0	cxx-stl	function_manager_trivial	med	op switch copy
+00178fd0	cxx-stl	sp_get_deleter	high	St19_Sp_make_shared_tag strcmp
+00179020	cxx-stl	sp_get_deleter	high	St19_Sp_make_shared_tag strcmp
+00179070	cxx-stl	nested_container_dtor	low	loops over vector of owned pointers
+00179170	xrt-device	bo_host_write	med	memcpy into host buffer then 155f30 dirty mark
+001791c0	logging-diag	variadic_format	low	variadic args, string create, callback param
+001792f0	cxx-stl	struct_dtor	low	frees vectors at +0x28/+0x40
+00179350	cxx-stl	map_at	med	"map::at" throw, memcmp
+00179450	cxx-stl	vector_dtor_loop	low	iterates elements freeing inner pointers
+00179530	cxx-stl	map_find	low	rb-tree walk with memcmp
+00179660	cxx-stl	vector_u16_resize	med	max_size check, 2-byte elements
+00179bd0	cxx-stl	hashtable_insert_node	med	_Prime_rehash_policy::_M_need_rehash
+00179d90	cxx-stl	hashtable_erase	low	bucket modulo, unlink node
+00179e40	model-compute	u8_u16_deinterleave	low	AVX byte masks 0xff00ff, shifts
+0017a1f0	util	skip_whitespace	med	advances while byte <= 0x20
+0017a240	cxx-stl	function_manager	med	typeinfo and ptr op switch
+0017a270	model-compute	bf16_scaled_reduce	low	ushort<<16 to float, times scale, loop
+0017a2f0	logging-diag	convert_progress_print	high	"halogen-npu convert: layer %d / %d (%.0f s)"
+0017a380	model-compute	quant_row_kernel	low	ldexp, vroundsd, max reduce
+0017a890	util	atomic_work_loop	low	LOCK fetch-add on shared counter
+0017a8e0	cxx-stl	thread_state_dtor	high	std::thread::_State dtor
+0017a8f0	cxx-stl	thread_state_deleting_dtor	high	std::thread::_State dtor then delete 0x20
+0017a920	hnp-format	container_write_aligned	low	fwrite pad to 8, ferror, fseek
+0017ab90	cxx-stl	function_manager	med	op switch copy 16 bytes
+0017abc0	cxx-stl	map_lookup	low	rb-tree decrement
+0017ac60	cxx-stl	map_lookup	low	rb-tree decrement
+0017ad00	cxx-stl	function_manager_heap_0x20	med	clones 0x20-byte functor
+0017ad80	cxx-stl	function_manager_heap_0x28	med	clones 0x28-byte functor
+0017ae10	cxx-stl	string_assign_move	med	SSO swap path
+0017aef0	cxx-stl	vector_assign	med	copies range, realloc on overflow
+0017b0a0	cxx-stl	string_compare	med	memcmp on min length
+0017b100	cxx-stl	vector_u64_ctor_n	med	max_size throw, 8-byte elements, memcpy
+0017b1c0	cxx-stl	rbtree_erase_recursive	med	recursive erase, 0x2a-qword nodes
+0017b2a0	util	json_object_get	low	checks type 5, scans member vector
+0017b330	cxx-stl	vector_u32_insert_range	med	range insert, memmove
+0017b6f0	util	thread_pool_create	low	hardware_concurrency picks thread count
+0017b9c0	model-compute	block512_kernel	low	size>>9 blocks, memset, max_size
+0017bbc0	model-compute	block_tensor_alloc	low	max_size, memset, size fields from struct
+0017bd30	model-compute	matrix_alloc_rows	low	divides length by dim, max_size, memset
+0017bf50	cxx-stl	string_assign_range	med	length <0x10 SSO path, memcpy
+0017bff0	cxx-stl	string_ctor_ptr_len	high	"construction from null is not valid"
+0017c0a0	cxx-stl	string_ctor_cstr	high	"construction from null is not valid", strlen
+0017c130	model-compute	dtype_buffer_alloc	low	size table lookup, rounds up to 256
+0017c750	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+0017c920	cxx-stl	map_holder_dtor	low	erases tree at +0x50 via 17c750
+0017c980	cxx-stl	struct_swap	low	moves three fields between structs
+0017cae0	unknown	large_struct_init	low	tried head: zeroes 0x2d qwords, memcpy, no strings
+0017d810	model-compute	vector_set_and_copy	low	copies int ranges, stores param at +0x18
+0017dbc0	model-compute	vector_set_and_copy	low	copies int ranges, stores param at +0x18
+0017e000	util	hash_update	low	64-byte block buffer, shifts and ors
+0017e3b0	util	hash_final	low	pads 0x80, length at 56
+0017e820	model-compute	block512_row_kernel	low	size>>9 blocks, memset, vmovhpd
+0017ec70	model-compute	block512_row_kernel	low	size>>9 blocks, memset, vmovhpd
+0017f110	model-compute	block512_row_kernel	low	size>>9 blocks, memset, vmovhpd
+0017f730	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+0017f900	cxx-stl	map_find	low	rb-tree walk
+0017fa00	cxx-stl	map_lookup	low	rb-tree decrement
+0017fb40	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+00180020	cxx-stl	insertion_sort_32byte	med	moves 4-qword elements, shifts down
+001806a0	cxx-stl	map_int_find	low	rb-tree walk comparing int keys
+00180930	cxx-stl	map_int_emplace_400	low	alloc 400-byte node, zero 0x2d qwords
+00180bd0	cxx-stl	string_replace_cstr	med	strlen, SSO threshold paths
+00180d30	cxx-stl	string_replace_cstr	med	"basic_string::_M_replace" length check
+00180fe0	cxx-stl	string_concat	med	strlen plus append into new string
+00181140	cxx-stl	string_concat	med	strlen plus append into new string
+001812a0	cxx-stl	vector_elem_dtor	low	destroys elements at +0x40..+0x48
+00181a10	cxx-stl	vector_realloc_append	med	"vector::_M_realloc_append" 64-byte elems
+00181d80	cxx-stl	vector_realloc_append	med	"vector::_M_realloc_append" 32-byte elems
+00182080	cxx-stl	vector_realloc_append	med	"vector::_M_realloc_append" 56-byte elems
+00182440	util	text_scan_next	low	advances char pointer to end, loop
+00182b30	cxx-stl	vector_copy_ctor_0x30	med	max_size throw, 48-byte elements
+00182c90	util	hex_encode	med	"0123456789abcdef", 32-byte input
+00182fa0	cxx-stl	string_copy_ctor	med	SSO copy path
+001830c0	cxx-stl	introsort_64byte_elems	med	threshold 0x200, depth limit param
+00184240	cxx-stl	sort_wrapper	med	calls 1830c0 then insertion sort 180020
+00184650	hnp-format	container_write_page_aligned	low	fwrite pad to 0xfff boundary, pack AVX
+001854f0	cxx-stl	string_ctor_ptr_len	high	"construction from null is not valid"
+001857c0	cxx-stl	string_vec_copy	low	string init then range copy
+00185ed0	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+00186180	cxx-stl	rbtree_erase_nested	med	nested loops freeing nodes
+00186550	model-compute	safetensors_file_dtor	low	munmap, frees maps, near 18a5b0 reader
+001867d0	util	json_parse_value	med	whitespace skip, strncmp "false", realloc_append
+00186fd0	cxx-stl	string_append	high	"basic_string::append" length check
+00187190	cxx-stl	string_concat	med	strlen plus append into new string
+00187490	model-compute	text_encoder_tensor_check	med	"the text encoder's", " is not bf16"
+00187650	model-compute	transformer_tensor_lookup	med	"the transformer's", " is not bf16"
+00187810	model-compute	tensor_convert_kernel	low	looks up tensor via 187650, AVX 64-bit multiplies
+00187c30	model-compute	time_guidance_embed_load	high	time_guidance_embed weights, exp and sincos
+00188210	util	int_to_string	med	digit-pair table 293949..., sign handling
+001887d0	cxx-stl	string_concat	med	strlen plus append into new string
+00188a90	util	name_suffix_join	low	builds name via 1887d0 and 13b890
+00188bf0	model-compute	image_model_weight_load	low	"/text_encoder" path, bf16 AVX, max_size, 41 callees
+0018a5b0	model-compute	safetensors_open	med	mmap, "dtype", "data_offsets", "is not a safetensors file"

@@ -97,7 +97,7 @@ verify/walk paths (getenv wrappers at 0x1883020 / 0x184bd90 Ghidra-space).
 
 `.hgn` = engine-native container (magic `HGN1`). Full layout recovered from
 `halogen-tools` decompiles and verified by a Python parser/builder
-(`work/hgn/hgnpy.py`; 165 crafted test containers in `work/hgn/files/`,
+(`work/hgn/hgnpy.py`; 169 crafted test containers in `work/hgn/files/`,
 tarred at `analysis/hgn-testfiles.tar.xz`):
 
 - Header 104 B LE: magic, version u32, n_tensors u64, table_off u64 (==104),
@@ -128,31 +128,38 @@ layers, 8-bit draft-head projections, FP8 n-gram table, HT (rotation-plane)
 and I4R variants with strict shape/group checks. GGUF (`qwen4exp`) repacked
 losslessly in RAM at start (~20 s) or once via `convert`.
 
-## 6. Not yet done (next passes)
+## 6. Findings complete at plan scope; residual unknowns
 
-1. **gfx1151 device kernels** — DONE through disassembly: fatbin v2 carved
-   (4 code objects, `work/fatbin/`, manifest `work/fatbin-manifest.json`),
-   llvm-objdump gfx1151 disassembly complete (`analysis/kernels-disasm/`,
-   3.34M lines; 214 per-kernel slices `analysis/kernels-slices.tar.xz`).
-   Family writeups: attention, MoE, indexer DONE
-   (`analysis/kernels-attention.md`, `kernels-moe.md`, `kernels-indexer.md`).
-   Remaining: dequant + speculation writeups — slices pre-cut
-   (`work/kernels-dequant/` 1141 files, `work/kernels-spec/` 43 files,
-   stats `tmp/stats-{dequant,spec}.csv`); Ghidra pseudocode for AMDGCN
-   stays blocked — no shader-ISA module exists
-   (`analysis/ghidra-module-writeup.md`); objdump-level is the accepted path.
-2. **halogen-tools deep pass** — DONE: `analysis/hgn-format.md` +
-   acceptance matrix (`tmp/verify_matrix.tsv`) + 5-test round-trip suite
-   (`tmp/rt_roundtrip.py`, all PASS).
-3. **halogen-npu** — DONE: `analysis/npu-engine.md` (XRT call graph,
-   hnpm/hnpb formats, getaddrinfo loopback gate proven).
-4. **dflash2 drafter** — DONE: `analysis/dflash2-probe.md` (reserved wire
-   slot, hard-wired 0 in every engine 0.11.10→0.17.3).
-5. **Version deltas** — DONE: `analysis/version-deltas.md` (9 releases,
-   sha256 code-object lineage, kernel/string set diffs).
-6. **Closure (Phase 6)** — remaining: unknowns ledger + coverage table +
-   evidence bundle + this section rewritten to "Findings complete;
-   residual unknowns: <list>". Blocked on item 1's two writeups.
+All seven phases of `PLAN.md` plus Phase 7 have evidence-backed writeups.
+Phases 0 to 6: version deltas (`version-deltas.md`), fatbin and gfx1151
+disassembly (`fatbin-inventory.md`), five kernel families
+(`kernels-attention.md`, `kernels-moe.md`, `kernels-indexer.md`,
+`kernels-dequant.md`, `kernels-speculation.md`), the `.hgn` format with
+round-trip tests (`hgn-format.md`), the NPU engine (`npu-engine.md`) and
+dflash2 (`dflash2-probe.md`). Phase 7: function maps of all three binaries
+(`function-map.tsv` 3,568 rows, `function-map-halogen-tools.tsv` 3,222,
+`function-map-halogen-npu.tsv` 1,412, `function-map-kernel-stubs.tsv`
+1,738; data rows, `wc -l` minus the header), the wire protocol
+(`wire-protocol.md`), entrypoint and API layer (`entrypoint-flow.md`,
+`api-layer.md`), a 31-step request trace (`request-trace.md`), a live
+0.17.3 engine run (`runtime-run-0.17.3.md`), 17 closure reports
+(`closure/`) and a rebuild guide (`rebuild-guide.md`).
+
+Residual unknowns, counted from the table in `unknowns.md`: CLOSED 9,
+PARTIAL 13, OPEN-BOUNDED 3, UNOBSERVABLE 1 (26 rows). The PARTIAL rows
+(U01, U02, U07, U09, U10, U11, U12, U14, U18, U19, U21, U23, U26) each say
+which half is closed and which is not. What stays open and why:
+
+- U03 NPU graph names: they live in the shipped `.elf` graph files, not in
+  this workspace.
+- U19 HT codebook decode: recovered statically, needs a real HT checkpoint
+  to confirm.
+- U06 0.14.x and 0.15.x patch deltas: those tags were not pulled (no
+  downloads in scope).
+- U22 AMDGCN pseudocode: Ghidra has no shader-ISA module; device code stays
+  at disassembly level.
+- U05 a future flip of the dflash2 literal: not observable from shipped
+  releases.
 
 ## 7. Method notes (reproducibility)
 

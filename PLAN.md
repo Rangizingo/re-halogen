@@ -22,6 +22,90 @@ report.md's §6 "Not yet done" is empty.
 
 ---
 
+## Phase 7: Complete reverse engineering (added 2026-10-10, Peter's goal)
+
+**Goal (Peter, verbatim intent):** 100% reverse engineering, a full, proven
+understanding of how halogen-flash-server 0.17.3 works from start to finish:
+formats, protocol, which kernel runs when, what each one computes. Someone
+could rebuild it from our writeups. Target is the latest release (0.17.3)
+only.
+
+**Definition of 100%:**
+1. Every function in `flash_serve` (~2,100) and `halogen-npu` has a role label;
+   any function we cannot explain is listed by name, not skipped.
+2. One request traced end to end with proof at each step: network call in,
+   loading, scheduling, prefill, decode, GPU kernels, sampling, streamed reply.
+3. The 19 closable unknowns in `analysis/unknowns.md` closed with proof.
+4. A rebuild guide (`analysis/rebuild-guide.md`) plus known-good test data
+   recorded from a real engine run, so a rebuild can be checked against it.
+5. Three named limits stay, by decision: U05 (future releases, unobservable),
+   U06 (0.14.x/0.15.x patch releases, dropped by Peter: only history, not the
+   latest), U22 (no Ghidra AMDGCN module; GPU code stays at assembly level,
+   explained by hand in the five kernel writeups).
+
+**Done already (second pass, branch `phase6-closure`):** all five kernel-family
+writeups, `unknowns.md` (22 items), `coverage.md`, report s6, CLAUDE.md.
+
+**Work, in order:**
+1. Mac Ghidra: install build tools, build the macOS decompiler for Ghidra
+   12.1.4 (`~/tools/ghidra_12.1.4_PUBLIC`, release ships linux/win only).
+   Peter picked this Mac for the decompile (the 4090 does not help Ghidra;
+   Ai-core is busy serving Hermes). REA (`rea-agents` 6.3.0, registered at
+   user scope) drives Ghidra: `GHIDRA_INSTALL_DIR`, PIE base +0x100000.
+2. Function map: REA binary overview, then classify all functions by role
+   (loading, scheduling, KV cache, sampling, protocol, GPU dispatch, runtime).
+   Send Peter the group list for approval before deep passes.
+3. Decompile the main path and close the 16 host-code unknowns (U01-U03,
+   U08-U18, U20, U21). Grep-driven, targeted windows; context overflow killed
+   two earlier subagent runs.
+4. End-to-end request trace and rebuild guide.
+5. Ai-core run (needs Peter's go and a window): confirm the model file is
+   complete, look for an HT checkpoint, run the engine once, record inputs and
+   outputs, close U04 and U19.
+6. Refresh unknowns, coverage, report; commit.
+
+**Delegation (superseded by Peter's pick, Sonnet agents in parallel, no
+DeepSeek spend):** the earlier idea was the DeepSeek lane
+(`bits-engine/lab/tools/ds_draft.py`, task file in, reply out, no tools). It
+spends Azure credit (stops at $950 or 2026-10-18), and this repo's stop
+condition says spending needs Peter's yes. Nothing it returns counts as proof:
+every claim is re-checked by grep or a disassembly window before it is written.
+
+**Gates (answered by Peter 2026-10-10):** running the engine allowed; AGENTS.md
+edits allowed; full Ai-core access granted now (Peter does not need it for
+anything, Hermes may go down); branch push approved; no DeepSeek, use Sonnet
+agents in parallel (Haiku only if the subagent-model guard allows it).
+
+**Ai-core facts (read-only survey 2026-10-10):** ssh works; both engine
+services inactive; Ghidra 12.1.2 (Linux) and ~/re-halogen present;
+`/srv/models/halogen-swift/qwen38-flash-next-mtp.hgn` and the Swift GGUFs
+exist; sizes and completeness not yet checked.
+
+**Phase 7 progress (2026-10-10, end of first Phase 7 session):**
+
+Done and pushed on branch `phase6-closure` (PR not yet opened):
+- Ghidra 12.1.4 with an arm64 decompiler built on this Mac; `scripts/ExportDecomp.java` exported all 3,568 `flash_serve` functions (0.17.3) and 3,564 (0.17.2) to `work/decomp/` (gitignored).
+- `analysis/function-map.md`, `function-map.tsv`, `function-map-core.tsv`: every function has a role (checked against the index, 0 missing, 0 duplicated).
+- Client-side docs: `wire-protocol.md`, `entrypoint-flow.md`, `api-layer.md`.
+- Live evidence: `runtime-run-0.17.3.md` plus `analysis/evidence/` (U04 and U26 closed; speculation, cache and seed measurements; the 0.17.3 engine ran on Ai-core inside the 0.17.2 image userland).
+- `version-compare-0.17.2-0.17.3.md` (host code differs, device code does not).
+- Kernel writeups corrected after an independent review (on-GPU splitmix64 RNG exists, `k_dv_scatter` is a gather, HT is a 128-point transform).
+- Tests: `tests/` (11 pytest tests, all pass).
+
+Incident: the engine test run deleted the live service's 60 GiB disk prompt cache (details in `runtime-run-0.17.3.md`). Rule from now on: test engines never mount `/srv/halogen-cache`; use their own cache dir and `HALOGEN_CACHE_PRUNE_OLD=0`.
+
+Second Phase 7 session (2026-10-10): `halogen-npu` and `halogen-tools` mapped (1,412 and 3,222 functions), kernel stubs bound 1:1 (1,738), 17 closure reports merged into `analysis/unknowns.md` in two rounds (counted from its table: CLOSED 9, PARTIAL 13, OPEN-BOUNDED 3, UNOBSERVABLE 1; U26 reopened to PARTIAL by the review refuter), `request-trace.md` updated from them, `rebuild-guide.md` written, closure docs refreshed. Left: the PR, review and merge (p7-3). Parked on Peter (`.claude/needs-human.md`): U03 needs the shipped NPU `.elf` graph files, U19 needs a real HT checkpoint.
+
+**Tracking for the next session** (the project plan_path `plan.md` is this same file on the case-insensitive Mac filesystem; never write a separate plan.md). Change `[ ]` to `[x] verified: <proof>` as each is proven.
+
+- [x] p7-1 verified: `test -f analysis/request-trace.md && test -f analysis/rebuild-guide.md && ! grep -q <em dash> analysis/rebuild-guide.md` printed P7-1-PROOF-PASS (2026-10-10; trace 22 proven, 6 proven in part, 3 inferred; guide 311 lines). Update `analysis/request-trace.md` steps and Gaps from `analysis/closure/` (pld.md, mtp-head.md, cache-key-kvpool.md, kernel-binding.md and the r2 reports), then write `analysis/rebuild-guide.md` (formats, protocol, startup, request path, kernels and dispatch, cache and KV pool, speculation, NPU, proven vs inferred). Proof: both files exist and the guide has no em dash.
+- [x] p7-2 verified: `python3 -m pytest -q tests` 11 passed and `grep -c 'Not yet done' analysis/report.md` 0, printed P7-2-PROOF-PASS (2026-10-10). Refresh `analysis/coverage.md`, `analysis/report.md` section 6, `start-here.md`, the AGENTS.md status line and this progress note to the current facts (unknowns counted from the table in `analysis/unknowns.md`; PARTIAL rows stay PARTIAL). Proof: `python3 -m pytest -q tests` passes and report.md section 6 no longer says "Not yet done".
+- [ ] p7-3 Open the PR for `phase6-closure`, independent review (reviewer on a different model than the author, see `.claude/handoff.md`), then merge. Proof: `gh pr list --state merged --head phase6-closure` is not empty.
+
+Reviewer gate: the stop-time review gate needs a reviewer on a different model than the Sonnet author; a fix (extra ladder rung and clearer message) was handed to an agent under a 60 minute hook grant (see needs-human). Settings parity warning: `rust-analyzer-lsp` plugin not installed, entry dropped from live `settings.json` only; Peter's call.
+
+---
+
 ## Progress log (updated 2026-10-10)
 
 Evidence lives in `analysis/` and `work/`; decompiles in `work/hgn/*.c`

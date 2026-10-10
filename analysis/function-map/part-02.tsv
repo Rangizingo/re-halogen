@@ -1,0 +1,299 @@
+addr	role	label	confidence	evidence
+01874120	cxx-stl	vector_string_copy_ctor	med	allocs n*0x20 then uninit_copy of strings
+018741a0	cxx-stl	vector_realloc_append	high	vector::_M_realloc string
+018743a0	cxx-stl	stl_uninit_copy	high	mangled libstdc++ name
+01874490	protocol-net	json_helper_4490	low	in JSON parse/schema address cluster
+018744f0	protocol-net	schema_node_destroy	low	recursive free of 0x78-byte nodes
+01874630	protocol-net	schema_tree_destroy	low	loops over 0x78 nodes calling destroy
+018746e0	protocol-net	json_parse_top	med	"trailing bytes at" error, hex digit table
+01874b00	protocol-net	json_schema_compile	med	"schema nesting deeper than 64", pattern, enum strings
+01875b80	protocol-net	json_helper_5b80	low	in JSON parse/schema address cluster
+01875d10	protocol-net	json_helper_5d10	low	in JSON parse/schema address cluster
+01875eb0	protocol-net	json_parse_object	high	"expected ':'" "expected ',' or '}'" strings
+01876770	protocol-net	json_error_format	med	" at byte " message builder
+01876c50	protocol-net	json_parse_string	high	"unterminated string" "control byte in string"
+018770a0	protocol-net	json_helper_70a0	low	in JSON parse/schema address cluster
+018771d0	protocol-net	json_parse_unicode_escape	high	"truncated \u escape" "bad hex in \u escape"
+01877320	protocol-net	json_helper_7320	low	in JSON parse/schema address cluster
+01877540	cxx-stl	vector_realloc_append	high	vector::_M_realloc string
+01877870	cxx-stl	vector_realloc_append	high	vector::_M_realloc string
+01877ad0	protocol-net	json_helper_7ad0	low	in JSON parse/schema address cluster
+01877b40	protocol-net	json_substr_helper	low	basic_string::substr pos check, JSON cluster
+01877ff0	protocol-net	json_helper_7ff0	low	in JSON parse/schema address cluster
+01878050	protocol-net	json_value_serialize	low	"false" literal, string append, JSON cluster
+01878500	cxx-stl	vector_realloc_append	high	vector::_M_realloc string
+018785f0	protocol-net	json_helper_85f0	low	in JSON parse/schema address cluster
+01878680	protocol-net	json_schema_validate	med	6KB, type names string/integer/false/array
+0187a180	protocol-net	json_helper_a180	low	in JSON parse/schema address cluster
+0187a340	protocol-net	json_helper_a340	low	in JSON parse/schema address cluster
+0187a5a0	cxx-stl	shared_ptr_string_release	low	frees heap string then 0x38 block
+0187a5e0	protocol-net	json_helper_a5e0	low	in JSON parse/schema address cluster
+0187a6d0	protocol-net	json_helper_a6d0	low	in JSON parse/schema address cluster
+0187a810	protocol-net	json_helper_a810	low	in JSON parse/schema address cluster
+0187a9d0	cxx-stl	stl_hashtable	high	mangled libstdc++ name
+0187aca0	protocol-net	json_helper_aca0	low	in JSON parse/schema address cluster
+0187ace0	cxx-stl	stl_hashtable	high	mangled libstdc++ name
+0187adc0	protocol-net	json_helper_adc0	low	in JSON parse/schema address cluster
+0187af00	protocol-net	json_helper_af00	low	in JSON parse/schema address cluster
+0187b210	protocol-net	json_helper_b210	low	in JSON parse/schema address cluster
+0187b430	cxx-stl	stl_vector_assign	high	mangled libstdc++ name
+0187b5f0	protocol-net	json_helper_b5f0	low	in JSON parse/schema address cluster
+0187b6a0	protocol-net	json_helper_b6a0	low	in JSON parse/schema address cluster
+0187b7a0	protocol-net	json_helper_b7a0	low	in JSON parse/schema address cluster
+0187b8a0	protocol-net	json_helper_b8a0	low	in JSON parse/schema address cluster
+0187b940	cxx-stl	stl_uninit_copy	high	mangled libstdc++ name
+0187ba30	cxx-stl	stl_uninit_copy	high	mangled libstdc++ name
+0187bb20	protocol-net	json_escape_string	high	"\u%04x" control-char escaping
+0187be30	protocol-net	json_helper_be30	low	in JSON parse/schema address cluster
+0187c050	cxx-stl	vector_realloc_append	high	vector::_M_realloc string
+0187c240	protocol-net	json_serialize_or_build	low	3.7KB, memcpy+realloc_append, JSON cluster
+0187d1e0	cxx-stl	vector_realloc_append	high	vector::_M_realloc string
+0187d380	protocol-net	json_helper_d380	low	in JSON parse/schema address cluster
+0187d600	protocol-net	json_helper_d600	low	in JSON parse/schema address cluster
+0187d6a0	protocol-net	json_helper_d6a0	low	in JSON parse/schema address cluster
+0187d870	protocol-net	json_helper_d870	low	in JSON parse/schema address cluster
+0187da10	protocol-net	json_helper_da10	low	in JSON parse/schema address cluster
+0187dbe0	protocol-net	json_helper_dbe0	low	in JSON parse/schema address cluster
+0187dc10	protocol-net	json_helper_dc10	low	in JSON parse/schema address cluster
+0187dd50	cxx-stl	vector_realloc_append	high	vector::_M_realloc string
+0187e120	protocol-net	json_helper_e120	low	in JSON parse/schema address cluster
+0187e240	cxx-stl	vector_realloc_append	high	vector::_M_realloc string
+0187e590	protocol-net	json_helper_e590	low	in JSON parse/schema address cluster
+0187ea60	protocol-net	json_helper_ea60	low	in JSON parse/schema address cluster
+0187ebb0	protocol-net	json_helper_ebb0	low	in JSON parse/schema address cluster
+0187ed50	protocol-net	json_helper_ed50	low	in JSON parse/schema address cluster
+0187ee90	cxx-stl	vector_realloc_insert	high	vector::_M_realloc string
+0187f080	cxx-stl	vector_realloc_insert	high	vector::_M_realloc string
+0187f290	unknown	unknown_range_copy	low	1.3KB, recursion+memcpy only, no strings
+0187f7c0	unknown	unknown_f7c0	low	between JSON and prompt-cache clusters, no strings
+0187f980	unknown	unknown_f980	low	between JSON and prompt-cache clusters, no strings
+0187fb00	kv-cache-prefix	prompt_cache_try_restore	high	"prompt cache: ... KV rows are on slot" strings
+018802a0	kv-cache-prefix	prompt_cache_helper_02a0	low	in prompt-cache address cluster
+01880490	kv-cache-prefix	prompt_cache_locked_op	low	mutex lock/unlock only, prompt cache cluster
+018806e0	kv-cache-prefix	prompt_cache_insert	low	2KB, calls disk load and string assign
+01880ff0	kv-cache-prefix	prompt_cache_helper_0ff0	low	in prompt-cache address cluster
+018810e0	kv-cache-prefix	prompt_cache_locked_op2	low	mutex lock/unlock only, prompt cache cluster
+01881240	kv-cache-prefix	prompt_cache_disk_load	med	"size table" ".blob" "blob size" strings
+01882340	kv-cache-prefix	prompt_cache_disk_restore	high	"prompt cache: disk restore of %s failed"
+01882920	kv-cache-prefix	prompt_cache_helper_2920	low	in prompt-cache address cluster
+01882a70	cxx-stl	new_0x48_node	low	only calls operator new(0x48)
+01882b50	kv-cache-prefix	prompt_cache_helper_2b50	low	in prompt-cache address cluster
+01882cd0	kv-cache-prefix	prompt_cache_helper_2cd0	low	in prompt-cache address cluster
+01882d20	kv-cache-prefix	prompt_cache_helper_2d20	low	in prompt-cache address cluster
+01882dd0	cxx-stl	vector_realloc_append	high	vector::_M_realloc string
+01882ea0	kv-cache-prefix	prompt_cache_helper_2ea0	low	in prompt-cache address cluster
+01882fd0	kv-cache-prefix	prompt_cache_helper_2fd0	low	in prompt-cache address cluster
+01883020	config-env	getenv_walk_falsify	high	getenv HALOGEN_WALK_FALSIFY
+01883050	cxx-stl	new_0x10_node	low	only calls operator new(0x10)
+01883260	cxx-stl	deque_string_pair_destroy	low	frees string pairs across deque nodes
+01883590	unknown	unknown_3590	low	no strings, not enough context in index
+018835d0	crt-runtime	_INIT_1_static_init	high	named _INIT_1, flash_serve.cpp path + build date
+01883720	gpu-dispatch	kernel_launch_stub_3720	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018837e0	gpu-dispatch	kernel_launch_stub_37e0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018838b0	gpu-dispatch	kernel_launch_stub_38b0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01883940	gpu-dispatch	kernel_launch_stub_3940	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01883a20	gpu-dispatch	kernel_launch_stub_3a20	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01883af0	gpu-dispatch	kernel_launch_stub_3af0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01883c00	gpu-dispatch	kernel_launch_stub_3c00	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01883c90	gpu-dispatch	kernel_launch_stub_3c90	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01883d60	gpu-dispatch	kernel_launch_stub_3d60	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01883e60	gpu-dispatch	kernel_launch_stub_3e60	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01883f50	gpu-dispatch	kernel_launch_stub_3f50	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01884010	gpu-dispatch	kernel_launch_stub_4010	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01884100	gpu-dispatch	kernel_launch_stub_4100	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01884240	gpu-dispatch	kernel_launch_stub_4240	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01884310	gpu-dispatch	kernel_launch_stub_4310	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018843d0	gpu-dispatch	kernel_launch_stub_43d0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01884460	hgn-loader	load_checkpoint_with_overlay	med	HALOGEN_CK_OVERLAY, ".overlay.hgn" strings, 9.8KB
+018891b0	util	host_hugepage_preflight	med	"contiguous 2 MiB blocks free" messages
+01889430	logging-diag	startup_progress_log	high	"startup [%6.1f s]" HALOGEN_STARTUP_PROGRESS
+01889610	hgn-loader	pin_trunk_weights	med	HALOGEN_FLASH_PIN_TRUNK, hipMemcpy, ngram_embedding
+018897f0	hgn-loader	upload_model_weights	med	19KB, embed_tokens.weight, router/route env flags
+0188f710	hgn-loader	load_mtp_drafter_weights	med	HALOGEN_MTP, mtp.layers.0.self_attn.* tensor names
+01891c50	sampling-speculation	load_draft_vocab_file	med	HALOGEN_DRAFT_VOCAB_FILE getenv
+01892e30	hip-runtime	dmalloc_device_alloc	high	"dmalloc:" strings, HIP error, 29 callers
+01893080	config-env	getenv_arena_union	high	getenv HALOGEN_ARENA_UNION
+018930b0	config-env	getenv_cache_file	high	getenv HALOGEN_CACHE_FILE
+01893110	util	const_0x7340	low	returns constant 0x7340
+01893120	unknown	unknown_1_5KB_bitops	low	calls FUN_01994340 5x, no strings
+01893700	hip-runtime	hip_memset_checked	med	hipMemset x5 with error string
+01893b00	util	worker_thread_stop_join	med	sets flag under mutex, notify_all, thread join
+01893b70	unknown	unknown_set_cleanup	low	erases string rb-tree, calls act_stats
+01893fe0	logging-diag	act_stats_dump	high	"act_stats: %u tensors ... -> %s" strings
+01894600	hgn-loader	find_tensor_by_name	med	9 callers, tensor-name users, table at +0x2a0
+01894750	hgn-loader	get_tensor_wrapper	low	calls find_tensor, 50 bytes
+01894790	sampling-speculation	locate_ngram_table	med	"the n-gram table (%s) is not in %s" string
+01894830	gpu-dispatch	hip_checked_op_4830	low	HIP error macro in flash_model.hip/flash_ops.h wrapper
+01894c80	gpu-dispatch	hip_checked_op_4c80	low	HIP error macro in flash_model.hip/flash_ops.h wrapper
+01894dd0	unknown	unknown_4dd0	low	no strings, not enough context in index
+01895170	gpu-dispatch	kernel_launch_wrapper_5170	low	small 1-callee stub with callers, no strings
+018951f0	config-env	getenv_tap_from_scan	high	getenv HALOGEN_TAP_FROM_SCAN
+01895250	util	clear_state_fields	low	zeroes four fields at +0x4b0..0x4c3
+01895270	hip-runtime	hip_memcpy_async_checked	med	hipMemcpyAsync x3 with error string
+018958a0	gpu-dispatch	kernel_launch_stub	med	hipLaunchKernel-style stub, 0 callers
+01895930	gpu-dispatch	kernel_launch_stub_5930	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01895ba0	gpu-dispatch	kernel_launch_stub_5ba0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01895c20	gpu-dispatch	kernel_launch_stub_5c20	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01895ca0	gpu-dispatch	hip_checked_op_5ca0	low	HIP error macro in flash_model.hip/flash_ops.h wrapper
+01896250	gpu-dispatch	kernel_launch_stub_6250	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01896320	gpu-dispatch	kernel_launch_wrapper_6320	low	small 1-callee stub with callers, no strings
+01896400	gpu-dispatch	kernel_launch_stub_6400	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01896490	hip-runtime	alloc_buffer_set	low	memset and 3 dmalloc calls
+01896988	unknown	unknown_6988	low	no strings, not enough context in index
+01896990	gpu-dispatch	hip_checked_op_6990	low	HIP error macro in flash_model.hip/flash_ops.h wrapper
+01896e10	gpu-dispatch	kernel_launch_stub_6e10	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01896ea0	gpu-dispatch	hip_checked_op_6ea0	low	HIP error macro in flash_model.hip/flash_ops.h wrapper
+01896f60	gpu-dispatch	hip_checked_op_6f60	low	HIP error macro in flash_model.hip/flash_ops.h wrapper
+01897040	gpu-dispatch	hip_checked_op_7040	low	HIP error macro in flash_model.hip/flash_ops.h wrapper
+018972e0	gpu-dispatch	kernel_launch_wrapper_72e0	low	small 1-callee stub with callers, no strings
+01897820	gpu-dispatch	kernel_launch_stub_7820	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018978a0	gpu-dispatch	kernel_launch_stub_78a0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01897940	unknown	unknown_7940	low	no strings, not enough context in index
+01897c90	kv-cache-prefix	cc_place_copy	med	"cc_place(%d -> %d, %d, at %d): refused: outside the pool"
+01898570	gpu-dispatch	kernel_launch_stub_8570	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01898650	gpu-dispatch	kernel_launch_stub_8650	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+01898720	unknown	unknown_8720	low	no strings, not enough context in index
+01898840	unknown	unknown_8840	low	no strings, not enough context in index
+01898900	gpu-dispatch	hip_checked_op_8900	low	HIP error macro in flash_model.hip/flash_ops.h wrapper
+01898a70	gpu-dispatch	hip_checked_op_8a70	low	HIP error macro in flash_model.hip/flash_ops.h wrapper
+01898c30	hgn-loader	format_hash_hex	low	"%016llx" snprintf, hash string builder
+01899240	hgn-loader	bind_moe_layer_tensors	med	shared_expert.* and experts.* names, find_tensor
+01899b40	cxx-stl	vector_length_error	med	"cannot create std::vector larger than max_size()"
+01899dc0	hgn-loader	get_tensor_alloc	low	calls find_tensor and dmalloc
+0189a2d0	util	string_from_cstr_vec	low	basic_string null check, 14 callees
+0189a580	hgn-loader	validate_ht_plane	med	"an HT plane must be f16 of %lld values"
+0189a700	hgn-loader	validate_qparam_layout	med	"qparam layout != table nbytes" string
+0189a920	gpu-dispatch	hip_checked_vec_launch	low	HIP error format flash_ops.h plus vector alloc
+0189aa70	hgn-loader	validate_i64_tensor	med	"expected i64[%d], got %s[%llu]"
+0189abb0	config-env	getenv_ngram_random	high	HALOGEN_FLASH_NGRAM_RANDOM
+0189abe0	model-forward	prefill_forward	med	11KB, HALOGEN_FLASH_PREFILL_GEMM, hc_read, flash_model.hip
+018a5150	gpu-dispatch	launch_helper_5150	low	calls several launch wrappers, no strings
+018a5260	gpu-dispatch	kernel_launch_wrapper_5260	low	small 1-callee stub with callers, no strings
+018a53b0	gpu-dispatch	launch_helper_53b0	low	calls several launch wrappers, no strings
+018a5560	gpu-dispatch	launch_helper_5560	low	calls several launch wrappers, no strings
+018a5730	config-env	getenv_hc_q8_fuse	med	HALOGEN_HC_Q8_FUSE getenv, 541 bytes
+018a5a80	gpu-dispatch	kernel_launch_stub_5a80	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018a5b30	gpu-dispatch	hip_checked_op_5b30	low	HIP error macro in flash_model.hip/flash_ops.h wrapper
+018a5f40	gpu-dispatch	launch_helper_5f40	low	calls several launch wrappers, no strings
+018a7520	gpu-dispatch	gemm_dispatch	med	PREFILL_GEMM and BF16_GEMM flags, flash_ops.h, 30 callees
+018a9540	gpu-dispatch	kernel_launch_stub_9540	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018a95d0	gpu-dispatch	launch_helper_95d0	low	calls several launch wrappers, no strings
+018a9620	gpu-dispatch	kernel_launch_stub_9620	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018a96d0	gpu-dispatch	kernel_launch_stub_96d0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018a97a0	gpu-dispatch	launch_helper_97a0	low	calls several launch wrappers, no strings
+018aad80	gpu-dispatch	kernel_launch_stub_ad80	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018aae00	gpu-dispatch	kernel_launch_stub_ae00	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018aaeb0	gpu-dispatch	kernel_launch_stub_aeb0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018aaf40	gpu-dispatch	kernel_launch_stub_af40	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018aafd0	gpu-dispatch	kernel_launch_stub_afd0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018ab0a0	gpu-dispatch	launch_helper_b0a0	low	calls several launch wrappers, no strings
+018ab410	gpu-dispatch	launch_helper_b410	low	calls several launch wrappers, no strings
+018ab460	gpu-dispatch	kernel_launch_stub_b460	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018ab530	gpu-dispatch	kernel_launch_stub_b530	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018ab5c0	model-forward	gdn_layer_forward	med	HALOGEN_DN_* flags, "gdn: mixed in-place / ring rows"
+018b0e10	config-env	getenv_gdn_step_n	high	getenv HALOGEN_GDN_STEP_N
+018b0e40	model-forward	linear_attn_ht_forward	low	HALOGEN_HT_LIN_GRP/DIRECT flags, 4KB
+018b28d0	config-env	getenv_gdn_step_n	high	getenv HALOGEN_GDN_STEP_N
+018b2900	gpu-dispatch	launch_helper_2900	low	calls several launch wrappers, no strings
+018b2950	gpu-dispatch	kernel_launch_stub_2950	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b2a30	gpu-dispatch	kernel_launch_stub_2a30	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b2b10	gpu-dispatch	kernel_launch_stub_2b10	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b2c40	gpu-dispatch	kernel_launch_stub_2c40	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b2d20	gpu-dispatch	kernel_launch_stub_2d20	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b2e00	gpu-dispatch	kernel_launch_stub_2e00	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b2ee0	gpu-dispatch	kernel_launch_stub_2ee0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b2fc0	gpu-dispatch	kernel_launch_stub_2fc0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b30a0	gpu-dispatch	kernel_launch_stub_30a0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b3180	gpu-dispatch	kernel_launch_stub_3180	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b3260	gpu-dispatch	kernel_launch_stub_3260	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b3340	gpu-dispatch	kernel_launch_stub_3340	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b3420	gpu-dispatch	kernel_launch_stub_3420	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b3500	gpu-dispatch	kernel_launch_stub_3500	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b35e0	gpu-dispatch	kernel_launch_stub_35e0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b36c0	gpu-dispatch	kernel_launch_stub_36c0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b37a0	gpu-dispatch	kernel_launch_stub_37a0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b3880	gpu-dispatch	kernel_launch_stub_3880	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b3990	gpu-dispatch	kernel_launch_stub_3990	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b3ac0	gpu-dispatch	kernel_launch_stub_3ac0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b3bf0	gpu-dispatch	kernel_launch_stub_3bf0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b3d20	gpu-dispatch	kernel_launch_stub_3d20	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b3e50	gpu-dispatch	kernel_launch_stub_3e50	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b3f80	gpu-dispatch	kernel_launch_stub_3f80	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b4050	gpu-dispatch	kernel_launch_stub_4050	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b4110	gpu-dispatch	kernel_launch_stub_4110	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b4210	gpu-dispatch	kernel_launch_stub_4210	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b4280	config-env	getenv_flash_conv_xc	high	getenv HALOGEN_FLASH_CONV_XC
+018b42b0	config-env	getenv_flash_conv_tb	high	getenv HALOGEN_FLASH_CONV_TB
+018b42e0	gpu-dispatch	kernel_launch_stub_42e0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b4390	gpu-dispatch	kernel_launch_stub_4390	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b4440	gpu-dispatch	kernel_launch_stub_4440	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b44f0	config-env	getenv_dn_f32_stores	high	getenv HALOGEN_DN_F32_STORES
+018b4520	config-env	getenv_dn_norm_read	high	getenv HALOGEN_DN_NORM_READ
+018b4550	config-env	getenv_dn_norm_fold	high	getenv HALOGEN_DN_NORM_FOLD
+018b4580	config-env	getenv_dn_fused	high	getenv HALOGEN_DN_FUSED
+018b45b0	config-env	getenv_dn_norm_w	high	getenv HALOGEN_DN_NORM_W
+018b45e0	gpu-dispatch	kernel_launch_stub_45e0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b46a0	gpu-dispatch	kernel_launch_stub_46a0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b4742	crt-runtime	nop_ret	high	single ret instruction
+018b4750	model-forward	indexer_select	med	"ix_select: no candidate scratch" string
+018b5a30	config-env	getenv_ix_select	high	getenv HALOGEN_IX_SELECT
+018b5a60	gpu-dispatch	kernel_launch_stub_5a60	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b5b30	gpu-dispatch	kernel_launch_stub_5b30	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b5c20	gpu-dispatch	kernel_launch_stub_5c20	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b5d10	gpu-dispatch	kernel_launch_stub_5d10	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b5e00	gpu-dispatch	kernel_launch_stub_5e00	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b5ef0	model-forward	qsa_select_blocks	low	HALOGEN_QSA_FORCE_SEL, hip checks, 3KB
+018b8500	config-env	getenv_ix_wmma	high	getenv HALOGEN_IX_WMMA
+018b8530	config-env	getenv_ix_wmma_poison	high	getenv HALOGEN_IX_WMMA_POISON
+018b8560	gpu-dispatch	kernel_launch_stub_8560	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b85f0	gpu-dispatch	kernel_launch_stub_85f0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018b86d0	model-forward	sparse_attn_block_select	med	"gives %d blocks > block_topk" HALOGEN_QSA_DENSE
+018bd250	gpu-dispatch	kernel_launch_stub_d250	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018bd2e0	gpu-dispatch	launch_helper_d2e0	low	calls several launch wrappers, no strings
+018bd9b0	gpu-dispatch	kernel_launch_stub_d9b0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018bda30	config-env	getenv_rope_w	high	getenv HALOGEN_ROPE_W
+018bda60	gpu-dispatch	kernel_launch_stub_da60	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018bdb80	gpu-dispatch	kernel_launch_stub_db80	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018bdc00	config-env	getenv_attn_fa	high	getenv HALOGEN_ATTN_FA
+018bdc30	gpu-dispatch	kernel_launch_stub_dc30	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018bdd10	config-env	getenv_attn_qs	high	getenv HALOGEN_ATTN_QS
+018bdd40	config-env	getenv_attn_qs_min	high	getenv HALOGEN_ATTN_QS_MIN HALOGEN_ATTN_QS_BT
+018bdda0	config-env	getenv_attn_qs_bt	high	getenv HALOGEN_ATTN_QS_BT
+018bddd0	gpu-dispatch	launch_helper_ddd0	low	calls several launch wrappers, no strings
+018bdf50	gpu-dispatch	kernel_launch_stub_df50	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018be030	gpu-dispatch	kernel_launch_stub_e030	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018be110	gpu-dispatch	kernel_launch_stub_e110	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018be1c0	gpu-dispatch	kernel_launch_stub_e1c0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018be2b0	gpu-dispatch	kernel_launch_stub_e2b0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018be390	model-forward	moe_forward	med	"moe: router produced expert id" 9.7KB
+018ca640	config-env	getenv_ht_moe_gemm	high	getenv HALOGEN_HT_MOE_GEMM
+018ca670	config-env	getenv_ht_moe_wpe	high	getenv HALOGEN_HT_MOE_WPE
+018ca6b0	config-env	getenv_ht_moe_v2	high	getenv HALOGEN_HT_MOE_V2
+018ca6f0	config-env	getenv_ht_moe_dv	high	getenv HALOGEN_HT_MOE_DV
+018ca730	config-env	getenv_ht_moe_dnx	high	getenv HALOGEN_HT_MOE_DNX
+018ca770	config-env	getenv_ht_moe_m128	high	getenv HALOGEN_HT_MOE_M128
+018ca7b0	config-env	getenv_ht_moe_m128_dn	high	getenv HALOGEN_HT_MOE_M128_DN
+018ca7e0	config-env	getenv_ht_moe_m128_gu	high	getenv HALOGEN_HT_MOE_M128_GU
+018ca810	logging-diag	arena_sizing_error	low	prints "internal sizing error in per-forward arena"
+018ca880	gpu-dispatch	kernel_launch_stub_a880	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018ca910	unknown	unknown_351b_4callers	low	4 callers, calls FUN_01940a80 twice, no strings
+018caa70	model-forward	moe_deferred_shared_down	med	"moe_ht_: deferred shared down did not launch"
+018cab60	gpu-dispatch	kernel_launch_stub_ab60	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cac30	gpu-dispatch	kernel_launch_stub_ac30	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cad00	gpu-dispatch	kernel_launch_stub_ad00	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cae00	gpu-dispatch	kernel_launch_stub_ae00	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018caf00	gpu-dispatch	kernel_launch_stub_af00	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cb000	gpu-dispatch	kernel_launch_stub_b000	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cb100	gpu-dispatch	kernel_launch_stub_b100	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cb1e0	gpu-dispatch	kernel_launch_stub_b1e0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cb2c0	gpu-dispatch	kernel_launch_stub_b2c0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cb3a0	gpu-dispatch	kernel_launch_stub_b3a0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cb480	gpu-dispatch	kernel_launch_stub_b480	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cb560	gpu-dispatch	kernel_launch_stub_b560	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cb640	gpu-dispatch	kernel_launch_stub_b640	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cb720	gpu-dispatch	kernel_launch_stub_b720	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cb800	gpu-dispatch	kernel_launch_stub_b800	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cb8e0	gpu-dispatch	kernel_launch_stub_b8e0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cb9c0	gpu-dispatch	kernel_launch_stub_b9c0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cbaa0	gpu-dispatch	kernel_launch_stub_baa0	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings
+018cbb80	gpu-dispatch	kernel_launch_stub_bb80	med	hipLaunchKernel stub: 1 callee, 0 callers, no strings

@@ -1,0 +1,299 @@
+addr	role	label	confidence	evidence
+0182b880	crt-runtime	entry	high	named entry
+0182b8b0	crt-runtime	init_array_stub	high	named _INIT_0
+0182b8f0	crt-runtime	fini_array_stub	high	named _FINI_0
+0182b940	crt-runtime	thunk_01853c10	high	named thunk, 5 bytes
+0182b950	crt-runtime	static_init_helper	low	no callers, 3 callees, no strings
+0182ba00	config-env	main_init_config	med	10KB, HALOGEN_KV_SLOTS and KV_POOL env, default model path
+0182e9a0	config-env	env_grammar	high	HALOGEN_GRAMMAR string
+0182ea00	unknown	unknown_0182ea00	low	126B, calls 01903630 and 01905000, no strings
+0182ea80	protocol-net	parse_request_json	med	52KB, error/malformed/id out of range strings
+01844aa0	cxx-stl	container_dtor_01844aa0	low	small, operator delete and one FUN callee
+01844ba0	hip-runtime	free_device_buffer	med	calls hipFree then memset
+01844d10	config-env	env_drafter_default	high	HALOGEN_DRAFTER_DEFAULT
+01844d40	util	nop_stub_01844d40	low	11 bytes, no callees
+01844d50	scheduler-slots	serve_queue_pending_trace	med	connection queued behind running session strings
+018456c0	protocol-net	recv_line_append	med	calls recv, string append and find
+01845940	protocol-net	send_string	med	calls send, string reserve and append
+01845a50	util	map_erase_helper	low	rb-tree increment and erase, calls 0184c7e0
+01845bf0	util	static_init_guarded	low	__cxa_guard, calls 0184c8a0
+01845d90	config-env	env_serve_trace	high	HALOGEN_SERVE_TRACE
+01845df0	util	steady_clock_now_cached	low	__cxa_guard plus steady_clock::now
+01845e50	scheduler-slots	trace_retire_request	med	req retired after tokens, pair joint rounds strings
+01846470	util	memmove_struct_helper	low	memmove only, 614B
+018466e0	scheduler-slots	slot_state_release	low	operator delete, memset, calls 01870630
+018469a0	scheduler-slots	slot_dispatch_helper	low	calls 0184d040, 01906050, 01907970
+01846b20	scheduler-slots	prefill_request_with_log	med	prefill %d/%d tokens log strings
+01847a30	scheduler-slots	prefill_cancelled	high	cancelled during its prefill string
+01847c40	scheduler-slots	move_slot_struct	low	field-wise move of large struct, memcpy
+01848190	scheduler-slots	decode_first_token	med	first token, penalty history kPenMax strings
+01849530	scheduler-slots	request_helper_01849530	low	calls 018704e0, no strings
+01849670	cxx-stl	vector_realloc_append_01849670	med	vector::_M_realloc_append string
+018497a0	scheduler-slots	refuse_request	med	request refused string, error
+0184a0a0	cxx-stl	container_dtor_0184a0a0	low	67B, operator delete only
+0184a0f0	scheduler-slots	move_request_state	low	moves struct fields, 2KB, memcpy
+0184a9b0	sampling-speculation	prob_helper	low	calls 01907c70, NAN handling
+0184aab0	sampling-speculation	check_token_legal_grammar	high	token illegal under grammar string
+0184ad90	sampling-speculation	sampling_vector_build	low	NAN, vector realloc, calls 01883050
+0184b4c0	sampling-speculation	grammar_state_step_wrapper	low	9B wrapper calling 01864950
+0184b4d0	protocol-net	format_float_list_reply	low	%.7g and %d %.7g formats
+0184be30	scheduler-slots	prefill_chunk_log	med	prefill %d/%d tokens string
+0184c3d0	util	nop_stub_0184c3d0	low	38B, no callees
+0184c400	model-forward	vision_img_prompt_expand	low	IMG string
+0184c7a0	config-env	env_vision_max_pixels	high	HALOGEN_VISION_MAX_PIXELS
+0184c7e0	cxx-stl	container_dtor_0184c7e0	low	operator delete only
+0184c8a0	util	small_helper_0184c8a0	low	253B, no callees, CONCAT only
+0184c9a0	protocol-net	format_stats_D_line	med	D %ld %s ... format line
+0184cf00	scheduler-slots	slot_release_helper	low	delete, calls 018466e0 and 018541d0
+0184cf80	scheduler-slots	slot_helper_0184cf80	low	calls 0184d040 only
+0184cfd0	util	small_helper_0184cfd0	low	38B, no callees
+0184d000	util	small_helper_0184d000	low	50B, no callees
+0184d040	sampling-speculation	grammar_compile_driver	low	large stack, calls grammar arena upload 0184d3a0
+0184d3a0	sampling-speculation	grammar_arena_upload	med	grammar arena, upload strings
+0184d930	util	hash_string_lookup	low	calls _Hash_bytes, bcmp
+0184dc30	cxx-stl	container_dtor_0184dc30	low	delete, calls 01844ba0
+0184dc70	cxx-stl	container_dtor_0184dc70	low	49B, delete only
+0184dcb0	cxx-stl	container_dtor_0184dcb0	low	60B, delete only
+0184dcf0	config-env	env_schema_escape	high	HALOGEN_SCHEMA_ESCAPE
+0184de40	kv-cache-prefix	kv_pool_alloc_region	med	kv pool disk-tier wait, grown in place strings
+0184e2f0	kv-cache-prefix	kv_pool_no_room	med	kv pool no room for positions string
+0184e740	kv-cache-prefix	kv_pool_region_op	low	new/delete, calls region helpers 0184f2f0..0184fed0
+0184f280	kv-cache-prefix	kv_pool_wait_disk	high	kv pool waited for disk tier string
+0184f2c0	config-env	env_test_defer_req	high	HALOGEN_TEST_DEFER_REQ
+0184f2f0	kv-cache-prefix	kv_region_helper_0184f2f0	low	calls 01850430, 01850af0 in pool cluster
+0184f370	kv-cache-prefix	kv_region_helper_0184f370	low	calls 0184f450, 0184fed0, 01851080
+0184f450	kv-cache-prefix	kv_region_merge	low	2KB, memmove, calls region helpers
+0184fed0	kv-cache-prefix	kv_region_insert	low	memmove, 1KB, pool cluster
+01850430	kv-cache-prefix	kv_region_helper_01850430	low	memmove, calls 018506f0
+018506f0	kv-cache-prefix	kv_region_helper_018506f0	low	pool cluster, no strings
+01850860	kv-cache-prefix	kv_region_helper_01850860	low	memmove, pool cluster
+01850af0	kv-cache-prefix	kv_region_helper_01850af0	low	calls 018506f0, 01850c40, 01850e60
+01850c40	kv-cache-prefix	kv_region_cmp_01850c40	low	pool cluster, no callees
+01850e60	kv-cache-prefix	kv_region_cmp_01850e60	low	pool cluster, no callees
+01851080	kv-cache-prefix	kv_region_helper_01851080	low	calls 0184fed0, 01850c40, 01850e60
+01851210	scheduler-slots	finish_request_log	med	req generated tokens string
+01851420	scheduler-slots	slot_helper_01851420	low	calls 0184d040 only
+01851470	util	small_helper_01851470	low	38B, no callees
+018514a0	sampling-speculation	sample_token_wrapper	low	calls 0184a9b0 and 0184ad90, NAN
+01851580	scheduler-slots	finish_request_log2	med	req generated tokens string
+01851770	sampling-speculation	spec_verify_grammar_check	med	flash_spec token illegal under grammar string
+01851dc0	sampling-speculation	spec_round_run	med	flash_spec grammar string, 3KB
+01852ab0	sampling-speculation	sample_token_wrapper2	low	calls 0184a9b0 and 0184ad90, NAN
+01852b30	cxx-stl	string_from_cstr	med	basic_string null construction error
+01852bd0	cxx-stl	string_eq_cstr	high	mangled operator== string vs cstr
+01852c20	config-env	env_guarded_init	low	__cxa_guard, calls 01853fb0 indexer budget
+01852ca0	config-env	env_cache_flags	high	HALOGEN_CACHE_INPLACE/FULL/DISK_DEEPEN strings
+01853140	config-env	env_cache_dir_disk	high	HALOGEN_CACHE_DIR and DISK_GIB strings
+018533a0	util	mutex_locked_op_018533a0	low	pthread lock/unlock
+018533f0	util	mutex_locked_op_018533f0	low	pthread lock/unlock
+01853430	util	mutex_locked_op_01853430	low	pthread lock/unlock
+01853470	cxx-stl	string_concat_01853470	high	mangled operator+ string
+01853520	util	small_format_helper	low	digit-pair table string, 341B
+018536a0	config-env	env_composable_context	high	HALOGEN_COMPOSABLE_CONTEXT* strings
+01853790	unknown	unknown_01853790	low	calls 01898c30 only
+01853890	config-env	env_sampled_gate	high	HALOGEN_SAMPLED_GATE string
+01853950	cxx-stl	string_concat_01853950	high	mangled operator+ string
+018539e0	cxx-stl	std_to_string_int	high	mangled std::__cxx11::to_string(int)
+01853b20	kv-cache-prefix	cache_entry_close_unlink	low	close, unlink, calls 01856070
+01853c10	cxx-stl	container_dtor_01853c10	low	delete, target of thunk 0182b940
+01853d40	cxx-stl	container_dtor_01853d40	low	98B, delete only
+01853db0	crt-runtime	terminate_landing_pad	high	__cxa_begin_catch then terminate
+01853dc0	cxx-stl	destroy_string_range	high	mangled std::_Destroy of strings
+01853e10	cxx-stl	container_dtor_01853e10	low	delete only
+01853ef0	cxx-stl	container_dtor_01853ef0	low	delete only
+01853f60	cxx-stl	container_dtor_01853f60	low	delete only
+01853fb0	config-env	env_indexer_budget	high	HALOGEN_INDEXER_BUDGET strings
+018540a0	cxx-stl	container_dtor_018540a0	low	delete, calls 01854140
+01854100	cxx-stl	container_dtor_thunk_01854100	low	12B, calls 01854260
+01854120	cxx-stl	container_dtor_thunk_01854120	low	12B wrapper
+01854140	cxx-stl	container_dtor_01854140	low	delete, calls 018541d0
+018541d0	cxx-stl	container_dtor_018541d0	low	delete only
+01854260	cxx-stl	container_dtor_01854260	low	59B, delete only
+018542a0	cxx-stl	rbtree_erase_int_string	high	mangled _Rb_tree<int,pair<int,string>> _M_erase
+01854310	kv-cache-prefix	disk_tier_header_write	high	prompt-cache disk tier v1, /proc/self/exe strings
+01854e90	kv-cache-prefix	disk_tier_open_prune	high	fingerprint, CACHE_PRUNE_OLD, direct-probe strings
+01856070	hip-runtime	cache_worker_shutdown	med	hipHostFree, hipStreamDestroy, thread join, condvar
+018561f0	kv-cache-prefix	cache_manifest_write	med	manifest fields %llu %016llx =none strings
+01856b80	kv-cache-prefix	cache_manifest_read	med	=none, missing, lld fields strings
+018575b0	kv-cache-prefix	cache_vector_assign_helper	low	cache cluster, memcpy, realloc helper
+01857640	cxx-stl	string_concat_01857640	high	mangled operator+ string
+01857710	cxx-stl	vector_realloc_append_01857710	med	vector::_M_realloc_append string
+018578b0	util	sorted_key_cmp_swap	low	string swap, memcmp, calls 01857ab0 and 018583d0
+01857ab0	util	sorted_key_helper_01857ab0	low	delete, memcpy, calls 01857e40
+01857c60	util	sorted_key_helper_01857c60	low	delete, memcpy, calls 01857e40
+01857e40	util	sorted_key_helper_01857e40	low	memcmp, memcpy, calls 01858190
+01858190	util	sorted_key_helper_01858190	low	memcmp, memcpy
+018583d0	util	sorted_key_helper_018583d0	low	string swap, memcmp
+018585b0	util	sorted_key_helper_018585b0	low	memcmp, memcpy, calls 01858880
+01858880	util	sorted_key_helper_01858880	low	memcmp, memcpy
+01858ab0	util	dir_list_size	med	opendir, readdir, stat
+01858d30	util	remove_dir_recursive	high	opendir, lstat, unlink, rmdir
+01858fb0	kv-cache-prefix	cache_blob_load	high	blob refused short or malformed removed strings
+0185a430	cxx-stl	container_dtor_0185a430	low	delete, calls 0185fbb0
+0185a4d0	cxx-stl	container_dtor_thunk_0185a4d0	low	12B wrapper
+0185a4f0	cxx-stl	container_dtor_thunk_0185a4f0	low	12B wrapper, calls 0185fec0
+0185a510	cxx-stl	container_dtor_0185a510	low	delete only
+0185a5d0	cxx-stl	container_dtor_0185a5d0	low	delete only
+0185a640	cxx-stl	container_alloc_0185a640	low	new, bad_alloc throw
+0185a7b0	cxx-stl	vector_realloc_append_0185a7b0	med	vector::_M_realloc_append string
+0185a9d0	cxx-stl	string_append_0185a9d0	med	basic_string::append, reserve
+0185ab40	kv-cache-prefix	cache_blob_path	low	.blob suffix, string append
+0185b420	cxx-stl	string_concat_0185b420	high	mangled operator+ string
+0185b500	cxx-stl	container_dtor_0185b500	low	delete only
+0185b560	kv-cache-prefix	cache_name_format	low	digit table, string append, cache cluster
+0185b840	cxx-stl	vector_assign_ulong	high	mangled vector<unsigned long>::operator=
+0185b990	util	key_compare_0185b990	low	memcmp, calls 0185c150
+0185bad0	cxx-stl	vector_default_append_ulong	high	mangled vector<ulong>::_M_default_append
+0185bc20	cxx-stl	vector_default_append_0185bc20	med	vector::_M_default_append string
+0185bd70	cxx-stl	vector_default_append_0185bd70	med	vector::_M_default_append string
+0185bec0	cxx-stl	vector_realloc_append_0185bec0	med	vector::_M_realloc_append string
+0185c150	cxx-stl	container_alloc_0185c150	low	44B, new only
+0185c2b0	cxx-stl	rbtree_helper_0185c2b0	low	rb-tree increment/decrement, memcmp
+0185c540	cxx-stl	container_dtor_0185c540	low	delete only
+0185c590	util	memcpy_wrapper_0185c590	low	memcpy only
+0185c670	cxx-stl	rbtree_helper_0185c670	low	rb-tree decrement, memcmp
+0185c7a6	crt-runtime	padding_ret	low	1 byte, no callees
+0185c7b0	cxx-stl	thread_state_dtor	med	deletes, calls std::thread::_State dtor
+0185c7d0	cxx-stl	thread_state_run_thunk	low	9B, calls 0185c7e0
+0185c7e0	scheduler-slots	worker_thread_loop	low	condvar wait, mutex, vector assign, 2KB
+0185d070	kv-cache-prefix	cache_helper_0185d070	low	delete, memcpy, cache cluster
+0185d3a0	kv-cache-prefix	cache_branch_copy	high	branch copy, disk budget strings
+0185dac0	kv-cache-prefix	cache_helper_0185dac0	low	delete only, cache cluster
+0185db90	kv-cache-prefix	cache_index_erase	low	rb-tree erase, calls 01858d30 remove dir
+0185e360	kv-cache-prefix	cache_write_file	high	cannot open for writing strings
+0185e6a0	kv-cache-prefix	cache_write_blob	high	.blob, writing failed strings
+0185ed70	kv-cache-prefix	cache_commit_entry	high	committing failed strings
+0185f690	cxx-stl	rbtree_insert_unique_string	high	mangled _Rb_tree<string> _M_insert_unique
+0185f770	cxx-stl	rbtree_get_insert_unique_pos_string	high	mangled _Rb_tree<string> _M_get_insert_unique_pos
+0185f8b0	util	memcpy_wrapper_0185f8b0	low	memcpy only
+0185f970	cxx-stl	container_dtor_0185f970	low	delete, calls 0185fa40
+0185fa40	cxx-stl	container_dtor_0185fa40	low	delete, memcpy
+0185fbb0	cxx-stl	container_dtor_0185fbb0	low	delete, calls 0185dac0
+0185fe50	cxx-stl	rbtree_erase_string	high	mangled _Rb_tree<string> _M_erase
+0185fec0	cxx-stl	container_dtor_0185fec0	low	delete only
+0185ff40	cxx-stl	container_dtor_0185ff40	low	delete only
+018600a0	cxx-stl	container_dtor_018600a0	low	56B, delete only
+018600f0	cxx-stl	container_dtor_018600f0	low	56B, delete only
+01860140	cxx-stl	vector_copy_01860140	low	memcpy, calls 01861410
+018601e0	kv-cache-prefix	cache_group_helper_018601e0	low	calls 0186d0c0, 0186fc70, 0186fd30
+01860300	cxx-stl	container_dtor_01860300	low	delete, calls 01870630
+01860330	kv-cache-prefix	cache_group_helper_01860330	low	calls 018708b0, 01870b60, 01870d40
+01860640	logging-diag	log_vprintf_flush	med	vfprintf then fflush
+018606f0	cxx-stl	container_dtor_018606f0	low	delete, calls 018541d0
+01860720	kv-cache-prefix	cache_vector_float_helper	low	vector<float> assign, calls 0186f2a0, 01893700
+01860a30	cxx-stl	vector_create_max_size	med	cannot create std::vector larger than max_size
+01860cb0	cxx-stl	vector_realloc_append_01860cb0	med	new, length_error throw
+01860e60	kv-cache-prefix	cache_helper_01860e60	low	calls 01870b60, 01882d20
+01860f70	cxx-stl	container_dtor_01860f70	low	delete, calls 01883260
+01861010	cxx-stl	container_dtor_01861010	low	delete, memcpy
+01861160	util	small_helper_01861160	low	336B, no callees, no strings
+018612b0	cxx-stl	container_alloc_018612b0	low	new, bad_alloc throw
+01861410	cxx-stl	vector_realloc_append_01861410	med	vector::_M_realloc_append string
+018615d0	cxx-stl	stringbuf_dtor	high	mangled basic_stringbuf dtor
+01861620	util	text_format_helper_01861620	low	string find, vector fill_insert, realloc strings
+01861e10	util	sorted_key_helper_01861e10	low	memcmp, calls 01862ee0 and 01863610
+018629a0	cxx-stl	vector_string_default_append	high	mangled vector<string>::_M_default_append
+01862c80	cxx-stl	vector_uchar_fill_insert	high	mangled vector<uchar>::_M_fill_insert
+01862ee0	util	sorted_key_helper_01862ee0	low	memcmp, calls 01863180 and 01863390
+01863180	util	sorted_key_helper_01863180	low	memcmp only
+01863390	util	sorted_key_helper_01863390	low	memcmp only
+01863610	util	sorted_key_helper_01863610	low	memcmp, memmove
+018637f0	cxx-stl	vector_create_max_size_018637f0	med	cannot create std::vector larger than max_size
+01863ab0	util	memmove_wrapper_01863ab0	low	memmove only
+01863b40	util	sorted_key_helper_01863b40	low	delete, calls 01863ea0 and 01864290
+01863ea0	util	sorted_key_helper_01863ea0	low	calls 01863fe0
+01863fe0	util	memcpy_helper_01863fe0	low	memcpy, 619B
+01864290	util	sorted_key_helper_01864290	low	calls 018643d0
+018643d0	util	memcpy_helper_018643d0	low	memcpy, 488B
+01864600	cxx-stl	deque_create_max_size	med	cannot create std::deque larger than max_size
+01864770	cxx-stl	deque_realloc_helper	low	delete, new, memmove, bad_array_new_length
+01864950	sampling-speculation	grammar_state_step	low	switch on state byte, calls 01864d30 and 01866200
+01864d30	sampling-speculation	grammar_helper_01864d30	low	calls 01864f80, 01865da0, memcpy
+01864f80	sampling-speculation	grammar_big_step	low	3.5KB, calls 01865f80, 01865ff0, 01866060
+01865da0	sampling-speculation	grammar_helper_01865da0	low	memcpy only
+01865f80	sampling-speculation	grammar_helper_01865f80	low	97B, memcpy
+01865ff0	sampling-speculation	grammar_helper_01865ff0	low	101B, no callees
+01866060	sampling-speculation	grammar_helper_01866060	low	memcpy only
+01866200	sampling-speculation	grammar_helper_01866200	low	memcpy only
+01866350	sampling-speculation	grammar_helper_01866350	low	calls 01866200 and 01866f80
+01866520	sampling-speculation	grammar_big_step_2	low	2.5KB, string find, calls 01864f80
+01866f80	sampling-speculation	grammar_helper_01866f80	low	no callees, grammar cluster
+01867100	cxx-stl	vector_ulong_fill_insert	high	mangled vector<ulong>::_M_fill_insert
+01867530	cxx-stl	vector_long_fill_insert	high	mangled vector<long>::_M_fill_insert
+01867960	cxx-stl	container_dtor_01867960	low	delete only
+01867b50	sampling-speculation	grammar_helper_01867b50	low	calls 01864d30, memcpy
+01867dc0	cxx-stl	container_alloc_01867dc0	low	new only
+01867f70	cxx-stl	container_alloc_01867f70	low	delete, new, bad_alloc throw
+018680b0	kv-cache-prefix	cache_lookup_and_store	low	1.6KB, calls snapshot store 0186a470 and 0186f9f0
+01868750	kv-cache-prefix	cache_helper_01868750	low	new/delete, calls 01869af0 and 0186a260
+01868c70	util	key_compare_01868c70	low	new, bcmp
+01868f30	kv-cache-prefix	composable_context_unit	med	composable context unit raw rows at layer string
+01869af0	cxx-stl	container_alloc_01869af0	low	new only
+0186a260	util	key_compare_0186a260	low	bcmp only
+0186a470	kv-cache-prefix	snapshot_store	high	snapshot store failed cache DISABLED string
+0186b270	kv-cache-prefix	cache_insert_new_entry	low	a new entry string
+0186b4f0	cxx-stl	vector_default_append_0186b4f0	med	vector::_M_default_append string
+0186b620	cxx-stl	container_dtor_0186b620	low	delete only
+0186b7c0	scheduler-slots	worker_queue_task	low	condvar notify, system_error, vector assign, 2.9KB
+0186c5c0	cxx-stl	container_alloc_0186c5c0	low	new only
+0186c6b0	util	mutex_guarded_op	low	pthread lock/unlock, system_error
+0186c900	util	index_search_0186c900	low	stride-40 element walk, no callees
+0186cb80	cxx-stl	vector_create_max_size_0186cb80	med	cannot create std::vector larger than max_size
+0186cdc0	kv-cache-prefix	cache_entry_kind_name	high	full entry, tail checkpoint, anchor strings
+0186d0c0	scheduler-slots	queue_wait_pop	low	condvar wait, mutex
+0186d250	util	container_helper_0186d250	low	delete, memcpy, calls 0186b620
+0186d450	cxx-stl	vector_realloc_append_0186d450	med	vector::_M_realloc_append string
+0186d560	util	memcpy_helper_0186d560	low	memcpy only, 592B
+0186d7b0	cxx-stl	vector_default_append_0186d7b0	med	vector::_M_default_append string
+0186d900	cxx-stl	container_dtor_0186d900	low	delete only
+0186d940	cxx-stl	vector_create_max_size_0186d940	med	cannot create std::vector larger than max_size
+0186da80	cxx-stl	vector_create_max_size_0186da80	med	cannot create std::vector larger than max_size
+0186dbc0	util	random_id_hex	high	/dev/urandom, hex format string
+0186dd60	cxx-stl	vector_realloc_append_0186dd60	med	vector::_M_realloc_append string
+0186dfd0	cxx-stl	vector_uchar_assign	high	mangled vector<uchar>::operator=
+0186e100	cxx-stl	deque_create_max_size_0186e100	med	cannot create std::deque larger than max_size
+0186e1e0	util	memcpy_helper_0186e1e0	low	memcpy only
+0186e390	cxx-stl	deque_realloc_helper_0186e390	low	delete, new, memmove
+0186e570	cxx-stl	rbtree_emplace_hint_int_string	high	mangled _Rb_tree<int,pair<int,string>> emplace_hint
+0186e650	cxx-stl	rbtree_get_insert_hint_int_string	high	mangled _Rb_tree<int,...> _M_get_insert_hint_unique_pos
+0186e820	cxx-stl	container_dtor_0186e820	low	delete only
+0186e860	cxx-stl	rbtree_helper_0186e860	low	rb-tree increment/decrement
+0186ea30	cxx-stl	container_dtor_0186ea30	low	delete only, 539B
+0186ec70	cxx-stl	vector_create_max_size_0186ec70	med	cannot create std::vector larger than max_size
+0186ee50	cxx-stl	vector_float_assign	high	mangled vector<float>::operator=
+0186efb0	cxx-stl	uninit_copy_with_catch_0186efb0	low	catch, rethrow, new, memmove
+0186f0c0	cxx-stl	vector_create_max_size_0186f0c0	med	cannot create std::vector larger than max_size
+0186f2a0	cxx-stl	vector_realloc_helper_0186f2a0	low	delete, new, memmove
+0186f3f0	cxx-stl	uninit_copy_with_catch_0186f3f0	low	catch, rethrow, new, memmove
+0186f500	cxx-stl	vector_realloc_append_0186f500	med	vector::_M_realloc_append string
+0186f7f0	kv-cache-prefix	cache_lookup_wrapper	low	calls snapshot store 0186a470 and 0186d0c0
+0186f9f0	kv-cache-prefix	cache_lookup_full_entry	low	this prompt's full entry string
+0186fc70	cxx-stl	rbtree_erase_helper_0186fc70	low	rb-tree erase, delete
+0186fd30	cxx-stl	rbtree_erase_helper_0186fd30	low	rb-tree erase, delete, calls 01854260
+0186fe90	cxx-stl	vector_realloc_append_0186fe90	med	vector::_M_realloc_append string
+0186ff80	cxx-stl	container_alloc_0186ff80	low	30B, new only
+01870190	cxx-stl	vector_realloc_helper_01870190	low	delete, new, bad_alloc
+018702d0	cxx-stl	container_alloc_018702d0	low	30B, new only
+018704e0	cxx-stl	vector_realloc_helper_018704e0	low	delete, new, memmove
+01870630	cxx-stl	container_dtor_01870630	low	delete, memset
+01870770	cxx-stl	container_dtor_01870770	low	delete only
+018707c0	cxx-stl	container_dtor_018707c0	low	delete, memset
+01870850	cxx-stl	container_dtor_01870850	low	delete only
+018708b0	cxx-stl	hashtable_rehash_insert	med	_Prime_rehash_policy::_M_next_bkt, ceil
+01870b60	cxx-stl	vector_realloc_append_01870b60	med	vector::_M_realloc_append string
+01870d40	kv-cache-prefix	cache_group_build	low	790B, vector append, calls 018f5190..018f5380
+01871100	cxx-stl	vector_range_insert	med	vector::_M_range_insert string
+01871410	cxx-stl	container_alloc_01871410	low	new only
+018715c0	cxx-stl	vector_realloc_append_018715c0	med	vector::_M_realloc_append string
+01871780	sampling-speculation	float_math_cpu	low	1.2KB double-precision math, no callees
+01871c50	cxx-stl	vector_create_max_size_01871c50	med	cannot create std::vector larger than max_size
+01871eb0	cxx-stl	vector_create_max_size_01871eb0	med	cannot create std::vector larger than max_size
+01872110	sampling-speculation	grammar_helper_01872110	low	calls 01864d30 and 0187d380, memcpy
+018723d0	sampling-speculation	grammar_json_object	low	json_object string
+018725a0	sampling-speculation	compile_json_schema	med	schema is not JSON, json_schema nodes strings
+01873640	cxx-stl	container_dtor_01873640	low	delete, memcpy, calls 01853e10
+01873770	cxx-stl	container_alloc_01873770	low	new, calls 01873e80
+01873bd0	cxx-stl	container_dtor_01873bd0	low	delete, memset
+01873d20	cxx-stl	container_dtor_01873d20	low	delete, calls 018744f0 and 01874630
+01873e80	cxx-stl	container_dtor_01873e80	low	delete, calls 018741a0
+01874060	cxx-stl	container_dtor_01874060	low	delete, calls 01873e80

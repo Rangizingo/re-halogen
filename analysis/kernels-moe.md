@@ -52,6 +52,7 @@ Conventions used below:
   sign flips (Walsh/Rademacher ordering), and `v_xor_b32_e32 v6, s6, v8` (0x22d0d8)
   for the plane sign vector.
 - Normalization: `v_mul_f32_e32 v6, 0x3db504f3, v6` (0x22d4f4) = ×1/√512 (1/16·√2).
+  **Correction (2026-10-10, see `kernels-dequant.md` s3a):** 0x3db504f3 = 0.0883883 = 1/√128, not 1/√512 (the quoted 1/16·√2 is the right value). With 4 elements per lane the ladder is 2 in-lane + 4 DPP + 1 permlanex16 stages, so the transform is 128-point, not 32-point.
 
 Same ladder in `k_ht_rot_in` @ 0x22ca00 (f16→DF16, `v_fma_mixhi/lo_f16` repack),
 `k_ht_rot_out` @ 0x22d600, `k_ht_rot_out_f32` @ 0x22de00, `k_ht_rot_rows_h` @ 0x22ef00.

@@ -1,0 +1,10 @@
+=== drafter 2
+INFO: I 1 0 262144 7 1 1 0 110 64 4 262144 2 1 1 524288 1 0.17.2 2 6 gguf 1 0 0 0 0 - 2048
+CSTAT-before: 
+TIMEOUT 30s (got=0)
+CSTAT-after: 
+=== drafter 0
+INFO: I 1 0 262144 7 1 1 0 110 64 4 262144 2 1 1 524288 1 0.17.2 2 6 gguf 1 0 0 0 0 - 2048
+CSTAT-before: 
+TIMEOUT 30s (got=0)
+CSTAT-after: 

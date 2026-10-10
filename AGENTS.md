@@ -5,21 +5,15 @@ the OpenAI-compatible inference server for Qwen3.8-Flash-Next on AMD Strix
 Halo (gfx1151). Target image: `ghcr.io/peonist-ai/halogen-flash-server:0.17.3`
 (manifest sha256:3bca0132db3c…, built 2026-10-08).
 
-Status: **~85% complete (see `start-here.md` + PLAN.md "Progress log").**
-Settled with evidence: architecture, network surface, falsifier question,
-`main()`, `draft_sample` + falsifier callers, the GGUF→.hgn repack driver
-(0x19af350), fatbin v2 extraction + full gfx1151 disassembly (llvm-objdump),
-a working Python parser/builder for the `.hgn` container (`work/hgn/hgnpy.py`)
-with the format spec AND acceptance round-trips passing
-(`analysis/hgn-format.md`, `tmp/rt_roundtrip.py`), NPU engine
-(`analysis/npu-engine.md`), version deltas across 9 releases
-(`analysis/version-deltas.md`), dflash2 (`analysis/dflash2-probe.md`), and
-3 of 5 kernel-family writeups (attention, MoE, indexer). Open: the
-dequant + speculation kernel-family writeups (slices and stats prepped,
-`work/kernels-dequant/`, `work/kernels-spec/`) and Phase 6 closure
-(ledger, coverage, evidence bundle, report.md rewrite). `PLAN.md` = the
-approved autonomous completion plan (Phases 0-6); execute it when Peter says
-"run the halogen plan".
+Status: **Phase 7 (complete reverse engineering) done at plan scope,
+2026-10-10; see `start-here.md` and `analysis/rebuild-guide.md`.** Settled
+with evidence: architecture, network surface, falsifier question, `main()`,
+the GGUF to .hgn repack driver, fatbin extraction and gfx1151 disassembly,
+the `.hgn` format with passing round trips, the NPU engine, version deltas,
+dflash2, five kernel-family writeups, function maps of all three binaries,
+the wire protocol, a 31-step request trace and a live 0.17.3 engine run.
+Unknowns (`analysis/unknowns.md`, counted from its table): CLOSED 9,
+PARTIAL 13, OPEN-BOUNDED 3 (U03, U06, U22), UNOBSERVABLE 1 (U05).
 
 ## Layout
 
@@ -82,11 +76,14 @@ Ghidra 12.1.2 lives at `~/.hermes/tools/ghidra-12.1.2` (JAVA_HOME=
 
 ## Ground rules
 
-- Read-only analysis of vendor binaries; do not run `flash_serve` from this
-  folder (a production engine from the same family runs on this host).
-- EULA v1.0 §3 permits reverse engineering without limitation and
+- Peter lifted (2026-10-10): running `flash_serve` and `halogen-tools` is
+  allowed, and full access to the Ai-core box (10.0.10.84, `ssh ai-core`)
+  is granted for Phase 7. Record every run (command, inputs, outputs) under
+  `analysis/evidence/`. Hermes on Ai-core may be taken down for the work.
+- Still binding: no money spent without Peter's yes, nothing destructive or
+  outside Ai-core and this repo, no real user data in runs.
+- EULA v1.0 section 3 permits reverse engineering without limitation and
   encourages it as an open community challenge: findings, specs,
   disassemblies, and derived implementations may be published and shared
-  freely (attribution per §2). Our own repo material is CC0
-  (`LICENSE`).
-- Every mutation on this host needs Peter's explicit go first.
+  freely (attribution per section 2). Our own repo material is CC0
+  (`LICENSE`). The repo stays private until Peter says otherwise.

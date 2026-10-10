@@ -1,0 +1,299 @@
+addr	role	label	confidence	evidence
+0193ad60	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193ae10	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193aec0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193af70	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b020	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b0d0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b180	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b230	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b2e0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b390	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b440	gpu-dispatch	k_launch_stub_7b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b4f0	gpu-dispatch	k_launch_stub_37b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b5a0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b650	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b700	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b7b0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b860	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b910	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193b9c0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193ba70	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193bb20	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193bbd0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193bc80	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193bd30	gpu-dispatch	k_launch_stub_52b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193bde0	gpu-dispatch	k_launch_stub_105b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193be90	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193bf40	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193bff0	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193c0a0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193c150	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193c200	gpu-dispatch	k_launch_stub_37b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193c2b0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193c360	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193c410	gpu-dispatch	k_launch_stub_95b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193c4c0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193c570	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193c620	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193c6d0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193c780	gpu-dispatch	k_launch_stub_62b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193c830	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193c8e0	gpu-dispatch	k_launch_stub_47b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193c990	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193ca40	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193caf0	config-env	env_halogen_row_gemv	high	getenv(HALOGEN_ROW_GEMV) then strtol or flag compare
+0193cb20	config-env	env_halogen_lin_m	high	getenv(HALOGEN_LIN_M) then strtol or flag compare
+0193cb70	config-env	env_halogen_lin_u	high	getenv(HALOGEN_LIN_U) then strtol or flag compare
+0193cbc0	config-env	env_halogen_row_gemv_m	high	getenv(HALOGEN_ROW_GEMV_M) then strtol or flag compare
+0193cc10	config-env	env_halogen_row_gemv_u	high	getenv(HALOGEN_ROW_GEMV_U) then strtol or flag compare
+0193cc50	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193cd00	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193cdb0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193ce60	gpu-dispatch	k_launch_stub_52b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193cf10	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193cfc0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193d070	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193d120	gpu-dispatch	k_launch_stub_7b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193d1d0	gpu-dispatch	k_launch_stub_42b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193d280	gpu-dispatch	k_launch_stub_62b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193d330	gpu-dispatch	k_launch_stub_27b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193d3e0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193d490	gpu-dispatch	k_launch_stub_85b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193d540	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193d5f0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193d6a0	gpu-dispatch	k_launch_stub_52b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193d750	gpu-dispatch	k_launch_stub_105b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193d800	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193d8b0	config-env	env_halogen_lbf_wave	high	getenv(HALOGEN_LBF_WAVE) then strtol or flag compare
+0193d8e0	config-env	env_halogen_lin_narrow	high	getenv(HALOGEN_LIN_NARROW) then strtol or flag compare
+0193d910	config-env	env_halogen_hc_up_w	high	getenv(HALOGEN_HC_UP_W) then strtol or flag compare
+0193d940	config-env	env_halogen_hc_up_chunk	high	getenv(HALOGEN_HC_UP_CHUNK) then strtol or flag compare
+0193d970	config-env	env_halogen_hc_sig_fuse	high	getenv(HALOGEN_HC_SIG_FUSE) then strtol or flag compare
+0193d9a0	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193da80	gpu-dispatch	k_launch_stub_158b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193db60	gpu-dispatch	k_launch_stub_158b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193dc40	gpu-dispatch	k_launch_stub_158b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193dd20	gpu-dispatch	k_launch_stub_158b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193de00	gpu-dispatch	k_launch_stub_158b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193dee0	gpu-dispatch	k_launch_stub_158b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193dfc0	gpu-dispatch	k_launch_stub_158b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193e0a0	gpu-dispatch	k_launch_stub_158b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193e180	gpu-dispatch	k_launch_stub_158b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193e260	gpu-dispatch	k_launch_stub_12b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193e340	gpu-dispatch	k_launch_stub_47b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193e420	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193e4d0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193e580	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193e630	gpu-dispatch	k_launch_stub_57b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193e6e0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193e790	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193e840	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193e8f0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193e9a0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193ea50	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193eb00	gpu-dispatch	k_launch_stub_32b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193ebb0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193ec60	gpu-dispatch	k_launch_stub_37b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193ed10	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193edc0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193ee70	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193ef20	config-env	env_halogen_lin_wave	high	getenv(HALOGEN_LIN_WAVE) then strtol or flag compare
+0193ef50	config-env	env_halogen_fuse2	high	getenv(HALOGEN_FUSE2) then strtol or flag compare
+0193ef80	config-env	env_halogen_dn_step_sr	high	getenv(HALOGEN_DN_STEP_SR) then strtol or flag compare
+0193efb0	config-env	env_flag_halogen_route_ride	high	getenv(HALOGEN_ROUTE_RIDE) then strtol or flag compare
+0193f010	gpu-dispatch	k_launch_stub_7b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193f0c0	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193f170	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193f220	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193f2d0	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193f380	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193f430	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193f4e0	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193f590	gpu-dispatch	k_launch_stub_105b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193f640	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193f6f0	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193f7a0	gpu-dispatch	k_launch_stub_29b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193f850	gpu-dispatch	k_launch_stub_85b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193f900	gpu-dispatch	k_launch_stub_24b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193f9b0	gpu-dispatch	k_launch_stub_29b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193fa60	gpu-dispatch	k_launch_stub_52b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193fb10	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193fbc0	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193fc70	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193fd20	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193fdd0	gpu-dispatch	k_launch_stub_85b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193fe80	gpu-dispatch	k_launch_stub_24b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193ff30	gpu-dispatch	k_launch_stub_52b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0193ffe0	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01940090	gpu-dispatch	k_launch_stub_19b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01940140	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019401f0	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019402a0	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01940350	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01940400	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019404b0	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01940560	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01940610	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019406c0	config-env	env_halogen_lq4w_sh	high	getenv(HALOGEN_LQ4W_SH) then strtol or flag compare
+019406f0	config-env	env_halogen_rope_w	high	getenv(HALOGEN_ROPE_W) then strtol or flag compare
+01940720	gpu-dispatch	k_launch_stub_167b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01940800	gpu-dispatch	k_launch_stub_151b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019408d0	gpu-dispatch	k_launch_stub_160b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019409b0	gpu-dispatch	k_launch_stub_144b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01940a80	config-env	env_halogen_ht_lin_blocks	high	getenv(HALOGEN_HT_LIN_BLOCKS) then strtol or flag compare
+01940ac0	config-env	env_halogen_ht_gemv_kl	high	getenv(HALOGEN_HT_GEMV_KL) then strtol or flag compare
+01940b00	config-env	env_halogen_ht_gu_split	high	getenv(HALOGEN_HT_GU_SPLIT) then strtol or flag compare
+01940b50	config-env	env_halogen_ht_dec_group	high	getenv(HALOGEN_HT_DEC_GROUP) then strtol or flag compare
+01940b90	config-env	env_halogen_i4r_dec_group	high	getenv(HALOGEN_I4R_DEC_GROUP) then strtol or flag compare
+01940bd0	config-env	env_halogen_i4r_sorted	high	getenv(HALOGEN_I4R_SORTED) then strtol or flag compare
+01940c10	gpu-dispatch	k_launch_stub_88b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01940ca0	gpu-dispatch	k_launch_stub_109b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01940d50	gpu-dispatch	k_launch_stub_127b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01940e10	config-env	env_halogen_moe_dn_rows	high	getenv(HALOGEN_MOE_DN_ROWS) then strtol or flag compare
+01940e40	config-env	env_flag_halogen_i4r_hfuse	high	getenv(HALOGEN_I4R_HFUSE) then strtol or flag compare
+01940ea0	config-env	env_flag_halogen_route_sg	high	getenv(HALOGEN_ROUTE_SG) then strtol or flag compare
+01940f00	config-env	env_flag_halogen_ht_lin_direct	high	getenv(HALOGEN_HT_LIN_DIRECT) then strtol or flag compare
+01940f60	config-env	env_flag_halogen_i4r_sdfuse	high	getenv(HALOGEN_I4R_SDFUSE) then strtol or flag compare
+01940fc0	gpu-dispatch	k_launch_stub_87b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01941050	gpu-dispatch	k_launch_stub_222b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01941170	gpu-dispatch	k_launch_stub_222b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01941290	gpu-dispatch	k_launch_stub_62b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019413b0	gpu-dispatch	k_launch_stub_111b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019414d0	gpu-dispatch	k_launch_stub_57b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019415f0	gpu-dispatch	k_launch_stub_119b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01941710	gpu-dispatch	k_launch_stub_47b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01941830	gpu-dispatch	k_launch_stub_222b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01941950	gpu-dispatch	k_launch_stub_12b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01941a10	gpu-dispatch	k_launch_stub_85b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01941ad0	gpu-dispatch	k_launch_stub_126b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01941b90	gpu-dispatch	k_launch_stub_126b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01941c50	gpu-dispatch	k_launch_stub_126b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01941d10	gpu-dispatch	k_launch_stub_126b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01941dd0	gpu-dispatch	k_launch_stub_126b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01941e90	gpu-dispatch	k_launch_stub_126b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01941f50	gpu-dispatch	k_launch_stub_126b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942010	gpu-dispatch	k_launch_stub_126b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019420d0	gpu-dispatch	k_launch_stub_126b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942190	gpu-dispatch	k_launch_stub_126b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942250	gpu-dispatch	k_launch_stub_126b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942310	gpu-dispatch	k_launch_stub_62b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019423d0	gpu-dispatch	k_launch_stub_126b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942490	gpu-dispatch	k_launch_stub_52b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942550	gpu-dispatch	k_launch_stub_85b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942610	gpu-dispatch	k_launch_stub_126b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019426d0	gpu-dispatch	k_launch_stub_126b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942790	gpu-dispatch	k_launch_stub_12b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942850	gpu-dispatch	k_launch_stub_37b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942900	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019429b0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942a60	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942b10	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942bc0	gpu-dispatch	k_launch_stub_12b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942c70	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942d20	config-env	env_halogen_route_dec_m	high	getenv(HALOGEN_ROUTE_DEC_M) then strtol or flag compare
+01942d60	gpu-dispatch	k_launch_stub_12b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942e40	gpu-dispatch	k_launch_stub_158b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01942f20	gpu-dispatch	k_launch_stub_158b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943000	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019430e0	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019431c0	gpu-dispatch	k_launch_stub_52b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019432a0	gpu-dispatch	k_launch_stub_52b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943380	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943460	gpu-dispatch	k_launch_stub_72b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943540	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943620	gpu-dispatch	k_launch_stub_12b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943700	gpu-dispatch	k_launch_stub_142b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019437d0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943880	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943910	gpu-dispatch	k_launch_stub_47b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0194395f	unknown	misdecoded_catch_pad	low	bytes after stubs decoded as catch handlers, not real code
+019439c0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943a70	gpu-dispatch	k_launch_stub_85b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943b20	gpu-dispatch	k_launch_stub_7b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943bd0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943c80	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943d30	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943de0	gpu-dispatch	k_launch_stub_12b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943e90	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943f40	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01943ff0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019440a0	gpu-dispatch	k_launch_stub_47b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944150	gpu-dispatch	k_launch_stub_12b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944200	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019442b0	gpu-dispatch	k_launch_stub_32b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944360	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944410	gpu-dispatch	k_launch_stub_37b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019444c0	gpu-dispatch	k_launch_stub_12b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944570	gpu-dispatch	k_launch_stub_57b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944620	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019446d0	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944780	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944830	gpu-dispatch	k_launch_stub_12b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019448e0	gpu-dispatch	k_launch_stub_57b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944990	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944a40	gpu-dispatch	k_launch_stub_72b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944af0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944ba0	gpu-dispatch	k_launch_stub_27b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944c50	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944d00	gpu-dispatch	k_launch_stub_7b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944db0	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944e60	gpu-dispatch	k_launch_stub_110b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944f10	gpu-dispatch	k_launch_stub_159b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01944ff0	config-env	env_halogen_deq_stream	high	getenv(HALOGEN_DEQ_STREAM) then strtol or flag compare
+01945020	hip-runtime	init_stream_and_events	high	hipStreamCreateWithFlags, 5 hipEventCreateWithFlags, HIP error exit
+01945170	gpu-dispatch	k_launch_stub_49b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945220	gpu-dispatch	k_launch_stub_1b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019452d0	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945380	gpu-dispatch	k_launch_stub_115b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945430	config-env	env_halogen_flash_deq_v8	high	getenv(HALOGEN_FLASH_DEQ_V8) then strtol or flag compare
+01945460	gpu-dispatch	k_launch_stub_174b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945550	gpu-dispatch	k_launch_stub_174b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945640	gpu-dispatch	k_launch_stub_55b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945730	gpu-dispatch	k_launch_stub_174b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945820	gpu-dispatch	k_launch_stub_60b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945910	gpu-dispatch	k_launch_stub_7b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945a00	gpu-dispatch	k_launch_stub_21b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945af0	gpu-dispatch	k_launch_stub_174b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945be0	gpu-dispatch	k_launch_stub_174b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945cd0	gpu-dispatch	k_launch_stub_174b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945dc0	gpu-dispatch	k_launch_stub_174b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945eb0	gpu-dispatch	k_launch_stub_174b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01945fa0	gpu-dispatch	k_launch_stub_174b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01946090	gpu-dispatch	k_launch_stub_174b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01946180	gpu-dispatch	k_launch_stub_174b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01946270	gpu-dispatch	k_launch_stub_174b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01946360	gpu-dispatch	k_launch_stub_174b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01946450	gpu-dispatch	k_launch_stub_174b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01946540	gpu-dispatch	k_launch_stub_142b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01946610	gpu-dispatch	k_launch_stub_142b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019466e0	config-env	env_halogen_deq_kern	high	getenv(HALOGEN_DEQ_KERN) then strtol or flag compare
+01946730	config-env	env_deq_probe_warn	high	getenv HALOGEN_DEQ_PROBE, stderr warning weights wrong
+019467a0	config-env	env_halogen_deq_cb	high	getenv(HALOGEN_DEQ_CB) then strtol or flag compare
+019467d0	gpu-dispatch	k_launch_stub_99b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01946870	config-env	env_halogen_exp_dn_r2	high	getenv(HALOGEN_EXP_DN_R2) then strtol or flag compare
+019468a0	config-env	env_halogen_dec_probe	high	getenv(HALOGEN_DEC_PROBE) then strtol or flag compare
+019468d0	gpu-dispatch	k_launch_stub_158b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019469b0	gpu-dispatch	k_launch_stub_48b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01946a40	gpu-dispatch	k_launch_stub_87b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01946ad0	gpu-dispatch	k_launch_stub_7b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01946ba0	logging-diag	init_debug_sect_events	high	getenv HALOGEN_DEBUG_SECT, hipEventCreate array for timing
+01946cf0	logging-diag	print_sect_timing	high	prints ms a step over 48 layers per section
+01946e90	gpu-dispatch	k_launch_stub_127b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01946f50	gpu-dispatch	k_launch_stub_127b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01947010	gpu-dispatch	k_launch_stub_127b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019470d0	gpu-dispatch	k_launch_stub_127b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01947190	gpu-dispatch	k_launch_stub_127b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01947250	gpu-dispatch	k_launch_stub_127b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01947310	gpu-dispatch	k_launch_stub_127b	high	host stub packs args then __hipPopCallConfiguration, no callers
+019473d0	gpu-dispatch	k_launch_stub_127b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01947490	gpu-dispatch	k_launch_stub_41b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01947530	hip-runtime	alloc_pinned_host_64mb	high	hipHostMalloc 0x4000000, HIP error exit
+019475a0	model-forward	vision_buffers_grow	med	hipFree many vision buffers when patches exceed capacity
+01947b30	gpu-dispatch	k_launch_stub_117b	high	host stub packs args then __hipPopCallConfiguration, no callers
+01947be0	model-forward	vision_patch_embed	high	grid check message, visual_patch_embed.proj, calls launch stub
+0194a4c0	gpu-dispatch	vision_linear_launch	high	name+.weight lookup, no device alias error, hipPushCallConfiguration
+0194a870	gpu-dispatch	k_launch_stub_117b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0194a920	gpu-dispatch	vision_kernel_launch_push	med	bare __hipPushCallConfiguration, no args, vision area
+0194acd0	gpu-dispatch	k_launch_stub_69b	high	host stub packs args then __hipPopCallConfiguration, no callers
+0194ad50	gpu-dispatch	vision_kernel_launch_push	med	bare __hipPushCallConfiguration, no args, vision area

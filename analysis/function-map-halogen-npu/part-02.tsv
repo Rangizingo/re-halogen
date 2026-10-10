@@ -1,0 +1,254 @@
+addr	role	label	confidence	evidence
+00116934	cxx-stl	throw_string_append	high	12 bytes, string literal basic_string::append
+001169d8	cxx-stl	throw_string_append	high	12 bytes, string literal basic_string::append
+00116b74	cxx-stl	eh_cleanup_engine_obj	med	landing pad, destroys members at offsets 0x1270-0x12d8, Unwind
+00116c69	cxx-stl	throw_vector_default_append	high	12 bytes, literal vector::_M_default_append
+00116cfa	cxx-stl	eh_cleanup_strings	med	landing pad, repeated string _M_dispose
+0011721f	cxx-stl	throw_string_append	high	12 bytes, literal basic_string::append
+0011724a	cxx-stl	throw_string_create	high	literal basic_string::_M_create
+001173d8	cxx-stl	eh_cleanup_string	high	string dispose then _Unwind_Resume
+0011740c	cxx-stl	eh_cleanup_string	high	string dispose then _Unwind_Resume
+0011742a	cxx-stl	eh_cleanup_fn	high	calls stored functor then _Unwind_Resume
+00117478	cxx-stl	eh_cleanup_string	high	string dispose then _Unwind_Resume
+0011748c	cxx-stl	throw_string_substr	high	literal basic_string::substr, __pos message
+001175a8	cxx-stl	eh_cleanup_string	high	string dispose, Unwind
+001175fa	cxx-stl	eh_cleanup_string	high	string dispose, Unwind
+001176cc	cxx-stl	eh_cleanup_string	high	string dispose, Unwind
+00117730	cxx-stl	eh_cleanup_string	high	string dispose, Unwind
+001177de	cxx-stl	eh_cleanup_string_vec_fn	high	string dispose, vector free, functor manager call
+00117e1c	cxx-stl	eh_cleanup_string	med	string dispose plus one PLT call
+00117e5a	cxx-stl	eh_cleanup_vectors	high	string dispose, vector frees, Unwind
+00117fc5	cxx-stl	throw_map_at	high	literal map::at
+0011817a	cxx-stl	throw_map_at	high	literal map::at
+001181d0	cxx-stl	throw_map_at	high	literal map::at
+001183c4	cxx-stl	throw_vector_max_size	high	literal cannot create std::vector larger than max_size()
+001184a2	cxx-stl	throw_vector_max_size	high	literal cannot create std::vector larger than max_size()
+0011853e	cxx-stl	throw_string_null	high	literal construction from null is not valid
+0011854a	cxx-stl	throw_vector_default_append	high	literal vector::_M_default_append
+00118556	cxx-stl	throw_string_create	high	literal basic_string::_M_create
+001189ef	cxx-stl	throw_vector_max_size	high	literal cannot create std::vector larger than max_size()
+00118d24	cxx-stl	throw_vector_max_size	high	literal cannot create std::vector larger than max_size()
+00118d80	cxx-stl	throw_vector_max_size	high	literal cannot create std::vector larger than max_size()
+00118e0c	cxx-stl	throw_vector_max_size	high	literal cannot create std::vector larger than max_size()
+00118f68	cxx-stl	throw_string_append	high	literal basic_string::append
+00118fba	cxx-stl	throw_vector_default_append	high	literal vector::_M_default_append
+0011900e	cxx-stl	throw_string_append	high	literal basic_string::append
+0011904a	cxx-stl	eh_cleanup_string_vec	high	string dispose, vector free, Unwind
+001190d4	cxx-stl	throw_string_replace	high	literal basic_string::_M_replace
+001194d0	crt-runtime	static_init_1	med	_INIT_1 registers vector<string> dtor via FUN_00139710
+001194f0	util	register_static_callback	low	swaps 4 words, calls PLT and FUN_00178f30; used by _INIT_2
+00119560	logging-diag	static_init_store_hit_counters	med	_INIT_2 registers names STORE and HIT via FUN_0016a880
+001198b0	crt-runtime	empty_stub	low	body is only return; no callers in index
+001198e0	crt-runtime	empty_stub	low	body is only return
+001199a0	cxx-stl	sized_delete_0xf0	med	operator delete(p,0xf0) only, deleting dtor tail
+001199b0	cxx-stl	sized_delete_stub	med	10 bytes, same shape as 001199a0
+001199c0	cxx-stl	sized_delete_stub	med	10 bytes, same shape as 001199a0
+001199d0	cxx-stl	sized_delete_stub	med	10 bytes, same shape as 001199a0
+001199e0	npu-protocol	signal_wake_pipe_write	med	sets flag DAT_00213700, write 1 byte to pipe fd DAT_0021354c
+00119a20	cxx-stl	insertion_sort_double	med	loops over doubles with memmove
+00119b00	cxx-stl	std_function_manager	med	op 1 and 2 clone, _Znwm(0x20)
+00119b80	cxx-stl	deque_iter_advance_0xf8	med	divides by 0xf8 element size, deque iterator add
+00119c20	cxx-stl	vector_u32_assign	med	memmove of 4-byte elements, vector operator=
+00119de0	cxx-stl	string_move_assign	med	SSO check, memcpy, pointer steal
+00119ec0	config-env	parse_next_int_arg	low	strtoll on args vector, 0x20 stride
+00119f30	util	write_file_wb	high	fopen wb, fwrite, fclose
+00119f90	cxx-stl	string_compare	high	memcmp then length difference clamp
+00119ff0	cxx-stl	sp_get_deleter	med	strcmp on St19_Sp_make_shared_tag
+0011a040	cxx-stl	sp_get_deleter	med	strcmp on St19_Sp_make_shared_tag
+0011a090	cxx-stl	vector_u32_push_back	med	append or realloc of 4-byte element
+0011a1a0	util	locked_flag_read	low	mutex lock, read byte at +0x30, unlock
+0011a1e0	cxx-stl	string_construct_range	high	literal _M_create, 14 callers
+0011a280	cxx-stl	string_ctor_cstr	high	literal construction from null, strlen memcpy
+0011a310	cxx-stl	string_replace_helper	low	_M_create literal, memcpy, 4 callees
+0011a430	cxx-stl	rbtree_erase_nested	med	unrolled node walk at +0x18, no strings
+0011a600	cxx-stl	vector_vector_string_dtor	med	nested vector walk with frees
+0011a6c0	xrt-device	map_erase_bo	med	rb-tree erase calling xrt::bo dtor
+0011a900	cxx-stl	rbtree_erase_string_key	high	recursion, frees string at +0x20, node 0x48
+0011a960	cxx-stl	rbtree_erase_string_key	high	21 lines, same shape as 0011a900
+0011a9c0	cxx-stl	vector_struct_dtor_0x70	med	loops stride 0xe longs freeing strings
+0011ab60	cxx-stl	introsort_double	med	heap/partition on doubles, size 0x80 cutoff
+0011b010	cxx-stl	sort_double_wrapper	med	calls 0011ab60 and 00119a20
+0011b0e0	cxx-stl	rbtree_erase_unrolled	high	deep nested walk at +0x18
+0011b4c0	cxx-stl	vector_struct_dtor	med	loops freeing string fields
+0011bd50	cxx-stl	rbtree_erase_vec_string	med	recursion, calls vector<string> dtor at +0xe0,+0xf8
+0011be70	cxx-stl	map_lower_bound	med	tree descent from +0x10, header +8
+0011bf70	cxx-stl	map_get_insert_pos	high	Rb_tree_decrement use
+0011c0b0	npu-protocol	parse_request_fields	med	strtoll over token vector, callers 0012b110 and 0012e9d0
+0011cb90	cxx-stl	rbtree_erase_unrolled	high	975 bytes, same as 0011b0e0
+0011cf70	cxx-stl	thread_state_dtor	med	calls std::thread::_State dtor
+0011cfa0	cxx-stl	thread_state_dtor	med	calls std::thread::_State dtor
+0011cfe0	cxx-stl	thread_state_run	low	calls 00139ab0 and shared release; called by 0011e670
+0011d060	cxx-stl	thread_state_run	med	calls stored fn at +0x20 then release
+0011d0b0	cxx-stl	thread_state_helper	low	only calls refcount release 00139cf0
+0011d120	cxx-stl	std_function_manager_16	med	op 2 clones 0x10 bytes
+0011d1e0	cxx-stl	std_function_manager_16	med	same shape as 0011d120
+0011d2a0	cxx-stl	thread_state_dtor	med	calls std::thread::_State dtor
+0011d2e0	cxx-stl	thread_state_dtor	med	calls std::thread::_State dtor
+0011d320	npu-protocol	job_queue_dtor	low	destroys deque of 0x1f0 records, condvar dtor, no callers
+0011d8e0	cxx-stl	deque_copy_0xf8	med	element size 0xf8 divide constant
+0011dfb0	cxx-stl	deque_move_0xf8	med	same shape as 0011d8e0
+0011e670	npu-protocol	schedule_requests	low	called by serve loop 001362d0; merges 0xf8 request deque
+001201b0	cxx-stl	vector_vector_dtor	low	loops frees, caller 00133090
+00120280	util	read_file_to_bytes	med	calls FUN_00163c50 then copies into vector<byte>
+00120bd0	util	global_string_set_lookup	med	mutex DAT_00213740, memcmp scan of string vector
+00120f50	config-env	parse_cli_args	med	literal --model, vector push, called by 00133090
+00121580	xrt-device	map_erase_run	med	rb-tree erase calling xrt::run dtor
+00121640	cxx-stl	map_emplace_hint_string	med	node 0x48, string copy via 0011a1e0
+00121940	cxx-stl	map_emplace_hint_string	med	same shape as 00121640
+00121c30	xrt-device	map_erase_bo	med	erase calls 0011a6c0 and xrt::bo dtor
+00121d10	cxx-stl	rbtree_erase_unrolled	high	deep nested walk at +0x18
+00121f70	cxx-stl	rbtree_erase_unrolled	high	same shape
+00122230	cxx-stl	rbtree_erase_vec_string	med	calls 00139710 vector<string> dtor
+001224f0	xrt-device	map_erase_kernel	med	rb-tree erase calling xrt::kernel dtor
+00122790	cxx-stl	map_get_insert_pos	high	330 bytes, calls erase helpers
+001228f0	cxx-stl	rbtree_erase_unrolled	high	deep nested walk
+00122b50	cxx-stl	dtor_thunk	med	9 bytes, jumps to 0013a310
+00122b60	cxx-stl	map_get_insert_pos	med	same shape as 00122790
+00122cc0	xrt-device	engine_state_dtor	med	destroys kernel, hw_context, bo, nested maps
+00123250	xrt-device	engine_state_dtor	med	mirrors 0013b150, calls bo dtor and 00122cc0
+00123a40	cxx-stl	vector_struct_assign	low	copy-assign with realloc, bad_array_new_length throw
+00124560	npu-protocol	format_text_ostringstream	low	ostringstream build; callers 00133090 and 0012e9d0
+00124b10	util	json_escape_string	high	literal \u%04x, appends escaped chars
+00124e10	npu-protocol	send_reply_line	high	mutex, appends newline, send() loop
+00124f60	npu-protocol	send_reply_line_thunk	high	11 bytes, jumps to 00124e10
+00124f70	cxx-stl	string_assign_cstr	med	strlen, _M_replace, memmove
+00125080	cxx-stl	string_append	high	append literal, 7 callers
+00125240	npu-protocol	format_reply_numbers	med	ostringstream with ints and doubles; callers dispatcher and serve loop
+001256c0	cxx-stl	string_append_cstr	high	strlen then append, 11 callers
+00125930	npu-protocol	build_gen_text	low	called by GEN parser 0012a4a0; appends numbers via 0013a710
+00125f60	model-compute	load_embedding_rows	med	strings rows or fnorm, sizes do not match H
+00126440	npu-protocol	info_model_entry_json	low	uses json escape 00124b10, string builds
+00126dd0	npu-protocol	info_capability_text	med	strings embedding score classify PFX
+00127670	cxx-stl	string_append_cstr	high	strlen, append
+001278f0	config-env	engine_env_config	med	HALOGEN_NPU_CONTEXTS, FLUX_THREADS, taef2.safetensors
+00127ec0	npu-protocol	info_models_json_build	med	strings model files proto name; map::at
+00129cb0	npu-protocol	info_reply_models_json	high	literal ,"models":[
+0012a4a0	npu-protocol	parse_gen_line	high	literal a malformed GEN line
+0012b110	npu-protocol	dispatch_verb	high	unknown verb, PFX, LEDGER, INFO strings; per earlier decompile
+0012e9d0	npu-protocol	connection_loop	high	recv, QUIT and INFO compares, ERR 0 line longer than
+001307b0	util	load_path_helper	low	calls read-file 00120280, string ops; caller 00133090
+00130a20	hnp-format	replay_hnpm_run	med	strings /replay.hnpm, no elf record; calls hnpm parser 00164090
+00133090	npu-protocol	main_listen	high	modes selftest cache probe convert replay; listen
+001362d0	npu-protocol	serve_loop	high	literal shutting down, tokens; earlier decompile
+00139710	cxx-stl	vector_string_dtor	high	frees strings stride 0x20, 37 callers
+00139780	cxx-stl	map_get_insert_pos	high	Rb_tree_decrement use
+001398c0	cxx-stl	map_get_insert_pos	high	same shape as 00139780
+00139a00	cxx-stl	string_equal	high	length compare then memcmp
+00139a40	cxx-stl	mutex_lock	med	25 bytes, pthread_mutex_lock
+00139a60	cxx-stl	string_equal_cstr	high	strlen compare, 31 callers
+00139ab0	npu-protocol	request_record_dtor	low	frees functor at +0xa8, string +0x70, vector +0x50
+00139ca0	cxx-stl	shared_count_release_part	med	uses __libc_single_threaded
+00139cf0	cxx-stl	shared_ptr_release	med	calls 00139ca0, 40 callers
+00139d70	cxx-stl	shared_count_add_ref	high	atomic increment at +8
+00139da0	cxx-stl	vector_ctor_n_zero	med	max_size throw, memset
+00139e60	cxx-stl	vector_ctor_n_zero	med	same shape as 00139da0
+00139f10	cxx-stl	vector_struct_dtor_0x48	low	loops elements freeing sub-vectors
+0013a040	xrt-device	map_erase_bo	med	calls 0011a6c0 and xrt::bo dtor
+0013a0e0	xrt-device	run_holder_dtor	med	calls xrt::run dtor
+0013a290	xrt-device	kernel_hwctx_map_dtor	med	erase calls kernel and hw_context dtors
+0013a310	cxx-stl	rbtree_erase_composite	med	calls erase helpers 0011a900 and 0011a960
+0013a470	cxx-stl	to_string_unsigned	med	digit table 00..99 constant
+0013a710	cxx-stl	to_string_int	med	sign handling, digit table, 38 callers
+0013a9b0	cxx-stl	to_string_long	med	digit table constant
+0013ad80	cxx-stl	vector_struct_dtor	low	loops freeing string fields
+0013b150	xrt-device	engine_state_dtor	med	bo dtor, 15e1b0, 15dc40, 00122cc0 calls
+0013b720	xrt-device	engine_state_dtor_thunk	med	33 bytes, calls 0013b150
+0013b890	cxx-stl	string_append	high	append literal, 35 callers
+0013b9f0	cxx-stl	map_emplace_string_0x58	low	_Znwm(0x58), string copy, insert
+0013bcb0	cxx-stl	map_emplace_run_node	low	node 0x48, calls xrt::run dtor on dup
+0013bf80	unknown	small_helper	low	84 bytes, 1 callee, 1 caller; body not identified
+0013bfe0	xrt-device	bo_sync_wrapper	high	calls xrt::bo::sync via 00155dc0
+0013c070	xrt-device	bo_sync_wrapper	high	same shape, sync other direction
+0013c110	cxx-stl	std_function_manager	med	op 1 and 2 clone
+0013c140	cxx-stl	string_find_char	high	memchr wrapper, returns offset or -1
+0013c180	cxx-stl	std_function_manager_0x30	med	_Znwm(0x30) clone
+0013c210	cxx-stl	std_function_manager_0x18	med	_Znwm(0x18) clone
+0013c270	cxx-stl	function_clone_tail	low	_Znwm, copies 3 words
+0013c290	cxx-stl	string_move_assign	med	SSO check, steal pointer
+0013c370	cxx-stl	string_compare	high	memcmp then length difference clamp
+0013c3d0	cxx-stl	vector_u32_push_back	med	append or realloc of 4-byte element
+0013c4e0	cxx-stl	vector_copy_assign	med	max_size throw, memcpy memmove
+0013c640	cxx-stl	vector_u32_assign	med	memmove memcpy 4-byte elements
+0013c7e0	cxx-stl	vector_copy_assign	med	same shape as 0013c4e0
+0013c940	cxx-stl	string_construct_range	high	_M_create literal, 20 callers
+0013c9e0	cxx-stl	string_ctor_cstr	high	construction from null, strlen memcpy
+0013ca70	xrt-device	map_erase_bo	med	erase with xrt::bo dtor
+0013ccb0	cxx-stl	vector_move_assign	med	steals 3 pointers
+0013cd40	cxx-stl	rbtree_erase_string_key	high	21 lines, string at +0x20
+0013cda0	cxx-stl	rbtree_erase_string_key	high	21 lines, string at +0x20
+0013ce00	cxx-stl	map_find_string	med	tree descent, header +8
+0013cf00	cxx-stl	map_find_string	med	same shape as 0013ce00
+0013d000	cxx-stl	map_find_string	med	same shape as 0013ce00
+0013d100	cxx-stl	map_find_string	med	same shape as 0013ce00
+0013d200	cxx-stl	map_get_insert_pos	high	Rb_tree_decrement use
+0013d340	cxx-stl	map_get_insert_pos	high	same shape
+0013d480	cxx-stl	map_get_insert_pos	high	same shape
+0013d5c0	cxx-stl	map_get_insert_pos	high	same shape
+0013d700	cxx-stl	map_get_insert_pos	high	same shape
+0013d840	cxx-stl	rbtree_erase_unrolled	high	deep nested walk
+0013dc20	xrt-device	map_erase_run_vectors	med	erase frees vectors, xrt::run dtor
+0013dcf0	cxx-stl	rbtree_erase_unrolled	high	deep nested walk
+0013dfe0	cxx-stl	rbtree_erase_unrolled	high	same shape as 0013dcf0
+0013e2e0	util	global_table_accessor	low	calls 0014f5a0; used by static init and dispatcher
+0013e380	cxx-stl	map_find_thunk	low	13 lines, calls 0013d100
+0013e3c0	xrt-device	bucket_clear_busy_flags	low	walks buckets map at +0x288, clears byte +0x2c8
+0013e470	xrt-device	count_loaded_buckets	low	counts buckets whose +0x1d8 pointer set
+0013e540	xrt-device	sum_bucket_counters	low	sums int at +0x268 across buckets
+0013e610	xrt-device	count_loaded_buckets	low	counts buckets whose +0x1d8 set, no early path
+0013e660	xrt-device	sum_bucket_sizes	low	sums sizes over bucket vectors
+0013e700	xrt-device	find_bucket_by_name	low	tree search at +0x218 with memcmp
+0013e8b0	xrt-device	lookup_bucket	low	literal bucket, uses 0013c9e0 and 00162ac0
+0013ea60	xrt-device	lookup_bucket_or_throw	low	literal bucket, 6 callees
+0013ed30	cxx-stl	map_emplace_hint_string	med	node 0x48, string copy 0013c940
+0013ef80	cxx-stl	map_emplace_hint_string	med	same shape as 0013ed30
+0013f1d0	cxx-stl	map_emplace_hint_string	med	same shape as 0013ed30
+0013f420	xrt-device	find_output_buffer_o	low	compares name to "o", map lookup at +0x178
+0013f7e0	xrt-device	read_proc_interrupts	med	fopen /proc/interrupts, fgets 64KB; matches NPU irq lines
+0013fc70	config-env	host_tuning_env	med	HALOGEN_NPU_HOST_THREADS, HOST_SPIN, calls 0013f7e0
+0013fff0	config-env	parse_cpu_list	med	strtol loop, values under 0x400, vector push
+00140350	cxx-stl	map_emplace_hint_string	med	node 0x48, string copy
+00140650	cxx-stl	map_emplace_hint_string	med	same shape as 00140350
+00140950	xrt-device	bucket_release_runs	low	walks map at +0x248, run dtor
+00140ec0	xrt-device	kernel_hwctx_holder_dtor	med	calls kernel and hw_context dtors
+00141170	xrt-device	context_reset	med	frees run, kernel, hw_context maps, resets tree headers
+001414e0	xrt-device	has_free_context	low	scans buckets for idle loaded entry
+001415a0	xrt-device	pick_free_context	low	scans buckets, flag +0x2c8, +0x1d8
+00141720	cxx-stl	string_assign_cstr	med	strlen, SSO threshold 0xf
+00141860	cxx-stl	string_append_cstr_n	med	literal basic_string::append, length check
+00141b40	cxx-stl	struct_copy_assign	low	string _M_assign at five offsets, vector copy
+001420f0	cxx-stl	string_append_cstr	high	strlen then append, 6 callers
+00142370	cxx-stl	string_append_cstr	high	strlen then append, 7 callers
+001425e0	cxx-stl	string_replace	med	literal basic_string::replace, __pos message
+00142820	model-compute	prefix_store_kv_copy	med	strings the prefix store: K / V read, copy at layer
+00142bf0	util	name_with_two_digit_index	med	snprintf %02d then string insert
+00142e90	cxx-stl	rbtree_erase_unrolled	high	deep nested walk
+00143270	xrt-device	open_device	high	xrt::device ctor; reads HALOGEN_NPU_WAIT_MS, SHORT_PATH
+00143660	logging-diag	format_timing_line	high	snprintf wall device flush pull embed fused minflt
+001441d0	hnp-format	verify_blob_checksum	high	strings no blob, checksum fails, bytes its buffer
+00144430	hnp-format	load_bucket_blobs_patches	med	strings blob, consts, layer; doc says patch records here
+00145b20	xrt-device	acquire_bucket_context	med	strings no NPU context free, loaded buckets in use
+00145eb0	hnp-format	load_model_dir_manifest	high	devices.hnpm, consts.hnpb, calls 00164090 and 00167960
+00149720	xrt-device	run_bucket_layers	med	strings no buffer at layer, has no kernel
+0014a6f0	model-compute	run_request_route	med	strings no route for B, token outside vocabulary, malformed request
+0014d2b0	model-compute	run_resume_record	med	token id outside vocabulary, resume record bind buffer
+0014e0f0	hnp-format	check_bucket_bind_order	low	strings binds buffers in another order, att kvp roles
+0014ef40	cxx-stl	map_get_insert_pos	high	Rb_tree_decrement use
+0014efe0	cxx-stl	rbtree_erase_unrolled	high	deep nested walk
+0014f1b0	cxx-stl	rbtree_erase_unrolled	high	deep nested walk
+0014f5a0	cxx-stl	static_map_dtor	med	105 bytes, calls erase 0014f1b0, no callers
+0014f610	cxx-stl	map_get_insert_pos	high	Rb_tree_decrement use
+0014f750	cxx-stl	map_get_insert_pos	high	same shape
+0014f890	cxx-stl	map_get_insert_pos	high	same shape
+0014f9d0	cxx-stl	map_get_insert_pos	high	same shape
+0014fb10	cxx-stl	map_get_insert_pos	high	same shape
+0014fc50	cxx-stl	rbtree_erase_vectors	med	recursion, frees vectors at +0xf8
+0014fe10	cxx-stl	struct_dtor_strings	low	frees many string members
+0014fef0	cxx-stl	vector_string_dtor	med	loops frees strings stride 0x20
+00150050	cxx-stl	rbtree_erase_composite	med	calls 0013cda0 and 0013cd40
+001501d0	xrt-device	map_erase_bo	med	calls 0013ca70 and xrt::bo dtor
+00150360	xrt-device	map_erase_bo	med	calls 0013ca70 and xrt::bo dtor
+00150460	cxx-stl	vector_u32_resize	med	literal vector::_M_default_append
+001505f0	util	alloc_zeroed_0x2e0	low	_Znwm(0x2e0) then zero fill 0x5c words
+00150710	cxx-stl	map_emplace_unique_0x50	med	_Znwm(0x50), called by 00145eb0
+00150930	cxx-stl	rbtree_erase_unrolled	high	deep nested walk
+00150c10	cxx-stl	rbtree_erase_vec_string	med	deep walk, calls 00139710

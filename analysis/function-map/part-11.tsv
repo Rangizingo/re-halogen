@@ -1,0 +1,299 @@
+addr	role	label	confidence	evidence
+019e6238	crt-runtime	pad_stub	low	1-byte function, no callees
+019e6240	util	matmul_plan_cache_find	med	map lookup keyed on (M,N,K,flag), used by matmul wrappers
+019e7500	config-env	matmul_algos_env	high	getenv HALOGEN_MATMUL_ALGOS
+019e7540	config-env	matmul_bucket_env	high	getenv HALOGEN_MATMUL_BUCKET
+019e7570	hip-runtime	matmul_hip_autotune_probe	med	HIP error string, matmul.cpp, 12 callees
+019e7b30	hip-runtime	hipblaslt_matmul_run	high	hipBLASLt matmul failed M N K message
+019e7e60	gpu-dispatch	matmul_bf16_plan_run_a	med	plan lookup flag 0, tune then hipblaslt_matmul_run
+019e7ed0	gpu-dispatch	matmul_bf16_plan_run_b	med	plan lookup flag 1, tune then run
+019e7f40	gpu-dispatch	matmul_plan_run_variant	low	same shape as 019e7e60, 3 callees, 4 callers
+019e7fb0	hip-runtime	hipblaslt_algo_search	med	hipBLASLt error string, 12 callees, matmul.cpp
+019e8500	hip-runtime	hl_bf16f32_supported_once	high	static guard wrapping 019e8570 result
+019e8570	hip-runtime	hipblaslt_probe_bf16_f32_solution	high	no bf16-in/fp32-out hipBLASLt solution, HALOGEN_ROUTE_HL
+019e8880	crt-runtime	thunk_tail_jump	low	12-byte one-callee thunk
+019e88a0	crt-runtime	thunk_tail_jump	low	12-byte one-callee thunk
+019e88c0	crt-runtime	thunk_tail_jump	low	12-byte one-callee thunk
+019e88e0	cxx-stl	rb_tree_erase_subtree	high	recursive node free, operator delete 0x48
+019e8920	cxx-stl	rb_tree_erase_subtree	med	same size and shape as 019e88e0
+019e8960	cxx-stl	vector_default_append_check	med	cannot create std::vector larger than max_size
+019e8a50	cxx-stl	rb_tree_erase_subtree	med	59 bytes, 2 callees, tree erase shape
+019e8a90	crt-runtime	thunk_tail_jump	low	28-byte one-callee wrapper
+019e8b80	cxx-stl	rb_tree_get_insert_hint_unique	med	map hint insert comparing 3-long key
+019e8d40	cxx-stl	rb_tree_get_insert_unique_pos	med	map insert position, Rb_tree_decrement
+019e8e30	crt-runtime	thunk_tail_jump	low	28-byte one-callee wrapper
+019e8f20	cxx-stl	rb_tree_get_insert_hint_unique	med	438-byte twin of 019e8b80
+019e90e0	cxx-stl	rb_tree_get_insert_unique_pos	med	220-byte twin of 019e8d40
+019e91d0	crt-runtime	thunk_tail_jump	low	28-byte one-callee wrapper
+019e92b0	cxx-stl	rb_tree_get_insert_hint_unique	med	438-byte twin of 019e8b80
+019e9470	cxx-stl	rb_tree_get_insert_unique_pos	med	220-byte twin of 019e8d40
+019e9560	crt-runtime	static_init_matmul_cpp	high	_INIT_9, matmul.cpp path and build timestamp
+019e95c0	util	build_check_register_node	med	pushes node onto global linked list, 7 callers
+019e95e0	logging-diag	build_check_print_row	high	build: %-22s %-24s %10s %8s, compiled kCtxCap kSdLen
+019e96a0	logging-diag	build_check_verify_or_die	high	FATAL linked from objects compiled against DIFFERENT constants
+019e97e0	config-env	fa_tq_value_x16	med	calls FA_TQ getter, shifts left 4
+019e97f0	config-env	fa_tq_env	high	getenv HALOGEN_FA_TQ cached
+019e9920	model-forward	attn_fa_launch	high	attn_fa HALOGEN_FA_TQ message, calls FA env getters, 21 callees
+019eb2c0	config-env	fa_vb_env	high	getenv HALOGEN_FA_VB
+019eb2f0	config-env	fa_rs_env	high	getenv HALOGEN_FA_RS
+019eb320	config-env	fa_opt_env	high	getenv HALOGEN_FA_OPT
+019eb350	config-env	fa_s21_env	high	getenv HALOGEN_FA_S21
+019eb380	gpu-dispatch	attn_fa_variant_select	low	switch on param&7 with guarded statics, 12 callees
+019ec930	gpu-dispatch	attn_launch_stub_qs	med	hipLaunchKernel stub style locals, one callee
+019eca20	model-forward	attn_qs_launch	high	HALOGEN_ATTN_QS_BT=0 k_attn_qs indexer budget message
+019ed5f0	config-env	attn_qs_probe_env	high	HALOGEN_ATTN_QS_PROBE, attention output WRONG
+019ed640	config-env	attn_qs_rsm_env	high	getenv HALOGEN_ATTN_QS_RSM
+019ed670	gpu-dispatch	attn_qs_kernel_launch_stub	med	222-byte template hipLaunchKernel stub, one callee
+019ed790	gpu-dispatch	attn_qs_kernel_launch_stub	med	222-byte template hipLaunchKernel stub, one callee
+019ed8b0	gpu-dispatch	attn_qs_kernel_launch_stub	med	222-byte template hipLaunchKernel stub, one callee
+019ed9d0	gpu-dispatch	attn_qs_kernel_launch_stub	med	222-byte template hipLaunchKernel stub, one callee
+019edaf0	gpu-dispatch	attn_qs_kernel_launch_stub	med	222-byte template hipLaunchKernel stub, one callee
+019edc10	gpu-dispatch	attn_qs_kernel_launch_stub	med	222-byte template hipLaunchKernel stub, one callee
+019edd30	gpu-dispatch	attn_qs_kernel_launch_stub	med	222-byte template hipLaunchKernel stub, one callee
+019ede50	gpu-dispatch	attn_kernel_grid_setup	med	PushCallConfiguration grid (n+3)/4, block 256
+019edf80	gpu-dispatch	kernel_launch_stub	med	host stub, one callee, 127 bytes, sets args
+019ee040	gpu-dispatch	attn_qs_bt2_grid_select	low	guarded statics, grid math, 4 callees
+019ee260	gpu-dispatch	attn_qs_kernel_stub	med	190-byte hip launch stub, one callee
+019ee360	model-forward	attn_qs_bt2_launch	high	BT2_WPE/OPT not instantiated messages
+019ef020	config-env	attn_qs_bt2_probe_env	high	HALOGEN_ATTN_QS_BT2_PROBE
+019ef070	config-env	attn_qs_bt2_opt_env	high	getenv HALOGEN_ATTN_QS_BT2_OPT
+019ef0a0	config-env	attn_qs_bt2_wpe_env	high	getenv HALOGEN_ATTN_QS_BT2_WPE
+019ef0d0	config-env	attn_qs_bt2_lds_env	high	getenv HALOGEN_ATTN_QS_BT2_LDS
+019ef100	gpu-dispatch	kernel_launch_stub	low	17-byte, no callees, launch stub shape
+019ef200	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019ef300	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019ef400	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019ef500	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019ef600	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019ef700	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019ef800	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019ef900	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019efa00	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019efb00	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019efc00	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019efd00	gpu-dispatch	kernel_device_stub	low	12 bytes, no callees
+019efe00	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019eff00	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f0000	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f0100	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f0200	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f0300	model-forward	attn_qs_bt4_launch	high	BT4_OPT not instantiated (0 1 3 5)
+019f0920	config-env	attn_qs_bt4_opt_env	high	getenv HALOGEN_ATTN_QS_BT4_OPT
+019f0950	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f0a50	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f0b50	crt-runtime	pad_stub	low	1-byte function
+019f0c50	crt-runtime	pad_stub	low	7-byte function, no callees
+019f0d50	gpu-dispatch	attn_qs_bt4_grid_select	low	guarded statics, 5 callees, stack args
+019f1100	config-env	attn_qs_bt4_opt_env	high	getenv HALOGEN_ATTN_QS_BT4_OPT
+019f1130	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f1230	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f1330	gpu-dispatch	kernel_grid_setup_64x16	med	PushCallConfiguration grid (n+63)/64,(m+15)/16, block 128
+019f14a0	gpu-dispatch	kernel_launch_stub	med	hipLaunchKernel stub, 160 bytes
+019f1580	gpu-dispatch	kernel_launch_stub	med	hipLaunchKernel stub, 175 bytes
+019f1740	gpu-dispatch	kernel_launch_stub	med	hipLaunchKernel stub, 176 bytes
+019f1830	gpu-dispatch	kernel_device_stub	low	103 bytes, no callees, stub-like locals
+019f1930	gpu-dispatch	kernel_device_stub	low	52 bytes, no callees, stub-like locals
+019f1a30	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f1b30	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f1b60	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f1c60	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f1d60	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f1d90	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f1e90	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f1ec0	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f1fc0	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f1ff0	gpu-dispatch	kernel_device_stub	low	111 bytes, no callees, stub-like locals
+019f20f0	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f2120	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f2220	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f2250	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f2350	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f2380	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f2480	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f24b0	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f25b0	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f25e0	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f26e0	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f27e0	gpu-dispatch	kernel_device_stub	low	12 bytes, no callees
+019f28e0	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f29e0	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f2a10	gpu-dispatch	kernel_device_stub	low	27 bytes, no callees, stub-like locals
+019f2b10	gpu-dispatch	kernel_device_stub	low	32 bytes, no callees
+019f2c10	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f2c40	gpu-dispatch	kernel_device_stub	low	119 bytes, no callees
+019f2d40	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f2d70	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f2e70	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f2ea0	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f2fa0	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f2fd0	gpu-dispatch	kernel_device_stub	low	52 bytes, no callees
+019f30d0	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f3100	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f3200	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f3230	gpu-dispatch	kernel_device_stub	low	57 bytes, no callees
+019f3330	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019f3360	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f3460	util	small_helper_called_once	low	1-byte, 1 caller, probably returns constant
+019f3490	gpu-dispatch	attn_kernel_launch_stub	med	190-byte template hipLaunchKernel stub, one callee
+019f3590	hip-runtime	hip_register_fatbin_kernels_attn	high	_INIT_11 registers k_attn_fa k_kv_bt k_attn_qs_bt k_ix_scores_wmma
+019f41e0	hip-runtime	hip_unregister_fatbin	high	__hipUnregisterFatBinary guard
+019f4210	crt-runtime	static_init_attn_fa_hip	high	_INIT_10, attn_fa.hip path and build timestamp
+019f4270	crt-runtime	atexit_register	high	calls __cxa_atexit
+019f4280	crt-runtime	_DT_INIT	high	ELF DT_INIT
+019f4298	crt-runtime	_DT_FINI	high	ELF DT_FINI
+019f42b0	crt-runtime	plt_resolver_stub	med	12 bytes, PLT region
+019f42c0	crt-runtime	__register_frame_info	high	PLT thunk to libc/runtime __register_frame_info
+019f42d0	crt-runtime	__cxa_finalize	high	PLT thunk to libc/runtime __cxa_finalize
+019f42e0	crt-runtime	__deregister_frame_info	high	PLT thunk to libc/runtime __deregister_frame_info
+019f42f0	crt-runtime	memset	high	PLT thunk to libc/runtime memset
+019f4300	crt-runtime	_ZdlPvm	high	PLT thunk to operator new/delete
+019f4310	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm	high	PLT thunk to libstdc++ _ZNSt7__cxx1112basic_stringIcSt11char_tr
+019f4320	crt-runtime	getenv	high	PLT thunk to libc/runtime getenv
+019f4330	crt-runtime	__isoc23_strtol	high	PLT thunk to libc/runtime __isoc23_strtol
+019f4340	crt-runtime	__isoc23_strtoll	high	PLT thunk to libc/runtime __isoc23_strtoll
+019f4350	crt-runtime	strlen	high	PLT thunk to libc/runtime strlen
+019f4360	crt-runtime	printf	high	PLT thunk to libc/runtime printf
+019f4370	crt-runtime	memcpy	high	PLT thunk to libc/runtime memcpy
+019f4380	crt-runtime	_Znwm	high	PLT thunk to operator new/delete
+019f4390	crt-runtime	bcmp	high	PLT thunk to libc/runtime bcmp
+019f43a0	crt-runtime	fprintf	high	PLT thunk to libc/runtime fprintf
+019f43b0	crt-runtime	puts	high	PLT thunk to libc/runtime puts
+019f43c0	protocol-net	socket	high	socket import socket
+019f43d0	protocol-net	setsockopt	high	socket import setsockopt
+019f43e0	protocol-net	inet_pton	high	socket import inet_pton
+019f43f0	protocol-net	bind	high	socket import bind
+019f4400	protocol-net	listen	high	socket import listen
+019f4410	crt-runtime	isspace	high	PLT thunk to libc/runtime isspace
+019f4420	crt-runtime	__isoc23_sscanf	high	PLT thunk to libc/runtime __isoc23_sscanf
+019f4430	crt-runtime	snprintf	high	PLT thunk to libc/runtime snprintf
+019f4440	crt-runtime	fflush	high	PLT thunk to libc/runtime fflush
+019f4450	crt-runtime	sigemptyset	high	PLT thunk to libc/runtime sigemptyset
+019f4460	crt-runtime	sigaction	high	PLT thunk to libc/runtime sigaction
+019f4470	crt-runtime	close	high	PLT thunk to libc/runtime close
+019f4480	crt-runtime	__errno_location	high	PLT thunk to libc/runtime __errno_location
+019f4490	crt-runtime	memmove	high	PLT thunk to libc/runtime memmove
+019f44a0	protocol-net	accept	high	socket import accept
+019f44b0	crt-runtime	perror	high	PLT thunk to libc/runtime perror
+019f44c0	crt-runtime	fwrite	high	PLT thunk to libc/runtime fwrite
+019f44d0	cxx-stl	_ZSt19__throw_logic_errorPKc	high	PLT thunk to libstdc++ _ZSt19__throw_logic_errorPKc
+019f44e0	crt-runtime	__cxa_guard_acquire	high	PLT thunk to libc/runtime __cxa_guard_acquire
+019f44f0	crt-runtime	__cxa_guard_release	high	PLT thunk to libc/runtime __cxa_guard_release
+019f4500	crt-runtime	__cxa_guard_abort	high	PLT thunk to libc/runtime __cxa_guard_abort
+019f4510	crt-runtime	_Unwind_Resume	high	PLT thunk to libc/runtime _Unwind_Resume
+019f4520	crt-runtime	open	high	PLT thunk to libc/runtime open
+019f4530	crt-runtime	strerror	high	PLT thunk to libc/runtime strerror
+019f4540	crt-runtime	exit	high	PLT thunk to libc/runtime exit
+019f4550	crt-runtime	strtod	high	PLT thunk to libc/runtime strtod
+019f4560	crt-runtime	pthread_mutex_lock	high	PLT thunk to libc/runtime pthread_mutex_lock
+019f4570	crt-runtime	pthread_mutex_unlock	high	PLT thunk to libc/runtime pthread_mutex_unlock
+019f4580	cxx-stl	_ZSt20__throw_system_errori	high	PLT thunk to libstdc++ _ZSt20__throw_system_errori
+019f4590	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm	high	PLT thunk to libstdc++ _ZNSt7__cxx1112basic_stringIcSt11char_tr
+019f45a0	cxx-stl	_ZSt20__throw_length_errorPKc	high	PLT thunk to libstdc++ _ZSt20__throw_length_errorPKc
+019f45b0	cxx-stl	_ZNSt8ios_baseC2Ev	high	PLT thunk to libstdc++ _ZNSt8ios_baseC2Ev
+019f45c0	cxx-stl	_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E	high	PLT thunk to libstdc++ _ZNSt9basic_iosIcSt11char_traitsIcEE4ini
+019f45d0	cxx-stl	_ZNSt6localeC1Ev	high	PLT thunk to libstdc++ _ZNSt6localeC1Ev
+019f45e0	cxx-stl	_ZNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE7_M_syncEPcmm	high	PLT thunk to libstdc++ _ZNSt7__cxx1115basic_stringbufIcSt11char
+019f45f0	cxx-stl	_ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE	high	PLT thunk to libstdc++ _ZStrsIcSt11char_traitsIcESaIcEERSt13bas
+019f4600	cxx-stl	_ZNSi10_M_extractIlEERSiRT_	high	PLT thunk to libstdc++ _ZNSi10_M_extractIlEERSiRT_
+019f4610	cxx-stl	_ZNSirsERi	high	PLT thunk to libstdc++ _ZNSirsERi
+019f4620	protocol-net	send	high	socket import send
+019f4630	cxx-stl	_ZNSt6chrono3_V212steady_clock3nowEv	high	PLT thunk to libstdc++ _ZNSt6chrono3_V212steady_clock3nowEv
+019f4640	crt-runtime	fputc	high	PLT thunk to libc/runtime fputc
+019f4650	cxx-stl	_ZNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEEC1ERKNS_12basic_stringIcS2_S3_EESt13_Ios_Openmode	high	PLT thunk to libstdc++ _ZNSt7__cxx1119basic_istringstreamIcSt11
+019f4660	cxx-stl	_ZNSt6localeD1Ev	high	PLT thunk to libstdc++ _ZNSt6localeD1Ev
+019f4670	cxx-stl	_ZNSt8ios_baseD2Ev	high	PLT thunk to libstdc++ _ZNSt8ios_baseD2Ev
+019f4680	cxx-stl	_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base	high	PLT thunk to libstdc++ _ZSt18_Rb_tree_decrementPSt18_Rb_tree_no
+019f4690	cxx-stl	_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base	high	PLT thunk to libstdc++ _ZSt18_Rb_tree_incrementPSt18_Rb_tree_no
+019f46a0	cxx-stl	_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_	high	PLT thunk to libstdc++ _ZSt29_Rb_tree_insert_and_rebalancebPSt1
+019f46b0	cxx-stl	_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm	high	PLT thunk to libstdc++ _ZNKSt7__cxx1112basic_stringIcSt11char_t
+019f46c0	protocol-net	select	high	socket import select
+019f46d0	protocol-net	recv	high	socket import recv
+019f46e0	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm	high	PLT thunk to libstdc++ _ZNSt7__cxx1112basic_stringIcSt11char_tr
+019f46f0	cxx-stl	_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base	high	PLT thunk to libstdc++ _ZSt18_Rb_tree_incrementPKSt18_Rb_tree_n
+019f4700	cxx-stl	_ZSt28_Rb_tree_rebalance_for_erasePSt18_Rb_tree_node_baseRS_	high	PLT thunk to libstdc++ _ZSt28_Rb_tree_rebalance_for_erasePSt18_
+019f4710	cxx-stl	_ZNSi10_M_extractIfEERSiRT_	high	PLT thunk to libstdc++ _ZNSi10_M_extractIfEERSiRT_
+019f4720	cxx-stl	_ZNSi10_M_extractIyEERSiRT_	high	PLT thunk to libstdc++ _ZNSi10_M_extractIyEERSiRT_
+019f4730	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_	high	PLT thunk to libstdc++ _ZNSt7__cxx1112basic_stringIcSt11char_tr
+019f4740	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc	high	PLT thunk to libstdc++ _ZNSt7__cxx1112basic_stringIcSt11char_tr
+019f4750	cxx-stl	_ZSt11_Hash_bytesPKvmm	high	PLT thunk to libstdc++ _ZSt11_Hash_bytesPKvmm
+019f4760	cxx-stl	_ZNKSt8__detail20_Prime_rehash_policy14_M_need_rehashEmmm	high	PLT thunk to libstdc++ _ZNKSt8__detail20_Prime_rehash_policy14_
+019f4770	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEv	high	PLT thunk to libstdc++ _ZNSt7__cxx1112basic_stringIcSt11char_tr
+019f4780	crt-runtime	exp	high	PLT thunk to libc/runtime exp
+019f4790	cxx-stl	_ZSt28__throw_bad_array_new_lengthv	high	PLT thunk to libstdc++ _ZSt28__throw_bad_array_new_lengthv
+019f47a0	cxx-stl	_ZSt17__throw_bad_allocv	high	PLT thunk to libstdc++ _ZSt17__throw_bad_allocv
+019f47b0	crt-runtime	__cxa_begin_catch	high	PLT thunk to libc/runtime __cxa_begin_catch
+019f47c0	crt-runtime	__cxa_rethrow	high	PLT thunk to libc/runtime __cxa_rethrow
+019f47d0	crt-runtime	__cxa_end_catch	high	PLT thunk to libc/runtime __cxa_end_catch
+019f47e0	cxx-stl	_ZNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEED1Ev	high	PLT thunk to libstdc++ _ZNSt7__cxx1119basic_istringstreamIcSt11
+019f47f0	crt-runtime	unlink	high	PLT thunk to libc/runtime unlink
+019f4800	cxx-stl	_ZSt9terminatev	high	PLT thunk to libstdc++ _ZSt9terminatev
+019f4810	hip-runtime	hipFree	high	PLT import hipFree
+019f4820	crt-runtime	fopen	high	PLT thunk to libc/runtime fopen
+019f4830	crt-runtime	fread	high	PLT thunk to libc/runtime fread
+019f4840	crt-runtime	fclose	high	PLT thunk to libc/runtime fclose
+019f4850	crt-runtime	strchr	high	PLT thunk to libc/runtime strchr
+019f4860	cxx-stl	_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEPKcmm	high	PLT thunk to libstdc++ _ZNKSt7__cxx1112basic_stringIcSt11char_t
+019f4870	crt-runtime	strcmp	high	PLT thunk to libc/runtime strcmp
+019f4880	cxx-stl	_ZNSt18condition_variableC1Ev	high	PLT thunk to libstdc++ _ZNSt18condition_variableC1Ev
+019f4890	crt-runtime	mkdir	high	PLT thunk to libc/runtime mkdir
+019f48a0	crt-runtime	rename	high	PLT thunk to libc/runtime rename
+019f48b0	crt-runtime	opendir	high	PLT thunk to libc/runtime opendir
+019f48c0	crt-runtime	readdir	high	PLT thunk to libc/runtime readdir
+019f48d0	crt-runtime	stat	high	PLT thunk to libc/runtime stat
+019f48e0	crt-runtime	closedir	high	PLT thunk to libc/runtime closedir
+019f48f0	hip-runtime	hipHostMalloc	high	PLT import hipHostMalloc
+019f4900	hip-runtime	hipStreamCreateWithFlags	high	PLT import hipStreamCreateWithFlags
+019f4910	cxx-stl	_ZNSt6thread15_M_start_threadESt10unique_ptrINS_6_StateESt14default_deleteIS1_EEPFvvE	high	PLT thunk to libstdc++ _ZNSt6thread15_M_start_threadESt10unique
+019f4920	cxx-stl	_ZNSt18condition_variableD1Ev	high	PLT thunk to libstdc++ _ZNSt18condition_variableD1Ev
+019f4930	cxx-stl	_ZNSt18condition_variable10notify_allEv	high	PLT thunk to libstdc++ _ZNSt18condition_variable10notify_allEv
+019f4940	cxx-stl	_ZNSt6thread4joinEv	high	PLT thunk to libstdc++ _ZNSt6thread4joinEv
+019f4950	hip-runtime	hipStreamDestroy	high	PLT import hipStreamDestroy
+019f4960	hip-runtime	hipHostFree	high	PLT import hipHostFree
+019f4970	crt-runtime	memcmp	high	PLT thunk to libc/runtime memcmp
+019f4980	crt-runtime	lstat	high	PLT thunk to libc/runtime lstat
+019f4990	crt-runtime	rmdir	high	PLT thunk to libc/runtime rmdir
+019f49a0	crt-runtime	truncate	high	PLT thunk to libc/runtime truncate
+019f49b0	cxx-stl	_ZNSt6thread6_StateD2Ev	high	PLT thunk to libstdc++ _ZNSt6thread6_StateD2Ev
+019f49c0	cxx-stl	_ZNSt18condition_variable4waitERSt11unique_lockISt5mutexE	high	PLT thunk to libstdc++ _ZNSt18condition_variable4waitERSt11uniq
+019f49d0	crt-runtime	copy_file_range	high	PLT thunk to libc/runtime copy_file_range
+019f49e0	crt-runtime	fdatasync	high	PLT thunk to libc/runtime fdatasync
+019f49f0	hip-runtime	hipMemcpyAsync	high	PLT import hipMemcpyAsync
+019f4a00	hip-runtime	hipStreamSynchronize	high	PLT import hipStreamSynchronize
+019f4a10	crt-runtime	pwrite	high	PLT thunk to libc/runtime pwrite
+019f4a20	crt-runtime	posix_fadvise	high	PLT thunk to libc/runtime posix_fadvise
+019f4a30	crt-runtime	fileno	high	PLT thunk to libc/runtime fileno
+019f4a40	crt-runtime	fsync	high	PLT thunk to libc/runtime fsync
+019f4a50	crt-runtime	vfprintf	high	PLT thunk to libc/runtime vfprintf
+019f4a60	crt-runtime	strncmp	high	PLT thunk to libc/runtime strncmp
+019f4a70	crt-runtime	strstr	high	PLT thunk to libc/runtime strstr
+019f4a80	hip-runtime	hipMalloc	high	PLT import hipMalloc
+019f4a90	hip-runtime	hipMemcpy	high	PLT import hipMemcpy
+019f4aa0	hip-runtime	hipGetErrorString	high	PLT import hipGetErrorString
+019f4ab0	crt-runtime	ceil	high	PLT thunk to libc/runtime ceil
+019f4ac0	cxx-stl	_ZNKSt8__detail20_Prime_rehash_policy11_M_next_bktEm	high	PLT thunk to libstdc++ _ZNKSt8__detail20_Prime_rehash_policy11_
+019f4ad0	cxx-stl	_ZSt24__throw_out_of_range_fmtPKcz	high	PLT thunk to libstdc++ _ZSt24__throw_out_of_range_fmtPKcz
+019f4ae0	crt-runtime	_ZnwmRKSt9nothrow_t	high	PLT thunk to operator new/delete
+019f4af0	crt-runtime	pread	high	PLT thunk to libc/runtime pread
+019f4b00	crt-runtime	__cxa_atexit	high	PLT thunk to libc/runtime __cxa_atexit
+019f4b10	hip-runtime	__hipPopCallConfiguration	high	PLT import __hipPopCallConfiguration
+019f4b20	hip-runtime	hipLaunchKernel	high	PLT import hipLaunchKernel
+019f4b30	hip-runtime	hipGetDevicePropertiesR0600	high	PLT import hipGetDevicePropertiesR0600
+019f4b40	cxx-stl	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc	high	PLT thunk to libstdc++ _ZNSt7__cxx1112basic_stringIcSt11char_tr
+019f4b50	cxx-stl	_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcmm	high	PLT thunk to libstdc++ _ZNKSt7__cxx1112basic_stringIcSt11char_t
+019f4b60	hip-runtime	hipDeviceSynchronize	high	PLT import hipDeviceSynchronize
+019f4b70	hip-runtime	hipMemset	high	PLT import hipMemset
+019f4b80	hip-runtime	hipGetLastError	high	PLT import hipGetLastError
+019f4b90	crt-runtime	vsnprintf	high	PLT thunk to libc/runtime vsnprintf
+019f4ba0	crt-runtime	fseek	high	PLT thunk to libc/runtime fseek
+019f4bb0	crt-runtime	ftell	high	PLT thunk to libc/runtime ftell
+019f4bc0	crt-runtime	rewind	high	PLT thunk to libc/runtime rewind
+019f4bd0	crt-runtime	madvise	high	PLT thunk to libc/runtime madvise
+019f4be0	hip-runtime	__hipPushCallConfiguration	high	PLT import __hipPushCallConfiguration
+019f4bf0	crt-runtime	strncpy	high	PLT thunk to libc/runtime strncpy
+019f4c00	cxx-stl	_ZSt25__throw_bad_function_callv	high	PLT thunk to libstdc++ _ZSt25__throw_bad_function_callv
+019f4c10	hip-runtime	hipMemsetAsync	high	PLT import hipMemsetAsync
+019f4c20	crt-runtime	sqrt	high	PLT thunk to libc/runtime sqrt
+019f4c30	crt-runtime	putchar	high	PLT thunk to libc/runtime putchar
+019f4c40	hip-runtime	hipMemcpy2D	high	PLT import hipMemcpy2D
+019f4c50	crt-runtime	expf	high	PLT thunk to libc/runtime expf
+019f4c60	hip-runtime	hipEventRecord	high	PLT import hipEventRecord

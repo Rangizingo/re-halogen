@@ -1,0 +1,254 @@
+addr	role	label	confidence	evidence
+00107000	crt-runtime	_DT_INIT	high	calls __gmon_start__ if non-null
+00107ac0	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append', 1 callee
+00107ad4	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+00107ae0	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+00107aec	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+00107af8	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00107b9b	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00107ba8	cxx-stl	EH cleanup free then resume	med	frees ptr, _Unwind_Resume
+00107bc8	cxx-stl	EH cleanup free two ptrs	med	two conditional frees, _Unwind_Resume
+00107bf6	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00107c43	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+00107c76	cxx-stl	EH cleanup string dispose and delete	med	string _M_dispose, operator delete, resume
+00107cec	cxx-stl	EH catch rethrow range destroy	med	__cxa_begin_catch, delete, rethrow
+00107dba	cxx-stl	EH catch rethrow range destroy	med	same shape as 00107cec
+00107e88	cxx-stl	EH cleanup destroy range	med	one destroy call, _Unwind_Resume
+00107e9c	cxx-stl	EH cleanup destroy range	med	one destroy call, _Unwind_Resume
+00107eb0	cxx-stl	EH catch destroy 0x98-byte element range	low	loop stride 0x13 longs, catch, rethrow
+00108163	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+00108242	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010828e	cxx-stl	string _M_replace_cold tail	med	calls _M_replace_cold then sets size and NUL
+001082b8	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+001082c4	cxx-stl	EH cleanup ostringstream teardown	med	string dispose, locale dtor, basic_ostringstream VTT
+00108381	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+001083bb	cxx-stl	throw vector range_insert cold stub	high	string 'vector::_M_range_insert'
+00108453	cxx-stl	EH cleanup strings and vector free	med	string dispose, vector delete, resume
+0010853a	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+001085de	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+001086b6	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+001086f0	cxx-stl	EH cleanup three strings	med	three string _M_dispose, resume
+0010879f	cxx-stl	EH cleanup strings	med	six string dispose calls, resume
+00108c85	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+00108d13	cxx-stl	EH cleanup large frame	low	431 bytes, many stack vars, dispose calls
+00108f7e	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00109730	cxx-stl	EH cleanup strings and vector	med	two string dispose, vector delete, resume
+00109785	cxx-stl	EH cleanup large frame with map erase	med	string dispose, FUN_0011cb90 tree erase calls
+00109d22	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00109db1	cxx-stl	EH cleanup tree erase and string	med	FUN_0013ad80 erase, string dispose, resume
+0010a29d	logging-diag	catch std::exception, print and return 1	high	fprintf(stderr,"halogen-npu: %s\n", what()), return 1
+0010a2fa	cxx-stl	EH cleanup large frame	low	559 bytes, string dispose, FUN_00139cf0 frees, resume
+0010a500	cxx-stl	throw system_error(1) cold stub	high	calls __throw_system_error(1)
+0010a8f4	util	catch sets worker error flag	med	catch-all stores 1 to byte at obj+8 (atomic)
+0010a914	util	catch sets worker error flag	med	catch-all stores 1 to byte at obj+0x10 (atomic)
+0010a934	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010a940	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010a94c	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010a958	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010a964	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+0010a970	cxx-stl	EH cleanup string	med	one string dispose, resume
+0010a996	cxx-stl	EH cleanup strings	med	three string dispose, resume
+0010a9d8	cxx-stl	EH catch rethrow delete	med	begin_catch, operator delete, rethrow
+0010aa06	cxx-stl	EH catch rethrow delete	med	begin_catch, operator delete, rethrow
+0010aa34	cxx-stl	EH catch rethrow delete	med	begin_catch, operator delete, rethrow
+0010aa62	cxx-stl	EH cleanup string	med	one string dispose, resume
+0010aa90	xrt-device	cold fragment scanning string for 'xdna'	low	memchr 'x' then compares 0x616e6478 ('xdna'), ':' split; callers none
+0010aad8	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010ab04	cxx-stl	EH catch rethrow tree erase	med	catch, delete, rethrow, FUN_0013cd40
+0010abd2	cxx-stl	EH catch rethrow tree erase	med	catch, delete, rethrow, FUN_0013cda0
+0010aca0	cxx-stl	string _M_replace_cold tail	med	calls _M_replace_cold then NUL terminate
+0010acbc	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010acd4	cxx-stl	EH catch destroy string range	med	loop stride 0x20 string dispose, rethrow
+0010ae0f	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010ae49	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010ae83	cxx-stl	string _M_replace_cold tail with move ctor	low	replace_cold, NUL, string move ctor
+0010aede	cxx-stl	string _M_replace_cold tail with move ctor	low	replace_cold, move ctor, FUN_0013c290, returns 0
+0010af4b	cxx-stl	string _M_replace_cold tail	med	replace_cold then NUL terminate
+0010afa2	xrt-device	EH cleanup destroy engine object incl xrt::device	med	calls xrt::device dtor, frees members at +0x2d8..0x378
+0010b0f6	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010b1a8	cxx-stl	EH cleanup strings	med	six string dispose, resume
+0010b1f8	cxx-stl	EH cleanup strings, free 0x90 obj	med	string dispose, operator delete size 0x90
+0010b4b0	xrt-device	catch builds 'a buffer for <name>: <what>' error	med	string 'a buffer for ', append ': ', exception what() virtual call
+0010b590	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+0010b5be	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010c728	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010c93e	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010cba7	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010cc1e	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010cd56	cxx-stl	EH cleanup end_catch and free	med	__cxa_end_catch, FUN_00139ab0, resume
+0010cea2	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010cf0c	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010cf18	cxx-stl	EH cleanup conditional free	med	frees ptr at obj+8, resume
+0010cf36	xrt-device	EH cleanup destroy xrt::bo holder	med	calls xrt::bo dtor, frees vector and string
+0010cf70	cxx-stl	string _M_replace_cold tail with SSO copy	low	replace_cold then 8-byte SSO copy loop
+0010cfcf	cxx-stl	throw string append length_error	high	string 'basic_string::append'
+0010cfe5	cxx-stl	throw string _M_replace length_error	high	string 'basic_string::_M_replace'
+0010d007	cxx-stl	throw string _M_create length_error	high	string 'basic_string::_M_create'
+0010d041	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010d04e	cxx-stl	throw string append length_error	high	string 'basic_string::append'
+0010d064	cxx-stl	string _M_replace_cold tail with SSO copy	low	same shape as 0010cf70
+0010d085	cxx-stl	throw string _M_create length_error	high	string 'basic_string::_M_create'
+0010d0eb	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010d103	cxx-stl	throw string _M_replace length_error	high	string 'basic_string::_M_replace'
+0010d12c	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010d1a0	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010d206	xrt-device	EH cleanup destroy xrt::bo	med	calls xrt::bo dtor then resume
+0010d23d	cxx-stl	EH cleanup invoke manager fn ptr	med	calls std::function manager if non-null, resume
+0010d264	cxx-stl	EH cleanup invoke std::function destroy (op 3)	med	calls fn(&x,&x,3), resume
+0010d2b4	cxx-stl	EH cleanup invoke manager fn ptr	med	calls std::function manager if non-null, resume
+0010d354	cxx-stl	EH cleanup invoke manager fn ptr	med	calls std::function manager if non-null, resume
+0010d37b	cxx-stl	EH cleanup conditional delete	med	operator delete if non-null, resume
+0010d3ae	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010d412	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010d476	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010d482	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010d48e	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010d4ed	cxx-stl	throw substr out_of_range cold stub	high	string 'basic_string::substr __pos > size()'
+0010d525	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010d577	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010d5ce	cxx-stl	EH cleanup large frame	med	string dispose, delete, FUN_0016a110 dtor, resume
+0010d67f	cxx-stl	throw substr out_of_range cold stub	high	string 'basic_string::substr __pos > size()'
+0010d6ba	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010d753	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010d83b	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010d8d4	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010d940	cxx-stl	throw string _M_replace cold stub	high	string 'basic_string::_M_replace'
+0010db78	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010db84	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+0010dbc4	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010dbf7	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+0010dc1c	model-compute	EH cleanup free 0x198000 and 0x100000 byte buffers	low	deletes sized 0x198000/0x100000 buffers, four strings
+0010dc82	cxx-stl	throw map::at cold stub	high	string 'map::at'
+0010dca6	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010dd54	cxx-stl	EH cleanup delete	med	operator delete, resume
+0010dd8c	cxx-stl	string _M_replace_cold tail	med	replace_cold then NUL terminate
+0010dda8	cxx-stl	throw string _M_replace cold stub	high	string 'basic_string::_M_replace'
+0010dddb	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010de15	cxx-stl	EH cleanup string	med	one string dispose, resume
+0010de28	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010de62	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+0010df09	cxx-stl	EH cleanup string	med	one string dispose, resume
+0010e088	cxx-stl	EH cleanup destroy 0x48-byte element range	low	loop stride 9 longs, string dispose, delete
+0010e2e4	cxx-stl	throw string _M_replace cold stub	high	string 'basic_string::_M_replace'
+0010e497	cxx-stl	throw string _M_replace cold stub	high	string 'basic_string::_M_replace'
+0010e4f6	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010e525	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010e6e5	xrt-device	EH cleanup destroy xrt::device and strings	med	calls xrt::device dtor, string dispose, FUN_00139cf0
+0010e826	cxx-stl	EH cleanup delete	med	operator delete, resume
+0010e83e	cxx-stl	EH cleanup conditional free	med	FUN_00139cf0 if non-null, resume
+0010e85d	cxx-stl	EH cleanup strings and frees	med	string dispose x4, FUN_00139cf0
+0010e9ad	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010ebd8	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010ef20	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f101	cxx-stl	EH cleanup string	med	one string dispose, resume
+0010f150	cxx-stl	vector storage deallocate (16-byte elems)	med	operator delete(p, n<<4)
+0010f15a	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f18d	cxx-stl	destroy vector range (24-byte elems)	med	loop stride 3 longs, delete each buffer
+0010f1ba	cxx-stl	vector of vectors destructor	med	frees members at +0x20 and range of 3-long elems
+0010f21a	cxx-stl	throw vector range_insert cold stub	high	string 'vector::_M_range_insert'
+0010f226	cxx-stl	EH cleanup virtual dtor and delete	med	virtual dtor call, delete, loop
+0010f2ad	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f346	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f3ab	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f3b8	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010f3c4	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+0010f3dc	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+0010f3e8	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010f444	cxx-stl	destroy vector of 0x78-byte elements	low	loop stride 0xf longs, frees element members
+0010f4a9	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010f523	cxx-stl	throw vector default_append cold stub	high	string 'vector::_M_default_append'
+0010f52f	cxx-stl	throw vector default_append cold stub	high	string 'vector::_M_default_append'
+0010f53b	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f594	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f5ed	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+0010f646	cxx-stl	string _M_replace_cold tail	med	calls _M_replace_cold, returns
+0010f662	cxx-stl	throw string _M_replace cold stub	high	string 'basic_string::_M_replace'
+0010f696	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010f6a2	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010f6ae	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010f6ba	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010f6c6	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010f742	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010f770	cxx-stl	EH cleanup filesystem::path list and string	med	path::_List::_Impl_deleter, string dispose, resume
+0010f79a	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010f823	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+0010f8a3	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010f90d	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010f91a	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0010f957	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0010f963	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010f99e	cxx-stl	EH cleanup string	med	one string dispose, resume
+0010f9b2	cxx-stl	EH cleanup string	med	one string dispose, resume
+0010f9c6	cxx-stl	EH cleanup two deletes	med	two operator delete, resume
+0010f9eb	cxx-stl	EH cleanup string	med	string dispose, resume
+0010faa0	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+0010faf4	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+0010fb2e	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+0010fb69	cxx-stl	EH cleanup strings and vector	med	string dispose, delete, FUN_001ac3d0
+0010ff4c	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0011001a	cxx-stl	EH cleanup five strings	med	five string dispose, resume
+00110133	cxx-stl	EH cleanup string	med	one string dispose, resume
+00110150	cxx-stl	EH cleanup strings and FUN_001812a0	med	two string dispose, FUN_001812a0, resume
+00110174	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+001101be	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0011020c	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0011025e	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0011055e	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+00110a2f	cxx-stl	throw string _M_replace cold stub	high	string 'basic_string::_M_replace'
+00110a52	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+00110b9e	cxx-stl	throw string append length_error	high	string 'basic_string::append'
+00110c7d	cxx-stl	EH cleanup strings	med	string dispose, resume
+00111949	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+00111a3e	cxx-stl	EH cleanup strings and FUN_001aaa50	low	string dispose, FUN_00139cf0 frees, FUN_001aaa50
+00111e20	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00112ebe	cxx-stl	throw vector<bool> insert_aux cold stub	high	string 'vector<bool>::_M_insert_aux'
+00113e56	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00113ed5	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+00114594	cxx-stl	throw map::at cold stub	high	string 'map::at'
+00114cdb	cxx-stl	EH cleanup string and vector free	med	string dispose, delete, resume
+00114e3b	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+001153d8	cxx-stl	throw vector range_insert cold stub	high	string 'vector::_M_range_insert'
+001153e4	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+001153f0	cxx-stl	string _M_replace_cold tail	med	calls _M_replace_cold, returns
+0011540c	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+0011543d	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00115449	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+00115464	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+001154b8	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+001154e8	cxx-stl	throw map::at cold stub	high	string 'map::at'
+0011550c	cxx-stl	throw string append cold stub	high	string 'basic_string::append'
+0011555e	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+00115685	cxx-stl	throw vector realloc_append cold stub	high	string 'vector::_M_realloc_append'
+00115912	cxx-stl	EH cleanup strings	med	five string dispose, resume
+00115b97	cxx-stl	throw vector default_append cold stub	high	string 'vector::_M_default_append'
+00115c55	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+001162fc	cxx-stl	string _M_replace_cold tail with move ctor	low	replace_cold, string move ctor
+00116360	cxx-stl	string _M_replace_cold tail	low	replace_cold then NUL at +0x21
+00116380	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+001163a7	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+001163f7	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+00116447	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+00116497	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+00116524	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+00116530	cxx-stl	throw string null ctor cold stub	high	string 'construction from null is not valid'
+0011653c	cxx-stl	EH cleanup resume	low	only _Unwind_Resume
+00116586	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+001165d6	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+00116626	cxx-stl	EH cleanup resume	low	only _Unwind_Resume after conditional
+00116676	cxx-stl	throw string _M_replace cold stub	high	string 'basic_string::_M_replace'
+001166a9	cxx-stl	throw vector max_size cold stub	high	string 'cannot create std::vector larger than max_size()'
+001166b5	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+001166d0	cxx-stl	EH cleanup string	med	one string dispose, resume
+001166f6	cxx-stl	EH cleanup string	med	one string dispose, resume
+0011671c	cxx-stl	EH cleanup string	med	one string dispose, resume
+0011672f	cxx-stl	EH cleanup string	med	one string dispose, resume
+00116742	cxx-stl	throw map::at cold stub	high	string 'map::at'
+0011677a	cxx-stl	throw map::at cold stub	high	string 'map::at'
+001167bf	cxx-stl	throw map::at cold stub	high	string 'map::at'
+001167cb	cxx-stl	throw map::at cold stub	high	string 'map::at'
+00116808	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+00116824	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+00116840	cxx-stl	EH cleanup two strings	med	two string dispose, resume
+0011685b	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+00116895	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'
+001168d0	cxx-stl	throw string _M_create cold stub	high	string 'basic_string::_M_create'

@@ -1,0 +1,13 @@
+{"conn": "first", "line": "INFO", "kind": "send", "t": 1791650207.966}
+{"conn": "first", "line": "I 1 0 262144 7 1 1 0 110 64 4 262144 2 1 1 524288 1 0.17.2 2 6 gguf 1 0 0 0 0 - 2048", "kind": "recv", "t": 1791650207.966}
+{"name": "first_info", "v": "I 1 0 262144 7 1 1 0 110 64 4 262144 2 1 1 524288 1 0.17.2 2 6 gguf 1 0 0 0 0 - 2048", "kind": "result", "t": 1791650207.966}
+{"conn": "second", "line": "INFO", "kind": "send", "t": 1791650207.966}
+{"conn": "second", "line": "I 1 0 262144 7 1 1 0 110 64 4 262144 2 1 1 524288 1 0.17.2 2 6 gguf 1 0 0 0 0 - 2048", "kind": "recv", "t": 1791650208.968}
+{"name": "second_info", "v": "I 1 0 262144 7 1 1 0 110 64 4 262144 2 1 1 524288 1 0.17.2 2 6 gguf 1 0 0 0 0 - 2048", "kind": "result", "t": 1791650208.968}
+{"conn": "second", "line": "PING", "kind": "send", "t": 1791650208.968}
+{"conn": "second", "line": "PONG", "kind": "recv", "t": 1791650209.969}
+{"name": "second_ping", "v": "PONG", "kind": "result", "t": 1791650209.969}
+{"conn": "second", "line": "CSTAT", "kind": "send", "t": 1791650209.969}
+{"conn": "second", "secs": 10, "kind": "timeout", "t": 1791650219.975}
+{"name": "second_cstat", "v": null, "kind": "result", "t": 1791650219.975}
+{"conn": "second", "line": "GEN 900001 4 2 151645 151643 3 7734 264 2716", "kind": "send", "t": 1791650219.975}

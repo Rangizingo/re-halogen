@@ -1,0 +1,300 @@
+addr	role	label	confidence	evidence
+01961a60	cxx-stl	regex_fn_manager_typeinfo	med	std::function manager, op 0/1/2 returns typeinfo or pointer
+01961a90	cxx-stl	regex_ctype_matcher_call	med	ctype widen via guarded static, bad_cast throw
+01961b30	cxx-stl	regex_ctype_widen_init	med	callee of 01961a90 guard init
+01961b80	cxx-stl	regex_fn_manager_typeinfo	med	38-byte manager, size matches 01961a60
+01961bb0	cxx-stl	regex_ctype_matcher_call	med	134 bytes, 5 callees, same shape as 01961a90
+01961c50	cxx-stl	regex_ctype_widen_init	med	58 bytes, same shape as 01961b30
+01961ca0	cxx-stl	regex_fn_manager_typeinfo	high	manager, typeinfo ptr 019d4f80, copies 1-byte functor
+01961ce0	cxx-stl	regex_fn_manager_typeinfo	med	38-byte manager stub
+01961d10	cxx-stl	regex_fn_manager_typeinfo	med	38-byte manager stub
+01961d40	cxx-stl	regex_any_char_matcher_call	high	widens char, \n, \r via ctype facet
+01961df0	cxx-stl	regex_fn_manager_typeinfo	med	38-byte manager stub
+01961e20	cxx-stl	regex_any_char_matcher_call	med	163 bytes, same shape as 01961d40
+01961ee0	cxx-stl	regex_fn_manager_typeinfo	med	42-byte manager stub
+01961f20	cxx-stl	regex_fn_manager_typeinfo	med	42-byte manager stub
+01961f50	cxx-stl	regex_char_eq_matcher_call	high	widens char, compares to stored char, bad_cast
+01961fa0	cxx-stl	regex_fn_manager_typeinfo	med	42-byte manager stub
+01961fd0	cxx-stl	regex_char_eq_matcher_call	med	67 bytes, same as 01961f50
+01962020	cxx-stl	regex_fn_manager_typeinfo	med	42-byte manager stub
+01962050	cxx-stl	regex_traits_value	high	builds istringstream from char, parses number
+019621f0	cxx-stl	regex_bracket_add_char_class	high	string Invalid character class
+019623c0	cxx-stl	std_sort_char_range	med	introsort on char range, 513 bytes
+019625f0	cxx-stl	std_sort_char_helper	low	160 bytes, 1 callee, no callers
+019626a0	cxx-stl	std_introsort_loop_char	high	partition loop over char array with depth limit
+019628d0	cxx-stl	std_insertion_sort_char	high	insertion sort below 16 elements, memmove
+01962ad0	cxx-stl	std_make_heap_char	high	heap sift on char array
+01962c40	cxx-stl	regex_bracket_matcher_match	med	bracket match with locale, try/catch
+01962e90	cxx-stl	regex_bracket_matcher_ctor	med	ctype facet lookup, vector alloc, max_size string
+01962f90	cxx-stl	std_sort_heap_char	low	518 bytes, 4 callers, char sort family
+019631b0	cxx-stl	regex_bracket_helper	low	248 bytes, 5 callees, 2 callers in regex block
+019632f0	cxx-stl	regex_bracket_fn_manager	high	manager with clone op alloc 0x98 and copy ctor
+01963370	cxx-stl	regex_bracket_matcher_dtor	med	called from manager destroy op
+01963430	cxx-stl	regex_bracket_matcher_copy	med	called from manager clone op with 0x98 object
+019638e0	cxx-stl	regex_bracket_add_char_class	high	string Invalid character class, size 456 like 019621f0
+01963ab0	cxx-stl	std_sort_char_range	med	525 bytes, 3 callees, variant of 019623c0
+01963cf0	cxx-stl	regex_bracket_helper	low	242 bytes, same size as 01965a80
+01963df0	cxx-stl	regex_bracket_cleanup	low	100 bytes, 1 callee, no callers
+01963e57	cxx-stl	eh_cleanup_stub	low	19 bytes, landing pad fragment
+01963e70	cxx-stl	regex_bracket_cleanup	med	called from catch handler in 01964740
+01963f20	cxx-stl	regex_bracket_matcher_match	med	829 bytes, 9 callees, same family as 01962c40
+019642d0	cxx-stl	regex_bracket_helper	low	248 bytes, 5 callees, same size as 019631b0
+01964410	cxx-stl	regex_bracket_helper	low	115 bytes, 4 callees, same size as 01965f70
+019644a0	cxx-stl	regex_bracket_cleanup	low	30 bytes, no callees
+01964740	cxx-stl	regex_bracket_vector_copy	med	copy ctor of vector, catch rethrow
+01964830	cxx-stl	regex_bracket_helper	low	239 bytes, 2 callees
+01964940	cxx-stl	regex_bracket_add_char_class	high	string Invalid character class, size 456
+01964b10	cxx-stl	std_sort_char_range	med	525 bytes, 3 callees
+01964d50	cxx-stl	std_sort_char_helper	low	160 bytes, same as 019625f0
+01964e00	cxx-stl	regex_bracket_matcher_match	med	620 bytes, 7 callees, same family as 01962c40
+019650a0	cxx-stl	regex_bracket_helper	low	150 bytes, 4 callees
+01965170	cxx-stl	regex_bracket_helper	low	93 bytes, 3 callees
+019651f0	cxx-stl	regex_bracket_helper	low	127 bytes, 1 callee
+019652b0	cxx-stl	regex_bracket_cleanup	low	30 bytes, no callees
+01965670	cxx-stl	regex_bracket_add_char_class	high	string Invalid character class, size 456
+01965840	cxx-stl	std_sort_char_range	med	525 bytes, 3 callees
+01965a80	cxx-stl	regex_bracket_helper	low	242 bytes, 3 callers
+01965b80	cxx-stl	regex_bracket_matcher_match	med	703 bytes, 9 callees, same family
+01965ea0	cxx-stl	regex_bracket_helper	low	150 bytes, same size as 019650a0
+01965f50	cxx-stl	regex_bracket_cleanup	low	27 bytes, no callees, no callers
+01965f70	cxx-stl	regex_bracket_helper	low	115 bytes, 4 callees
+01966000	cxx-stl	regex_bracket_vector_assign	med	vector copy with memcpy and size math
+019662a0	cxx-stl	regex_bracket_matcher_ctor	med	965 bytes, realloc_append string, builds matcher
+01966720	cxx-stl	regex_bracket_matcher_ctor	med	824 bytes, realloc_append, same family
+01966b10	cxx-stl	regex_bracket_matcher_ctor	med	803 bytes, locals match 019662a0
+01966ef0	cxx-stl	regex_bracket_matcher_ctor	med	658 bytes, 10 callees
+01967230	cxx-stl	regex_scanner_bracket_state	high	string Unexpected character within [...] in regular expression
+01967b30	cxx-stl	regex_bracket_collate	high	string Invalid collate element
+01967c60	cxx-stl	regex_bracket_helper	low	238 bytes, realloc_append
+01967d50	cxx-stl	regex_bracket_helper	low	217 bytes, realloc_append
+01967e30	cxx-stl	regex_bracket_equiv_class	high	string Invalid equivalence class
+01968020	cxx-stl	regex_bracket_range	high	string Invalid range in bracket expression
+019684a0	cxx-stl	regex_bracket_matcher_ctor	med	same shape and size as 01962e90
+019685a0	cxx-stl	regex_scanner_bracket_state	high	string Unexpected character within [...], 557 bytes
+01968ea0	cxx-stl	regex_bracket_collate	high	string Invalid collate element
+01968fd0	cxx-stl	regex_bracket_helper	low	238 bytes, same as 01967c60
+019690c0	cxx-stl	regex_bracket_helper	low	217 bytes, same as 01967d50
+019691a0	cxx-stl	regex_bracket_equiv_class	high	string Invalid equivalence class
+01969390	cxx-stl	regex_bracket_range	high	string Invalid range in bracket expression
+019696e0	cxx-stl	regex_bracket_helper	med	594 bytes, realloc_append, 2 callers
+01969940	cxx-stl	regex_scanner_bracket_state	med	string Unexpected character within [...]
+01969e90	cxx-stl	regex_bracket_helper	low	236 bytes, realloc_append
+01969f80	cxx-stl	regex_bracket_cleanup	low	14 bytes, no callees
+0196a0f0	cxx-stl	regex_bracket_cleanup	low	30 bytes, no callees
+0196a2e0	cxx-stl	regex_bracket_range	high	string Invalid range in bracket expression
+0196a4b0	cxx-stl	regex_scanner_bracket_state	med	string Unexpected character within [...]
+0196aa00	cxx-stl	regex_bracket_helper	low	236 bytes, same as 01969e90
+0196aaf0	cxx-stl	regex_bracket_collate	high	string Invalid collate element
+0196ac60	cxx-stl	regex_bracket_equiv_class	high	string Invalid equivalence class
+0196ae50	cxx-stl	regex_bracket_range	high	string Invalid range in bracket expression
+0196b1a0	cxx-stl	regex_bracket_cleanup	low	48 bytes, no callees
+0196b340	cxx-stl	regex_nfa_insert_state	high	string Number of NFA states exceeds limit
+0196bb50	cxx-stl	regex_compiler_helper	low	220 bytes, 4 callees, chains to 0196bc70
+0196bc70	cxx-stl	regex_compiler_helper	low	481 bytes, self-contained
+0196be60	cxx-stl	regex_compiler_helper	low	46 bytes, 3 callers
+0196bea0	cxx-stl	regex_compiler_helper	low	194 bytes, 1 callee
+0196bfe0	cxx-stl	std_deque_reserve_map	med	string cannot create std::deque larger than max_size
+0196c0b0	cxx-stl	std_deque_allocate_map	med	bad_alloc throw, called from deque ctor 0196bfe0
+0196c290	cxx-stl	std_deque_reserve_map	med	string cannot create std::deque larger than max_size
+0196c380	cxx-stl	std_deque_allocate_map	med	bad_alloc throw, called from 0196c290
+0196c560	cxx-stl	std_deque_reserve_map	med	deque max_size string, 21 callers
+0196c650	cxx-stl	std_vector_append_range	low	memcpy and length_error, 6 callers
+0196c9b0	cxx-stl	std_vector_copy	low	memcpy, 2 callees
+0196cac0	cxx-stl	thread_pool_stop	med	mutex lock, condvar dtor, std::thread join
+0196cb00	cxx-stl	thread_pool_dtor	med	condvar dtor x2, thread join, terminate
+0196cbf0	cxx-stl	regex_executor_dfs	med	581 bytes, calls matcher helpers 0196d960 and 0196ec90
+0196d100	cxx-stl	std_vector_resize_zero	low	memset, vector max_size string
+0196d340	cxx-stl	regex_executor_helper	low	148 bytes, no callers
+0196d3f0	cxx-stl	regex_executor_helper	low	165 bytes, calls 0196ec90 and 0196ead0
+0196d4a0	cxx-stl	regex_executor_helper	low	48 bytes, 1 callee
+0196d4d0	cxx-stl	regex_executor_helper	low	297 bytes, 1 caller
+0196d600	cxx-stl	std_vector_realloc	low	vector max_size string, 184 bytes
+0196d69c	cxx-stl	decomp_fragment	low	mid-function Ghidra split, unaff registers
+0196d735	cxx-stl	decomp_fragment	low	mid-function Ghidra split, undefined opcode
+0196d900	cxx-stl	regex_executor_helper	low	89 bytes, 1 callee
+0196d960	cxx-stl	regex_executor_bfs	med	646 bytes, memset, calls 0196dc30
+0196dc30	cxx-stl	regex_executor_state_visit	med	908 bytes, recursive, 4 callers
+0196dfd0	cxx-stl	regex_state_vector_realloc	med	string vector realloc_append
+0196e1d0	cxx-stl	regex_function_invoke	med	bad_function_call throw
+0196e460	cxx-stl	regex_locale_ctype_lookup	med	locale copy, ctype id, bad_cast
+0196e530	cxx-stl	regex_locale_ctype_widen	med	ctype widen_init twice
+0196e700	cxx-stl	regex_executor_helper	low	25 bytes, calls 0196d960
+0196e9d0	cxx-stl	regex_locale_ctype_lookup	med	locale copy, ctype id, bad_cast
+0196ead0	cxx-stl	regex_executor_save_state	low	memcpy, 3 callers
+0196ec90	cxx-stl	regex_executor_state_visit	med	886 bytes, recursive x11, bad_function_call
+0196f0a0	cxx-stl	regex_executor_helper	low	168 bytes, calls 0196ec90
+0196f190	cxx-stl	regex_locale_ctype_lookup	med	locale copy, ctype id, bad_cast
+0196f260	cxx-stl	regex_locale_ctype_widen	med	ctype widen_init twice
+0196f430	cxx-stl	regex_executor_helper	low	59 bytes, no callees
+0196f820	cxx-stl	std_vector_default_append	med	string vector default_append
+0196f980	cxx-stl	std_vector_default_append	med	string vector default_append, memset
+0196fe10	cxx-stl	regex_state_helper	low	491 bytes, 2 callers
+01970000	cxx-stl	std_vector_resize	low	vector max_size string, 638 bytes
+01970280	cxx-stl	std_vector_resize	low	vector max_size string, 638 bytes
+01970500	cxx-stl	std_vector_realloc_insert	low	vector max_size, EH cleanup helpers
+019706e0	cxx-stl	std_vector_copy_range	low	memcpy, 332 bytes
+01970830	cxx-stl	std_uninitialized_copy_guard	low	begin_catch, rethrow, destroys range
+01970940	cxx-stl	std_vector_default_append	med	string vector default_append
+01970a80	cxx-stl	std_vector_realloc_insert	low	vector max_size string, 605 bytes
+019713d0	cxx-stl	regex_executor_helper	low	526 bytes, 2 callers
+01971620	cxx-stl	regex_executor_helper	low	234 bytes, 1 callee
+019717a0	cxx-stl	regex_executor_helper	low	356 bytes, no callees
+01971940	cxx-stl	std_vector_default_append	med	string vector default_append
+01971a90	cxx-stl	std_vector_resize	low	vector max_size string
+01971bd0	cxx-stl	std_vector_realloc_append	med	string vector realloc_append
+01972530	hgn-loader	checkpoint_overlay_wrapper	low	calls checkpoint_overlay_path_build 01972680, no strings
+01972b20	hgn-loader	checkpoint_overlay_wrapper	low	calls checkpoint_overlay_path_build 01972680
+01972e50	hgn-loader	checkpoint_read_file	med	open and pread x2, string create
+01973290	hgn-loader	checkpoint_find_overlay	med	getenv, overlay path build, memset
+019742b0	hip-runtime	kfd_topology_probe	high	reads /sys/class/kfd/kfd/topology/nodes/%d/properties
+019744e0	hgn-loader	checkpoint_mlock_ranges	high	string checkpoint: locked %.2f GiB, mlock, MemAvailable
+01975130	hgn-loader	checkpoint_residency_report	high	string checkpoint: %.2f GiB in %zu tensor(s) already resident
+01976130	hgn-loader	checkpoint_unmap	med	munmap and hipHostUnregister x3
+01976480	cxx-stl	string_vector_dtor	low	loops freeing SSO strings
+019764f0	cxx-stl	locale_dtor_helper	low	155 bytes, calls locale dtor
+01976590	hgn-loader	checkpoint_struct_reset	low	memset, 137 bytes, no strings
+01976630	logging-diag	fatal_exit	high	fprintf stderr, fputc newline, exit(1)
+01976660	cxx-stl	std_vector_reserve	med	string vector::reserve
+019767e0	cxx-stl	std_vector_reserve	med	string vector::reserve
+01976930	cxx-stl	std_vector_realloc_append	med	string vector realloc_append
+01976b00	cxx-stl	std_vector_realloc_append	med	string vector realloc_append
+01976d10	cxx-stl	std_unordered_map_helper	low	calls 019772f0 and 01977190, hashtable shape
+019778a0	cxx-stl	std_hashtable_rehash	low	memset, bad_alloc, bucket alloc
+01977ba0	cxx-stl	std_unordered_map_string_find	med	_Hash_bytes, string create
+01977ea0	cxx-stl	std_string_create_copy	med	memcpy, basic_string create
+01978140	crt-runtime	static_init_checkpoint_cpp	high	_INIT_4, strings checkpoint.cpp and build date, atexit
+01978220	hgn-loader	checkpoint_open_gguf_head	low	stat, fopen, fread, calls general.architecture check 0197d650
+0197d650	gguf-repack	gguf_check_architecture	med	memcmp, string general.architecture
+01986700	config-env	mtp_head_path_resolve	med	getenv HALOGEN_MTP_HEAD, default /models/qwen38-flash-next-mtp.hgn
+019867e0	hgn-loader	checkpoint_helper	low	149 bytes, 2 callees, no strings
+01986890	hgn-loader	checkpoint_helper	low	329 bytes, calls 019a4900 019a4890 019a4810
+01986a10	hgn-loader	checkpoint_helper	low	293 bytes, 2 callees, no strings
+0198ab80	gguf-repack	gguf_cache_entry_build	low	nothrow new, cache helpers 01997240 01997160
+0198c350	gguf-repack	gguf_entry_init	low	string init, field set -1, assign
+0198c600	gguf-repack	gguf_vector_helper	low	650 bytes, calls vector resize 019a5620
+0198c8b0	gguf-repack	gguf_load_model_meta	med	string qwen3.8-flash-next-gguf, memcpy
+0198cf70	gguf-repack	gguf_repack_main	high	strings not a GGUF, HALOGEN_GGUF_THREADS, hashing
+0198dcd0	gguf-repack	gguf_hash_line_format	med	snprintf x8, header+table hash text
+0198dfc0	gguf-repack	gguf_job_dtor	low	sets vtable, frees vectors
+0198e840	gguf-repack	gguf_tensor_name_match	low	memcmp x10, string create
+0198ef20	gguf-repack	gguf_tensor_info_dtor	low	frees vectors and string
+0198efa0	gguf-repack	gguf_linear_attn_name_map	high	strings linear_attn.in_proj_qkv.weight, in_proj_z
+01993400	gguf-repack	gguf_repack_tensor_copy	low	memcpy x21, memcmp x7, 4317 bytes
+019945d0	gguf-repack	gguf_repack_tensor_slice	low	memcpy and memcmp, calls 01994990
+01994b20	gguf-repack	gguf_repack_tensor_slice	low	memcpy and memcmp, calls 01994f40
+01994f40	gguf-repack	gguf_repack_tensor_slice	low	memcpy and memcmp, calls 01994990
+01995140	gguf-repack	gguf_cache_json_write	high	strings halogen_gguf_cache, entries, arena_bytes, shards
+01997160	gguf-repack	gguf_cache_helper	low	calls 01997240 01998290
+01997240	gguf-repack	gguf_cache_entry_sort	low	2964 bytes, self recursive
+01997e70	gguf-repack	gguf_cache_helper	low	546 bytes, self-contained
+019980a0	gguf-repack	gguf_cache_helper	low	461 bytes, calls 018425c0
+019984a0	cxx-stl	thread_state_dtor	high	std::thread::_State dtor then delete 0x38
+01998630	gguf-repack	gguf_repack_layers	high	strings layers., conv1d.weight, calls repack_linear_attn
+019a1750	gguf-repack	gguf_hash_report	low	calls hash line format 0198dcd0 twice
+019a1a80	gguf-repack	gguf_hex_helper	low	559 bytes, no callees, 4 callers
+019a1d30	cxx-stl	std_string_create_vec	low	string create, calls 019a4ae0
+019a1ee0	cxx-stl	std_vector_realloc_append	med	string vector realloc_append
+019a2110	cxx-stl	std_vector_default_append	med	string vector default_append
+019a2240	cxx-stl	std_map_find_string	low	memcmp x5, calls 019a25f0
+019a2520	cxx-stl	std_string_create_copy	med	memcpy, string create
+019a2730	cxx-stl	std_map_find_string	low	memcmp x5, calls 019a2ae0
+019a2a10	cxx-stl	std_string_create_copy	med	memcpy, string create
+019a2c20	cxx-stl	std_map_find_string	low	memcmp x5, calls 019a2fc0
+019a2ef0	cxx-stl	std_string_create_copy	med	memcpy, string create
+019a3100	cxx-stl	std_string_create_copy	med	memcpy, string create
+019a31d0	cxx-stl	std_string_create_helper	low	341 bytes, negates size, allocation path
+019a3880	cxx-stl	std_string_create_copy	med	memcpy, string create
+019a3ae0	cxx-stl	std_map_node_dtor	med	frees vector then string
+019a3b60	cxx-stl	std_map_find_string	low	memcmp x5, calls 019a3ef0
+019a3df0	cxx-stl	std_map_find_string	low	memcmp, calls 019a4030
+019a4030	cxx-stl	std_string_create_copy	med	memcpy, string create
+019a4170	cxx-stl	std_map_erase_subtree	high	recursive tree walk frees vector and string
+019a4330	cxx-stl	std_map_find_string	low	memcmp, calls 019a3b60
+019a4690	cxx-stl	std_map_find_string	low	memcmp, calls 0185ced0
+019a4810	cxx-stl	std_map_erase_subtree	med	93 bytes, recursive tree erase
+019a4890	cxx-stl	std_map_erase_subtree	med	72 bytes, recursive tree erase
+019a4900	cxx-stl	std_map_erase_subtree	med	96 bytes, recursive tree erase
+019a4ae0	cxx-stl	std_vector_string_realloc	med	strings realloc_append and string create
+019a4d30	cxx-stl	std_string_from_cstr	high	string construction from null is not valid
+019a4e40	cxx-stl	std_vector_string_emplace	med	strings realloc_append, null construction
+019a50b0	cxx-stl	std_string_create_copy	med	memcpy, string create
+019a51a0	cxx-stl	std_string_create_copy	low	memcpy, length_error, bad_alloc
+019a53f0	cxx-stl	std_vector_default_append	med	string vector default_append
+019a5620	cxx-stl	std_vector_resize	low	vector max_size string
+019a5900	cxx-stl	std_vector_resize	low	vector max_size string, calls 019a5ad0
+019a5ad0	cxx-stl	std_string_create_copy	med	memcpy, string create
+019a5c10	crt-runtime	static_guard_cached_int	high	cxa_guard_acquire, caches result of 019a5c60
+019a5ca0	crt-runtime	static_guard_cached_value	med	cxa_guard pattern, calls 019a5cf0
+019a5da0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration style stub, 5 params
+019a5e70	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration style stub, 4 params
+019a5f00	gpu-dispatch	dn_chunk_forward_dispatch	high	strings HALOGEN_DN_S14 no fp16 mirrors, 122 callees
+019b2350	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019b3550	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019b36d0	gpu-dispatch	kernel_launch_stub	low	222 bytes, 1 callee
+019b37f0	gpu-dispatch	dn_chunk_forward	high	string dn_chunk_forward norm_read without qinv/kinv, hipMemcpy
+019b88d0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019b8db0	gpu-dispatch	dn_kernel_variant_select	med	2223 bytes, 22 callees to kernel stubs
+019b99f0	hip-runtime	occupancy_query	high	hipOccupancyMaxActiveBlocksPerMultiprocessor
+019b9a00	hip-runtime	occupancy_query	high	hipOccupancyMaxActiveBlocksPerMultiprocessor
+019ba1c0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019bb3c0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 222 bytes
+019bb4e0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 222 bytes
+019bc460	gpu-dispatch	kernel_launch_stub	low	110 bytes, 1 callee
+019be550	hip-runtime	occupancy_query	high	hipOccupancyMaxActiveBlocksPerMultiprocessor
+019be590	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019be6a0	gpu-dispatch	dn_fused_kernel_variant_select	med	2061 bytes, calls fused kernel stubs 019bf650..019bfed0
+019bf210	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019bfdc0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019bfed0	gpu-dispatch	dn_fused_gram_launch	high	strings HALOGEN_DN_FUSED_GRAM and HALOGEN_DN_FUSED_PAIR
+019c0850	gpu-dispatch	dn_fused_gram_launch	high	strings HALOGEN_DN_FUSED_GRAM and HALOGEN_DN_FUSED_PAIR
+019c0b00	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019c0c10	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019c0d20	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019c0e30	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019c1ec0	hip-runtime	hipblaslt_matmul_plan	high	hipBLASLt layout and preference create, matmul.cpp, bf16>f32
+019c3ae0	hip-runtime	hipblaslt_matmul_run	med	calls plan 019c1ec0 then 019c31f0 or 019c37b0
+019c3b50	hip-runtime	hipblaslt_matmul_run	med	calls plan 019c1ec0 then 019c31f0 or 019c37b0
+019c4560	cxx-stl	std_map_erase_subtree	med	recursive tree erase, delete 0x48
+019c45a0	cxx-stl	std_map_erase_subtree	med	46 bytes, recursive
+019c45e0	cxx-stl	std_vector_copy	low	memcpy, vector max_size string
+019c46d0	cxx-stl	std_map_erase_subtree	med	46 bytes, recursive
+019c4710	cxx-stl	std_map_emplace_helper	low	213 bytes, calls 019c4800
+019c4ab0	cxx-stl	std_map_emplace_helper	low	213 bytes, calls 019c4ba0
+019c4ba0	cxx-stl	std_map_insert_pos	low	438 bytes, calls 019c4d60
+019c4e50	cxx-stl	std_map_emplace_helper	low	195 bytes, calls 019c4f30
+019c4f30	cxx-stl	std_map_insert_pos	low	438 bytes, calls 019c50f0
+019c51e0	crt-runtime	static_init_matmul_cpp	high	_INIT_9, strings matmul.cpp and build date
+019c5240	crt-runtime	static_init_list_push	med	pushes node onto global list head
+019c7000	gpu-dispatch	attn_kernel_variant_select	med	5130 bytes, 9 guarded statics, calls kernel stubs
+019c92f0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 222 bytes
+019c9410	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 222 bytes
+019c9530	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 222 bytes
+019c9650	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 222 bytes
+019c9770	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 222 bytes
+019c9ad0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, int param
+019c9cc0	gpu-dispatch	attn_kernel_launch	med	guarded static, calls 01955f00, 10 params
+019c9ee0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 190 bytes
+019c9fe0	gpu-dispatch	attn_qs_bt2_dispatch	high	strings HALOGEN_ATTN_QS_BT2_PROBE, WPE, OPT not instantiated
+019cad80	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 190 bytes
+019cb180	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019cb380	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019cb680	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 190 bytes
+019cb980	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 190 bytes
+019cc7d0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 190 bytes
+019cc9d0	gpu-dispatch	attn_kernel_launch	med	guarded statics, calls 019ccd80 and 01955f00
+019cceb0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019ccfb0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 9 params
+019cd200	gpu-dispatch	kernel_launch_stub	low	397 bytes, 2 callees, stub-like
+019cd5b0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 190 bytes
+019cd6b0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 190 bytes
+019cd7e0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019cd8e0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 190 bytes
+019cd9e0	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019cdb40	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019cdc70	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub, 190 bytes
+019cdda0	gpu-dispatch	kernel_launch_stub	low	27 bytes, no callees, stub-like
+019cdea0	config-env	fa_lpt_env	high	getenv HALOGEN_FA_LPT
+019cded0	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019ce260	gpu-dispatch	kernel_launch_stub	med	hipPopCallConfiguration stub
+019cfef0	crt-runtime	atexit_register	high	calls cxa_atexit with dso handle
+019cff00	crt-runtime	dt_init	high	_DT_INIT symbol

@@ -1,0 +1,299 @@
+addr	role	label	confidence	evidence
+018cbc40	gpu-dispatch	kernel_host_stub_018cbc40	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cbd20	gpu-dispatch	kernel_host_stub_018cbd20	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cbe00	gpu-dispatch	kernel_host_stub_018cbe00	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cbee0	gpu-dispatch	kernel_host_stub_018cbee0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cbfc0	gpu-dispatch	kernel_host_stub_018cbfc0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cc0a0	gpu-dispatch	kernel_host_stub_018cc0a0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cc180	gpu-dispatch	kernel_host_stub_018cc180	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cc260	gpu-dispatch	kernel_host_stub_018cc260	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cc340	gpu-dispatch	kernel_host_stub_018cc340	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cc420	gpu-dispatch	kernel_host_stub_018cc420	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cc500	gpu-dispatch	kernel_host_stub_018cc500	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cc5e0	gpu-dispatch	kernel_host_stub_018cc5e0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cc6c0	gpu-dispatch	kernel_host_stub_018cc6c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cc7a0	gpu-dispatch	kernel_host_stub_018cc7a0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cc880	gpu-dispatch	kernel_host_stub_018cc880	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cc960	gpu-dispatch	kernel_host_stub_018cc960	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cca40	gpu-dispatch	kernel_host_stub_018cca40	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ccb20	gpu-dispatch	kernel_host_stub_018ccb20	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ccc00	gpu-dispatch	kernel_host_stub_018ccc00	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cccc0	gpu-dispatch	kernel_host_stub_018cccc0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ccd80	gpu-dispatch	kernel_host_stub_018ccd80	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cce40	gpu-dispatch	kernel_host_stub_018cce40	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ccf00	gpu-dispatch	kernel_host_stub_018ccf00	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ccfe0	gpu-dispatch	kernel_host_stub_018ccfe0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cd0c0	gpu-dispatch	kernel_host_stub_018cd0c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cd1a0	gpu-dispatch	kernel_host_stub_018cd1a0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cd280	gpu-dispatch	kernel_host_stub_018cd280	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cd360	gpu-dispatch	kernel_host_stub_018cd360	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cd440	gpu-dispatch	kernel_host_stub_018cd440	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cd520	gpu-dispatch	kernel_host_stub_018cd520	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cd600	gpu-dispatch	kernel_host_stub_018cd600	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cd6c0	gpu-dispatch	kernel_host_stub_018cd6c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cd780	gpu-dispatch	kernel_host_stub_018cd780	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cd840	gpu-dispatch	kernel_host_stub_018cd840	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cd900	gpu-dispatch	kernel_host_stub_018cd900	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cd9e0	gpu-dispatch	kernel_host_stub_018cd9e0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cdac0	gpu-dispatch	kernel_host_stub_018cdac0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cdba0	gpu-dispatch	kernel_host_stub_018cdba0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cdc80	gpu-dispatch	kernel_host_stub_018cdc80	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cdd60	gpu-dispatch	kernel_host_stub_018cdd60	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cde40	gpu-dispatch	kernel_host_stub_018cde40	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cdf20	gpu-dispatch	kernel_host_stub_018cdf20	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ce000	gpu-dispatch	kernel_host_stub_018ce000	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ce0c0	gpu-dispatch	kernel_host_stub_018ce0c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ce180	gpu-dispatch	kernel_host_stub_018ce180	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ce240	gpu-dispatch	kernel_host_stub_018ce240	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ce300	gpu-dispatch	kernel_host_stub_018ce300	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ce3e0	gpu-dispatch	kernel_host_stub_018ce3e0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ce4c0	gpu-dispatch	kernel_host_stub_018ce4c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ce5a0	gpu-dispatch	kernel_host_stub_018ce5a0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ce680	gpu-dispatch	kernel_host_stub_018ce680	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ce760	gpu-dispatch	kernel_host_stub_018ce760	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ce840	gpu-dispatch	kernel_host_stub_018ce840	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ce920	gpu-dispatch	kernel_host_stub_018ce920	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cea00	gpu-dispatch	kernel_host_stub_018cea00	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ceac0	gpu-dispatch	kernel_host_stub_018ceac0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ceb80	gpu-dispatch	kernel_host_stub_018ceb80	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cec40	gpu-dispatch	kernel_host_stub_018cec40	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ced00	gpu-dispatch	kernel_host_stub_018ced00	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cede0	gpu-dispatch	kernel_host_stub_018cede0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ceec0	gpu-dispatch	kernel_host_stub_018ceec0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cefa0	gpu-dispatch	kernel_host_stub_018cefa0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cf080	gpu-dispatch	kernel_host_stub_018cf080	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cf160	gpu-dispatch	kernel_host_stub_018cf160	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cf240	gpu-dispatch	kernel_host_stub_018cf240	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cf320	gpu-dispatch	kernel_host_stub_018cf320	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cf400	gpu-dispatch	kernel_host_stub_018cf400	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cf4c0	gpu-dispatch	kernel_host_stub_018cf4c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cf580	gpu-dispatch	kernel_host_stub_018cf580	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cf640	gpu-dispatch	kernel_host_stub_018cf640	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cf700	gpu-dispatch	kernel_host_stub_018cf700	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cf7e0	gpu-dispatch	kernel_host_stub_018cf7e0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cf8c0	gpu-dispatch	kernel_host_stub_018cf8c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cf9a0	gpu-dispatch	kernel_host_stub_018cf9a0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cfa80	gpu-dispatch	kernel_host_stub_018cfa80	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cfb10	gpu-dispatch	kernel_host_stub_018cfb10	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cfba0	gpu-dispatch	copy_to_host_vector_checked	med	hipMemcpy, HIP error print, std::vector size check, flash_model.hip
+018cfd10	gpu-dispatch	kernel_host_stub_018cfd10	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cfdd0	gpu-dispatch	kernel_host_stub_018cfdd0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cfea0	gpu-dispatch	kernel_host_stub_018cfea0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018cff70	gpu-dispatch	kernel_host_stub_018cff70	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0020	gpu-dispatch	kernel_host_stub_018d0020	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d00d0	cxx-stl	vector_dtor_free	med	operator delete(begin, cap-begin) vector storage release
+018d00f0	gpu-dispatch	kernel_host_stub_018d00f0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d01c0	gpu-dispatch	kernel_host_stub_018d01c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0290	gpu-dispatch	kernel_host_stub_018d0290	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0360	gpu-dispatch	kernel_host_stub_018d0360	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0430	gpu-dispatch	kernel_host_stub_018d0430	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d04e0	gpu-dispatch	kernel_host_stub_018d04e0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0590	gpu-dispatch	kernel_host_stub_018d0590	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0640	gpu-dispatch	kernel_host_stub_018d0640	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d06f0	gpu-dispatch	kernel_host_stub_018d06f0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d07a0	gpu-dispatch	kernel_host_stub_018d07a0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0850	gpu-dispatch	kernel_host_stub_018d0850	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0900	gpu-dispatch	kernel_host_stub_018d0900	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d09b0	gpu-dispatch	kernel_host_stub_018d09b0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0a80	gpu-dispatch	kernel_host_stub_018d0a80	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0b50	gpu-dispatch	kernel_host_stub_018d0b50	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0c20	gpu-dispatch	kernel_host_stub_018d0c20	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0cf0	gpu-dispatch	kernel_host_stub_018d0cf0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0da0	gpu-dispatch	kernel_host_stub_018d0da0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0e50	gpu-dispatch	kernel_host_stub_018d0e50	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0f00	gpu-dispatch	kernel_host_stub_018d0f00	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d0fb0	gpu-dispatch	kernel_host_stub_018d0fb0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1060	gpu-dispatch	kernel_host_stub_018d1060	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1110	gpu-dispatch	kernel_host_stub_018d1110	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d11c0	gpu-dispatch	kernel_host_stub_018d11c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1270	gpu-dispatch	kernel_host_stub_018d1270	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1340	gpu-dispatch	kernel_host_stub_018d1340	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1410	gpu-dispatch	kernel_host_stub_018d1410	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d14e0	gpu-dispatch	kernel_host_stub_018d14e0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d15b0	gpu-dispatch	kernel_host_stub_018d15b0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1660	gpu-dispatch	kernel_host_stub_018d1660	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1710	gpu-dispatch	kernel_host_stub_018d1710	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d17c0	gpu-dispatch	kernel_host_stub_018d17c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1870	gpu-dispatch	kernel_host_stub_018d1870	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1920	gpu-dispatch	kernel_host_stub_018d1920	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d19d0	gpu-dispatch	kernel_host_stub_018d19d0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1a80	gpu-dispatch	kernel_host_stub_018d1a80	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1b30	gpu-dispatch	kernel_host_stub_018d1b30	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1c00	gpu-dispatch	kernel_host_stub_018d1c00	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1cd0	gpu-dispatch	kernel_host_stub_018d1cd0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1d80	gpu-dispatch	kernel_host_stub_018d1d80	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1e30	gpu-dispatch	kernel_host_stub_018d1e30	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1f00	gpu-dispatch	kernel_host_stub_018d1f00	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d1fb0	gpu-dispatch	kernel_host_stub_018d1fb0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d2060	gpu-dispatch	kernel_host_stub_018d2060	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d2130	gpu-dispatch	kernel_host_stub_018d2130	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d2200	gpu-dispatch	kernel_host_stub_018d2200	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d22b0	gpu-dispatch	kernel_host_stub_018d22b0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d2360	gpu-dispatch	kernel_host_stub_018d2360	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d2430	model-forward	moe_i4r_fused_plan_arena	med	HALOGEN_I4R_FUSE/LAST strings, arena sizing error, moe_i4r_ message
+018d59c0	config-env	env_flash_moe_v2_mode	high	getenv HALOGEN_FLASH_MOE_V2 strtol, returns 1 or 2
+018d5a00	model-forward	moe_i4r_deferred_shared_down	high	string: deferred shared down did not launch; exit(1)
+018d5af0	gpu-dispatch	kernel_host_stub_018d5af0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d5bc0	gpu-dispatch	kernel_host_stub_018d5bc0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d5ca0	gpu-dispatch	kernel_host_stub_018d5ca0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d5d70	config-env	env_i4r_last_flag	high	cached getenv HALOGEN_I4R_LAST, default true
+018d5dd0	config-env	env_cached_int_a	low	static guard caching result of FUN_01940b90, likely getenv
+018d5e20	config-env	env_threshold_check	low	static guard caches FUN_01940bd0, compares to param
+018d5ec0	gpu-dispatch	kernel_host_stub_018d5ec0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d5fe0	gpu-dispatch	kernel_host_stub_018d5fe0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d6100	gpu-dispatch	kernel_host_stub_018d6100	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d6220	gpu-dispatch	kernel_host_stub_018d6220	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d6350	gpu-dispatch	kernel_host_stub_018d6350	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d6480	gpu-dispatch	kernel_host_stub_018d6480	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d65b0	gpu-dispatch	kernel_host_stub_018d65b0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d66e0	gpu-dispatch	kernel_host_stub_018d66e0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d6810	gpu-dispatch	kernel_host_stub_018d6810	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d6940	gpu-dispatch	kernel_host_stub_018d6940	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d6a50	gpu-dispatch	kernel_host_stub_018d6a50	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d6b60	gpu-dispatch	kernel_host_stub_018d6b60	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d6c70	gpu-dispatch	kernel_host_stub_018d6c70	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d6d40	gpu-dispatch	kernel_host_stub_018d6d40	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d6df0	gpu-dispatch	kernel_host_stub_018d6df0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d6ec0	gpu-dispatch	kernel_host_stub_018d6ec0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d6f60	util	arena_alloc_forward_chunks	med	bump allocator on DAT globals, 256 alignment, arena sizing error
+018d7430	gpu-dispatch	kernel_host_stub_018d7430	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018d7510	model-forward	moe_layer_forward	med	HALOGEN_FLASH_MOE_TIME, ROUTE_ROWS, ROUTE_SG, I4R_LAST; 27 callees
+018e43e0	config-env	env_flash_moe_v2	high	getenv HALOGEN_FLASH_MOE_V2
+018e4420	config-env	env_flash_moe_v2_minn	high	getenv HALOGEN_FLASH_MOE_V2_MINN
+018e4460	config-env	env_flash_moe_v2_bn	high	getenv HALOGEN_FLASH_MOE_V2_BN
+018e44a0	config-env	env_flash_moe_v2_conc	high	getenv HALOGEN_FLASH_MOE_V2_CONC
+018e44d0	config-env	env_flash_moe_fused_n	high	getenv HALOGEN_FLASH_MOE_FUSED_N
+018e4500	config-env	env_cached_int_b	low	static guard caches FUN_01940e10, likely getenv
+018e4550	config-env	env_flash_route_m	high	getenv HALOGEN_FLASH_ROUTE_M strtol default 8
+018e4580	model-forward	moe_route_decode_fused	med	HALOGEN_HT_DEC_FUSE, I4R_HFUSE, ROUTE_SG, arena sizing
+018e5560	config-env	env_flash_route_m_b	high	getenv HALOGEN_FLASH_ROUTE_M
+018e5590	config-env	env_flash_route_gemm	high	getenv HALOGEN_FLASH_ROUTE_GEMM
+018e55c0	gpu-dispatch	kernel_host_stub_018e55c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018e5650	gpu-dispatch	kernel_host_stub_018e5650	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018e56e0	config-env	env_cached_int_c	low	static guard caches FUN_01942d20, likely getenv
+018e5730	gpu-dispatch	kernel_host_stub_018e5730	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018e57e0	gpu-dispatch	kernel_host_stub_018e57e0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018e5890	gpu-dispatch	kernel_host_stub_018e5890	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018e5940	gpu-dispatch	launch_kernel_by_dtype_switch	med	switch on dtype 1..8, hipPushCallConfiguration, cached kernel handle
+018e6f20	model-forward	linear_f32	high	string: linear_f32: %s is Q8G64/Q6G64 has no f32 path
+018e84b0	gpu-dispatch	kernel_host_stub_018e84b0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018e8530	config-env	env_route_topk_w	high	getenv HALOGEN_ROUTE_TOPK_W
+018e8560	gpu-dispatch	kernel_host_stub_018e8560	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018e8660	gpu-dispatch	kernel_host_stub_018e8660	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018e8760	gpu-dispatch	kernel_host_stub_018e8760	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018e87f0	gpu-dispatch	kernel_host_stub_018e87f0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018e8870	config-env	env_flash_moe_fused_n_b	high	getenv HALOGEN_FLASH_MOE_FUSED_N
+018e88a0	hip-runtime	ensure_device_buffer_grow	high	hipFree then hipMalloc if size grows, flash_model.hip:0x11d1
+018e8950	hgn-loader	check_q4cp_tensor_layout	high	strings: expected Q4C-P, Q4C-P size != table nbytes
+018e8b00	config-env	env_flash_moe_v2_sum	high	getenv HALOGEN_FLASH_MOE_V2_SUM
+018e8b30	config-env	env_moe_gpu_route	high	getenv HALOGEN_MOE_GPU_ROUTE
+018e8b60	config-env	env_moe_csort	high	getenv HALOGEN_MOE_CSORT
+018e8b90	cxx-stl	stable_sort_int32_buffered	med	nothrow new temp buffer, inplace merge on 4 byte elements
+018e8cc0	config-env	env_moe_size_hist	high	getenv HALOGEN_MOE_SIZE_HIST
+018e8cf0	logging-diag	moe_size_histogram_update	low	global vector, atexit registration, MOE_SIZE_HIST context
+018e8fe0	config-env	env_flash_moe_gemm	high	getenv HALOGEN_FLASH_MOE_GEMM
+018e9010	config-env	env_flash_moe_gemm_dn	high	getenv HALOGEN_FLASH_MOE_GEMM_DN
+018e9040	config-env	env_moe_h_order	high	getenv HALOGEN_MOE_H_ORDER
+018e9070	config-env	env_init_once	low	guard-once call to FUN_01945020, likely env read
+018e90c0	config-env	env_flash_moe_batch_gu	high	getenv HALOGEN_FLASH_MOE_BATCH_GU
+018e90f0	gpu-dispatch	kernel_host_stub_018e90f0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018e9180	gpu-dispatch	launch_cfg_grid_rows_div32	med	hipPushCallConfiguration grid=ceil(rows*cols/32/256), 256 threads
+018e95d0	gpu-dispatch	launch_q4cp_moe_kernel_variant	low	guard-cached kernel handles, 7 callees, called from q4cp checker path
+018ea860	gpu-dispatch	kernel_host_stub_018ea860	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ea8f0	gpu-dispatch	kernel_host_stub_018ea8f0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ea980	gpu-dispatch	kernel_host_stub_018ea980	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eaa50	gpu-dispatch	kernel_host_stub_018eaa50	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eab20	gpu-dispatch	kernel_host_stub_018eab20	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eabf0	gpu-dispatch	kernel_host_stub_018eabf0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eacc0	gpu-dispatch	kernel_host_stub_018eacc0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eadb0	gpu-dispatch	kernel_host_stub_018eadb0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eaea0	gpu-dispatch	launch_cfg_grid_rows_div32_b	med	hipPushCallConfiguration grid=ceil(rows*cols/32/256)
+018eafd0	gpu-dispatch	kernel_host_stub_018eafd0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eb060	gpu-dispatch	kernel_host_stub_018eb060	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eb110	gpu-dispatch	kernel_host_stub_018eb110	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eb180	gpu-dispatch	kernel_host_stub_018eb180	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eb260	gpu-dispatch	kernel_host_stub_018eb260	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eb360	config-env	env_exp_lpr	high	getenv HALOGEN_EXP_LPR
+018eb390	config-env	env_exp_pf	high	getenv HALOGEN_EXP_PF
+018eb3c0	gpu-dispatch	kernel_host_stub_018eb3c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eb460	gpu-dispatch	kernel_host_stub_018eb460	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eb500	gpu-dispatch	kernel_host_stub_018eb500	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eb5a0	gpu-dispatch	kernel_host_stub_018eb5a0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eb640	gpu-dispatch	kernel_host_stub_018eb640	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eb6e0	gpu-dispatch	kernel_host_stub_018eb6e0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eb780	gpu-dispatch	kernel_host_stub_018eb780	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eb820	gpu-dispatch	kernel_host_stub_018eb820	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eb8c0	gpu-dispatch	kernel_host_stub_018eb8c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eb960	gpu-dispatch	kernel_host_stub_018eb960	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eba00	gpu-dispatch	kernel_host_stub_018eba00	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ebaa0	gpu-dispatch	kernel_host_stub_018ebaa0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ebb40	gpu-dispatch	kernel_host_stub_018ebb40	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ebbe0	gpu-dispatch	kernel_host_stub_018ebbe0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ebc80	gpu-dispatch	kernel_host_stub_018ebc80	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ebd20	gpu-dispatch	kernel_host_stub_018ebd20	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ebdc0	gpu-dispatch	kernel_host_stub_018ebdc0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ebe60	gpu-dispatch	kernel_host_stub_018ebe60	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ebf00	gpu-dispatch	kernel_host_stub_018ebf00	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ebfd0	gpu-dispatch	kernel_host_stub_018ebfd0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ec0a0	gpu-dispatch	kernel_host_stub_018ec0a0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ec170	gpu-dispatch	kernel_host_stub_018ec170	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ec240	gpu-dispatch	kernel_host_stub_018ec240	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ec310	gpu-dispatch	kernel_host_stub_018ec310	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ec3e0	gpu-dispatch	kernel_host_stub_018ec3e0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ec4b0	gpu-dispatch	kernel_host_stub_018ec4b0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ec580	gpu-dispatch	kernel_host_stub_018ec580	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ec650	gpu-dispatch	kernel_host_stub_018ec650	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ec720	gpu-dispatch	kernel_host_stub_018ec720	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ec7f0	gpu-dispatch	kernel_host_stub_018ec7f0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ec8c0	gpu-dispatch	kernel_host_stub_018ec8c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ec990	gpu-dispatch	kernel_host_stub_018ec990	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eca60	gpu-dispatch	kernel_host_stub_018eca60	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ecb30	gpu-dispatch	kernel_host_stub_018ecb30	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ecc00	gpu-dispatch	kernel_host_stub_018ecc00	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018eccd0	gpu-dispatch	kernel_host_stub_018eccd0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ecda0	gpu-dispatch	kernel_host_stub_018ecda0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ece80	gpu-dispatch	kernel_host_stub_018ece80	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ecf70	config-env	env_cached_int_d	low	static guard caches FUN_01946870, likely getenv
+018ecfc0	gpu-dispatch	kernel_host_stub_018ecfc0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ed0d0	config-env	env_cached_int_e	low	static guard caches FUN_019468a0, likely getenv
+018ed120	gpu-dispatch	kernel_host_stub_018ed120	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ed230	gpu-dispatch	kernel_host_stub_018ed230	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ed340	gpu-dispatch	kernel_host_stub_018ed340	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ed450	gpu-dispatch	kernel_host_stub_018ed450	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ed520	gpu-dispatch	kernel_host_stub_018ed520	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ed600	model-forward	q8s32_expert_forward_checked	med	HIP errors flash_ops.h, Q8S32 experts read in place string
+018edcf0	gpu-dispatch	kernel_host_stub_018edcf0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018edd80	gpu-dispatch	kernel_host_stub_018edd80	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018ede30	model-forward	lookup_table_load_rows	med	strings: lookup table rows for tokens read time; hipMemcpyAsync, condvar
+018f0d40	gpu-dispatch	launch_cfg_grid_div256	low	hipPushCallConfiguration grid=(n+257)/256
+018f1020	gpu-dispatch	kernel_host_stub_018f1020	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f10f0	config-env	env_ngram_early_check	high	cached getenv HALOGEN_NGRAM_EARLY_CHECK
+018f1150	sampling-speculation	ngram_lookup_check	med	strings: lookup check %d tokens, lookup check failed row; n-gram env
+018f1990	config-env	env_cached_int_f	low	static guard caches FUN_019036e0, likely getenv
+018f19e0	config-env	env_cached_int_g	low	static guard caches FUN_01903710, likely getenv
+018f1a30	gpu-dispatch	kernel_host_stub_018f1a30	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f1ab0	gpu-dispatch	kernel_host_stub_018f1ab0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f1b30	gpu-dispatch	kernel_host_stub_018f1b30	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f1bb0	gpu-dispatch	kernel_host_stub_018f1bb0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f1c30	gpu-dispatch	kernel_host_stub_018f1c30	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f1cc0	gpu-dispatch	kernel_host_stub_018f1cc0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f1d40	gpu-dispatch	kernel_host_stub_018f1d40	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f1dc0	gpu-dispatch	kernel_host_stub_018f1dc0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f1e80	gpu-dispatch	kernel_host_stub_018f1e80	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f1f40	gpu-dispatch	kernel_host_stub_018f1f40	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f1fe0	gpu-dispatch	kernel_host_stub_018f1fe0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f2060	model-forward	forward_timed_profile	med	hipEventRecord/ElapsedTime x6, hipDeviceSynchronize, calls moe_layer_forward
+018f2b90	util	steady_clock_now_wrap	high	wraps std::chrono::steady_clock::now
+018f2bc0	hgn-loader	build_expert_tensor_names	med	strings shared_expert.gate_proj/up_proj, experts.; string appends
+018f34c0	gpu-dispatch	mtp_wire_copy_async	med	HALOGEN_MTP_WIRE, hipMemcpyAsync, HIP error
+018f4430	gpu-dispatch	kernel_host_stub_018f4430	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f44b0	gpu-dispatch	kernel_host_stub_018f44b0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f4530	gpu-dispatch	kernel_host_stub_018f4530	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f45c0	gpu-dispatch	kernel_host_stub_018f45c0	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f4640	gpu-dispatch	kernel_host_stub_018f4640	med	hipcc host stub: pops call config, packs ~0 args, launches; no strings
+018f46b0	model-forward	lm_head_forward	med	string lm_head.weight; calls linear_f32
+018f4b90	gpu-dispatch	launch_cfg_cached_grid_x	low	hipPushCallConfiguration grid from cached env value
+018f5190	config-env	env_draft_vocab_cached	med	static guard wrapping FUN_018f51e0 (HALOGEN_DRAFT_VOCAB)
+018f51e0	config-env	env_draft_vocab_mode	high	getenv HALOGEN_DRAFT_VOCAB; values 0,1,cycle,check
+018f5260	model-forward	tensor_table_count	low	(end-begin)/48 over vector at +0x70, element 0x30 bytes
+018f5280	model-forward	tensor_name_by_index	low	indexes vector of 0x30-byte entries, returns name ptr or default
