@@ -78,7 +78,9 @@ def test_ulp_across_zero_and_sign():
 def test_nan_handling():
     nan1 = struct.pack('<I', 0x7fc00000)
     nan2 = struct.pack('<I', 0x7fc00001)
-    assert c.compare_bytes(nan1, nan2, 'f32')['match']
+    assert not c.compare_bytes(nan1, nan2, 'f32')['match']          # bitwise sees the payload
+    assert c.compare_bytes(nan1, nan1, 'f32')['match']
+    assert c.compare_bytes(nan1, nan2, 'f32', max_ulp=0)['match']   # tolerance mode: NaN equals NaN
     r = c.compare_bytes(nan1, f32s(1.0), 'f32', max_abs=1e9, max_ulp=10 ** 9)
     assert not r['match']
 
@@ -134,3 +136,14 @@ def test_result_text_words():
     assert c.result_text(ok).startswith('MATCH n=4 diff=0')
     bad = dict(ok, match=False, n_diff=1, first_diff=3)
     assert c.result_text(bad).startswith('MISMATCH') and 'first_diff=3' in c.result_text(bad)
+
+
+def test_empty_buffers_never_match():
+    r = c.compare_bytes(b'', b'', 'bf16')
+    assert not r['match'] and r['note'] == 'empty'
+
+
+def test_untouched_output_detected():
+    pre = b'\x9d\xc2' * 8
+    assert c.untouched(pre, pre)
+    assert not c.untouched(b'\x00\x00' + pre[2:], pre)

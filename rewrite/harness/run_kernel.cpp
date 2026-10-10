@@ -225,6 +225,7 @@ int main(int argc, char** argv) {
     }
   }
   auto g = spec.at("grid").a, bl = spec.at("block").a;
+  if (g.size() != 3 || bl.size() != 3) { fprintf(stderr, "grid and block need 3 values each\n"); return 2; }
   if (spec.has("hidden")) {
     const J& h = spec.at("hidden");
     auto w32 = [&](const std::string& k, uint32_t v) { if (h.has(k)) { room(h.at(k).i(), 4); memcpy(&ka[h.at(k).i()], &v, 4); } };
@@ -243,6 +244,15 @@ int main(int argc, char** argv) {
   size_t kasz = ksz;
   void* cfg[] = {HIP_LAUNCH_PARAM_BUFFER_POINTER, ka.data(), HIP_LAUNCH_PARAM_BUFFER_SIZE, &kasz, HIP_LAUNCH_PARAM_END};
   unsigned lds = spec.has("lds_bytes") ? (unsigned)spec.at("lds_bytes").i() : 0;
+  // Pre-launch copy of every dumped buffer: compare.py fails a case whose output the kernel never wrote.
+  if (spec.has("dump")) for (auto& nm : spec.at("dump").a) {
+    auto it = bufs.find(nm.s);
+    if (it == bufs.end()) { fprintf(stderr, "dump: unknown buffer %s\n", nm.s.c_str()); return 2; }
+    std::vector<uint8_t> h(it->second.bytes);
+    if (!h.empty()) CK(hipMemcpy(h.data(), it->second.d, h.size(), hipMemcpyDeviceToHost));
+    std::ofstream o(out + "/" + nm.s + ".pre.bin", std::ios::binary);
+    o.write((char*)h.data(), h.size());
+  }
   CK(hipModuleLaunchKernel(fn, g[0].i(), g[1].i(), g[2].i(), bl[0].i(), bl[1].i(), bl[2].i(), lds, nullptr, nullptr, cfg));
   CK(hipDeviceSynchronize());
   CK(hipGetLastError());

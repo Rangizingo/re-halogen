@@ -120,8 +120,12 @@ def compare_bytes(a, b, dtype, max_abs=None, max_ulp=None):
     """Compare two raw buffers. Bitwise unless max_abs or max_ulp is given.
 
     Returns dict: match, n, n_diff (elements whose bits differ), max_abs, max_ulp, first_diff.
-    NaN vs NaN counts as equal; NaN vs number is an infinite difference.
+    Bitwise mode compares raw bits, NaN payloads included. With a tolerance, NaN vs NaN counts as
+    equal and NaN vs number is an infinite difference. Two empty buffers never match.
     """
+    if not a and not b:
+        return {'match': False, 'n': 0, 'n_diff': 0, 'max_abs': 0.0, 'max_ulp': 0, 'first_diff': None,
+                'note': 'empty'}
     if len(a) != len(b):
         return {'match': False, 'n': 0, 'n_diff': -1, 'max_abs': float('inf'), 'max_ulp': float('inf'),
                 'first_diff': None, 'note': f'length {len(a)} vs {len(b)}'}
@@ -134,7 +138,7 @@ def compare_bytes(a, b, dtype, max_abs=None, max_ulp=None):
     for i, (x, y) in enumerate(zip(ba, bb)):
         if x == y:
             continue
-        if isfloat and _is_nan(x, dtype) and _is_nan(y, dtype):
+        if isfloat and (max_abs is not None or max_ulp is not None) and _is_nan(x, dtype) and _is_nan(y, dtype):
             continue
         n_diff += 1
         if first is None:
@@ -155,6 +159,11 @@ def compare_bytes(a, b, dtype, max_abs=None, max_ulp=None):
         ok = (max_abs is None or worst_abs <= max_abs) and (max_ulp is None or worst_ulp <= max_ulp)
     return {'match': ok, 'n': len(ba), 'n_diff': n_diff, 'max_abs': worst_abs, 'max_ulp': worst_ulp,
             'first_diff': first}
+
+
+def untouched(out, pre):
+    """True when a kernel left its output exactly as it was before the launch."""
+    return out == pre
 
 
 def tol_text(max_abs, max_ulp):
@@ -266,9 +275,14 @@ def main(argv=None):
             run_kernel(rco.resolve(), build_run_spec(template, rname, rlay, env), rdir)
             res = {'match': True, 'n': 0, 'n_diff': 0, 'max_abs': 0.0, 'max_ulp': 0, 'first_diff': None}
             for out in cmp_cfg['outputs']:
-                r = compare_bytes((vdir / (out['buffer'] + '.bin')).read_bytes(),
-                                  (rdir / (out['buffer'] + '.bin')).read_bytes(),
-                                  out['dtype'], max_abs, max_ulp)
+                name = out['buffer']
+                vb, rb = (vdir / f'{name}.bin').read_bytes(), (rdir / f'{name}.bin').read_bytes()
+                r = compare_bytes(vb, rb, out['dtype'], max_abs, max_ulp)
+                # Agreeing on an output neither kernel wrote proves nothing.
+                for side, d, b in (('vendor', vdir, vb), ('rewrite', rdir, rb)):
+                    if untouched(b, (d / f'{name}.pre.bin').read_bytes()):
+                        r['match'] = False
+                        print(f'UNTOUCHED {side} output {name} in {d.name}')
                 res['match'] &= r['match']
                 res['n'] += r['n']
                 res['n_diff'] += max(r['n_diff'], 0)
