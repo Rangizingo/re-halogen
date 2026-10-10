@@ -1,0 +1,3 @@
+HIP /src/halogen/src/flash_ops.h:4060: invalid argument
+halogen: engine exited (rc=1, the component that ended this: 1); shutting down
+halogen: GTT in use after the engine exited: 0.0 GiB (1s after)
