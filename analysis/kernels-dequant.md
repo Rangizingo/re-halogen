@@ -177,6 +177,12 @@ stored rotated and 3/4-bit quantized, with per-block fp16 vectors as the
 only stored rotation data. Not proven: that `su`/`sv` are random signs
 rather than learned scales (a fp16 vector is stored either way).
 
+Update 2026-10-10 (real vendor data, `closure/ht-decode.md`): `su` is
+exactly +/-1 signs; `sv` is a signed per-row scale; the stored weights are
+rotated on both sides (input and output 128-point Hadamard), and the
+`v_sad_u8` decode is confirmed at Pearson 0.98 to 0.99 against q4c
+references for 3 and 4 bit.
+
 ## 4. `k_i4r_*`: 4-bit rows with a rotation plane
 
 `k_i4r_rows<2560>(uint8* W, long stride, int, half* x, int, int* idx, float*

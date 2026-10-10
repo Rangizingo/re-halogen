@@ -6,7 +6,7 @@ rebuild a compatible server from the writeups).
 
 **Overall: Phase 7 done at plan scope (2026-10-10).** All phases have
 evidence-backed writeups. Unknowns, counted from the table in
-`analysis/unknowns.md`: CLOSED 9, PARTIAL 13, OPEN-BOUNDED 3 (U03, U06,
+`analysis/unknowns.md`: CLOSED 11, PARTIAL 12, OPEN-BOUNDED 2 (U06,
 U22), UNOBSERVABLE 1 (U05). PARTIAL rows say which half is closed. What is
 left needs data that is not in this workspace (see "Open" below).
 
@@ -28,8 +28,6 @@ left needs data that is not in this workspace (see "Open" below).
 
 ## Open
 
-- U03 NPU graph names: need the shipped `.elf` graph files.
-- U19 HT codebook decode: recovered statically, needs a real HT checkpoint.
 - U06 old patch releases, U05 future releases, U22 no AMDGCN decompiler:
   named limits by decision.
 - The inferred steps of the request trace are listed in its Gaps section.

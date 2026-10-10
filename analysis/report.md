@@ -145,21 +145,22 @@ dflash2 (`dflash2-probe.md`). Phase 7: function maps of all three binaries
 0.17.3 engine run (`runtime-run-0.17.3.md`), 17 closure reports
 (`closure/`) and a rebuild guide (`rebuild-guide.md`).
 
-Residual unknowns, counted from the table in `unknowns.md`: CLOSED 9,
-PARTIAL 13, OPEN-BOUNDED 3, UNOBSERVABLE 1 (26 rows). The PARTIAL rows
-(U01, U02, U07, U09, U10, U11, U12, U14, U18, U19, U21, U23, U26) each say
+Residual unknowns, counted from the table in `unknowns.md`: CLOSED 11,
+PARTIAL 12, OPEN-BOUNDED 2, UNOBSERVABLE 1 (26 rows). The PARTIAL rows
+(U01, U02, U07, U09, U10, U11, U12, U14, U18, U21, U23, U26) each say
 which half is closed and which is not. What stays open and why:
 
-- U03 NPU graph names: they live in the shipped `.elf` graph files, not in
-  this workspace.
-- U19 HT codebook decode: recovered statically, needs a real HT checkpoint
-  to confirm.
 - U06 0.14.x and 0.15.x patch deltas: those tags were not pulled (no
   downloads in scope).
 - U22 AMDGCN pseudocode: Ghidra has no shader-ISA module; device code stays
   at disassembly level.
 - U05 a future flip of the dflash2 literal: not observable from shipped
   releases.
+
+Closed late from vendor files fetched with Peter's approval: U03 NPU graph
+names (`closure/npu-shipped-files.md`) and U19 HT weight decode, confirmed
+at Pearson 0.98 to 0.99 against q4c references (`closure/ht-decode.md`,
+`scripts/ht_decode.py`).
 
 ## 7. Method notes (reproducibility)
 

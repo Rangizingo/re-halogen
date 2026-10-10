@@ -1,0 +1,22 @@
+# xxd -l 64 consts.hnpb
+00000000: 484e 5042 0100 0000 0200 0000 0000 0000  HNPB............
+00000010: 0f00 0000 0000 0000 0010 1900 0000 0000  ................
+00000020: 0010 0000 0000 0000 d819 1900 0000 0000  ................
+00000030: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+# per-blob records (table at header +0x18), python struct parse
+header+0x08 = 2  n = 15  table_off = 0x191000
+u0/w0    tag=4 +0x54=1 dim0=8192 off=4096 size=32768 bytes_per_elem=4 sha256_at_0x80_matches=True xor32=0x0f5a00ef
+u0/w1    tag=1 +0x54=1 dim0=8192 off=36864 size=16384 bytes_per_elem=2 sha256_at_0x80_matches=True xor32=0x00000000
+u0/w2    tag=1 +0x54=1 dim0=8192 off=53248 size=16384 bytes_per_elem=2 sha256_at_0x80_matches=True xor32=0x00000000
+u1/w0    tag=4 +0x54=1 dim0=16384 off=69632 size=65536 bytes_per_elem=4 sha256_at_0x80_matches=True xor32=0x86fde9ba
+u1/w1    tag=1 +0x54=1 dim0=8192 off=135168 size=16384 bytes_per_elem=2 sha256_at_0x80_matches=True xor32=0x00000000
+u1/w2    tag=1 +0x54=1 dim0=8192 off=151552 size=16384 bytes_per_elem=2 sha256_at_0x80_matches=True xor32=0x00000000
+u2/w0    tag=4 +0x54=1 dim0=65536 off=167936 size=262144 bytes_per_elem=4 sha256_at_0x80_matches=True xor32=0x88b7acb7
+u2/w1    tag=1 +0x54=1 dim0=8192 off=430080 size=16384 bytes_per_elem=2 sha256_at_0x80_matches=True xor32=0x00000000
+u2/w2    tag=1 +0x54=1 dim0=8192 off=446464 size=16384 bytes_per_elem=2 sha256_at_0x80_matches=True xor32=0x00000000
+u3/w0    tag=4 +0x54=1 dim0=262144 off=462848 size=1048576 bytes_per_elem=4 sha256_at_0x80_matches=True xor32=0x07b74d8d
+u3/w1    tag=1 +0x54=1 dim0=8192 off=1511424 size=16384 bytes_per_elem=2 sha256_at_0x80_matches=True xor32=0x00000000
+u3/w2    tag=1 +0x54=1 dim0=8192 off=1527808 size=16384 bytes_per_elem=2 sha256_at_0x80_matches=True xor32=0x00000000
+u4/w0    tag=4 +0x54=1 dim0=16384 off=1544192 size=65536 bytes_per_elem=4 sha256_at_0x80_matches=True xor32=0x86fde9ba
+u4/w1    tag=1 +0x54=1 dim0=8192 off=1609728 size=16384 bytes_per_elem=2 sha256_at_0x80_matches=True xor32=0x00000000
+u4/w2    tag=1 +0x54=1 dim0=8192 off=1626112 size=16384 bytes_per_elem=2 sha256_at_0x80_matches=True xor32=0x00000000

@@ -1,0 +1,15 @@
+# sha256 check against image/npu-models.txt (decider-0.8b, revision 38adff38)
+devices/NOTICE.md: OK
+devices/consts.hnpb: OK
+devices/devices.hnpm: OK
+devices/u0.elf: OK
+devices/u1.elf: OK
+devices/u2.elf: OK
+devices/u3.elf: OK
+devices/u4.elf: OK
+# readelf -gW section-group signatures per ELF (d* groups and k* kernels)
+u0.elf: d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 k2 k19 k0 k18 k17 k1 k3 k21 k20 k8_128 k9_128 k10_128 k11_128 k4_128 k5_128 k6_128 k7_128 k8_64 k9_64 k10_64 k11_64 k4_64 k5_64 k6_64 k7_64 k12 k13 k15 k14 k16 d11 d12 d13 d14 d15 d16 d17 d18 
+u1.elf: d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 k2 k19 k22 k24 k23 k0 k18 k17 k1 k3 k21 k20 
+u2.elf: d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 k2 k19 k22 k24 k23 k0 k18 k17 k1 k3 k21 k20 
+u3.elf: d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 k2 k19 k22 k24 k23 k0 k18 k17 k1 k3 k21 k20 
+u4.elf: d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 k2 k19 k22 k24 k23 k0 k18 k17 k1 k3 k21 k20 
