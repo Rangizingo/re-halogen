@@ -30,9 +30,15 @@ grep -c 'v_exp\|v_rcp\|v_mfma\|v_permlane\|v_bfe' work/kernels-spec/<slice>.s
 
 # REA (MCP server "rea" is registered at user scope; CLI equivalent)
 npx -y rea-agents@6.3.0 doctor --provider ghidra --json
+
+# Tests (pytest; 3 real-data HT tests skip unless HT_TESTDATA is set)
+python3 -m pytest -q tests                                   # 15 pass, 3 skip
+bash scripts/fetch_ht_testdata.sh <dir>                      # ~491 MB of vendor slices by HTTP range read
+HT_TESTDATA=<dir> python3 -m pytest -q tests                 # 18 pass
+python3 -I scripts/ht_decode.py <dir>                        # HT decode scores vs q4c references
 ```
 
-There is no lint, test runner, or CI config. Do not add a CLAUDE.md "Stack" or web conventions here; none apply.
+There is no CI config. Do not add a CLAUDE.md "Stack" or web conventions here; none apply.
 
 ## Gotchas
 
