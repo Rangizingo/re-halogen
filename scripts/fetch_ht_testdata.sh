@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Fetch the HT decoder test slices by HTTP range reads (about 487 MB, mostly the w4b expert reference).
+# Fetch the HT decoder test slices by HTTP range reads (about 491 MB, mostly the w4b expert reference).
 # usage: bash scripts/fetch_ht_testdata.sh <out_dir>   then: python3 -I scripts/ht_decode.py <out_dir>
 # Offsets come from the .hgn tables of qwen38-flash-next-ht43.hgn and qwen38-flash-next-w4b.hgn
 # (peonist-ai/halogen-qwen3.8-flash-next, read 2026-10-10). If the vendor republishes, re-read the tables.
@@ -29,4 +29,10 @@ get e1_down_ht_x0x1.ht      1777909632   1228800 "$ht"
 get e1_down_suh_x0x1.f16    2092482432      2560 "$ht"
 get e1_down_svh_x0x1.f16    2093137792     10240 "$ht"
 get e1_down_w4b_full.q4c   53135904704 482345024 "$w4b"
+get g0_gu_x0.ht               823782080   1638400 "$ht"
+get g0_su.f16               1662642880      5120 "$ht"
+get g0_gu_svh_x0.f16        1662648000      2560 "$ht"
+get g0_gu_w4b_cb.bin         880484992        64 "$w4b"
+get g0_gu_w4b_nib_x0.bin     880485056   1638400 "$w4b"
+get g0_gu_w4b_sc_x0.f16    1719345856    204800 "$w4b"
 ls -l "$out"

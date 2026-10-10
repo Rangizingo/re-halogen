@@ -87,3 +87,16 @@ def test_real_3bit_expert_matches_reference():
     w = ht.reconstruct(ht.decode_codes(raw, 2560, 640, 3), _f16("e1_down_suh_x0x1.f16")[:640], _f16("e1_down_svh_x0x1.f16")[:2560])
     ref = ht.load_q4c(f"{d}/e1_down_w4b_full.q4c", 2560, 640, e=0, n_exp=512, sc_per_row=24)
     assert _corr(w, ref) > 0.97
+
+
+@_needs_data
+def test_real_gate_up_expert_matches_reference_only_with_its_own_walk():
+    d = os.environ["HT_TESTDATA"]
+    raw = np.fromfile(f"{d}/g0_gu_x0.ht", np.uint8)
+    su, sv = _f16("g0_su.f16"), _f16("g0_gu_svh_x0.f16")
+    cb = np.fromfile(f"{d}/g0_gu_w4b_cb.bin", "<f4")
+    q = np.fromfile(f"{d}/g0_gu_w4b_nib_x0.bin", np.uint8)
+    sc = _f16("g0_gu_w4b_sc_x0.f16").reshape(1280, 80)
+    ref = cb[np.stack([q & 15, q >> 4], -1).reshape(-1)].reshape(1280, 2560) * np.repeat(sc, 32, 1)
+    assert _corr(ht.reconstruct(ht.decode_codes_gate_up(raw, 1280, 2560, 4), su, sv), ref) > 0.98
+    assert abs(_corr(ht.reconstruct(ht.decode_codes(raw, 1280, 2560, 4), su, sv), ref)) < 0.1

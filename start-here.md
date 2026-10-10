@@ -6,8 +6,8 @@ rebuild a compatible server from the writeups).
 
 **Overall: Phase 7 done at plan scope (2026-10-10).** All phases have
 evidence-backed writeups. Unknowns, counted from the table in
-`analysis/unknowns.md`: CLOSED 11, PARTIAL 12, OPEN-BOUNDED 3 (U06,
-U22, U27), UNOBSERVABLE 1 (U05). PARTIAL rows say which half is closed. What is
+`analysis/unknowns.md`: CLOSED 11, PARTIAL 13, OPEN-BOUNDED 2 (U06,
+U22), UNOBSERVABLE 1 (U05). PARTIAL rows say which half is closed. What is
 left needs data that is not in this workspace (see "Open" below).
 
 ## Done (with artifacts)
@@ -28,7 +28,7 @@ left needs data that is not in this workspace (see "Open" below).
 
 ## Open
 
-- U27 HT gate_up expert layout and i4r weight decode (data reachable, not done).
+- U27 i4r weight decode (data reachable, not done); HT gate_up is solved.
 - U06 old patch releases, U05 future releases, U22 no AMDGCN decompiler:
   named limits by decision.
 - The inferred steps of the request trace are listed in its Gaps section.
