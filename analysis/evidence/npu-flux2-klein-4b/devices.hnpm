@@ -1,0 +1,133 @@
+hnpm 1 devices
+family name=flux2 sig=d3072.h24x128.b5x20.m9216.c7680
+elf res=0 file=u0.elf bytes=4217536 sha256=b0df47d9cf0a0bbafc5c28a4f48d8bdbf379f8e3fa703441e6b049e2782a1afa csha256=b3ecd464d2ecf86b82336569203672b1a2aee26003c2bffeba839ebcdb692a0f
+elf res=512 file=u1.elf bytes=12741144 sha256=dd5982c599071ca2545c63a851e4aa8304438f9aa1d1924dbc221b84f4dcb829 csha256=fbd9e130aafe67b40ebd9cf5e0b16f6aa1a3b3e9c924c6bbcbcba1dae7742ffe
+elf res=256 file=u2.elf bytes=11506200 sha256=c0cbabf765b17a9a0fb61cb56b8332afa575bea0a43a133cc49128da841097b2 csha256=7aec9010e5c7613da318163bac7bcc518046a4048aa27bef9e476c81a4640eb6
+buf res=0 name=Aq bytes=2621440
+buf res=0 name=Cq bytes=6291456
+buf res=0 name=Ao bytes=4194304
+buf res=0 name=Co bytes=2621440
+buf res=0 name=Am bytes=2621440
+buf res=0 name=Hm bytes=9961472
+buf res=0 name=Cm bytes=2621440
+buf res=0 name=Ad bytes=9961472
+buf res=0 name=Aq2 bytes=2621440
+buf res=0 name=Cq2 bytes=6291456
+buf res=0 name=Ao2 bytes=4194304
+buf res=0 name=Co2 bytes=2621440
+buf res=0 name=Ad2 bytes=9961472
+buf res=0 name=Cm2 bytes=2621440
+buf res=512 name=Ax bytes=262144
+buf res=512 name=Cx bytes=6291456
+buf res=512 name=Actx bytes=7864320
+buf res=512 name=Cctx bytes=3145728
+buf res=512 name=Ax2 bytes=262144
+buf res=512 name=Cx2 bytes=6291456
+buf res=512 name=Actx2 bytes=7864320
+buf res=512 name=Cctx2 bytes=3145728
+buf res=512 name=Ai bytes=6291456
+buf res=512 name=At bytes=3145728
+buf res=512 name=Ci bytes=18874368
+buf res=512 name=Ct bytes=9437184
+buf res=512 name=O bytes=9437184
+buf res=512 name=Coi bytes=6291456
+buf res=512 name=Cot bytes=3145728
+buf res=512 name=Hi bytes=18874368
+buf res=512 name=Ht bytes=9437184
+buf res=512 name=As bytes=9437184
+buf res=512 name=Cs bytes=28311552
+buf res=512 name=AO bytes=37748736
+buf res=512 name=Cso bytes=9437184
+buf res=512 name=Ap bytes=6291456
+buf res=512 name=Cp bytes=2097152
+buf res=512 name=Q bytes=5308416
+buf res=512 name=KV bytes=10616832
+buf res=256 name=Ax bytes=65536
+buf res=256 name=Cx bytes=1572864
+buf res=256 name=Actx bytes=7864320
+buf res=256 name=Cctx bytes=3145728
+buf res=256 name=Ax2 bytes=65536
+buf res=256 name=Cx2 bytes=1572864
+buf res=256 name=Actx2 bytes=7864320
+buf res=256 name=Cctx2 bytes=3145728
+buf res=256 name=Ai bytes=1572864
+buf res=256 name=At bytes=3145728
+buf res=256 name=Ci bytes=4718592
+buf res=256 name=Ct bytes=9437184
+buf res=256 name=O bytes=4718592
+buf res=256 name=Coi bytes=1572864
+buf res=256 name=Cot bytes=3145728
+buf res=256 name=Hi bytes=4718592
+buf res=256 name=Ht bytes=9437184
+buf res=256 name=As bytes=4718592
+buf res=256 name=Cs bytes=14155776
+buf res=256 name=AO bytes=18874368
+buf res=256 name=Cso bytes=4718592
+buf res=256 name=Ap bytes=1572864
+buf res=256 name=Cp bytes=524288
+buf res=256 name=Q bytes=2654208
+buf res=256 name=KV bytes=5308416
+kernel res=0 name=k0 fn=tqkv slots=Aq:bf16,Wtqkv:bf16,Cq:bf16,Aq2:bf16,Cq2:bf16 kpts=f0 ro=k4 keep=k5
+kernel res=0 name=k1 fn=to slots=Ao:bf16,Wto:bf16,Co:bf16,Ao2:bf16,Co2:bf16 kpts=f0 ro=k6 keep=k7
+kernel res=0 name=k2 fn=tmup slots=Am:bf16,Wtmup:bf16,Hm:bf16 kpts=f0 ro=k8 keep=k9
+kernel res=0 name=k3 fn=tmdn slots=Ad:bf16,Wtmdn:bf16,Cm:bf16,Ad2:bf16,Cm2:bf16 kpts=f0 ro=k10 keep=k11
+kernel res=0 name=k4 slots=Aq:bf16,Wtqkv:bf16,Cq:bf16,Aq2:bf16,Cq2:bf16
+kernel res=0 name=k5 slots=Aq:bf16,Wtqkv:bf16,Cq:bf16,Aq2:bf16,Cq2:bf16
+kernel res=0 name=k6 slots=Ao:bf16,Wto:bf16,Co:bf16,Ao2:bf16,Co2:bf16
+kernel res=0 name=k7 slots=Ao:bf16,Wto:bf16,Co:bf16,Ao2:bf16,Co2:bf16
+kernel res=0 name=k8 slots=Am:bf16,Wtmup:bf16,Hm:bf16
+kernel res=0 name=k9 slots=Am:bf16,Wtmup:bf16,Hm:bf16
+kernel res=0 name=k10 slots=Ad:bf16,Wtmdn:bf16,Cm:bf16,Ad2:bf16,Cm2:bf16
+kernel res=0 name=k11 slots=Ad:bf16,Wtmdn:bf16,Cm:bf16,Ad2:bf16,Cm2:bf16
+kernel res=512 name=k12 fn=xemb slots=Ax:bf16,Wxemb:bf16,Cx:bf16,Ax2:bf16,Cx2:bf16 kpts=f0 ro=k23 keep=k24
+kernel res=512 name=k13 fn=cemb slots=Actx:bf16,Wcemb:bf16,Cctx:bf16,Actx2:bf16,Cctx2:bf16 kpts=f0 ro=k25 keep=k26
+kernel res=512 name=k14 fn=dqkv slots=Ai:bf16,Wqkv_i:bf16,Ci:bf16,At:bf16,Wqkv_t:bf16,Ct:bf16 kpts=f0 ro=k27 keep=k28
+kernel res=512 name=k15 fn=datt slots=Q:bf16,KV:bf16,O:bf16,Wout_i:bf16,Coi:bf16,Wout_t:bf16,Cot:bf16 kpts=f1,f0
+kernel res=512 name=k16 fn=dff slots=Ai:bf16,Wffin_i:bf16,Hi:bf16,Wffout_i:bf16,Coi:bf16,At:bf16,Wffin_t:bf16,Ht:bf16,Wffout_t:bf16,Cot:bf16 kpts=f0 ro=k29 keep=k30
+kernel res=512 name=k17 fn=sin slots=As:bf16,Wsqkv:bf16,Cs:bf16,Wsmlp:bf16,AO:bf16 kpts=f0 ro=k31 keep=k32
+kernel res=512 name=k18 fn=sqkv slots=As:bf16,Wsqkv:bf16,Cs:bf16 kpts=f0 ro=k33 keep=k34
+kernel res=512 name=k19 fn=smlp slots=As:bf16,Wsmlp:bf16,AO:bf16 kpts=f0 ro=k35 keep=k36
+kernel res=512 name=k20 fn=satt slots=Q:bf16,KV:bf16,AO:bf16,Wsout:bf16,Cso:bf16 kpts=f1,f0
+kernel res=512 name=k21 fn=proj slots=Ap:bf16,Wproj:bf16,Cp:bf16 kpts=f0 ro=k37 keep=k38
+kernel res=512 name=k23 slots=Ax:bf16,Wxemb:bf16,Cx:bf16,Ax2:bf16,Cx2:bf16
+kernel res=512 name=k24 slots=Ax:bf16,Wxemb:bf16,Cx:bf16,Ax2:bf16,Cx2:bf16
+kernel res=512 name=k25 slots=Actx:bf16,Wcemb:bf16,Cctx:bf16,Actx2:bf16,Cctx2:bf16
+kernel res=512 name=k26 slots=Actx:bf16,Wcemb:bf16,Cctx:bf16,Actx2:bf16,Cctx2:bf16
+kernel res=512 name=k27 slots=Ai:bf16,Wqkv_i:bf16,Ci:bf16,At:bf16,Wqkv_t:bf16,Ct:bf16
+kernel res=512 name=k28 slots=Ai:bf16,Wqkv_i:bf16,Ci:bf16,At:bf16,Wqkv_t:bf16,Ct:bf16
+kernel res=512 name=k29 slots=Ai:bf16,Wffin_i:bf16,Hi:bf16,Wffout_i:bf16,Coi:bf16,At:bf16,Wffin_t:bf16,Ht:bf16,Wffout_t:bf16,Cot:bf16
+kernel res=512 name=k30 slots=Ai:bf16,Wffin_i:bf16,Hi:bf16,Wffout_i:bf16,Coi:bf16,At:bf16,Wffin_t:bf16,Ht:bf16,Wffout_t:bf16,Cot:bf16
+kernel res=512 name=k31 slots=As:bf16,Wsqkv:bf16,Cs:bf16,Wsmlp:bf16,AO:bf16
+kernel res=512 name=k32 slots=As:bf16,Wsqkv:bf16,Cs:bf16,Wsmlp:bf16,AO:bf16
+kernel res=512 name=k33 slots=As:bf16,Wsqkv:bf16,Cs:bf16
+kernel res=512 name=k34 slots=As:bf16,Wsqkv:bf16,Cs:bf16
+kernel res=512 name=k35 slots=As:bf16,Wsmlp:bf16,AO:bf16
+kernel res=512 name=k36 slots=As:bf16,Wsmlp:bf16,AO:bf16
+kernel res=512 name=k37 slots=Ap:bf16,Wproj:bf16,Cp:bf16
+kernel res=512 name=k38 slots=Ap:bf16,Wproj:bf16,Cp:bf16
+kernel res=256 name=k12 fn=xemb slots=Ax:bf16,Wxemb:bf16,Cx:bf16,Ax2:bf16,Cx2:bf16 kpts=f0 ro=k23 keep=k24
+kernel res=256 name=k13 fn=cemb slots=Actx:bf16,Wcemb:bf16,Cctx:bf16,Actx2:bf16,Cctx2:bf16 kpts=f0 ro=k25 keep=k26
+kernel res=256 name=k14 fn=dqkv slots=Ai:bf16,Wqkv_i:bf16,Ci:bf16,At:bf16,Wqkv_t:bf16,Ct:bf16 kpts=f0 ro=k27 keep=k28
+kernel res=256 name=k15 fn=datt slots=Q:bf16,KV:bf16,O:bf16,Wout_i:bf16,Coi:bf16,Wout_t:bf16,Cot:bf16 kpts=f1,f0
+kernel res=256 name=k16 fn=dff slots=Ai:bf16,Wffin_i:bf16,Hi:bf16,Wffout_i:bf16,Coi:bf16,At:bf16,Wffin_t:bf16,Ht:bf16,Wffout_t:bf16,Cot:bf16 kpts=f0 ro=k29 keep=k30
+kernel res=256 name=k17 fn=sin slots=As:bf16,Wsqkv:bf16,Cs:bf16,Wsmlp:bf16,AO:bf16 kpts=f0 ro=k31 keep=k32
+kernel res=256 name=k18 fn=sqkv slots=As:bf16,Wsqkv:bf16,Cs:bf16 kpts=f0 ro=k33 keep=k34
+kernel res=256 name=k19 fn=smlp slots=As:bf16,Wsmlp:bf16,AO:bf16 kpts=f0 ro=k35 keep=k36
+kernel res=256 name=k20 fn=satt slots=Q:bf16,KV:bf16,AO:bf16,Wsout:bf16,Cso:bf16 kpts=f1,f0
+kernel res=256 name=k21 fn=proj slots=Ap:bf16,Wproj:bf16,Cp:bf16 kpts=f0 ro=k37 keep=k38
+kernel res=256 name=k23 slots=Ax:bf16,Wxemb:bf16,Cx:bf16,Ax2:bf16,Cx2:bf16
+kernel res=256 name=k24 slots=Ax:bf16,Wxemb:bf16,Cx:bf16,Ax2:bf16,Cx2:bf16
+kernel res=256 name=k25 slots=Actx:bf16,Wcemb:bf16,Cctx:bf16,Actx2:bf16,Cctx2:bf16
+kernel res=256 name=k26 slots=Actx:bf16,Wcemb:bf16,Cctx:bf16,Actx2:bf16,Cctx2:bf16
+kernel res=256 name=k27 slots=Ai:bf16,Wqkv_i:bf16,Ci:bf16,At:bf16,Wqkv_t:bf16,Ct:bf16
+kernel res=256 name=k28 slots=Ai:bf16,Wqkv_i:bf16,Ci:bf16,At:bf16,Wqkv_t:bf16,Ct:bf16
+kernel res=256 name=k29 slots=Ai:bf16,Wffin_i:bf16,Hi:bf16,Wffout_i:bf16,Coi:bf16,At:bf16,Wffin_t:bf16,Ht:bf16,Wffout_t:bf16,Cot:bf16
+kernel res=256 name=k30 slots=Ai:bf16,Wffin_i:bf16,Hi:bf16,Wffout_i:bf16,Coi:bf16,At:bf16,Wffin_t:bf16,Ht:bf16,Wffout_t:bf16,Cot:bf16
+kernel res=256 name=k31 slots=As:bf16,Wsqkv:bf16,Cs:bf16,Wsmlp:bf16,AO:bf16
+kernel res=256 name=k32 slots=As:bf16,Wsqkv:bf16,Cs:bf16,Wsmlp:bf16,AO:bf16
+kernel res=256 name=k33 slots=As:bf16,Wsqkv:bf16,Cs:bf16
+kernel res=256 name=k34 slots=As:bf16,Wsqkv:bf16,Cs:bf16
+kernel res=256 name=k35 slots=As:bf16,Wsmlp:bf16,AO:bf16
+kernel res=256 name=k36 slots=As:bf16,Wsmlp:bf16,AO:bf16
+kernel res=256 name=k37 slots=Ap:bf16,Wproj:bf16,Cp:bf16
+kernel res=256 name=k38 slots=Ap:bf16,Wproj:bf16,Cp:bf16

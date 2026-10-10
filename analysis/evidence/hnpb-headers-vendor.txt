@@ -1,0 +1,11 @@
+# HNPB header first 16 bytes of every vendor-published HNPB file pinned in image/npu-models.txt
+# fetched 2026-10-10T19:43:55Z by HTTP range read (bytes 0-15) from huggingface.co/peonist-ai/halogen-npu-<id>/resolve/<revision>/<path>; header +0x08 is the third u32
+decider-0.8b-devices_consts.hnpb 484e5042010000000200000000000000
+decider-0.8b-decider-0.8b.hnpw 484e5042010000000100000000000000
+flux2-klein-4b-flux2-klein-4b.hnpw 484e5042010000000100000000000000
+qwen3-embedding-0.6b-devices_consts.hnpb 484e5042010000000200000000000000
+qwen3-embedding-0.6b-qwen3-embedding-0.6b.hnpw 484e5042010000000100000000000000
+qwen3-reranker-0.6b-qwen3-reranker-0.6b.hnpw 484e5042010000000100000000000000
+qwen3.5-2b-devices_consts.hnpb 484e5042010000000200000000000000
+qwen3.5-2b-qwen3.5-2b.hnpw 484e5042010000000100000000000000
+qwen3guard-gen-0.6b-qwen3guard-gen-0.6b.hnpw 484e5042010000000100000000000000
