@@ -23,7 +23,7 @@ Prompts P (19 tokens) and Q (25 tokens), real tokens from the model tokenizer, 6
 - Greedy, MTP vs serial (drafter 0): identical on P (warm both) and on Q (serial cold vs MTP warm). Speculation did not change greedy output in these 2 prompts.
 - Sampling (temperature 1.2, top_k 0, top_p 1.0, min_p 0), one comparison each: MTP with seed 111 twice gave identical tokens; seed 222 differed; MTP seed 111 vs serial seed 111 differed. Serial seed determinism was not run twice, so it is untested. A speculative run was not the same sample sequence as the serial run in this one case.
 - The engine's own startup text for the in-place prompt cache says "a warm answer is NOT bitwise the cold one", and for `HALOGEN_ADMIT_CHUNK=0` "the engine's own chunk keeps the admitted prompt bitwise its alone self". The token-level equality above does not contradict the first statement (it concerns numerics, not tokens, and 64 tokens is short).
-- `D` line fields matched `analysis/wire-protocol.md` (29 fields on done lines; `n_cached` at position 10, drafter, rounds, commit at 7-9).
+- `D` line fields matched `analysis/wire-protocol.md` (30 whitespace-separated parts on done lines, 12 on the error line; `n_cached` at position 10, drafter, rounds, commit at 7-9).
 - Startup: GGUF repack 35.6 s, engine ready about 36 s after container start, listening on 8730 with 4 slots over one 524,288-position pool.
 
 ## Unexplained
@@ -32,4 +32,4 @@ Every request in the engine log reads `generated 2 tokens, 0.0 s` while the tran
 
 ## Limits
 
-One engine, one run, small prompts. The seed test shows determinism per drafter, not the draw's source (U23 stays open: splitmix64 is in the pick kernels, the seed path is untraced). The probe cannot see logits, so "bitwise" claims are untested beyond token equality.
+One engine, one run, small prompts. The seed test shows determinism for MTP only (n=1), not the draw's source (U23 stays open: splitmix64 is in the pick kernels, the seed path is untraced). The probe cannot see logits, so "bitwise" claims are untested beyond token equality.
