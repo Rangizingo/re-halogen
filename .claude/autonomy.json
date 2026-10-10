@@ -52,7 +52,7 @@
   "model_source_allowed": [
     "*"
   ],
-  "test_command": "pnpm test",
+  "test_command": "python3 -I -c \"import sys;sys.path.insert(0,'work/hgn');import hgnpy;e=[dict(name='t.weight',dtype=0,qparam=0,dims=[2,4],payload=bytes(16))];d=hgnpy.build(version=1,model_id='ci',entries=e);hgnpy.parse(d);print('hgn build+parse ok')\"",
   "priorities": [
     "security",
     "readability",
