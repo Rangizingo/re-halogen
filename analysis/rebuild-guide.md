@@ -242,7 +242,7 @@ Sources: `analysis/npu-engine.md`, `closure/npu-closure.md`, `closure/npu-closur
 
 ## 11. Proven versus inferred: what a rebuild can rely on
 
-Unknowns ledger counts from `analysis/unknowns.md` (27 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 12, PARTIAL 12, OPEN-BOUNDED 2, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 27.
+Unknowns ledger counts from `analysis/unknowns.md` (27 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 18, PARTIAL 6, OPEN-BOUNDED 2, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 27.
 
 Can rely on [proven]:
 - The `.hgn` container: header, table, checksums, size rules, dtype codes, `verify` and `inspect` behavior (169 vendor-checked files, round trips).
@@ -254,24 +254,24 @@ Can rely on [proven]:
 - The MTP head file layout and the host plumbing around it.
 
 Cannot rely on (PARTIAL, OPEN-BOUNDED, UNOBSERVABLE rows; what is missing):
-- U01 PARTIAL: per-blob fields are now read from a shipped `consts.hnpb` (tag 4 = f32, 1 = bf16; +0x80 is the blob SHA-256; `closure/npu-shipped-files.md`). Header +0x08 is 2 there, a value no `halogen-npu` writer stores; its meaning stays inferred.
-- U02 PARTIAL: some NPU numeric field meanings; LOOKUP, QHN, QLED, EDUMP and IMG grammars.
+- U01 PARTIAL: per-blob fields read from the shipped `consts.hnpb`; header +0x08 is copied by its one reader without a check, so 2 loads, but halogen-npu writes only 3 or 1; what 2 means needs the vendor's producer (`closure/hnpb-header-r3.md`).
+- U02 PARTIAL: numeric fields of GEN, DEC, EMB, SCO, CLS, PFX, ELOAD, EFREE and IMG are closed (`closure/npu-verbs-r3.md`; times are microseconds); LOOKUP, QHN, QLED, EDUMP argument lists and the GEN hash buffers are open.
 - U05 UNOBSERVABLE: a future flip of the dflash2 format literal cannot be seen from the nine pulled releases.
 - U06 OPEN-BOUNDED: 0.14.x and 0.15.x patch deltas; those tags were not pulled.
-- U07 PARTIAL: `HALOGEN_WALK_FALSIFY` has no device-side change; host feeding of acceptance not traced (U20 CLOSED covers the S2 flags and `SAMPLED_*`).
-- U09 PARTIAL: the HtItem record is 16 B (not 72); the host does not fill it; field meanings are a stride-based inference.
-- U10 PARTIAL: grouped GEMV selection CLOSED (default, `HALOGEN_HT_DEC_GROUP`); the launch of `k_ht_tg` and `k_ht_tg_sum` is not found.
-- U11 PARTIAL: `DnfTaps` tap count per template arg and the per-format bias table (4-bit symmetric 8 and q6k 32 known; q5a, q8s32, iq4nl and the q4a zero point missing).
+- U07 is CLOSED (moved out of this list): `HALOGEN_WALK_FALSIFY` is a host-only test mode that perturbs the RNG counter and residual-sample inputs, never the accept formula or a kernel argument (`closure/walk-falsify-r3.md`).
+- U09 is CLOSED (moved out of this list): HtItem = {expert, tile, begin, end}, 16 B, written on the GPU by `k_ht_items_group` (`closure/htitem-r3.md`).
+- U10 is CLOSED (moved out of this list): `k_ht_tg` and `k_ht_tg_sum` are launched by slot in FUN_01928680; tg_sum is split-K sum plus inverse Hadamard plus scales to bf16 (`closure/ht-tg-r3.md`).
+- U11 PARTIAL: 3 taps for every template arg, arg N is a timing-probe index, most format biases read (`closure/dnftaps-r3.md`); per-probe regions, the N supplier and q5_0/q5_1/q8_0 biases are open.
 - U12 PARTIAL: `scan3` args B, C, D, G; `ut4` and `ut5` flags; decode versus prefill `k_dnc_att` variant; the case-to-stub map of `019dd130` (jump table unread).
-- U14 PARTIAL: fa2 args and legacy dispatch closed; FaSel is 32 B with +0x1c patched to the indexer budget high dword; the meanings of slots +0x00 to +0x18 are open.
-- U18 PARTIAL: `k_dv_quant8` roles and geometry closed; output plane offsets, the other width path at `0x1792530` and the writers of D-line `dv_*` counters open.
+- U14 is CLOSED (moved out of this list): FaSel slots are tile bitmask, selected-block ids, per-row counts, mask stride and block_topk (`closure/fasel-r3.md`).
+- U18 is CLOSED (moved out of this list): `k_dv_quant8` rows are A int8 quants then A/16 bytes of f16 scales; FUN_01882d20 writes the dv_* counters (`closure/dv-quant-r3.md`).
 - U19 is CLOSED (moved out of this list): `scripts/ht_decode.py` decodes real 3 and 4 bit HT weights, Pearson 0.98 to 0.99 against q4c references (`closure/ht-decode.md`). qparam is a fixed tag 0x1200 plus bits << 1 (loader check). gate_up experts use their own tile walk (`decode_codes_gate_up`, 0.9922 measured).
 - U21 PARTIAL: decode and small-batch launch CLOSED; the prefill dequant-versus-fused choice, per-dtype helper reach, `lq*` epilogue id E and HT template args S, B, C, D are open.
 - U22 OPEN-BOUNDED: Ghidra has no AMDGCN module, so device code stays at disassembly level; rebuilding kernels means writing from instruction listings.
-- U23 PARTIAL: the seed-to-state copy is not located.
+- U23 is CLOSED (moved out of this list): the wire seed reaches SampleRow+0x10 unchanged; the splitmix64 counter is the token's sequence position (`closure/sampler-seed-r3.md`).
 - U26 PARTIAL: a second connection got `INFO` and `PING` answers and no `CSTAT` reply; its `GEN` result was not recorded, and where the engine accepts a second fd is not found.
 - U27 is CLOSED (moved out of this list): i4r (dtype 23) decodes as planar signed nibbles times one fp16 scale per 128, then the HT rotation (`decode_codes_i4r`, 0.9876 and 0.9885 measured, `closure/ht-decode.md`).
-- CLOSED rows (U03, U04, U08, U13, U15, U16, U17, U19, U20, U24, U25, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
+- CLOSED rows (U03, U04, U07, U08, U09, U10, U13, U14, U15, U16, U17, U18, U19, U20, U23, U24, U25, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
 
 Other gaps a rebuild hits (request-trace.md "Gaps" and the closure reports):
 - MTP head layer kernels, the fusion of `fc_embedding` and `fc_hidden`, router top-k, the greedy draft step (mtp-head.md s7).

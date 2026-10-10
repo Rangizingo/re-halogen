@@ -145,9 +145,9 @@ dflash2 (`dflash2-probe.md`). Phase 7: function maps of all three binaries
 0.17.3 engine run (`runtime-run-0.17.3.md`), 17 closure reports
 (`closure/`) and a rebuild guide (`rebuild-guide.md`).
 
-Residual unknowns, counted from the table in `unknowns.md`: CLOSED 12,
-PARTIAL 12, OPEN-BOUNDED 2, UNOBSERVABLE 1 (27 rows). The PARTIAL rows
-(U01, U02, U07, U09, U10, U11, U12, U14, U18, U21, U23, U26) each say
+Residual unknowns, counted from the table in `unknowns.md`: CLOSED 18,
+PARTIAL 6, OPEN-BOUNDED 2, UNOBSERVABLE 1 (27 rows). The PARTIAL rows
+(U01, U02, U11, U12, U21, U26) each say
 which half is closed and which is not. What stays open and why:
 
 - U06 0.14.x and 0.15.x patch deltas: those tags were not pulled (no

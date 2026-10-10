@@ -6,7 +6,7 @@ rebuild a compatible server from the writeups).
 
 **Overall: Phase 7 done at plan scope (2026-10-10).** All phases have
 evidence-backed writeups. Unknowns, counted from the table in
-`analysis/unknowns.md`: CLOSED 12, PARTIAL 12, OPEN-BOUNDED 2 (U06,
+`analysis/unknowns.md`: CLOSED 18, PARTIAL 6, OPEN-BOUNDED 2 (U06,
 U22), UNOBSERVABLE 1 (U05). PARTIAL rows say which half is closed. What is
 left needs data that is not in this workspace (see "Open" below).
 
