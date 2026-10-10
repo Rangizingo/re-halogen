@@ -274,11 +274,11 @@ Cannot rely on (PARTIAL, OPEN-BOUNDED, UNOBSERVABLE rows; what is missing):
 - CLOSED rows (U01, U02, U03, U04, U07, U08, U09, U10, U11, U13, U14, U15, U16, U17, U18, U19, U20, U21, U23, U24, U25, U26, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
 
 Other gaps a rebuild hits (request-trace.md "Gaps" and the closure reports):
-- MTP head layer kernels, the fusion of `fc_embedding` and `fc_hidden`, router top-k, the greedy draft step (mtp-head.md s7).
-- Sampler tie handling, top_p inclusion, penalty and bias math; whether sampled speculation matches serial draws under one seed (it did not in one test).
-- Disk cache record naming and manifest fields; the cache clock unit; the end-of-request snapshot (S29); SSE framing (S27).
-- The engine-read env flag list is incomplete; the D-line counters `shared`, `dv_*`, `kept_*`, `think_*` have no analysed writers.
-- Evidence limit: one live run, two prompts, 64 tokens, one engine.
+- MTP head: fc_embedding/fc_hidden fusion, router top-k and the greedy draft step are CLOSED (`closure/mtp-head-r5.md`); the head layer's kernel order is PARTIAL there, and run 4 recorded the full launch order to read it from (`runtime-run-0.17.3-r4.md`, `evidence/run-r4-kargs-trace.txt`).
+- Sampler: top_k keeps every tie of the k-th logit, top_p keeps the crossing token and is measured against the full-vocab mass (top_k and top_p intersect), min_p, penalties, logit_bias and temperature order are CLOSED (`closure/sampler-math-r5.md`); edge cases are untested. Sampled speculation agrees in distribution, not token for token (runs 1 and 2).
+- Disk cache record naming and the 32-byte `e<N>.rec` header, the cache clock unit, S29 (no entry covering generated tokens is stored) and SSE framing for all four routes are CLOSED from code (`closure/cache-sse-r5.md`); no on-disk record has been observed live (runs 3 and 4 wrote none).
+- Env flags: 256 variables read by flash_serve, one row each in `analysis/env-flags.md`; D-line counters `shared`, `dv_*`, `kept_*`, `think_*` writers are CLOSED (`closure/env-dline-r5.md`).
+- Evidence limit: four live runs (runtime-run-0.17.3.md, -r2, -r3, -r4), short prompts, greedy plus a few sampled requests, one engine.
 
 Source disagreements found while writing this guide (later or more specific source wins here):
 - q8g64 size: hgn-format.md s3 says `N*K + 2*N`; closure/dequant-host.md says `numel*17/16` (`0190e330.c:207`). The binder rule is read from code; the table row was a formula guess.
