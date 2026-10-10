@@ -1,0 +1,111 @@
+{
+ "grid": [
+  4,
+  24,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "q": {
+   "bytes": "=4*24*256*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "k": {
+   "bytes": "=N*512*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+1",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "v": {
+   "bytes": "=N*512*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+2",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "out": {
+   "bytes": "=4*6144*2+64",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "gate": {
+   "bytes": "=4*6144*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+4",
+    "lo": -4,
+    "hi": 4
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "q"
+  },
+  {
+   "offset": 8,
+   "buffer": "k"
+  },
+  {
+   "offset": 16,
+   "buffer": "v"
+  },
+  {
+   "offset": 24,
+   "hex": "0000000000000000"
+  },
+  {
+   "offset": 32,
+   "buffer": "out"
+  },
+  {
+   "offset": 40,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 44,
+   "type": "i32",
+   "value": "=N//2"
+  },
+  {
+   "offset": 48,
+   "buffer": "gate"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/attn.hip",
+  "rewrite_kernel": "k_attn",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

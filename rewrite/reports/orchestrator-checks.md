@@ -43,3 +43,9 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 
 - 43 distinct instances with MATCH in g11.md; LqGrp branch of the 16 hc8 kernels in `tables/g11-lq.md` (96 MATCH rows; negctl `g11-lq-negctl.md`). sha1 of 11 .hip: Mac equals Ai-core. negctl 12 MISMATCH rows in g11-negctl.md.
 - Re-run seeds 7 and 11: k_hc8_fused<2> on hc8_lq_2.json (LqGrp branch), 2 of 2 MATCH.
+
+## g07 (attn_fd, attn_fa2, qk, rope, kv, attn_fa, attn, attn_sel), 2026-10-10
+
+- 45 distinct instances with MATCH, 0 MISMATCH rows; negctl 29 MISMATCH rows. sha1 of 8 .hip: Mac equals Ai-core. Edge specs present for attn_fd_merge, attn, attn_sel, attn_fa, attn_fa2 (3), qk.
+- Re-run seeds 7 and 11: k_attn_fa2<1,1,false,0,0,false> at N 48 (295,040 outputs), 2 of 2 MATCH.
+- Negative control, log2e 0x3fb8aa3b to 0x3fb8aa3c (1 ulp, attn_fa2.hip:30): MISMATCH, 16 outputs differ, max_ulp 176.

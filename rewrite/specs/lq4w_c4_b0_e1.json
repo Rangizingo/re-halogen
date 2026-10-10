@@ -1,0 +1,27 @@
+{
+  "grid": ["=N", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "blob": {"bytes": "=256+N*16*ceil_div(N,20)+N*(2*ceil_div(N,20)+16)+64", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED", "lo": -2, "hi": 2}},
+    "x": {"bytes": "=4*32*ceil_div(N,20)*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+100", "lo": -2, "hi": 2}},
+    "out": {"bytes": "=N*4*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "blob"},
+    {"offset": 8, "buffer": "x"},
+    {"offset": 16, "buffer": "out"},
+    {"offset": 24, "type": "i64", "value": "=32*ceil_div(N,20)"},
+    {"offset": 32, "type": "i64", "value": "=N"},
+    {"offset": 40, "type": "i64", "value": 256},
+    {"offset": 48, "type": "i64", "value": "=256+N*16*ceil_div(N,20)"},
+    {"offset": 56, "type": "i64", "value": "=2*ceil_div(N,20)+16"},
+    {"offset": 64, "buffer": "out"},
+    {"offset": 72, "type": "f32", "value": "=0.5+SEED*0.25"}
+  ],
+  "dump": ["out"],
+  "compare": {
+    "rewrite_src": "../kernels/lq4w.hip",
+    "rewrite_kernel": "lq4w_sel",
+    "outputs": [{"buffer": "out", "dtype": "bf16"}]
+  }
+}
