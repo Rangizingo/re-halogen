@@ -254,7 +254,7 @@ Can rely on [proven]:
 - The MTP head file layout and the host plumbing around it.
 
 Cannot rely on (PARTIAL, OPEN-BOUNDED, UNOBSERVABLE rows; what is missing):
-- U01 is CLOSED (moved out of this list): header +0x08 is a pack-kind tag the reader ignores; vendor weight packs carry 1, vendor device-constants packs 2, the in-binary bulk dump writes 3 (`closure/hnpb-header-r4.md`, `evidence/hnpb-headers-vendor.txt`).
+- U01 is CLOSED (moved out of this list): header +0x08 is a pack-kind tag, copied without a check and with no later reader found; vendor weight packs carry 1, vendor device-constants packs 2, the in-binary bulk dump writes 3 (`closure/hnpb-header-r4.md`, `evidence/hnpb-headers-vendor.txt`).
 - U02 PARTIAL: STORE and HIT grammars, checks and reply layouts are closed (`closure/npu-store-hit-r4.md`); IMG sides are the `res=` values of the model's devices.hnpm `elf` records, 256 and 512 for flux2-klein-4b. Open: how many entry ids a STORE reply lists and which entries a HIT reply lists (no shipped manifest has a bucket kind STORE or HIT accepts, so no live reply).
 - U05 UNOBSERVABLE: a future flip of the dflash2 format literal cannot be seen from the nine pulled releases.
 - U06 OPEN-BOUNDED: 0.14.x and 0.15.x patch deltas; those tags were not pulled.
