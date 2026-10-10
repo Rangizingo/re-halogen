@@ -1,0 +1,129 @@
+hnpm 1 devices
+family name=qwen35_hybrid sig=h2048.i6144.v248320.a8x2x256.g16x128x16x128.LLLALLLALLLALLLALLLALLLA layers=24
+compat h=16fc176471b384c2
+defaults h=57956300c985e99f
+route bmin=1 bmax=1 nmax=1024 bucket=u0
+route bmin=1 bmax=1 nmax=4096 bucket=u1
+route bmin=1 bmax=1 nmax=16384 bucket=u2
+compat h=16fc176471b384c2
+bucket kind=g S=1024 B=1 M=1024 xd=3 name=u0 elf=u0.elf bytes=16734664 sha256=f1ad33b97337e5aeaf68a9e12e3f649d4ac92d9bfa0ed0b2a48275af9316cbab csha256=1a83f5275efc6e7c974cb6f667563cc39fe4c6bb2af8450cc990960fbaaf0ed3
+pass xw=8982528 gbase=69632 gst=1048576 fkv=1179648 bucket=u0
+buf bytes=4194304 role=pass init=zero bucket=u0 name=b0
+buf bytes=17825792 role=unused init=zero bucket=u0 name=b1
+buf bytes=4194304 role=pass init=zero bucket=u0 name=b2
+buf bytes=10485760 role=pass init=zero bucket=u0 name=b3
+buf bytes=4194304 role=pass init=zero bucket=u0 name=b4
+buf bytes=4194304 role=pass init=zero bucket=u0 name=b5
+buf bytes=4194304 role=pass init=zero bucket=u0 name=b6
+buf bytes=12582912 role=pass init=zero bucket=u0 name=b7
+buf bytes=4194304 role=pass init=zero bucket=u0 name=b8
+buf bytes=262144 role=const init=blob src=consts blob=u0/w0 bucket=u0 name=b9
+buf bytes=16384 role=const init=blob src=consts blob=u0/w1 bucket=u0 name=b10
+buf bytes=16384 role=const init=blob src=consts blob=u0/w2 bucket=u0 name=b11
+buf bytes=19046400 role=pass init=zero bucket=u0 name=b12
+buf bytes=1048576 role=pass init=zero bucket=u0 name=b13
+buf bytes=7077888 role=pass init=zero bucket=u0 name=b14
+buf bytes=1179648 role=pass init=zero bucket=u0 name=b15
+buf bytes=20072448 role=layer init=blob src=weights blob=L{i}/w4 layers=linear_attention share=1 bucket=u0 name=b16
+buf bytes=4737024 role=layer init=blob src=weights blob=L{i}/w5 layers=all share=1 bucket=u0 name=b17
+buf bytes=28329984 role=layer init=blob src=weights blob=L{i}/w6 layers=all share=1 bucket=u0 name=b18
+buf bytes=14174208 role=layer init=blob src=weights blob=L{i}/w7 layers=all share=1 bucket=u0 name=b19
+buf bytes=11814912 role=layer init=blob src=weights blob=L{i}/w8 layers=full_attention share=1 bucket=u0 name=b20
+buf bytes=16384 role=layer init=blob src=weights blob=S1024/L{i}/w9 layers=full_attention share=1 bucket=u0 name=b21
+buf bytes=16384 role=layer init=blob src=weights blob=S1024/L{i}/w10 layers=full_attention share=1 bucket=u0 name=b22
+kernel bucket=u0 name=k0 slots=b0:bf16,b16:bf16,b12:bf16 kpts=f0 ro=k5 keep=k6
+kernel bucket=u0 name=k1 slots=b12:bf16,b4:bf16,b13:bf16,b17:bf16,b5:bf16 kpts=f1,f0
+kernel bucket=u0 name=k2 slots=b0:bf16,b16:bf16,b12:bf16,b4:bf16,b13:bf16,b17:bf16,b5:bf16 kpts=f0,f1,f0 ro=k7 keep=k8
+kernel bucket=u0 name=k3 slots=b2:bf16,b20:bf16,b3:bf16,b9:f32,b21:bf16,b14:bf16,b22:bf16,b15:bf16,b10:bf16,b11:bf16,b4:bf16,b17:bf16,b5:bf16 kpts=f0,f2,f3,f0 ro=k9
+kernel bucket=u0 name=k4 slots=b6:bf16,b18:bf16,b7:bf16,b19:bf16,b8:bf16 kpts=f0 ro=k10 keep=k11
+kernel bucket=u0 name=k5 slots=b0:bf16,b16:bf16,b12:bf16 kpts=f0 base=k0
+kernel bucket=u0 name=k6 slots=b0:bf16,b16:bf16,b12:bf16 kpts=f0 base=k0
+kernel bucket=u0 name=k7 slots=b0:bf16,b16:bf16,b12:bf16,b4:bf16,b13:bf16,b17:bf16,b5:bf16 kpts=f0,f1,f0 base=k2
+kernel bucket=u0 name=k8 slots=b0:bf16,b16:bf16,b12:bf16,b4:bf16,b13:bf16,b17:bf16,b5:bf16 kpts=f0,f1,f0 base=k2
+kernel bucket=u0 name=k9 slots=b2:bf16,b20:bf16,b3:bf16,b9:f32,b21:bf16,b14:bf16,b22:bf16,b15:bf16,b10:bf16,b11:bf16,b4:bf16,b17:bf16,b5:bf16 kpts=f0,f2,f3,f0 base=k3
+kernel bucket=u0 name=k10 slots=b6:bf16,b18:bf16,b7:bf16,b19:bf16,b8:bf16 kpts=f0 base=k4
+kernel bucket=u0 name=k11 slots=b6:bf16,b18:bf16,b7:bf16,b19:bf16,b8:bf16 kpts=f0 base=k4
+plan bucket=u0 type=linear_attention ops=in:b0,const:b12,call:k2,out:b5@0,res,in:b6,call:k4,out:b8@0,res
+plan bucket=u0 type=full_attention ops=in:b2,call:k3,out:b5@0,res,in:b6,call:k4,out:b8@0,res
+role bucket=u0 lin=k2 att=k3 mlp=k4 x=b12 st=b13 kv=b15 ia=b0 ib=b2 iu=b6 cd=b5 cm=b8 cb=L{i}/w11 sb=L{i}/w12
+bucket kind=g S=4096 B=1 M=4096 xd=3 name=u1 elf=u1.elf bytes=19957192 sha256=cfce8180d224aa605ece0a2f5633621ccfb005749f78ca52e1d8835c940093c8 csha256=9cb3f46b1aee2307b74930eade31e966f7b6f41dbdd3f2e38fdcbd0b97344bbd
+pass xw=35721216 gbase=69632 gst=1048576 fkv=4718592 bucket=u1
+buf bytes=16777216 role=pass init=zero bucket=u1 name=b0
+buf bytes=71303168 role=unused init=zero bucket=u1 name=b1
+buf bytes=16777216 role=pass init=zero bucket=u1 name=b2
+buf bytes=41943040 role=pass init=zero bucket=u1 name=b3
+buf bytes=16777216 role=pass init=zero bucket=u1 name=b4
+buf bytes=16777216 role=pass init=zero bucket=u1 name=b5
+buf bytes=16777216 role=pass init=zero bucket=u1 name=b6
+buf bytes=50331648 role=pass init=zero bucket=u1 name=b7
+buf bytes=16777216 role=pass init=zero bucket=u1 name=b8
+buf bytes=1048576 role=const init=blob src=consts blob=u1/w0 bucket=u1 name=b9
+buf bytes=16384 role=const init=blob src=consts blob=u1/w1 bucket=u1 name=b10
+buf bytes=16384 role=const init=blob src=consts blob=u1/w2 bucket=u1 name=b11
+buf bytes=75669504 role=pass init=zero bucket=u1 name=b12
+buf bytes=1048576 role=pass init=zero bucket=u1 name=b13
+buf bytes=28311552 role=pass init=zero bucket=u1 name=b14
+buf bytes=4718592 role=pass init=zero bucket=u1 name=b15
+buf bytes=20072448 role=layer init=blob src=weights blob=L{i}/w4 layers=linear_attention share=1 bucket=u1 name=b16
+buf bytes=4737024 role=layer init=blob src=weights blob=L{i}/w5 layers=all share=1 bucket=u1 name=b17
+buf bytes=28329984 role=layer init=blob src=weights blob=L{i}/w6 layers=all share=1 bucket=u1 name=b18
+buf bytes=14174208 role=layer init=blob src=weights blob=L{i}/w7 layers=all share=1 bucket=u1 name=b19
+buf bytes=11814912 role=layer init=blob src=weights blob=L{i}/w8 layers=full_attention share=1 bucket=u1 name=b20
+buf bytes=16384 role=layer init=blob src=weights blob=S4096/L{i}/w9 layers=full_attention share=1 bucket=u1 name=b21
+buf bytes=16384 role=layer init=blob src=weights blob=S4096/L{i}/w10 layers=full_attention share=1 bucket=u1 name=b22
+kernel bucket=u1 name=k0 slots=b0:bf16,b16:bf16,b12:bf16 kpts=f0 ro=k5 keep=k6
+kernel bucket=u1 name=k1 slots=b12:bf16,b4:bf16,b13:bf16,b17:bf16,b5:bf16 kpts=f1,f0
+kernel bucket=u1 name=k2 slots=b0:bf16,b16:bf16,b12:bf16,b4:bf16,b13:bf16,b17:bf16,b5:bf16 kpts=f0,f1,f0 ro=k7 keep=k8
+kernel bucket=u1 name=k3 slots=b2:bf16,b20:bf16,b3:bf16,b9:f32,b21:bf16,b14:bf16,b22:bf16,b15:bf16,b10:bf16,b11:bf16,b4:bf16,b17:bf16,b5:bf16 kpts=f0,f2,f3,f0 ro=k9
+kernel bucket=u1 name=k4 slots=b6:bf16,b18:bf16,b7:bf16,b19:bf16,b8:bf16 kpts=f0 ro=k10 keep=k11
+kernel bucket=u1 name=k5 slots=b0:bf16,b16:bf16,b12:bf16 kpts=f0 base=k0
+kernel bucket=u1 name=k6 slots=b0:bf16,b16:bf16,b12:bf16 kpts=f0 base=k0
+kernel bucket=u1 name=k7 slots=b0:bf16,b16:bf16,b12:bf16,b4:bf16,b13:bf16,b17:bf16,b5:bf16 kpts=f0,f1,f0 base=k2
+kernel bucket=u1 name=k8 slots=b0:bf16,b16:bf16,b12:bf16,b4:bf16,b13:bf16,b17:bf16,b5:bf16 kpts=f0,f1,f0 base=k2
+kernel bucket=u1 name=k9 slots=b2:bf16,b20:bf16,b3:bf16,b9:f32,b21:bf16,b14:bf16,b22:bf16,b15:bf16,b10:bf16,b11:bf16,b4:bf16,b17:bf16,b5:bf16 kpts=f0,f2,f3,f0 base=k3
+kernel bucket=u1 name=k10 slots=b6:bf16,b18:bf16,b7:bf16,b19:bf16,b8:bf16 kpts=f0 base=k4
+kernel bucket=u1 name=k11 slots=b6:bf16,b18:bf16,b7:bf16,b19:bf16,b8:bf16 kpts=f0 base=k4
+plan bucket=u1 type=linear_attention ops=in:b0,const:b12,call:k2,out:b5@0,res,in:b6,call:k4,out:b8@0,res
+plan bucket=u1 type=full_attention ops=in:b2,call:k3,out:b5@0,res,in:b6,call:k4,out:b8@0,res
+role bucket=u1 lin=k2 att=k3 mlp=k4 x=b12 st=b13 kv=b15 ia=b0 ib=b2 iu=b6 cd=b5 cm=b8 cb=L{i}/w11 sb=L{i}/w12
+bucket kind=g S=16384 B=1 M=16384 xd=3 name=u2 elf=u2.elf bytes=32918808 sha256=568ab75568a288c8ba52dc97df6c6900c55eef2f817c33c914d2fb49747b6567 csha256=06b75093b397eb0400de64f37a931e46ed14a7332d3729523a933be00b3c3aff
+pass xw=142675968 gbase=69632 gst=1048576 fkv=18874368 bucket=u2
+buf bytes=67108864 role=pass init=zero bucket=u2 name=b0
+buf bytes=285212672 role=unused init=zero bucket=u2 name=b1
+buf bytes=67108864 role=pass init=zero bucket=u2 name=b2
+buf bytes=167772160 role=pass init=zero bucket=u2 name=b3
+buf bytes=67108864 role=pass init=zero bucket=u2 name=b4
+buf bytes=67108864 role=pass init=zero bucket=u2 name=b5
+buf bytes=67108864 role=pass init=zero bucket=u2 name=b6
+buf bytes=201326592 role=pass init=zero bucket=u2 name=b7
+buf bytes=67108864 role=pass init=zero bucket=u2 name=b8
+buf bytes=4194304 role=const init=blob src=consts blob=u2/w0 bucket=u2 name=b9
+buf bytes=16384 role=const init=blob src=consts blob=u2/w1 bucket=u2 name=b10
+buf bytes=16384 role=const init=blob src=consts blob=u2/w2 bucket=u2 name=b11
+buf bytes=302161920 role=pass init=zero bucket=u2 name=b12
+buf bytes=1048576 role=pass init=zero bucket=u2 name=b13
+buf bytes=113246208 role=pass init=zero bucket=u2 name=b14
+buf bytes=18874368 role=pass init=zero bucket=u2 name=b15
+buf bytes=20072448 role=layer init=blob src=weights blob=L{i}/w4 layers=linear_attention share=1 bucket=u2 name=b16
+buf bytes=4737024 role=layer init=blob src=weights blob=L{i}/w5 layers=all share=1 bucket=u2 name=b17
+buf bytes=28329984 role=layer init=blob src=weights blob=L{i}/w6 layers=all share=1 bucket=u2 name=b18
+buf bytes=14174208 role=layer init=blob src=weights blob=L{i}/w7 layers=all share=1 bucket=u2 name=b19
+buf bytes=11814912 role=layer init=blob src=weights blob=L{i}/w8 layers=full_attention share=1 bucket=u2 name=b20
+buf bytes=16384 role=layer init=blob src=weights blob=S16384/L{i}/w9 layers=full_attention share=1 bucket=u2 name=b21
+buf bytes=16384 role=layer init=blob src=weights blob=S16384/L{i}/w10 layers=full_attention share=1 bucket=u2 name=b22
+kernel bucket=u2 name=k0 slots=b0:bf16,b16:bf16,b12:bf16 kpts=f0 ro=k5 keep=k6
+kernel bucket=u2 name=k1 slots=b12:bf16,b4:bf16,b13:bf16,b17:bf16,b5:bf16 kpts=f1,f0
+kernel bucket=u2 name=k2 slots=b0:bf16,b16:bf16,b12:bf16,b4:bf16,b13:bf16,b17:bf16,b5:bf16 kpts=f0,f1,f0 ro=k7 keep=k8
+kernel bucket=u2 name=k3 slots=b2:bf16,b20:bf16,b3:bf16,b9:f32,b21:bf16,b14:bf16,b22:bf16,b15:bf16,b10:bf16,b11:bf16,b4:bf16,b17:bf16,b5:bf16 kpts=f0,f2,f3,f0 ro=k9
+kernel bucket=u2 name=k4 slots=b6:bf16,b18:bf16,b7:bf16,b19:bf16,b8:bf16 kpts=f0 ro=k10 keep=k11
+kernel bucket=u2 name=k5 slots=b0:bf16,b16:bf16,b12:bf16 kpts=f0 base=k0
+kernel bucket=u2 name=k6 slots=b0:bf16,b16:bf16,b12:bf16 kpts=f0 base=k0
+kernel bucket=u2 name=k7 slots=b0:bf16,b16:bf16,b12:bf16,b4:bf16,b13:bf16,b17:bf16,b5:bf16 kpts=f0,f1,f0 base=k2
+kernel bucket=u2 name=k8 slots=b0:bf16,b16:bf16,b12:bf16,b4:bf16,b13:bf16,b17:bf16,b5:bf16 kpts=f0,f1,f0 base=k2
+kernel bucket=u2 name=k9 slots=b2:bf16,b20:bf16,b3:bf16,b9:f32,b21:bf16,b14:bf16,b22:bf16,b15:bf16,b10:bf16,b11:bf16,b4:bf16,b17:bf16,b5:bf16 kpts=f0,f2,f3,f0 base=k3
+kernel bucket=u2 name=k10 slots=b6:bf16,b18:bf16,b7:bf16,b19:bf16,b8:bf16 kpts=f0 base=k4
+kernel bucket=u2 name=k11 slots=b6:bf16,b18:bf16,b7:bf16,b19:bf16,b8:bf16 kpts=f0 base=k4
+plan bucket=u2 type=linear_attention ops=in:b0,const:b12,call:k2,out:b5@0,res,in:b6,call:k4,out:b8@0,res
+plan bucket=u2 type=full_attention ops=in:b2,call:k3,out:b5@0,res,in:b6,call:k4,out:b8@0,res
+role bucket=u2 lin=k2 att=k3 mlp=k4 x=b12 st=b13 kv=b15 ia=b0 ib=b2 iu=b6 cd=b5 cm=b8 cb=L{i}/w11 sb=L{i}/w12
+decode elf=u3.elf kinds=dddadddadddadddadddaddda H=2048 F=6144 vocab=248320 caps=1152 kernels=k12 wtot=249700352 scr=2622976 state=5345280 logits=2374656 bytes=2854352 sha256=c4ce63074583f116c38792bae6392efffea90ebb4f01b870df1ae57771235f61 csha256=ab26efdb2002dc2381979ac174fff7e132c300ce713b2116942ea4f750eab967
