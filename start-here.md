@@ -6,7 +6,7 @@ rebuild a compatible server from the writeups).
 
 **Overall: Phase 7 done at plan scope (2026-10-10).** All phases have
 evidence-backed writeups. Unknowns, counted from the table in
-`analysis/unknowns.md`: CLOSED 20, PARTIAL 4, OPEN-BOUNDED 2 (U06,
+`analysis/unknowns.md`: CLOSED 23, PARTIAL 1, OPEN-BOUNDED 2 (U06,
 U22), UNOBSERVABLE 1 (U05). PARTIAL rows say which half is closed. What is
 left needs data that is not in this workspace (see "Open" below).
 
@@ -24,13 +24,12 @@ left needs data that is not in this workspace (see "Open" below).
 | 7 | Function maps of all three binaries (3,568 / 3,222 / 1,412 functions, 1,738 kernel stubs) | `analysis/function-map*.tsv`, `analysis/function-map.md` |
 | 7 | Wire protocol, entrypoint, API layer, 31-step request trace | `analysis/wire-protocol.md`, `entrypoint-flow.md`, `api-layer.md`, `request-trace.md` |
 | 7 | Live 0.17.3 engine run on Ai-core, version compare 0.17.2 to 0.17.3 | `analysis/runtime-run-0.17.3.md`, `analysis/version-compare-0.17.2-0.17.3.md` |
-| 7 | closure reports merged into the ledger in four rounds (`analysis/closure/`, 39 files); rebuild guide; i4r decode; engine runs 2 and 3 | `analysis/closure/`, `analysis/rebuild-guide.md` |
+| 7 | closure reports merged into the ledger in five rounds (`analysis/closure/`, 43 files); rebuild guide; i4r decode; engine runs 2 and 3 | `analysis/closure/`, `analysis/rebuild-guide.md` |
 
 ## Open
 
-- PARTIAL rows U02, U11, U12, U21: each row says
-  which half is closed and what is left (most need a runtime probe or a
-  vendor file not shipped).
+- PARTIAL row U12: the row says which half is closed; what is left needs
+  a kernarg capture on Ai-core (p7-11) and the kernel rewrite (p7-12).
 - U06 old patch releases, U05 future releases, U22 no AMDGCN decompiler:
   named limits by decision.
 - The inferred steps of the request trace are listed in its Gaps section.
