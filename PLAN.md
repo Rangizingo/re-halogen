@@ -96,6 +96,12 @@ Incident: the engine test run deleted the live service's 60 GiB disk prompt cach
 
 Left (see `.claude/goal.md`): close the remaining open items in `analysis/unknowns.md` (host-side, by decompile proof), write `analysis/request-trace.md` and `analysis/rebuild-guide.md`, map `halogen-npu` and `halogen-tools` the same way, further Ai-core runs only for a named open item (serial-seed determinism, HT checkpoint, seed source U23), refresh the closure docs, open the PR, independent review, merge.
 
+**Tracking for the next session** (the project plan_path `plan.md` is this same file on the case-insensitive Mac filesystem; never write a separate plan.md). Change `[ ]` to `[x] verified: <proof>` as each is proven.
+
+- [ ] p7-1 Update `analysis/request-trace.md` steps and Gaps from `analysis/closure/` (pld.md, mtp-head.md, cache-key-kvpool.md, kernel-binding.md and the r2 reports), then write `analysis/rebuild-guide.md` (formats, protocol, startup, request path, kernels and dispatch, cache and KV pool, speculation, NPU, proven vs inferred). Proof: both files exist and the guide has no em dash.
+- [ ] p7-2 Refresh `analysis/coverage.md`, `analysis/report.md` section 6, `start-here.md`, the AGENTS.md status line and this progress note to the current facts (unknowns counted from the table in `analysis/unknowns.md`; PARTIAL rows stay PARTIAL). Proof: `python3 -m pytest -q tests` passes and report.md section 6 no longer says "Not yet done".
+- [ ] p7-3 Open the PR for `phase6-closure`, independent review (reviewer on a different model than the author, see `.claude/handoff.md`), then merge. Proof: `gh pr list --state merged --head phase6-closure` is not empty.
+
 Reviewer gate: the stop-time review gate needs a reviewer on a different model than the Sonnet author; a fix (extra ladder rung and clearer message) was handed to an agent under a 60 minute hook grant (see needs-human). Settings parity warning: `rust-analyzer-lsp` plugin not installed, entry dropped from live `settings.json` only; Peter's call.
 
 ---
