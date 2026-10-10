@@ -86,10 +86,12 @@ verify/walk paths (getenv wrappers at 0x1883020 / 0x184bd90 Ghidra-space).
   "the token protocol has no auth; keep this port unpublished"). None in the
   front either — documented; request records (`HALOGEN_RECORD_DIR`) store
   message text and the docs warn about shared hosts.
-- **EULA** (image copy, `image/EULA.md`): free use incl. commercial; RE
-  explicitly not prohibited (interoperability + security research welcome);
-  no redistribution of modified builds as halogen; benchmark publication
-  expressly permitted (ask: name the version + prompt set).
+- **EULA** (image copy, `image/EULA.md`, revised to v1.0 2026-10-10): free
+  use incl. commercial; RE expressly permitted without limitation and
+  encouraged as an open community challenge (findings, specs, and derived
+  implementations publishable, attribution per §2); redistribution of
+  modified/derived works permitted under attribution conditions; benchmark
+  publication expressly permitted (ask: name the version + prompt set).
 
 ## 5. Checkpoint format (.hgn) — recovered, round-trip implemented
 

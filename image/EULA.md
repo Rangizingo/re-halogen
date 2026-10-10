@@ -1,11 +1,11 @@
 # halogen — End User License Agreement
 
-**Version 0.1 · Effective 25 August 2026**
+**Version 1.0 · Effective 10 October 2026**
 
-This Agreement is between you ("**You**") and **Peonist, LLC** ("we", "us"), and
-governs your use of **halogen** (the "**Software**") — the container image
-published by us containing the halogen inference engine binary, its serving
-front-end, and supporting scripts.
+This Agreement is between you ("**You**") and **Peonist, LLC** ("we", "us"),
+and governs your use of **halogen** (the "**Software**") — the container
+image published by us containing the halogen inference engine binary, its
+serving front-end, and supporting scripts.
 
 By downloading, running, or otherwise using the Software, you agree to this
 Agreement. If you do not agree, do not use the Software.
@@ -31,42 +31,79 @@ It does **not** cover:
   directory and inside the image. Where a third-party license conflicts with
   this Agreement, **the third-party license governs that component.**
 
-## 2. License grant
+## 2. Open-source license grant
 
-Subject to this Agreement, we grant you a worldwide, royalty-free,
-non-exclusive, perpetual license to:
+The Software is **free and open source**. Subject to the conditions in this
+Agreement, we grant you a worldwide, royalty-free, non-exclusive, perpetual,
+irrevocable license to:
 
 1. **Use and run** the Software for any purpose, **including commercial and
    production use**, on any number of machines, with no seat, core, request,
    or revenue limit, and no license key.
-2. **Redistribute the Software unmodified**, including by mirroring it into
-   your own container registry, provided that this Agreement and
-   `THIRD-PARTY-NOTICES.md` travel with it intact and that you do not
-   represent the redistributed copy as being something other than ours.
+2. **Study, review, and modify** the Software, in source and object form, and
+   to create derivative works.
+3. **Redistribute** the Software, in source or object form, modified or
+   unmodified, including by mirroring it into your own container registry.
+4. **Extract, adapt, and reuse components** of the Software — source files,
+   build tooling, scripts, packaging, and data formats — in your own
+   projects, at your own free will and without additional permission.
 
 No fee is payable and no registration is required.
 
-## 3. Restrictions
+**Conditions.** In exchange, copies of the Software and of any derivative
+work must:
+
+1. carry a prominent notice stating that they are derived from halogen and
+   identifying its origin;
+2. include the copyright notice, this Agreement, and
+   `THIRD-PARTY-NOTICES.md` intact; and
+3. clearly document any modifications, so that a modified copy is not
+   represented as the unmodified Software.
+
+## 3. Reverse engineering — expressly permitted, and encouraged
+
+**Reverse engineering of the Software is explicitly permitted without
+limitation.** You may decompile, disassemble, emulate, instrument, profile,
+and otherwise analyze any part of the Software — including the engine binary,
+its compiled gfx1151 device code and fatbin kernels, the serving front-end,
+the `.hgn` container format, and any other component shipped in the image —
+for any purpose whatsoever, including interoperability, security research,
+debugging, academic study, teaching, and personal curiosity.
+
+This permission is unconditional. It requires no separate authorization, no
+notice, no registration, and no agreement beyond this one, and no provision
+of this Agreement — including Section 4 — restricts it.
+
+**You may publish what you find.** Writeups, specifications, disassemblies,
+decompilations, recovered algorithms, re-implementations, ports, forks, and
+derivative works of any kind are yours to distribute under terms of your
+choosing. We claim no approval right over them and assert no copyright
+against them, provided the attribution conditions in Section 2 are met.
+
+**This is an open community challenge.** The Software is published as a
+compiled binary by design, and we want it taken apart. Find out how the
+kernels work. Recover the formats. Break the assumptions. Show us where the
+engine is slow, wrong, unsafe, or leaving performance on the table, and
+improve it. Fork it, rebuild it, and ship something better under your own
+name. Anything you discover is a contribution to the project, not a
+violation of it.
+
+## 4. Restrictions
 
 You may not:
 
-1. **Redistribute a modified Software image to third parties**, or distribute
-   a derivative and present it as halogen. Modifying your own copy for your
-   own use is permitted; passing the result to others as halogen is not.
-2. **Remove, obscure, or alter** the copyright notices, this Agreement, or
-   `THIRD-PARTY-NOTICES.md`.
-3. **Use our names or marks** — "Peonist", "halogen" — to endorse or promote
+1. **Use our names or marks** — "Peonist", "halogen" — to endorse or promote
    your products without our written permission. Factually stating that your
-   product runs on halogen is fine and needs no permission. `TRADEMARKS.md`
-   states the full policy.
+   product runs on halogen, is derived from halogen, or is compatible with
+   halogen is fine and needs no permission. `TRADEMARKS.md` states the full
+   policy.
+2. **Present the Software as warrantied.** The disclaimers in Sections 6 and
+   7 must travel with every copy and derivative.
+3. **Misrepresent provenance.** Do not remove the attribution notices
+   required by Section 2, and do not represent a modified copy as the
+   unmodified Software.
 
-**On reverse engineering.** We do not prohibit it, and we would rather say so
-plainly than pretend otherwise: the engine ships as a compiled binary
-containing gfx1151 device code, and anyone with a disassembler can read those
-kernels. We ask that you not redistribute derived source or kernels as your
-own work. Interoperability and security research are welcome.
-
-## 4. Benchmarking and publication — expressly permitted
+## 5. Benchmarking and publication — expressly permitted
 
 **You may run benchmarks on the Software and publish the results.** No
 approval, notice, or prior review by us is required. We ship `bench` and
@@ -86,7 +123,7 @@ meaningful, in either direction. This is a request, and not a condition of
 your license: publishing a figure without naming the prompt set does not
 breach this Agreement.
 
-## 5. No telemetry
+## 6. No telemetry
 
 The Software performs no telemetry, no license checks, and no usage
 reporting, and it makes no callback to us of any kind. **We receive no
@@ -100,7 +137,7 @@ exception, and it is off unless you switch it on: if you set
 repository you name. That is a connection to a third-party host of your
 choosing, not to us, and it happens only when the weights are absent.
 
-## 6. No warranty
+## 7. No warranty
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -115,7 +152,7 @@ error-free. **Model output is generated text and may be wrong.** Do not rely
 on it for safety-critical, medical, legal, or financial decisions without
 independent verification.
 
-## 7. Limitation of liability
+## 8. Limitation of liability
 
 TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL WE BE LIABLE FOR ANY
 INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS
@@ -132,16 +169,17 @@ liabilities; in those places, the exclusions above apply only to the extent
 permitted, and nothing here limits liability for fraud, or for death or
 personal injury caused by negligence.
 
-## 8. Term and termination
+## 9. Term and termination
 
-This Agreement applies for as long as you use the Software. It terminates
-automatically if you breach Section 3, and you must then stop using and
-distributing the Software. Sections 1, 6, 7, and 9 survive termination.
+This license is perpetual and irrevocable. It terminates only if you breach
+Section 4, and you must then stop distributing the Software in breach;
+licenses you have already granted to third parties for copies they lawfully
+received are unaffected. Sections 1, 7, 8, and 10 survive termination.
 
 Your rights under Section 2 for a copy you already hold are not withdrawn by
 us ceasing to publish the Software.
 
-## 9. General
+## 10. General
 
 This Agreement is the entire agreement between us regarding the Software and
 supersedes prior discussions. If any provision is held unenforceable, the rest
@@ -156,4 +194,4 @@ terms will apply to those versions, not retroactively to this one.
 ---
 
 **Contact:** open an issue at https://github.com/peonist-ai/halogen-flash-server
-**Copyright © 2026 Peonist, LLC. All rights reserved.**
+**Copyright © 2026 Peonist, LLC.**

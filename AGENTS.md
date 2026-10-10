@@ -84,6 +84,9 @@ Ghidra 12.1.2 lives at `~/.hermes/tools/ghidra-12.1.2` (JAVA_HOME=
 
 - Read-only analysis of vendor binaries; do not run `flash_serve` from this
   folder (a production engine from the same family runs on this host).
-- EULA §3 permits RE for interoperability/security research; do not
-  redistribute derived source as our own work.
+- EULA v1.0 §3 permits reverse engineering without limitation and
+  encourages it as an open community challenge: findings, specs,
+  disassemblies, and derived implementations may be published and shared
+  freely (attribution per §2). Our own repo material is CC0
+  (`LICENSE`).
 - Every mutation on this host needs Peter's explicit go first.
