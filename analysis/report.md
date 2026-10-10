@@ -132,20 +132,25 @@ losslessly in RAM at start (~20 s) or once via `convert`.
    (4 code objects, `work/fatbin/`, manifest `work/fatbin-manifest.json`),
    llvm-objdump gfx1151 disassembly complete (`analysis/kernels-disasm/`,
    3.34M lines; 214 per-kernel slices `analysis/kernels-slices.tar.xz`).
-   Remaining: per-family algorithm writeups (Phase 2) from the slices;
-   Ghidra pseudocode for AMDGCN is blocked — no shader-ISA module exists
+   Family writeups: attention, MoE, indexer DONE
+   (`analysis/kernels-attention.md`, `kernels-moe.md`, `kernels-indexer.md`).
+   Remaining: dequant + speculation writeups — slices pre-cut
+   (`work/kernels-dequant/` 1141 files, `work/kernels-spec/` 43 files,
+   stats `tmp/stats-{dequant,spec}.csv`); Ghidra pseudocode for AMDGCN
+   stays blocked — no shader-ISA module exists
    (`analysis/ghidra-module-writeup.md`); objdump-level is the accepted path.
-2. **halogen-tools deep pass** — format recovered + round-trip implemented
-   (§5); remaining: `analysis/hgn-format.md` writeup + `verify` round-trip
-   acceptance tests.
-3. **halogen-npu** — overview + `serve` loop decompiled
-   (`analysis/npu_server_pseudo.c`); remaining: XRT call graph,
-   consts.hnpb/devices.hnpm formats, getaddrinfo call sites.
-4. **dflash2 drafter** — front-end exposes it (id 2); engine 0.17.3 has no
-   matching strings; capability comes from the probe. Trace the probe fields.
-5. **Version deltas** — 0.17.2/0.17.0/0.16.4/0.15.0 pull stalled at the
-   token step (`work/pull.status`); rerun `scripts/pull_versions.sh`, then
-   `compare_functions` / `find_changed_behavior`.
+2. **halogen-tools deep pass** — DONE: `analysis/hgn-format.md` +
+   acceptance matrix (`tmp/verify_matrix.tsv`) + 5-test round-trip suite
+   (`tmp/rt_roundtrip.py`, all PASS).
+3. **halogen-npu** — DONE: `analysis/npu-engine.md` (XRT call graph,
+   hnpm/hnpb formats, getaddrinfo loopback gate proven).
+4. **dflash2 drafter** — DONE: `analysis/dflash2-probe.md` (reserved wire
+   slot, hard-wired 0 in every engine 0.11.10→0.17.3).
+5. **Version deltas** — DONE: `analysis/version-deltas.md` (9 releases,
+   sha256 code-object lineage, kernel/string set diffs).
+6. **Closure (Phase 6)** — remaining: unknowns ledger + coverage table +
+   evidence bundle + this section rewritten to "Findings complete;
+   residual unknowns: <list>". Blocked on item 1's two writeups.
 
 ## 7. Method notes (reproducibility)
 

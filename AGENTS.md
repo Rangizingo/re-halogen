@@ -5,14 +5,19 @@ the OpenAI-compatible inference server for Qwen3.8-Flash-Next on AMD Strix
 Halo (gfx1151). Target image: `ghcr.io/peonist-ai/halogen-flash-server:0.17.3`
 (manifest sha256:3bca0132db3c…, built 2026-10-08).
 
-Status: **in progress (see PLAN.md "Progress log" for per-phase state).**
+Status: **~85% complete (see `start-here.md` + PLAN.md "Progress log").**
 Settled with evidence: architecture, network surface, falsifier question,
 `main()`, `draft_sample` + falsifier callers, the GGUF→.hgn repack driver
 (0x19af350), fatbin v2 extraction + full gfx1151 disassembly (llvm-objdump),
-and a working Python parser/builder for the `.hgn` container (`work/hgn/hgnpy.py`,
-spec draft in PLAN.md progress log). Open: kernel pseudocode (no Ghidra AMDGCN
-module exists — objdump-level is the working path), `.hgn` writeup + round-trip
-tests, npu XRT call graph + getaddrinfo, dflash2, closure. `PLAN.md` = the
+a working Python parser/builder for the `.hgn` container (`work/hgn/hgnpy.py`)
+with the format spec AND acceptance round-trips passing
+(`analysis/hgn-format.md`, `tmp/rt_roundtrip.py`), NPU engine
+(`analysis/npu-engine.md`), version deltas across 9 releases
+(`analysis/version-deltas.md`), dflash2 (`analysis/dflash2-probe.md`), and
+3 of 5 kernel-family writeups (attention, MoE, indexer). Open: the
+dequant + speculation kernel-family writeups (slices and stats prepped,
+`work/kernels-dequant/`, `work/kernels-spec/`) and Phase 6 closure
+(ledger, coverage, evidence bundle, report.md rewrite). `PLAN.md` = the
 approved autonomous completion plan (Phases 0-6); execute it when Peter says
 "run the halogen plan".
 

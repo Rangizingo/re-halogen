@@ -27,13 +27,17 @@ report.md's §6 "Not yet done" is empty.
 Evidence lives in `analysis/` and `work/`; decompiles in `work/hgn/*.c`
 (27 Ghidra JSON passes, 17 cleaned pseudocode files).
 
-**Phase 0 — PARTIAL.** Live probes skipped honestly: engine pid 2918 gone,
+**Phase 0 — DONE.** Live probes skipped honestly: engine pid 2918 gone,
 127.0.0.1:8730 refuses; 8731 is the bits-live llama stack (not the target).
 Protocol grammar corroborated statically (client-side) in
-`analysis/runtime-findings.md`. **Version pull stalled**: `scripts/pull_versions.sh`
-started 2026-10-09T21:32Z and died at the token step (`work/pull.status` has
-only the start line; `work/versions/` empty). Rerun, then
-`compare_functions`/`find_changed_behavior` → `analysis/version-deltas.md`.
+`analysis/runtime-findings.md`. **Version pull rerun 2026-10-10**: all 8
+versions (0.11.10/0.12.0/0.13.3/0.13.4/0.15.0/0.16.4/0.17.0/0.17.2) pulled
+to `work/versions/`, carved per-version (`carve_fatbin.py`), symbol-set +
+string-set diffs run (`scripts/version_deltas.py` → `tmp/deltas_raw.txt`)
+→ **`analysis/version-deltas.md` written** (code-object sha256 lineage
+across 9 releases; +318 kernels at 0.16.4; k_dv_* at 0.17.2;
+HALOGEN_SAMPLED_*/WALK_FALSIFY host strings at 0.17.3; 0.17.2→0.17.3 ships
+zero device-code change).
 
 **Phase 1 — DONE at disassembly level.** Clang offload bundle v2 walked
 (`scripts/carve_fatbin.py`): 4 code objects in `work/fatbin/` (largest
@@ -46,14 +50,25 @@ k_ngram_*). Ghidra AMDGCN: **no module exists** for shader ISA — probed and
 documented in `analysis/ghidra-module-writeup.md` (only the F32 management-CPU
 module, installed + tested, irrelevant to kernels). Per plan's fallback:
 kernel analysis proceeds at objdump level; Ghidra pseudocode for AMDGCN is a
-bounded, documented open item. `analysis/fatbin-inventory.md` still to write
-from the manifest.
+bounded, documented open item. `analysis/fatbin-inventory.md` written
+from the manifest (2026-10-10).
 
-**Phase 2 — IN PROGRESS (objdump-level path).** Kernel families inventoried
-(counts above). No `analysis/kernels-<family>.md` writeups yet. The four
-acceptance claims need kernel-level evidence read out of the slices.
+**Phase 2 — IN PROGRESS (objdump-level path), 3/5 families written.**
+`analysis/kernels-attention.md` (k_attn_fa2/qs*, 264 L),
+`analysis/kernels-moe.md` (k_dn_fused16/k_exp*/router, 370 L),
+`analysis/kernels-indexer.md` (k_dnc_* sparse-attention, 194 L).
+Slices for the remaining families cut 2026-10-10:
+`work/kernels-dequant/` (1141: k_lq4w/lq6k/lq8s32/lq8w/lq6w/lbfw/hcup*/
+hc6_fused/hc8_fused/ht_*/i4r_*/q4moe) + `work/kernels-spec/` (43:
+k_smpg_*/accept_prob/pen_*/sample/ngram_*/dv_quant/dv_scatter), stats in
+`tmp/stats-dequant.csv` / `tmp/stats-spec.csv`. Two subagent writeup runs
+on these died from model context overflow (transcripts under
+`~/.hermes/cache/delegation/live/`); the reads are cheap, the writeup
+needs a grep-driven budget — see start-here.md. Acceptance claims:
+attention/MoE/indexer claims closed in their writeups; HT rotation-plane
+and speculation-cannot-change-output claims need the two missing writeups.
 
-**Phase 3 — MOSTLY DONE, writeup pending.** `.hgn` format fully recovered and
+**Phase 3 — DONE.** `.hgn` format fully recovered and
 implemented round-trip in `work/hgn/hgnpy.py` (docstring = the spec draft):
 104-B header (magic HGN1, version, n_tensors, table_off, data_off, file_bytes,
 model_id[64]); 160-B table entries (name[96], dtype, rank≤4, dims u64[4],
@@ -67,18 +82,37 @@ decompiled: `flash_serve` 0x19af350 (`work/hgn/gs_0x19af350.c`) — GGUF magic
 gate, n-gram table requirement (`layers.1.ple.ngram_embedding.weight` /
 `per_layer_token_embd.weight`, fatal "Nothing was written" path), 64-B
 aligned layout from 0x80, sparse `ftruncate`, `HALOGEN_GGUF_THREADS`
-(default 8, clamp 1..64), thread-pool spawn. TODO: `analysis/hgn-format.md`
-+ run `halogen-tools verify` on the crafted files (pre-approved) → 3
-round-trip tests.
+(default 8, clamp 1..64), thread-pool spawn. **`analysis/hgn-format.md`
+written; acceptance matrix ran (`tmp/verify_matrix.tsv`, 165 files: 9 PASS
+/ 160 FAIL as designed) and the round-trip suite
+(`tmp/rt_roundtrip.py` → `work/hgn/rt/`) PASSES all 5: build→verify PASS,
+corrupt-payload→checksum FAIL, parse-back field-exact, truncate→layout
+FAIL, HT negative matrix (9 qparam forms, all rejected as
+"form the engine does not read" + companion-plane rule).**
 
-**Phase 4 — STARTED.** `halogen-npu` overview + `serve` decompiled
-(`analysis/npu_server_pseudo.c`, FUN_00133090: socket/poll loop). getaddrinfo
-call-site enumeration, XRT call graph, `consts.hnpb`/`devices.hnpm`/`hnpw`
-readers, `analysis/npu-engine.md`: open.
+**Phase 4 — DONE.** `analysis/npu-engine.md` written. getaddrinfo: single call
+site 0x35042 in FUN_00133090 (listen), loopback gate proven (sa_data[2]==0x7f /
+::1 checks; no connect import) — verdict loopback-only. XRT call graph documented
+(device→elf→hw_context→ext::kernel "main:<graph>"→run start/wait→bo
+host-only 0x20000000 = XCL_BO_FLAGS_HOST_ONLY, not CACHEABLE). Containers:
+devices.hnpm = text key=value manifest (parser FUN_00164090, xor32 FUN_00162fd0);
+consts.hnpb = HNPB v1 binary blob pack (FUN_00167960, 0xa8-B table, 4K-aligned
+blobs); `<id>.hnpw` = same HNPB v1 reader (no HNPW magic exists). serve/listen
+protocol verbs recovered (INFO/GEN/DEC/IMG/EMB/SCO/CLS/PFX/LEDGER/CANCEL/QUIT,
+READY banners, ERR/OK replies); worker FUN_001362d0 + dispatcher FUN_0012b110
+decompiled (work/npu/*.pseudo.c). Bounded-open: HNPB +0x08 header u32, per-blob
+u32 pair @+0x50/+0xa0, per-verb argument grammars.
 
-**Phase 5 — NOT STARTED.** dflash2 probe-field trace.
+**Phase 5 — DONE.** `analysis/dflash2-probe.md` written. Verdict: dflash2
+is a reserved wire-protocol drafter slot (id 2), hard-wired to 0 in the
+INFO format string of every engine 0.11.10→0.17.3 (zero `dflash` strings
+in any engine binary); the client 400s it before the engine sees it. The
+shipped second drafter is the n-gram prompt-lookup (HALOGEN_PLD,
+k_ngram_* kernels) running beside the MTP head. Bounded-open: engine
+behavior for a raw `GEN ... 2` on the socket.
 
-**Phase 6 — NOT STARTED.** Ledger, coverage, evidence bundle, report rewrite.
+**Phase 6 — NOT STARTED.** Ledger, coverage, evidence bundle, report
+rewrite. Blocked on Phase 2's last two writeups (see start-here.md).
 
 ## Phase 0 — Runtime corroboration (cheapest, do first)
 

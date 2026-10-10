@@ -6,7 +6,7 @@ cd /home/rangizingo/re-halogen
 S=work/pull.status
 echo "start $(date -u +%FT%TZ)" > "$S"
 RESP=$(curl -s "https://ghcr.io/token?scope=repository:peonist-ai/halogen-flash-server:pull")
-TOKEN=*** "$RESP" | sed -n 's/.*"access_token":"*\([^"]*\)".*/\1/p')
+TOKEN=$(echo "$RESP" | sed -n 's/.*"token":"\([^"]*\)".*/\1/p')
 echo "token_len=${#TOKEN}" >> "$S"
 for TAG in 0.17.2 0.17.0 0.16.4 0.15.0; do
   OUT=work/versions/$TAG

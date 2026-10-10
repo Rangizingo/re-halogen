@@ -1,0 +1,169 @@
+a1.hgn	1	FAIL work/hgn/files/a1.hgn: the table does not fit in the file	0	
+a2.hgn	1	FAIL work/hgn/files/a2.hgn: the table does not fit in the file	0	
+a3.hgn	1	FAIL work/hgn/files/a3.hgn: the table does not fit in the file	0	
+a4.hgn	1	FAIL work/hgn/files/a4.hgn: the table does not fit in the file	0	
+a5.hgn	1	FAIL work/hgn/files/a5.hgn: the table does not fit in the file	0	
+b1.hgn	1	FAIL work/hgn/files/b1.hgn: the table does not fit in the file	0	
+b2.hgn	1	FAIL work/hgn/files/b2.hgn: the table does not fit in the file	0	
+b3.hgn	1	FAIL work/hgn/files/b3.hgn: the table does not fit in the file	0	
+b4.hgn	1	FAIL work/hgn/files/b4.hgn: 5 problems; the first: header: file_bytes 296 but the file is 264	0	{"path":"work/hgn/files/b4.hgn","model_id":"","version":1,"n_tensors":1,"file_bytes":296,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":1,"bytes":0,"bpw":0.0000}],"total
+c1.hgn	1	FAIL work/hgn/files/c1.hgn: 5 problems; the first: header: unsupported version 3	0	{"path":"work/hgn/files/c1.hgn","model_id":"tiny","version":3,"n_tensors":1,"file_bytes":10920,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":1,"bytes":0,"bpw":0.0000}],
+c2.hgn	1	FAIL work/hgn/files/c2.hgn: 5 problems; the first: header: unsupported version 3	0	{"path":"work/hgn/files/c2.hgn","model_id":"tiny","version":3,"n_tensors":1,"file_bytes":10920,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":1,"bytes":0,"bpw":0.0000}],
+c3.hgn	1	FAIL work/hgn/files/c3.hgn: 4 problems; the first: header: data offset inside the table	0	{"path":"work/hgn/files/c3.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":10920,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":1,"bytes":0,"bpw":0.0000}],
+ck2-sum-bytes.hgn	1	FAIL work/hgn/files/ck2-sum-bytes.hgn: entry 0 (w) points past the end of the file	0	
+ck2-sum-u32le.hgn	1	FAIL work/hgn/files/ck2-sum-u32le.hgn: entry 0 (w) points past the end of the file	0	
+ck2-xor-bytes.hgn	1	FAIL work/hgn/files/ck2-xor-bytes.hgn: entry 0 (w) points past the end of the file	0	
+ck2-xor-u32be.hgn	1	FAIL work/hgn/files/ck2-xor-u32be.hgn: entry 0 (w) points past the end of the file	0	
+ck2-xor-u32le.hgn	1	FAIL work/hgn/files/ck2-xor-u32le.hgn: entry 0 (w) points past the end of the file	0	
+ck3-sum-bytes.hgn	1	FAIL work/hgn/files/ck3-sum-bytes.hgn: 1 problem; the first: w: checksum 00000000 on disk, table says 00000078	0	{"path":"work/hgn/files/ck3-sum-bytes.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":16,"bpw"
+ck3-sum-u32le.hgn	1	FAIL work/hgn/files/ck3-sum-u32le.hgn: 1 problem; the first: w: checksum 00000000 on disk, table says 24201c18	0	{"path":"work/hgn/files/ck3-sum-u32le.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":16,"bpw"
+ck3-xor-bytes.hgn	0	PASS work/hgn/files/ck3-xor-bytes.hgn: 1 tensors, 0.00 GiB, v1, model_id tiny; header, table, layout, payload sizes, checksums, codebooks and scales OK; geometry checked on 0 tensors (1 with no rule)	0	{"path":"work/hgn/files/ck3-xor-bytes.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":16,"bpw"
+ck3-xor-u32be.hgn	0	PASS work/hgn/files/ck3-xor-u32be.hgn: 1 tensors, 0.00 GiB, v1, model_id tiny; header, table, layout, payload sizes, checksums, codebooks and scales OK; geometry checked on 0 tensors (1 with no rule)	0	{"path":"work/hgn/files/ck3-xor-u32be.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":16,"bpw"
+ck3-xor-u32le.hgn	0	PASS work/hgn/files/ck3-xor-u32le.hgn: 1 tensors, 0.00 GiB, v1, model_id tiny; header, table, layout, payload sizes, checksums, codebooks and scales OK; geometry checked on 0 tensors (1 with no rule)	0	{"path":"work/hgn/files/ck3-xor-u32le.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":16,"bpw"
+ck-sum-bytes.hgn	1	FAIL work/hgn/files/ck-sum-bytes.hgn: 2 problems; the first: w: payload 8 B, the format implies 16 B from dims	0	{"path":"work/hgn/files/ck-sum-bytes.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":328,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":8,"bpw":8
+ck-sum-u32be.hgn	1	FAIL work/hgn/files/ck-sum-u32be.hgn: 2 problems; the first: w: payload 8 B, the format implies 16 B from dims	0	{"path":"work/hgn/files/ck-sum-u32be.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":328,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":8,"bpw":8
+ck-sum-u32le.hgn	1	FAIL work/hgn/files/ck-sum-u32le.hgn: 2 problems; the first: w: payload 8 B, the format implies 16 B from dims	0	{"path":"work/hgn/files/ck-sum-u32le.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":328,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":8,"bpw":8
+ck-xor-bytes.hgn	1	FAIL work/hgn/files/ck-xor-bytes.hgn: 2 problems; the first: w: payload 8 B, the format implies 16 B from dims	0	{"path":"work/hgn/files/ck-xor-bytes.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":328,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":8,"bpw":8
+ck-xor-u32be.hgn	1	FAIL work/hgn/files/ck-xor-u32be.hgn: 2 problems; the first: w: payload 8 B, the format implies 16 B from dims	0	{"path":"work/hgn/files/ck-xor-u32be.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":328,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":8,"bpw":8
+ck-xor-u32le.hgn	1	FAIL work/hgn/files/ck-xor-u32le.hgn: 2 problems; the first: w: payload 8 B, the format implies 16 B from dims	0	{"path":"work/hgn/files/ck-xor-u32le.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":328,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":8,"bpw":8
+d1.hgn	1	FAIL work/hgn/files/d1.hgn: the table does not fit in the file	0	
+d2.hgn	1	FAIL work/hgn/files/d2.hgn: the table does not fit in the file	0	
+e1.hgn	1	FAIL work/hgn/files/e1.hgn: 3 problems; the first: header: data offset not 64 B aligned	0	{"path":"work/hgn/files/e1.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":280,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":4,"bytes":16,"bpw":32.0000}],
+e2.hgn	1	FAIL work/hgn/files/e2.hgn: 4 problems; the first: header: data offset not 64 B aligned	0	{"path":"work/hgn/files/e2.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":280,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":4,"bytes":16,"bpw":32.0000}],
+e3.hgn	1	FAIL work/hgn/files/e3.hgn: the table does not fit in the file	0	
+fb424.hgn	1	FAIL work/hgn/files/fb424.hgn: 12 problems; the first: header: file_bytes 424 but the file is 584	0	{"path":"work/hgn/files/fb424.hgn","model_id":"","version":1,"n_tensors":3,"file_bytes":424,"families":[{"class":"norms / conv / misc","format":"i64","count":1,"params":1,"bytes":0,"bpw":0.0000},{"cla
+fb584.hgn	1	FAIL work/hgn/files/fb584.hgn: 11 problems; the first: header: data offset inside the table	0	{"path":"work/hgn/files/fb584.hgn","model_id":"","version":1,"n_tensors":3,"file_bytes":584,"families":[{"class":"norms / conv / misc","format":"i64","count":1,"params":1,"bytes":0,"bpw":0.0000},{"cla
+g1.hgn	1	FAIL work/hgn/files/g1.hgn: 3 problems; the first: header: file_bytes 328 but the file is 296	0	{"path":"work/hgn/files/g1.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":328,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":4,"bytes":0,"bpw":0.0000}],"t
+g2.hgn	1	FAIL work/hgn/files/g2.hgn: 3 problems; the first: header: file_bytes 328 but the file is 296	0	{"path":"work/hgn/files/g2.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":328,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":4,"bytes":0,"bpw":0.0000}],"t
+g3.hgn	1	FAIL work/hgn/files/g3.hgn: 3 problems; the first: header: file_bytes 392 but the file is 360	0	{"path":"work/hgn/files/g3.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":392,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":4,"bytes":0,"bpw":0.0000}],"t
+g4.hgn	1	FAIL work/hgn/files/g4.hgn: entry 0 (test) has rank 117835012 (at most 4)	0	
+h10.hgn	1	FAIL work/hgn/files/h10.hgn: entry 0 (w) points past the end of the file	0	
+h11.hgn	1	FAIL work/hgn/files/h11.hgn: 1 problem; the first: w: checksum 00000000 on disk, table says 00000003	0	{"path":"work/hgn/files/h11.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":336,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":4,"bytes":8,"bpw":16.0000}],
+h12.hgn	1	FAIL work/hgn/files/h12.hgn: 1 problem; the first: w: checksum 00000000 on disk, table says deadbeef	0	{"path":"work/hgn/files/h12.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":336,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":4,"bytes":8,"bpw":16.0000}],
+h13.hgn	1	FAIL work/hgn/files/h13.hgn: 1 problem; the first: w: checksum 00000000 on disk, table says 00000003	0	{"path":"work/hgn/files/h13.hgn","model_id":"tiny","version":2,"n_tensors":1,"file_bytes":336,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":4,"bytes":8,"bpw":16.0000}],
+h14.hgn	1	FAIL work/hgn/files/h14.hgn: 2 problems; the first: header: unsupported version 3	0	{"path":"work/hgn/files/h14.hgn","model_id":"tiny","version":3,"n_tensors":1,"file_bytes":336,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":4,"bytes":8,"bpw":16.0000}],
+h1.hgn	1	FAIL work/hgn/files/h1.hgn: the table does not fit in the file	0	
+h2.hgn	1	FAIL work/hgn/files/h2.hgn: the table does not fit in the file	0	
+h3.hgn	1	FAIL work/hgn/files/h3.hgn: 2 problems; the first: header: file_bytes 0 but the file is 128	0	{"path":"work/hgn/files/h3.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+h4.hgn	1	FAIL work/hgn/files/h4.hgn: the table does not fit in the file	0	
+h5.hgn	1	FAIL work/hgn/files/h5.hgn: 3 problems; the first: header: file_bytes 0 but the file is 128	0	{"path":"work/hgn/files/h5.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+h6.hgn	1	FAIL work/hgn/files/h6.hgn: 4 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/h6.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+h7.hgn	1	FAIL work/hgn/files/h7.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/h7.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":104,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+k1.hgn	1	FAIL work/hgn/files/k1.hgn: 1 problem; the first: w: checksum 00000000 on disk, table says 00000003	0	{"path":"work/hgn/files/k1.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":340,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":4,"bytes":8,"bpw":16.0000}],"
+k2.hgn	1	FAIL work/hgn/files/k2.hgn: 1 problem; the first: w: checksum 00000000 on disk, table says deadbeef	0	{"path":"work/hgn/files/k2.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":340,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":4,"bytes":8,"bpw":16.0000}],"
+k3.hgn	0	PASS work/hgn/files/k3.hgn: 1 tensors, 0.00 GiB, v1, model_id test-model; header, table, layout, payload sizes, checksums, codebooks and scales OK; geometry checked on 0 tensors (1 with no rule)	0	{"path":"work/hgn/files/k3.hgn","model_id":"test-model","version":1,"n_tensors":1,"file_bytes":336,"families":[{"class":"norms / conv / misc","format":"f32","count":1,"params":4,"bytes":16,"bpw":32.00
+m0.hgn	1	FAIL work/hgn/files/m0.hgn: shorter than a header	0	
+m1.hgn	1	FAIL work/hgn/files/m1.hgn: the table does not fit in the file	0	
+m2.hgn	1	FAIL work/hgn/files/m2.hgn: the table does not fit in the file	0	
+m3.hgn	1	FAIL work/hgn/files/m3.hgn: the table does not fit in the file	0	
+m4.hgn	1	FAIL work/hgn/files/m4.hgn: the table does not fit in the file	0	
+m5.hgn	1	FAIL work/hgn/files/m5.hgn: the table does not fit in the file	0	
+n16.hgn	1	FAIL work/hgn/files/n16.hgn: 4 problems; the first: header: table offset 1 (expected 104)	0	{"path":"work/hgn/files/n16.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+n1.hgn	1	FAIL work/hgn/files/n1.hgn: 4 problems; the first: header: data offset not 64 B aligned	0	{"path":"work/hgn/files/n1.hgn","model_id":"","version":1,"n_tensors":1,"file_bytes":424,"families":[{"class":"norms / conv / misc","format":"i64","count":1,"params":1,"bytes":0,"bpw":0.0000}],"total_
+n24.hgn	1	FAIL work/hgn/files/n24.hgn: 4 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/n24.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+n2.hgn	1	FAIL work/hgn/files/n2.hgn: 8 problems; the first: header: data offset inside the table	0	{"path":"work/hgn/files/n2.hgn","model_id":"","version":1,"n_tensors":2,"file_bytes":424,"families":[{"class":"norms / conv / misc","format":"i64","count":1,"params":1,"bytes":0,"bpw":0.0000},{"class"
+n32.hgn	1	FAIL work/hgn/files/n32.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/n32.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":1,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+n3.hgn	1	FAIL work/hgn/files/n3.hgn: the table does not fit in the file	0	
+n40.hgn	1	FAIL work/hgn/files/n40.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/n40.hgn","model_id":"\u0001","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+n48.hgn	1	FAIL work/hgn/files/n48.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/n48.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+n4.hgn	1	FAIL work/hgn/files/n4.hgn: the table does not fit in the file	0	
+n56.hgn	1	FAIL work/hgn/files/n56.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/n56.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+n64.hgn	1	FAIL work/hgn/files/n64.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/n64.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+n72.hgn	1	FAIL work/hgn/files/n72.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/n72.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+n80.hgn	1	FAIL work/hgn/files/n80.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/n80.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+n88.hgn	1	FAIL work/hgn/files/n88.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/n88.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+n8.hgn	1	FAIL work/hgn/files/n8.hgn: the table does not fit in the file	0	
+n96.hgn	1	FAIL work/hgn/files/n96.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/n96.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+o1.hgn	1	FAIL work/hgn/files/o1.hgn: 3 problems; the first: header: file_bytes 104 but the file is 128	0	{"path":"work/hgn/files/o1.hgn","model_id":"h","version":1,"n_tensors":0,"file_bytes":104,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+o2.hgn	1	FAIL work/hgn/files/o2.hgn: 3 problems; the first: header: file_bytes 104 but the file is 128	0	{"path":"work/hgn/files/o2.hgn","model_id":"h","version":1,"n_tensors":0,"file_bytes":104,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+o3.hgn	1	FAIL work/hgn/files/o3.hgn: 3 problems; the first: header: file_bytes 104 but the file is 128	0	{"path":"work/hgn/files/o3.hgn","model_id":"h","version":1,"n_tensors":0,"file_bytes":104,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+p1.hgn	1	FAIL work/hgn/files/p1.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/p1.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+p2.hgn	1	FAIL work/hgn/files/p2.hgn: 4 problems; the first: header: unsupported version 7	0	{"path":"work/hgn/files/p2.hgn","model_id":"","version":7,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+p3.hgn	1	FAIL work/hgn/files/p3.hgn: the table does not fit in the file	0	
+p4.hgn	1	FAIL work/hgn/files/p4.hgn: the table does not fit in the file	0	
+p5.hgn	1	FAIL work/hgn/files/p5.hgn: the table does not fit in the file	0	
+q32.hgn	1	FAIL work/hgn/files/q32.hgn: the table does not fit in the file	0	
+q40.hgn	1	FAIL work/hgn/files/q40.hgn: the table does not fit in the file	0	
+q48.hgn	1	FAIL work/hgn/files/q48.hgn: the table does not fit in the file	0	
+q56.hgn	1	FAIL work/hgn/files/q56.hgn: the table does not fit in the file	0	
+q64.hgn	1	FAIL work/hgn/files/q64.hgn: the table does not fit in the file	0	
+q72.hgn	1	FAIL work/hgn/files/q72.hgn: the table does not fit in the file	0	
+q80.hgn	1	FAIL work/hgn/files/q80.hgn: the table does not fit in the file	0	
+q88.hgn	1	FAIL work/hgn/files/q88.hgn: the table does not fit in the file	0	
+q96.hgn	1	FAIL work/hgn/files/q96.hgn: the table does not fit in the file	0	
+r1.hgn	1	FAIL work/hgn/files/r1.hgn: the table does not fit in the file	0	
+r2.hgn	1	FAIL work/hgn/files/r2.hgn: the table does not fit in the file	0	
+rt-badpad.hgn	0	PASS work/hgn/files/rt-badpad.hgn: 1 tensors, 0.00 GiB, v1, model_id tiny; header, table, layout, payload sizes, checksums, codebooks and scales OK; geometry checked on 0 tensors (1 with no rule)	0	{"path":"work/hgn/files/rt-badpad.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":16,"bpw":16.
+rt-badxor.hgn	1	FAIL work/hgn/files/rt-badxor.hgn: 1 problem; the first: w: checksum 00000000 on disk, table says deadbeef	0	{"path":"work/hgn/files/rt-badxor.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":16,"bpw":16.
+rt-f32.hgn	1	FAIL work/hgn/files/rt-f32.hgn: 1 problem; the first: w: checksum 00000000 on disk, table says bfa00000	0	{"path":"work/hgn/files/rt-f32.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"f32","count":1,"params":4,"bytes":16,"bpw":32.0000
+rt-trunc.hgn	1	FAIL work/hgn/files/rt-trunc.hgn: entry 0 (w) points past the end of the file	0	
+rt-valid.hgn	0	PASS work/hgn/files/rt-valid.hgn: 1 tensors, 0.00 GiB, v1, model_id tiny; header, table, layout, payload sizes, checksums, codebooks and scales OK; geometry checked on 0 tensors (1 with no rule)	0	{"path":"work/hgn/files/rt-valid.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":16,"bpw":16.0
+s1.hgn	1	FAIL work/hgn/files/s1.hgn: the table does not fit in the file	0	
+s2.hgn	1	FAIL work/hgn/files/s2.hgn: the table does not fit in the file	0	
+slot10.hgn	1	FAIL work/hgn/files/slot10.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/slot10.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+slot11.hgn	1	FAIL work/hgn/files/slot11.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/slot11.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+slot12.hgn	1	FAIL work/hgn/files/slot12.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/slot12.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+slot1.hgn	1	FAIL work/hgn/files/slot1.hgn: the table does not fit in the file	0	
+slot2.hgn	1	FAIL work/hgn/files/slot2.hgn: the table does not fit in the file	0	
+slot3.hgn	1	FAIL work/hgn/files/slot3.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/slot3.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+slot4.hgn	1	FAIL work/hgn/files/slot4.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/slot4.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":18446744073709486080,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+slot5.hgn	1	FAIL work/hgn/files/slot5.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/slot5.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+slot6.hgn	1	FAIL work/hgn/files/slot6.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/slot6.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+slot7.hgn	1	FAIL work/hgn/files/slot7.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/slot7.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+slot8.hgn	1	FAIL work/hgn/files/slot8.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/slot8.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+slot9.hgn	1	FAIL work/hgn/files/slot9.hgn: 3 problems; the first: header: table offset 0 (expected 104)	0	{"path":"work/hgn/files/slot9.hgn","model_id":"","version":1,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+t1.hgn	0	PASS work/hgn/files/t1.hgn: 3 tensors, 0.00 GiB, v1, model_id test-model; header, table, layout, payload sizes, checksums, codebooks and scales OK; geometry checked on 0 tensors (3 with no rule)	0	{"path":"work/hgn/files/t1.hgn","model_id":"test-model","version":1,"n_tensors":3,"file_bytes":800,"families":[{"class":"FFN (mlp)","format":"bf16","count":1,"params":16,"bytes":32,"bpw":16.0000},{"cl
+t2-badxor.hgn	1	FAIL work/hgn/files/t2-badxor.hgn: 1 problem; the first: blk.0.attn.q_proj.weight: checksum 04040404 on disk, table says deadbeef	0	{"path":"work/hgn/files/t2-badxor.hgn","model_id":"test-model","version":1,"n_tensors":3,"file_bytes":800,"families":[{"class":"FFN (mlp)","format":"bf16","count":1,"params":16,"bytes":32,"bpw":16.000
+t3-trunc.hgn	1	FAIL work/hgn/files/t3-trunc.hgn: entry 2 (blk.0.mlp.gate_proj.weight) points past the end of the file	0	
+t4-badpay.hgn	1	FAIL work/hgn/files/t4-badpay.hgn: 1 problem; the first: blk.0.mlp.gate_proj.weight: checksum 00000001 on disk, table says 00000000	0	{"path":"work/hgn/files/t4-badpay.hgn","model_id":"test-model","version":1,"n_tensors":3,"file_bytes":800,"families":[{"class":"FFN (mlp)","format":"bf16","count":1,"params":16,"bytes":32,"bpw":16.000
+t5.hgn	1	FAIL work/hgn/files/t5.hgn: 2 problems; the first: embed_tokens.weight: dims [8,64], the model's geometry says [248320,2560]	0	{"path":"work/hgn/files/t5.hgn","model_id":"qwen38f-test","version":1,"n_tensors":4,"file_bytes":68352,"families":[{"class":"norms / conv / misc","format":"bf16","count":2,"params":32768,"bytes":65536
+t6-geom.hgn	1	FAIL work/hgn/files/t6-geom.hgn: 2 problems; the first: model.norm.weight: payload 12 B, the format implies 16 B from dims	0	{"path":"work/hgn/files/t6-geom.hgn","model_id":"test-model","version":1,"n_tensors":1,"file_bytes":336,"families":[{"class":"norms / conv / misc","format":"f32","count":1,"params":4,"bytes":12,"bpw":
+u1.hgn	1	FAIL work/hgn/files/u1.hgn: the table does not fit in the file	0	
+u2.hgn	1	FAIL work/hgn/files/u2.hgn: the table does not fit in the file	0	
+u3.hgn	1	FAIL work/hgn/files/u3.hgn: the table does not fit in the file	0	
+u4.hgn	1	FAIL work/hgn/files/u4.hgn: the table does not fit in the file	0	
+v1.hgn	1	FAIL work/hgn/files/v1.hgn: the table does not fit in the file	0	
+v2.hgn	1	FAIL work/hgn/files/v2.hgn: the table does not fit in the file	0	
+v3.hgn	1	FAIL work/hgn/files/v3.hgn: the table does not fit in the file	0	
+v4.hgn	1	FAIL work/hgn/files/v4.hgn: the table does not fit in the file	0	
+v5.hgn	1	FAIL work/hgn/files/v5.hgn: the table does not fit in the file	0	
+vt0.hgn	1	FAIL work/hgn/files/vt0.hgn: 1 problem; the first: header: unsupported version 0	0	{"path":"work/hgn/files/vt0.hgn","model_id":"tiny","version":0,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":16,"bpw":16.0000}]
+vt1.hgn	0	PASS work/hgn/files/vt1.hgn: 1 tensors, 0.00 GiB, v1, model_id tiny; header, table, layout, payload sizes, checksums, codebooks and scales OK; geometry checked on 0 tensors (1 with no rule)	0	{"path":"work/hgn/files/vt1.hgn","model_id":"tiny","version":1,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":16,"bpw":16.0000}]
+vt24.hgn	1	FAIL work/hgn/files/vt24.hgn: 1 problem; the first: header: unsupported version 24	0	{"path":"work/hgn/files/vt24.hgn","model_id":"tiny","version":24,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":16,"bpw":16.0000
+vt25.hgn	1	FAIL work/hgn/files/vt25.hgn: 1 problem; the first: header: unsupported version 25	0	{"path":"work/hgn/files/vt25.hgn","model_id":"tiny","version":25,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":16,"bpw":16.0000
+vt2.hgn	0	PASS work/hgn/files/vt2.hgn: 1 tensors, 0.00 GiB, v2, model_id tiny; header, table, layout, payload sizes, checksums, codebooks and scales OK; geometry checked on 0 tensors (1 with no rule)	0	{"path":"work/hgn/files/vt2.hgn","model_id":"tiny","version":2,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":16,"bpw":16.0000}]
+vt3.hgn	1	FAIL work/hgn/files/vt3.hgn: 1 problem; the first: header: unsupported version 3	0	{"path":"work/hgn/files/vt3.hgn","model_id":"tiny","version":3,"n_tensors":1,"file_bytes":344,"families":[{"class":"norms / conv / misc","format":"bf16","count":1,"params":8,"bytes":16,"bpw":16.0000}]
+w1.hgn	1	FAIL work/hgn/files/w1.hgn: the table does not fit in the file	0	
+w2.hgn	1	FAIL work/hgn/files/w2.hgn: the table does not fit in the file	0	
+w3.hgn	1	FAIL work/hgn/files/w3.hgn: the table does not fit in the file	0	
+w4.hgn	1	FAIL work/hgn/files/w4.hgn: the table does not fit in the file	0	
+w5.hgn	1	FAIL work/hgn/files/w5.hgn: the table does not fit in the file	0	
+w6.hgn	1	FAIL work/hgn/files/w6.hgn: the table does not fit in the file	0	
+x1.hgn	1	FAIL work/hgn/files/x1.hgn: the table does not fit in the file	0	
+x2.hgn	1	FAIL work/hgn/files/x2.hgn: the table does not fit in the file	0	
+x3.hgn	1	FAIL work/hgn/files/x3.hgn: the table does not fit in the file	0	
+y1.hgn	1	FAIL work/hgn/files/y1.hgn: the table does not fit in the file	0	
+y2.hgn	1	FAIL work/hgn/files/y2.hgn: the table does not fit in the file	0	
+z100.hgn	1	FAIL work/hgn/files/z100.hgn: shorter than a header	0	
+z104.hgn	1	FAIL work/hgn/files/z104.hgn: 4 problems; the first: header: unsupported version 0	0	{"path":"work/hgn/files/z104.hgn","model_id":"","version":0,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+z112.hgn	1	FAIL work/hgn/files/z112.hgn: 4 problems; the first: header: unsupported version 0	0	{"path":"work/hgn/files/z112.hgn","model_id":"","version":0,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+z120.hgn	1	FAIL work/hgn/files/z120.hgn: 4 problems; the first: header: unsupported version 0	0	{"path":"work/hgn/files/z120.hgn","model_id":"","version":0,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+z127.hgn	1	FAIL work/hgn/files/z127.hgn: 4 problems; the first: header: unsupported version 0	0	{"path":"work/hgn/files/z127.hgn","model_id":"","version":0,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+z128.hgn	1	FAIL work/hgn/files/z128.hgn: 4 problems; the first: header: unsupported version 0	0	{"path":"work/hgn/files/z128.hgn","model_id":"","version":0,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+z16.hgn	1	FAIL work/hgn/files/z16.hgn: shorter than a header	0	
+z192.hgn	1	FAIL work/hgn/files/z192.hgn: 4 problems; the first: header: unsupported version 0	0	{"path":"work/hgn/files/z192.hgn","model_id":"","version":0,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+z1.hgn	1	FAIL work/hgn/files/z1.hgn: the table does not fit in the file	0	
+z24.hgn	1	FAIL work/hgn/files/z24.hgn: shorter than a header	0	
+z256.hgn	1	FAIL work/hgn/files/z256.hgn: 4 problems; the first: header: unsupported version 0	0	{"path":"work/hgn/files/z256.hgn","model_id":"","version":0,"n_tensors":0,"file_bytes":0,"families":[],"total_bytes":0,"aux_bytes":0,"params":0,"tensors":[]}
+z2.hgn	1	FAIL work/hgn/files/z2.hgn: the table does not fit in the file	0	
+z32.hgn	1	FAIL work/hgn/files/z32.hgn: shorter than a header	0	
+z40.hgn	1	FAIL work/hgn/files/z40.hgn: shorter than a header	0	
+z48.hgn	1	FAIL work/hgn/files/z48.hgn: shorter than a header	0	
+z4.hgn	1	FAIL work/hgn/files/z4.hgn: shorter than a header	0	
+z56.hgn	1	FAIL work/hgn/files/z56.hgn: shorter than a header	0	
+z64.hgn	1	FAIL work/hgn/files/z64.hgn: shorter than a header	0	
+z72.hgn	1	FAIL work/hgn/files/z72.hgn: shorter than a header	0	
+z80.hgn	1	FAIL work/hgn/files/z80.hgn: shorter than a header	0	
+z8.hgn	1	FAIL work/hgn/files/z8.hgn: shorter than a header	0	
+z96.hgn	1	FAIL work/hgn/files/z96.hgn: shorter than a header	0	
+z97.hgn	1	FAIL work/hgn/files/z97.hgn: shorter than a header	0	
