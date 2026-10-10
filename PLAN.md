@@ -81,6 +81,23 @@ services inactive; Ghidra 12.1.2 (Linux) and ~/re-halogen present;
 `/srv/models/halogen-swift/qwen38-flash-next-mtp.hgn` and the Swift GGUFs
 exist; sizes and completeness not yet checked.
 
+**Phase 7 progress (2026-10-10, end of first Phase 7 session):**
+
+Done and pushed on branch `phase6-closure` (PR not yet opened):
+- Ghidra 12.1.4 with an arm64 decompiler built on this Mac; `scripts/ExportDecomp.java` exported all 3,568 `flash_serve` functions (0.17.3) and 3,564 (0.17.2) to `work/decomp/` (gitignored).
+- `analysis/function-map.md`, `function-map.tsv`, `function-map-core.tsv`: every function has a role (checked against the index, 0 missing, 0 duplicated).
+- Client-side docs: `wire-protocol.md`, `entrypoint-flow.md`, `api-layer.md`.
+- Live evidence: `runtime-run-0.17.3.md` plus `analysis/evidence/` (U04 and U26 closed; speculation, cache and seed measurements; the 0.17.3 engine ran on Ai-core inside the 0.17.2 image userland).
+- `version-compare-0.17.2-0.17.3.md` (host code differs, device code does not).
+- Kernel writeups corrected after an independent review (on-GPU splitmix64 RNG exists, `k_dv_scatter` is a gather, HT is a 128-point transform).
+- Tests: `tests/` (11 pytest tests, all pass).
+
+Incident: the engine test run deleted the live service's 60 GiB disk prompt cache (details in `runtime-run-0.17.3.md`). Rule from now on: test engines never mount `/srv/halogen-cache`; use their own cache dir and `HALOGEN_CACHE_PRUNE_OLD=0`.
+
+Left (see `.claude/goal.md`): close the remaining open items in `analysis/unknowns.md` (host-side, by decompile proof), write `analysis/request-trace.md` and `analysis/rebuild-guide.md`, map `halogen-npu` and `halogen-tools` the same way, further Ai-core runs only for a named open item (serial-seed determinism, HT checkpoint, seed source U23), refresh the closure docs, open the PR, independent review, merge.
+
+Reviewer gate: the stop-time review gate needs a reviewer on a different model than the Sonnet author; a fix (extra ladder rung and clearer message) was handed to an agent under a 60 minute hook grant (see needs-human). Settings parity warning: `rust-analyzer-lsp` plugin not installed, entry dropped from live `settings.json` only; Peter's call.
+
 ---
 
 ## Progress log (updated 2026-10-10)
