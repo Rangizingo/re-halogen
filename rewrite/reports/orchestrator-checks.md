@@ -49,3 +49,10 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 - 45 distinct instances with MATCH, 0 MISMATCH rows; negctl 29 MISMATCH rows. sha1 of 8 .hip: Mac equals Ai-core. Edge specs present for attn_fd_merge, attn, attn_sel, attn_fa, attn_fa2 (3), qk.
 - Re-run seeds 7 and 11: k_attn_fa2<1,1,false,0,0,false> at N 48 (295,040 outputs), 2 of 2 MATCH.
 - Negative control, log2e 0x3fb8aa3b to 0x3fb8aa3c (1 ulp, attn_fa2.hip:30): MISMATCH, 16 outputs differ, max_ulp 176.
+
+## g01 (lq4w, 488 instances), 2026-10-10
+
+- 488 distinct instances with MATCH (3,348 rows), 0 MISMATCH; negctl in g01-negctl.md. Report written by the agent directly into the main checkout. harness/ and kernargs.json in the agent worktree are byte-identical to main (`diff -r`, `cmp`).
+- Instance selection: one templated lq4w.hip; each instance is compiled with `HIPCC_COMPILE_FLAGS_APPEND="-DLQ_N.. -DLQ_F.."` set by `rewrite/specs/lq4w{,_pair,_grp}_run_all.sh` (needs `LQ_TSV`, a copy of function-map-kernel-stubs.tsv, on Ai-core). A row is still a comparison against the named vendor instance, whatever the flags.
+- Re-run seeds 7 and 11: k_lq4w<1,16,1,true,3,1> at N 1000 and 2800, 4 of 4 MATCH; k_lq4w<1,32,8,false,5,1> seed 7 at 1024 and 3072, 2 of 2 MATCH.
+- Controls: building the E=5 instance with LQ_F=0 instead of 1 still MATCHes at N 3072 (F changes the loop structure only, no numeric effect; not a valid control). RNE bias 0x7fff to 0 (lq4w.hip:15) on <1,16,1,true,3,1>: MISMATCH, 171 of 1,000 outputs differ.
