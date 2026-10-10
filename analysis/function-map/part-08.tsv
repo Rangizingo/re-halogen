@@ -1,0 +1,299 @@
+addr	role	label	confidence	evidence
+0195c3a0	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195c4a0	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195c5a0	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 27; packs args, __hipPopCallConfiguration
+0195c6a0	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195c7a0	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 63; packs args, __hipPopCallConfiguration
+0195c8a0	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195c9a0	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 107; packs args, __hipPopCallConfiguration
+0195caa0	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 68; packs args, __hipPopCallConfiguration
+0195cba0	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195cca0	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195cda0	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195cea0	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 123; packs args, __hipPopCallConfiguration
+0195cfa0	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 63; packs args, __hipPopCallConfiguration
+0195d0a0	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195d1a0	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195d2a0	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195d3a0	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195d4a0	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 81; packs args, __hipPopCallConfiguration
+0195d5a0	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 222; packs args, __hipPopCallConfiguration
+0195d6c0	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 7; packs args, __hipPopCallConfiguration
+0195d7e0	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 222; packs args, __hipPopCallConfiguration
+0195d900	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 222; packs args, __hipPopCallConfiguration
+0195da20	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 52; packs args, __hipPopCallConfiguration
+0195db40	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 76; packs args, __hipPopCallConfiguration
+0195dc40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195dd40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195de40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195df40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195e040	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195e140	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195e240	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 168; packs args, __hipPopCallConfiguration
+0195e340	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195e440	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 1; packs args, __hipPopCallConfiguration
+0195e540	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 48; packs args, __hipPopCallConfiguration
+0195e640	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195e740	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 176; packs args, __hipPopCallConfiguration
+0195e840	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 168; packs args, __hipPopCallConfiguration
+0195e940	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195ea40	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 17; packs args, __hipPopCallConfiguration
+0195eb40	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 48; packs args, __hipPopCallConfiguration
+0195ec40	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 32; packs args, __hipPopCallConfiguration
+0195ed40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195ee40	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 131; packs args, __hipPopCallConfiguration
+0195ef40	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 123; packs args, __hipPopCallConfiguration
+0195f040	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195f140	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 7; packs args, __hipPopCallConfiguration
+0195f240	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195f340	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195f440	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 176; packs args, __hipPopCallConfiguration
+0195f540	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 1; packs args, __hipPopCallConfiguration
+0195f640	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 1; packs args, __hipPopCallConfiguration
+0195f740	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195f840	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 107; packs args, __hipPopCallConfiguration
+0195f940	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195fa40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195fb40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195fc40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195fd40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195fe40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+0195ff40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01960040	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01960140	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01960240	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01960340	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01960440	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01960540	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01960640	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01960740	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 139; packs args, __hipPopCallConfiguration
+01960840	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01960940	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 7; packs args, __hipPopCallConfiguration
+01960a40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01960b40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01960c40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01960d40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01960e40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01960f40	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 94; packs args, __hipPopCallConfiguration
+01961040	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01961140	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01961240	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 107; packs args, __hipPopCallConfiguration
+01961340	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 68; packs args, __hipPopCallConfiguration
+01961440	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 102; packs args, __hipPopCallConfiguration
+01961540	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 115; packs args, __hipPopCallConfiguration
+01961640	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01961740	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01961840	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01961940	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01961a40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01961b40	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 139; packs args, __hipPopCallConfiguration
+01961c40	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 123; packs args, __hipPopCallConfiguration
+01961d40	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 68; packs args, __hipPopCallConfiguration
+01961e40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01961f40	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 68; packs args, __hipPopCallConfiguration
+01962040	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 181; packs args, __hipPopCallConfiguration
+01962140	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01962240	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 94; packs args, __hipPopCallConfiguration
+01962340	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 155; packs args, __hipPopCallConfiguration
+01962440	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01962540	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01962640	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01962740	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01962840	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 131; packs args, __hipPopCallConfiguration
+01962940	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 12; packs args, __hipPopCallConfiguration
+01962a40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01962b40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01962c40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01962d40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01962e40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01962f40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963040	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963140	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963240	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963340	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963440	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963540	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963640	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963740	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963840	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963940	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963a40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963b40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963c40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963d40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963e40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01963f40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01964040	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01964140	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01964240	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01964340	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01964440	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01964540	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 191; packs args, __hipPopCallConfiguration
+01964640	gpu-dispatch	kernel_host_stub	med	hipcc host stub for k_*; sz 107; packs args, __hipPopCallConfiguration
+01964740	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01964840	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01964940	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01964a40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01964b40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01964c40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01964d40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01964e40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01964f40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01965040	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01965140	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01965240	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01965340	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01965440	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01965540	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01965640	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01965740	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01965840	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01965940	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01965a40	gpu-dispatch	kernel_host_stub	high	hipcc host stub for k_*; sz 201; packs args, __hipPopCallConfiguration
+01965b40	cxx-stl	introsort_float	med	std::sort<float*> introsort (threshold 0x10), 930 bytes
+01965f60	cxx-stl	introsort_float_b	med	twin of 01965b40, float introsort
+01966380	cxx-stl	inplace_stable_sort_idx	med	recursive split, merge via 01967260, keys in DAT_019fcdf8
+019664c0	cxx-stl	stable_sort_adaptive_idx	med	adaptive merge sort of int indices by key array
+019665a0	cxx-stl	chunk_insertion_sort_idx	med	insertion sort chunks of int indices by key
+01967070	cxx-stl	merge_adaptive_idx	med	memmove buffer merge of int indices by key
+01967260	cxx-stl	merge_without_buffer_idx	med	in-place merge, binary search on key array
+01967430	cxx-stl	merge_adaptive_resize_idx	med	adaptive merge with buffer bound param_7
+01967620	cxx-stl	thread_state_impl_dtor_0x48	high	calls std::thread::_State dtor then delete 0x48
+01967640	util	thread_worker_gather_rows	low	atomic chunk 256, memcpy rows by index list from pool
+01967720	cxx-stl	vector_realloc_append	high	string vector::_M_realloc_append
+01967830	cxx-stl	function_manager_a	med	std::function manager, typeinfo ops 0..2
+01967860	util	assign_arena_offsets_by_kind	low	switch over buffer kind 3..12 stores offsets into struct arrays
+01967900	cxx-stl	function_manager_b	med	std::function manager clone 16 bytes
+01967930	cxx-stl	vector_realloc_append	high	vector::_M_realloc_append string
+01967a50	cxx-stl	thread_state_run_stub	low	38 bytes, one caller, no callees; thread/function glue
+01967a80	cxx-stl	vector_realloc_append	high	vector::_M_realloc_append string
+01967cf0	cxx-stl	function_manager_heap_0x18	med	std::function manager, new/delete 0x18
+01967d60	cxx-stl	thread_state_impl_dtor_0x20	high	calls std::thread::_State dtor then delete 0x20
+01967d80	util	thread_worker_parallel_rows	low	atomic chunk 16, condvar wait, mutex; thread pool task over rows
+01968680	hip-runtime	register_all_kernels	high	1484 __hipRegisterFunction calls, 1462 distinct k_* names
+01979140	hip-runtime	hip_module_ctor_register_fatbin	high	__hipRegisterFatBinary then register kernels, atexit
+01979190	hip-runtime	hip_module_dtor_unregister_fatbin	high	__hipUnregisterFatBinary
+019791c0	util	delete_obj_0x158	low	calls dtor 019996e0 then delete 0x158
+019791f0	cxx-stl	regex_ctor_from_cstr	high	locale ctor, strlen, regex compiler 0197f6e0
+01979300	cxx-stl	shared_ptr_release	med	refcount 0x100000001 pattern, virtual dispose/destroy
+01979390	util	tensor_numel	med	product of dims, rank at +0x14, dims from +0x18
+01979420	util	delete_obj_0x140	low	calls dtor 01990e00 then delete 0x140
+01979450	cxx-stl	vector_of_vectors_dtor	med	frees inner buffers stride 0x18
+019794b0	cxx-stl	vector_dtor_elem_0x148	low	destroys 0x148-byte elements via 0197aec0
+01979510	cxx-stl	vector_u16_resize	med	size via >>1, grow call, shrink end pointer
+01979540	cxx-stl	vector_dtor	med	frees begin buffer
+01979560	cxx-stl	vector_u16_ctor_n	high	cannot create std::vector larger than max_size()
+019795f0	cxx-stl	vector_u32_resize	med	size via >>2, grow call, shrink end pointer
+01979630	cxx-stl	function_invoke_3args	high	throws bad_function_call if empty
+01979670	gpu-dispatch	kernel_host_stub	med	6 params packed, no __hipPopCallConfiguration shown
+01979740	gpu-dispatch	kernel_host_stub	med	6 params packed, hipcc device stub pattern
+01979810	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979870	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+019798d0	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979930	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979990	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+019799f0	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979a50	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979ab0	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979b10	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979b70	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979bd0	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979c30	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979c90	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979cf0	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979d50	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979db0	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979e10	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979e70	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979ed0	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979f30	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979f90	gpu-dispatch	kernel_host_stub	med	small hipcc kernel stub, calls __hipPopCallConfiguration
+01979fd0	cxx-stl	vector_thread_dtor	med	terminate if joinable thread present, then free
+0197a020	hgn-loader	read_model_bound_u32_file	low	fopen rb; not a version 1 file; made for another model; damaged
+0197a6b0	cxx-stl	struct_with_vectors_dtor	low	frees nested vector buffers
+0197a7a0	cxx-stl	vector_of_vectors_dtor	med	frees inner buffers stride 0x18
+0197a800	cxx-stl	vector_of_vectors_copy_ctor	low	copy construct, memcpy loops, 5 callees
+0197aec0	cxx-stl	struct_0x148_dtor	low	frees several vector members
+0197af80	gpu-dispatch	kernel_host_stub	med	5 params packed, hipPopCallConfiguration
+0197b020	cxx-stl	shared_ptr_release_last	med	atomic dec of use count, virtual dispose
+0197b060	cxx-stl	hashtable_clear	med	walk nodes, memset buckets, free if not single bucket
+0197b0e0	cxx-stl	hashtable_find_u64	med	bucket lookup, modulo key hash
+0197b290	cxx-stl	hashtable_rehash	med	bucket alloc, bad_array_new_length, relink nodes
+0197b3d0	cxx-stl	regex_executor_init	med	vector max_size string, regex state setup
+0197b8e0	cxx-stl	regex_executor_ctor_fragment	low	1 byte body at index, fields from regex params
+0197bb20	cxx-stl	regex_internal	low	in std::regex address block, size 150, no strings
+0197bbd0	cxx-stl	regex_internal	low	in std::regex address block, size 165, no strings
+0197bc80	cxx-stl	regex_internal	low	in std::regex address block, size 48, no strings
+0197bcb0	cxx-stl	regex_internal	low	in std::regex address block, size 216, no strings
+0197bde0	cxx-stl	vector_ctor_or_init	high	cannot create std::vector larger than max_size()
+0197c0d0	cxx-stl	regex_internal	low	in std::regex address block, size 91, no strings
+0197c130	cxx-stl	regex_internal	low	in std::regex address block, size 419, no strings
+0197c400	cxx-stl	regex_internal	low	in std::regex address block, size 819, no strings
+0197c7a0	cxx-stl	vector_realloc_append	high	vector::_M_realloc_append
+0197c9a0	cxx-stl	regex_internal	low	in std::regex address block, size 278, no strings
+0197cac0	cxx-stl	regex_internal	low	in std::regex address block, size 222, no strings
+0197cba0	cxx-stl	regex_internal	low	in std::regex address block, size 126, no strings
+0197cc20	cxx-stl	regex_internal	low	in std::regex address block, size 178, no strings
+0197ccf0	cxx-stl	regex_internal	low	in std::regex address block, size 453, no strings
+0197cec0	cxx-stl	regex_traits_lookup_classname	high	xdigit alnum alpha blank class names
+0197d270	cxx-stl	regex_internal	low	in std::regex address block, size 626, no strings
+0197d530	cxx-stl	regex_internal	low	in std::regex address block, size 230, no strings
+0197d630	cxx-stl	regex_internal	low	in std::regex address block, size 339, no strings
+0197d7e0	cxx-stl	regex_internal	low	in std::regex address block, size 839, no strings
+0197dbf0	cxx-stl	regex_internal	low	in std::regex address block, size 222, no strings
+0197dcd0	cxx-stl	regex_internal	low	in std::regex address block, size 178, no strings
+0197dda0	cxx-stl	regex_internal	low	in std::regex address block, size 449, no strings
+0197df70	cxx-stl	vector_ctor_or_init	high	cannot create std::vector larger than max_size()
+0197e350	cxx-stl	hashtable_clear_string_nodes	med	frees SSO strings in nodes, memset buckets
+0197e3f0	cxx-stl	string_construct_from_range	high	basic_string: construction from null is not valid
+0197e4e0	cxx-stl	hashtable_find_string	med	small-size linear scan, string compare
+0197e6a0	cxx-stl	deque_init_map	high	cannot create std::deque larger than max_size()
+0197e840	cxx-stl	regex_internal	low	in std::regex address block, size 493, no strings
+0197eaa0	cxx-stl	delete_string_node_0x38	med	free SSO string then node 0x38
+0197eae0	cxx-stl	operator_new_0x38	med	new size 0x38
+0197ebd0	cxx-stl	regex_internal	low	in std::regex address block, size 254, no strings
+0197ed10	cxx-stl	vector_ctor_or_init	high	cannot create std::vector larger than max_size()
+0197ef90	cxx-stl	vector_range_insert	high	vector::_M_range_insert
+0197f270	cxx-stl	vector_realloc_append	high	vector::_M_realloc_append
+0197f490	gpu-dispatch	kernel_host_stub	med	5-arg hipcc stub, same shape as 0197af80
+0197f530	gpu-dispatch	kernel_host_stub	med	5-arg hipcc stub, same shape as 0197af80
+0197f5d0	gpu-dispatch	kernel_host_stub	med	5-arg hipcc stub, same shape as 0197af80
+0197f670	gpu-dispatch	kernel_host_stub	med	5-arg hipcc stub, same shape as 0197af80
+0197f6e0	cxx-stl	regex_compiler_ctor	high	conflicting grammar options
+0197fb30	cxx-stl	regex_internal	low	in std::regex address block, size 310, no strings
+0197fc70	cxx-stl	regex_internal	low	in std::regex address block, size 288, no strings
+0197fdc0	cxx-stl	regex_nfa_state_limit_check	high	Number of NFA states exceeds limit string
+01980030	cxx-stl	regex_internal	low	in std::regex address block, size 709, no strings
+01980320	cxx-stl	regex_internal	low	in std::regex address block, size 130, no strings
+019803b0	cxx-stl	regex_nfa_state_limit_check	high	Number of NFA states exceeds limit string
+01980550	cxx-stl	regex_nfa_state_limit_check	high	Number of NFA states exceeds limit string
+01980630	cxx-stl	regex_internal	low	in std::regex address block, size 96, no strings
+01980690	cxx-stl	regex_internal	low	in std::regex address block, size 105, no strings
+01980700	cxx-stl	throw_regex_error	high	__cxa_throw std::regex_error
+01980750	cxx-stl	regex_error_ctor	med	constructs regex_error for throw
+01980780	cxx-stl	regex_scanner_token_table_init	med	stores chars ^ $ . * + with token ids
+019808c0	cxx-stl	regex_scanner_escape	high	Invalid \xNN / \uNNNN control character strings
+01980cc0	cxx-stl	regex_internal	low	in std::regex address block, size 255, no strings
+01980dc0	cxx-stl	regex_internal	low	in std::regex address block, size 500, no strings
+01981030	cxx-stl	regex_scanner_advance_escape	high	Invalid escape at end of regular expression
+019813e0	cxx-stl	regex_scanner_bracket	high	Incomplete [[ character class
+01981590	cxx-stl	regex_internal	low	in std::regex address block, size 440, no strings
+01981760	cxx-stl	regex_internal	low	in std::regex address block, size 287, no strings
+01981880	cxx-stl	operator_new_0x68	med	new size 0x68
+01981976	cxx-stl	empty_ret	low	1 byte ret, trailing nop stub
+01981980	cxx-stl	operator_delete_0x68	med	delete size 0x68
+01981990	cxx-stl	regex_nfa_dtor	med	locale dtor, destroys state vector with function members
+01981a30	cxx-stl	regex_internal	low	in std::regex address block, size 10, no strings
+01981a40	cxx-stl	make_shared_regex_nfa	high	St19_Sp_make_shared_tag string
+01981a90	cxx-stl	regex_internal	low	in std::regex address block, size 31, no strings
+01981ac0	cxx-stl	regex_internal	low	in std::regex address block, size 98, no strings
+01981c30	cxx-stl	vector_realloc_append	high	vector::_M_realloc_append
+01981e00	cxx-stl	regex_internal	low	in std::regex address block, size 522, no strings
+01982010	cxx-stl	regex_nfa_state_limit_check	high	Number of NFA states exceeds limit string
+019820f0	cxx-stl	regex_nfa_state_limit_check	high	Number of NFA states exceeds limit string
+01982280	cxx-stl	regex_internal	low	in std::regex address block, size 509, no strings
+019826d0	cxx-stl	regex_compiler_backref_or_dfs	med	invalid back reference string; regex executor
+01982e40	cxx-stl	regex_compiler_backref_or_dfs	med	invalid back reference string; regex executor
+01983cf0	cxx-stl	regex_nfa_state_limit_check	high	Number of NFA states exceeds limit string
+01983dd0	cxx-stl	regex_nfa_state_limit_check	high	Number of NFA states exceeds limit string
+01983eb0	cxx-stl	regex_nfa_state_limit_check	high	Number of NFA states exceeds limit string

@@ -54,34 +54,46 @@ k_smpg_accept_final(const float*, const int* draft_ids, const SampleRow*, const 
 6. Two `global_store_b32`: an accept value (1.0 when mode `s13 == 3`) and the
    log-ratio.
 
-That is the standard speculative-sampling test (accept with probability
-min(1, p/q)) with the uniform supplied by the host in the row (`SampleRow` is
-32 B: row index shifted by 5, `s_lshl_b64 s[2:3], s[20:21], 5`; field 0 is
-the temperature fed to the `1/T` divide). The kernel also has an early
-fall-through that stores 1.0 when the mode argument `s13 == 3` (line ~300);
-what the other mode values mean was not traced, so which mode is the greedy
-one is open. The greedy commit itself (trunk argmax) is the falsifier-gate
-argument in `analysis/report.md` section 3, not re-derived here. Counts of
-`v_exp_f32` / `v_log_f32` (grep; the stats CSV `exp` column adds the two):
-`k_accept_prob_f32` 7/1, `k_resid_sample_f32` 9/1, `k_sample_f32` 7/2,
-`k_smpg_accept_final` 1/1 (the one log and one exp of the chain above),
-`k_smpg_pick` 1/2.
+The chain computes exp((a - b)/T), divides it by a second value, then compares
+the exp numerator `v0` with `s15` (`v_cmp_nle_f32 vcc, s15, v0`, slice line
+306). `s15` comes from `s_load_b32 s15, s[2:3], 0xc` (slice line 15) on the
+32-byte `SampleRow` (row index shifted by 5; field 0 feeds the `1/T` divide).
+This has the shape of a speculative-sampling accept test: accept when a
+probability clears a threshold. That it is exactly min(1, p/q) against a
+uniform draw is inferred: this kernel has no explicit min with 1.0 and no
+uniform generation, and the compare operand is the exp numerator, not the
+ratio. The kernel also has an early fall-through that stores 1.0 when the mode
+argument `s13 == 3` (line ~300); what the other mode values mean was not
+traced, so which mode is greedy is open. The greedy commit itself (trunk
+argmax) is the falsifier-gate argument in `analysis/report.md` section 3, not
+re-derived here. Counts of `v_exp_f32` / `v_log_f32` (grep; the stats CSV
+`exp` column adds the two): `k_accept_prob_f32` 7/1, `k_resid_sample_f32` 9/1,
+`k_sample_f32` 7/2, `k_smpg_accept_final` 1/1 (log at slice line 270, exp at
+284), `k_smpg_pick` 1/2.
 
-**No RNG inside any kernel.** Across all 22 sampling/acceptance/SMPG/penalty
-slices there is no multiply-hash or shift-xor generator. Every `v_xor_b32`
-in the `k_smpg_*` family is a `0x80000000` sign flip. The only other xors, 3
-each in `k_accept_prob_f32`, `k_sample_f32`, `k_resid_sample_f32` (lines
-566/692/819, 580/706/833, 561/687/814), are `v_xor_b32 vA, vB, vSign` pairs
-inside the compiler's signed 64-bit divide/modulo expansion (same shape as
-the one in `k_ngram_ids`). Uniforms come from `SampleRow`, filled by the
-host. Consequence for the claim "speculation can't change output": in greedy
-mode the commit is the trunk argmax; in sampled mode (0.17.3
-`HALOGEN_SAMPLED_*`) acceptance preserves the target distribution by
-construction (accept min(1,p/q), resample from the residual in
-`k_resid_sample_f32`), so output equals plain sampling with the same
-uniforms. The distribution-preservation argument is inferred from the
-standard algorithm matching the instruction chain; bitwise equality across
-runs depends on the host supplying identical uniforms (not checkable here).
+**There is an in-kernel RNG, in the pick kernels, not in the accept kernel.**
+`k_smpg_pick` (slice lines 184-212) and `k_smpg_rpick` (lines 234-264) contain
+the splitmix64 constants 0x9e3779b97f4a7c15, 0xbf58476d1ce4e5b9 and
+0x94d049bb133111eb (12 hits each by grep, scalar `s_mul_i32`, `s_mul_hi_u32`,
+`s_xor_b64`, shifts 30 and 27). The first pass of this writeup grepped vector
+ops only and missed them; the independent review caught it. So the sampled draw
+is generated on the GPU from a seed. Where the seed and counter come from
+(`SampleRow`, `SmpScratch`, or a kernel argument) is not traced (U23), so what
+`s15` in the accept kernel holds is also open.
+
+The other xors are not a divide expansion either. `k_smpg_level<1..3>` each
+have one non-sign xor (level1 slice line 697). `k_accept_prob_f32` (lines
+555-567), `k_sample_f32` and `k_resid_sample_f32` carry a float-to-sortable-key
+transform: `v_not_b32`, `v_or_b32 0x80000000`, a sign compare, `v_cndmask_b32`,
+`v_xor_b32` (key = x < 0 ? ~x : x | 0x80000000), and `k_accept_prob_f32` then
+extracts a byte with `v_bfe_u32 ,16,8`. That is a radix-style select over float
+keys, probably a top-k, top-p or sorted search (U24, purpose not traced).
+
+Consequence for "speculation can't change output": the kernels alone do not
+prove it. Greedy: see report.md section 3. Sampled: accept-by-probability plus
+residual resample (`k_resid_sample_f32`) is the standard distribution-preserving
+scheme and the instruction chain is consistent with it (inferred). Bitwise
+reproducibility of sampled runs rests on the splitmix64 seed source (U23).
 
 ## 2. Sampler / SMPG structure
 
@@ -116,7 +128,10 @@ All four take `long long` token arrays and write `long long` ids.
   `s_xor_b64`, lines ~40-60), then a signed 64-bit modulo (the `v_rcp_f32` +
   `v_mad_u64_u32` expansion) by a per-lane table size.
 
-Float ops: zero `v_exp`, zero `v_fma`, zero LDS. Integer hash, modulo, store.
+Float ops: zero `v_exp`, zero `v_fma`, zero LDS. The only float instructions
+are the reciprocal seed inside the compiler's 64-bit modulo expansion
+(`v_cvt_f32_u32`, `v_fmamk_f32`, `v_rcp_f32`, `v_mul_f32`, slice lines
+102-112). Integer hash, modulo, store.
 This matches the host strings `ple.ple_embedding.ngram_heads_offsets`,
 `ngram_heads_vocab_sizes` and `HALOGEN_NGRAM_TABLE` (the 47.7 GiB lookup
 file): the kernels produce per-head row ids into the n-gram embedding table;
@@ -144,22 +159,26 @@ inferred, not proven.
 This is symmetric int8 block quantization with a 16-bit scale, the same shape
 as GGUF Q8_0 (32 values, 1 scale). The exact byte layout of the output block
 and which of the two int arguments is the row map is not pinned down (bounded
-open). `k_dv_quant` (6065 instrs, `long` row stride, one LDS read, 16
-`v_max3`, 65 `v_rcp`, one `v_cvt_f16_f32`) is the same quantizer unrolled and
-using reciprocal-multiply instead of IEEE divide; it has no `v_minmax`
-clamp, so it relies on the reciprocal bounding values to 127 by
-construction (inferred).
+open).
+
+`k_dv_quant` (6065 instrs, `long` row stride) is not the same quantizer. The
+independent review caught this and grep confirms: 36 `ds_` ops, 128
+`v_div_scale` (64 IEEE divides), 775 `v_cmp_lt_f32`, 16 `v_max3_f32`, one
+`v_cvt_f16_f32`, and no `v_rndne_f32` and no `v_cvt_i32_f32`. A compare ladder
+in place of round-and-clamp points to a non-uniform codebook (nearest-level
+search) with an f16 block scale. Unresolved (U25).
 
 `k_dv_scatter(const float* src, const int* idx, float* dst, int n)` (147
-instrs): `if (idx[i] >= 0) dst[idx[i]] = src[i]` (`v_cmpx_lt_i32 -1`,
-`global_load_b32` x2, `global_store_b32`). A masked scatter.
+instrs) is a gather despite the name: it loads `idx[i]`, tests
+`v_cmpx_lt_i32 -1`, loads `src[idx[i]]` when the index is non-negative, and
+stores `dst[i] = idx[i] >= 0 ? src[idx[i]] : -inf` (default `0xff800000`).
 
 What "dv" stands for is not shown by the kernels. They first appear at 0.17.2
 and 0.17.3 adds host guards `q_keep: row %d outside 0..%d` and "was not kept"
 (`analysis/version-deltas.md`): the engine keeps a quantized copy of the
 sampled "q rows" (the draft distribution) for the acceptance walk. That fits
 the kernels: `k_dv_quant8` packs a q row to int8 blocks, `k_dv_scatter`
-places rows by index (negative index = skip), and `k_smpg_qwrite` /
+gathers rows by index (negative index = -inf), and `k_smpg_qwrite` /
 `k_q_softmax_f32` produce the q rows. So the p/q ratio in section 1 reads q
 from this int8 copy (inferred from names and release notes, the load of the
 quantized rows inside the accept kernels was not traced).
@@ -179,10 +198,10 @@ host-side and untraced (bounded open item 6).
 
 | claim | verdict | evidence |
 |---|---|---|
-| greedy vs probabilistic acceptance | the kernels implement the probabilistic test, min(1, p/q) against a host uniform; which mode value is greedy is open | `k_smpg_accept_final` log/exp/divide/compare chain, `s15` from `SampleRow+0xc` |
-| in-kernel RNG | none | no multiply-hash or shift-xor in 22 slices; remaining xors are sign flips or divide expansion |
-| n-gram table is a pure lookup | holds | `k_ngram_ids` is integer hash plus modulo, 0 float ops |
-| speculation cannot change output | holds for greedy (argmax commit); for sampled, by distribution preservation (inferred) | section 1 |
+| greedy vs probabilistic acceptance | the accept kernel has the shape of a probability-threshold test (inferred to be min(1, p/q)); which mode value is greedy is open | `k_smpg_accept_final` log/exp/divide/compare chain, `s15` from `SampleRow+0xc` |
+| in-kernel RNG | exists: splitmix64 in `k_smpg_pick` and `k_smpg_rpick`; seed source untraced | constants at pick lines 184-212, rpick 234-264 |
+| n-gram table is a pure lookup | holds: integer hash plus modulo, only float ops are the divide's reciprocal seed | `k_ngram_ids` |
+ holds for greedy (argmax commit); for sampled, by distribution preservation (inferred) | section 1 |
 
 ## 6. Bounded open
 
@@ -190,5 +209,7 @@ host-side and untraced (bounded open item 6).
 2. Per-lane n-gram order in `k_ngram_ids`.
 3. `k_dv_quant`/`k_dv_quant8` output block layout and argument roles.
 4. What consumes the `k_dv_*` output (host dispatch not traced).
-5. Bitwise reproducibility of sampled runs depends on host-supplied uniforms.
+5. Seed and counter source of the splitmix64 draw (U23); what `s15` holds.
 6. Host feeding of acceptance inputs under `HALOGEN_WALK_FALSIFY`.
+7. Purpose of the float-key radix select in the accept and sample kernels (U24).
+8. What `k_dv_quant` quantizes to (compare-ladder codebook, U25).

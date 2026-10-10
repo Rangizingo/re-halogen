@@ -17,14 +17,16 @@ distinct algorithms.
 | `k_lq8s32`, `k_lq8w` (+`_grp`) | 64, 32, 8 | 8-bit, scale per 32 | `v_dot2_f32_bf16` |
 | `k_lbfw`, `k_lbfw_lds` | 16, 2 | bf16 weights, no decode | `v_dot2_f32_bf16` |
 | `k_hcup4/6/8(w)`, `k_hc6/8_fused(3)` | 12+4+4+4+4+1, 8x4 | 4/6/8-bit hybrid-code weights, fused epilogue | `v_dot2_f32_bf16` |
-| `k_i4r_*` | ~25 | i4r rows: 4-bit rows with rotation plane (`_rot`, `_fold`, `_epi`, `_gu_epi`) | `v_dot2acc_f32_f16` |
+| `k_i4r_*` | 19 | i4r rows: 4-bit rows with rotation plane (`_rot`, `_fold`, `_epi`, `_gu_epi`) | `v_dot2acc_f32_f16` |
 | `k_ht_*` | 262 | Hadamard-transform (HT) weights and activations | `v_dot2acc_f32_f16`, `v_wmma` (MoE) |
 | `k_q4moe`, `k_q4moe_items` | 20, 2 | 4-bit routed-expert GEMM | `v_wmma_f32_16x16x16_bf16` |
 | `k_deq_*` (`q4cp`, `q4cp_v8/v8u/v32/probe/sel/f32`, `q6k`, `q6g64`, `q8g64`, `q8s32`, `aff`) | ~30 | standalone dequant to bf16 | none (convert + store) |
 
 No `v_mfma` anywhere (gfx1151 has none). WMMA appears in `k_q4moe` (368 per
-kernel on average), the `k_ht_moe_*` expert kernels and `k_hcup4w` (one
-slice). All other dense and decode-path kernels use packed dot2 on the VALU.
+kernel on average), the `k_ht_moe_*` expert kernels, `k_ht_tg`/`k_ht_tg3` (4
+slices), `k_dn_fused16` (17 slices, covered in `kernels-moe.md`) and
+`k_hcup4w` (one slice). All other lq/hc/lbf dense and decode kernels use
+packed dot2 on the VALU.
 
 Mapping to `.hgn` dtypes (`analysis/hgn-format.md`): `q4c`/`q4a`/`iq4nl` ->
 `k_lq4w`/`k_deq_q4cp*`; `q6k`/`q6g64` -> `k_lq6k`/`k_lq6w`/`k_deq_q6*`;
@@ -67,16 +69,19 @@ column counts `v_exp` plus `v_log`; `rcp` counts `v_rcp`.
 ## 2. `k_q4moe`: the routed-expert tensor-core path
 
 `k_q4moe<1,0,128,Tune<0,128>,0>(Args)` is the largest family member (5,472 to
-41,495 instrs). Op census (largest variant): 2,544 `v_perm_b32`, 1,384
-`v_bfe_u32`, 576 `v_wmma_f32_16x16x16_bf16`, 576 `v_div_scale_f32`, 512
-`v_permlanex16_b32`. Reading: 4-bit expert weights are expanded to bf16 with
-byte permutes (`v_perm_b32` is the nibble-to-bf16 trick) and fed to 16x16x16
-bf16 WMMA tiles; `permlanex16` shuffles tiles between the two 16-lane halves
-of a wave32. `k_q4moe_items<128>(int*, int*, int*, int, Item*, Item*, int*)`
-(309 instrs, no WMMA) builds the per-expert work list (token counts to
-`Item` records), so tokens are grouped by expert before the GEMM. The tile
-width 128 matches the 128-element Hadamard block in section 3. This is the
-dense-MoE counterpart of `k_dn_fused16` in `analysis/kernels-moe.md`.
+41,495 instrs). Half of the 20 slices use bf16 WMMA and half use f16 WMMA
+(10 and 10 by grep for `v_wmma_f32_16x16x16_bf16` vs `_f16`). The 41,495-
+instruction variant is an f16 one: 576 `v_wmma_f32_16x16x16_f16`, about 2,030
+`v_perm_b32`, about 1,380 `v_permlanex16_b32` (counts from the independent
+review; my first pass quoted a bf16 census that does not match that variant).
+Reading: 4-bit expert weights are expanded with byte permutes (`v_perm_b32` is
+the nibble expansion trick) and fed to 16x16x16 WMMA tiles; `permlanex16`
+shuffles tiles between the two 16-lane halves of a wave32.
+`k_q4moe_items<128>(int*, int*, int*, int, Item*, Item*, int*)` (309 instrs,
+no WMMA) builds the per-expert work list (token counts to `Item` records), so
+tokens are grouped by expert before the GEMM. The tile width 128 matches the
+128-element Hadamard block in section 3. This is the dense-MoE counterpart of
+`k_dn_fused16` in `analysis/kernels-moe.md`.
 
 ## 3. HT tensors carry a rotation plane (claim closed)
 
@@ -124,27 +129,39 @@ butterfly with the diagonal applied after (it takes `bf16* y` as the in-place
 target); `_f32`/`_h`/`_rows` differ only in input/output precision and row
 count. This is the QuIP#-style incoherence-processing pattern.
 
+**Reconciliation with `kernels-moe.md`.** That older writeup (section 1.1) reads
+the same constant `0x3db504f3` as 1/sqrt(512) and the rotation as a 32-point
+Hadamard per 32-element group. The constant is 0.08838835, which is 1/sqrt(128)
+(and equals 1/16 times sqrt(2), the parenthetical it quotes). The butterfly
+adds 2 in-lane stages (each lane holds 4 elements), 4 DPP stages and 1
+`permlanex16` stage: 2 + 4 + 1 = 7 stages = a 128-point transform, and the
+orthonormal normalization of a 128-point WHT is 1/sqrt(128). I take 128-point
+as correct; a correction note is added to `kernels-moe.md`.
+
 **3b. The GEMV kernels consume the rotated basis.** `k_ht_lin<3|4,...>`
 (`uint32* Wq, bf16* x, int x4, half* su, half* sv, float* out, uint32*, void*,
 bf16*`) and `k_ht_gemv_gu<3|4,8,1>(uint32*, half*, HtItem*, int*, half*,
 half*, half*)` take **two fp16 vectors**, which are the per-block vectors of
 section 3a (`su`/`sv`: input side and output side), and inline the same WHT:
-`k_ht_lin` has 48 `dpp`, 12 `permlane`, 7 uses of `0x3db504f3`, 20
-`fma_mix`; `k_ht_gemv_gu` 96 `dpp`, 16 `permlane`, 16 uses of the constant;
-the expert kernels `k_ht_moe_gu`/`_dn` 768 and 256 `dpp`, 125 and 44 uses.
-Weights arrive as packed `uint32` and are decoded with `v_sad_u8` (64 in
-`k_ht_lin`, 128 in `k_ht_gemv_gu`) and dotted with `v_dot2acc_f32_f16`
-(32 and 62). Rotating the activations by H then taking the dot product with
+`k_ht_lin` has 48 `dpp` in the first slice, 12 to 68 `permlane` across slices,
+7 uses of `0x3db504f3` and 16 `fma_mix`; `k_ht_gemv_gu` 96 `dpp`, 16
+`permlane`, 16 uses of the constant; the expert kernels `k_ht_moe_gu`/`_dn`
+768 and 256 `dpp`, 125 and 44 uses. Weights arrive as packed `uint32` and are
+decoded with `v_sad_u8` (64 in `k_ht_lin`, 128 in `k_ht_gemv_gu`) and dotted
+with `v_dot2acc_f32_f16` (21 to 137 per `k_ht_lin` slice, 50 to 53 per
+`k_ht_gemv_gu` slice; ranges per the independent review, they vary with the
+instantiation). Rotating the activations by H then taking the dot product with
 a stored weight that was quantized in the rotated basis equals the original
 product, which is the reason to store the plane.
 
-**3c. The first template argument is 3 or 4, evenly split** across every
-`k_ht_*` family (`k_ht_lin` 32/32, `k_ht_gemv_gu_t` 20/20, `k_ht_moe_*` 3/3
-and so on). Reading: bits per weight, so HT is a 3-bit and a 4-bit format
-sharing one kernel set. Inferred from the split and the `.hgn` error string
-"form the engine does not read (codebook, tile order or bits)" in
-`analysis/hgn-format.md`; the decode through `v_sad_u8` is not reversed
-(bounded open).
+**3c. The first template argument is 3 or 4** across the GEMV and MoE `k_ht_*`
+families, mostly in an even split (`k_ht_lin` 32/32, `k_ht_gemv_gu_t` 20/20,
+`k_ht_moe_*` 3/3), but not everywhere: `k_ht_lin_grp` is 16/17, `k_ht_items_group`
+is 2/4 and the `k_ht_rot_*` kernels have no template arguments. Reading: bits
+per weight, so HT is a 3-bit and a 4-bit format sharing one kernel set.
+Inferred from the split and the `.hgn` error string "form the engine does not
+read (codebook, tile order or bits)" in `analysis/hgn-format.md`; the decode
+through `v_sad_u8` is not reversed (bounded open).
 
 **3d. Companion tensors.** The `.suh` / `.svh` companion rule in
 `analysis/hgn-format.md` (HT tensors travel with two fp16 vectors) matches
@@ -180,9 +197,9 @@ plane. HT adds the 3/4-bit `v_sad_u8` code path and the MoE tiles; i4r is the
 | claim | verdict | evidence |
 |---|---|---|
 | HT tensors carry a rotation plane | closed | section 3a-d |
-| lq/hc/lbf decode kernels dot in bf16 on the VALU, no tensor cores | holds with one exception: `k_hcup4w` (1 slice, 32 WMMA) | grep: 1 of ~190 `k_lq*`/`k_hc*`/`k_lbf*` slices has `v_wmma` |
+| lq/hc/lbf decode kernels dot in bf16 on the VALU, no tensor cores | holds with one exception: `k_hcup4w` (1 slice, 32 WMMA) | grep: 1 of 791 `k_lq*`/`k_hc*`/`k_lbf*` slices has `v_wmma` |
 | i4r carries the same rotation plane as HT | holds | `0x3db504f3` in 17 of 19 i4r slices, 257 of 262 HT slices |
-| MoE expert 4-bit path uses WMMA | holds | `k_q4moe` 576 `v_wmma_f32_16x16x16_bf16` |
+| MoE expert 4-bit path uses WMMA | holds, in both bf16 and f16 variants | `k_q4moe`: 10 bf16 and 10 f16 slices |
 
 Bounded open:
 

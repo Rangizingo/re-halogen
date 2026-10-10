@@ -19,10 +19,11 @@ Acceptance claims from PLAN.md Phase 2:
 
 | claim | verdict | where |
 |---|---|---|
-| speculation can't change output | greedy: argmax commit (report.md s3); sampled: standard min(1,p/q) accept plus residual resample, no in-kernel RNG (distribution preservation inferred) | kernels-speculation.md s1 |
-| prompt cache resume is bitwise | kernel side closed; host dispatch half open (U13) | kernels-attention.md |
-| HT tensors carry a rotation plane | closed | kernels-dequant.md s3 |
-| n-gram table is a pure lookup | closed (integer hash and modulo, 0 float ops) | kernels-speculation.md s3 |
+| speculation can't change output | not provable from kernels alone. Greedy: report.md s3. Sampled: accept-by-probability plus residual resample is the standard scheme (inferred); the draw comes from an on-GPU splitmix64 whose seed source is untraced (U23) | kernels-speculation.md s1 |
+| prompt cache resume is bitwise | contradicted for the in-place cache: the engine's own startup text says "a warm answer is NOT bitwise the cold one" (HALOGEN_PROMPT_CACHE=2, resume-anywhere). Not yet tested for other cache modes (U13) | analysis/evidence/live-0.17.2-startup-and-info.txt |
+| HT tensors carry a rotation plane | closed, 128-point Hadamard; kernels-moe.md corrected | kernels-dequant.md s3 |
+| n-gram table is a pure lookup | holds at kernel level (integer hash plus modulo) | kernels-speculation.md s3 |
 
-Residual: 22 bounded unknowns (`unknowns.md`). 4 of 4 acceptance claims have
-kernel-level evidence; one (cache resume) is bounded by its host half.
+Residual: 26 bounded unknowns (`unknowns.md`). One acceptance claim is
+contradicted by the engine itself and two are bounded by host-side or seed
+questions.

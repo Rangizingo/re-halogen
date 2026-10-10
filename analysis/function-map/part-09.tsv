@@ -1,0 +1,299 @@
+addr	role	label	confidence	evidence
+01984050	cxx-stl	regex_nfa_state_limit_check	high	string: Number of NFA states exceeds limit
+01984200	cxx-stl	regex_executor_helper	low	std::regex region, small, no strings
+019842f0	cxx-stl	regex_executor_helper	low	std::regex region, small, no strings
+019843e0	cxx-stl	regex_executor_helper	low	std::regex region, small, no strings
+019844d0	cxx-stl	regex_executor_helper	low	std::regex region, small, no strings
+019845c0	cxx-stl	regex_executor_helper	low	std::regex region, small, no strings
+019846b0	cxx-stl	regex_executor_helper	low	std::regex region, small, no strings
+019847a0	cxx-stl	regex_executor_helper	low	std::regex region, small, no strings
+01984890	cxx-stl	regex_executor_helper	low	std::regex region, small, no strings
+01984980	cxx-stl	regex_backref_handling	high	string: invalid back reference
+01984c80	cxx-stl	regex_executor_helper	low	std::regex region, small, no strings
+01984d80	cxx-stl	regex_executor_helper	low	std::regex region, small, no strings
+01984e80	cxx-stl	regex_executor_helper	low	std::regex region, small, no strings
+01984fc0	cxx-stl	regex_executor_helper	low	std::regex region, small, no strings
+01985100	cxx-stl	regex_backref_parse	high	back-reference error strings
+01985300	cxx-stl	regex_backref_check	high	string: invalid back reference
+01985380	cxx-stl	regex_executor_helper	low	std::regex region, leaf, no strings
+019856b0	cxx-stl	regex_char_class_parse	high	string: Invalid character class
+01985950	cxx-stl	regex_char_class_parse	high	string: Invalid character class
+01985c90	cxx-stl	regex_char_class_parse	high	string: Invalid character class
+01985f30	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+01986020	cxx-stl	regex_nfa_state_limit_check	high	string: Number of NFA states exceeds limit
+01986200	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+01986250	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+01986280	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+019862d0	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+019862f8	cxx-stl	regex_matcher_thunk	low	8-byte tail jump, std::function manager style
+01986300	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+01986330	cxx-stl	regex_matcher_manager	low	std::function manager shape, std::regex region
+019863d0	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+01986410	cxx-stl	regex_matcher_thunk	low	8-byte tail jump
+01986420	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+01986450	cxx-stl	regex_matcher_manager	low	std::function manager shape, std::regex region
+019864f0	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+01986530	cxx-stl	regex_matcher_thunk	low	16-byte leaf, std::regex region
+01986540	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+01986570	cxx-stl	regex_matcher_thunk	low	16-byte leaf, std::regex region
+01986580	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+019865a8	cxx-stl	regex_matcher_thunk	low	8-byte tail jump
+019865b0	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+019865e0	cxx-stl	regex_matcher_manager	low	std::function manager shape, std::regex region
+01986688	cxx-stl	regex_matcher_thunk	low	8-byte tail jump
+01986690	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+019866c0	cxx-stl	regex_matcher_manager	low	std::function manager shape, std::regex region
+01986770	cxx-stl	regex_matcher_thunk	low	10-byte leaf, std::regex region
+01986780	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+019867b0	cxx-stl	regex_matcher_thunk	low	10-byte leaf, std::regex region
+019867c0	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+019867f0	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+01986840	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+01986870	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+019868c0	cxx-stl	regex_matcher_thunk	low	small std::regex region function
+019868f0	cxx-stl	regex_compiler_helper	low	std::regex region, 6 callees, no strings
+01986a90	cxx-stl	regex_bracket_add_class	high	Invalid character class, vector realloc strings
+01986c60	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01986e90	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01986f40	cxx-stl	std_sort_insertion_char	med	char range insertion sort loop in head
+01987170	cxx-stl	std_sort_char_range	med	char range, size<0x11 insertion branch, introsort
+01987370	cxx-stl	std_make_heap_char	med	heap sift on 2-byte pairs (uVar4 half index)
+019874e0	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01987730	cxx-stl	std_vector_length_check_ctor	high	string: cannot create std::vector larger than max_size
+01987830	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01987a50	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01987b70	cxx-stl	regex_compiler_helper	low	24-byte leaf, std::regex region
+01987b90	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01987c10	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01987cd0	cxx-stl	regex_compiler_helper	low	std::regex region, 883 bytes, no strings
+01988090	cxx-stl	regex_bracket_add_class	high	Invalid character class, vector realloc strings
+01988260	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+019884a0	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+019885a0	cxx-stl	regex_compiler_helper	low	2-byte stub, std::regex region
+01988620	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01988690	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+019886d0	cxx-stl	regex_compiler_helper	low	std::regex region, 829 bytes, no strings
+01988a80	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01988ba0	cxx-stl	regex_compiler_helper	low	small leaf, std::regex region
+01988bc0	cxx-stl	regex_compiler_helper	low	small leaf, std::regex region
+01988c50	cxx-stl	regex_compiler_helper	low	small leaf, std::regex region
+01988ef0	cxx-stl	regex_compiler_helper	low	std::regex region, 9 callees, no strings
+01988fe0	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+019890f0	cxx-stl	regex_bracket_add_class	high	Invalid character class, vector realloc strings
+019892c0	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01989500	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+019895b0	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01989850	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01989900	cxx-stl	regex_compiler_helper	low	small leaf, std::regex region
+01989920	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+019899a0	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01989a60	cxx-stl	regex_compiler_helper	low	std::regex region, 884 bytes, no strings
+01989e20	cxx-stl	regex_bracket_add_class	high	Invalid character class, vector realloc strings
+01989ff0	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+0198a230	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+0198a330	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+0198a650	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+0198a700	cxx-stl	regex_compiler_helper	low	small leaf, std::regex region
+0198a720	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+0198a7b0	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+0198aa50	cxx-stl	regex_compiler_helper	med	std::regex region, vector realloc string
+0198aed0	cxx-stl	regex_compiler_helper	med	std::regex region, vector realloc string
+0198b2c0	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+0198b6a0	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+0198b9e0	cxx-stl	regex_bracket_expression_parse	high	'[...]' and '[x-x]' error strings
+0198c2e0	cxx-stl	regex_collate_element_parse	high	string: Invalid collate element
+0198c410	cxx-stl	regex_bracket_helper	med	vector realloc string, regex region
+0198c500	cxx-stl	regex_bracket_helper	med	vector realloc string, regex region
+0198c5e0	cxx-stl	regex_equivalence_class_parse	high	string: Invalid equivalence class
+0198c7d0	cxx-stl	regex_bracket_range_parse	high	string: Invalid range in bracket expression
+0198c9a0	cxx-stl	regex_escape_char_parse	med	string: alert, regex escape names
+0198cc50	cxx-stl	std_vector_length_check_ctor	high	string: cannot create std::vector larger than max_size
+0198cd50	cxx-stl	regex_bracket_expression_parse	high	'[...]' and '[x-x]' error strings
+0198d650	cxx-stl	regex_collate_element_parse	high	string: Invalid collate element
+0198d780	cxx-stl	regex_bracket_helper	med	vector realloc string, regex region
+0198d870	cxx-stl	regex_bracket_helper	med	vector realloc string, regex region
+0198d950	cxx-stl	regex_equivalence_class_parse	high	string: Invalid equivalence class
+0198db40	cxx-stl	regex_bracket_range_parse	high	string: Invalid range in bracket expression
+0198de90	cxx-stl	regex_bracket_helper	med	vector realloc string, regex region
+0198e0f0	cxx-stl	regex_bracket_expression_parse	high	POSIX '-' location error string
+0198e640	cxx-stl	regex_bracket_helper	med	vector realloc string, regex region
+0198e730	cxx-stl	regex_collate_element_parse	high	string: Invalid collate element
+0198e8a0	cxx-stl	regex_equivalence_class_parse	high	string: Invalid equivalence class
+0198ea90	cxx-stl	regex_bracket_range_parse	high	string: Invalid range in bracket expression
+0198ec60	cxx-stl	regex_bracket_expression_parse	high	POSIX '-' location error string
+0198f1b0	cxx-stl	regex_bracket_helper	med	vector realloc string, regex region
+0198f2a0	cxx-stl	regex_compiler_helper	low	14-byte leaf, std::regex region
+0198f410	cxx-stl	regex_equivalence_class_parse	high	string: Invalid equivalence class
+0198f600	cxx-stl	regex_bracket_range_parse	high	string: Invalid range in bracket expression
+0198f950	cxx-stl	regex_nfa_state_limit_check	high	string: Number of NFA states exceeds limit
+0198faf0	cxx-stl	regex_compile_finalize	high	NFA limit string, 1758 bytes
+019902a0	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01990300	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01990400	cxx-stl	regex_compiler_helper	low	small leaf, std::regex region
+01990420	cxx-stl	std_rbtree_get_insert_unique_pos	med	_Rb_tree header at +8, key compare at +0x20
+01990610	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01990650	cxx-stl	regex_compiler_helper	low	std::regex region, no strings
+01990790	cxx-stl	std_deque_length_check_ctor	high	string: cannot create std::deque larger than max_size
+01990860	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+01990a40	cxx-stl	std_deque_length_check_ctor	high	string: cannot create std::deque larger than max_size
+01990b30	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+01990d10	cxx-stl	std_deque_length_check_ctor	high	string: cannot create std::deque larger than max_size
+01990e00	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+01990f30	cxx-stl	regex_executor_dfs_main	med	large frame, 7 params incl flags, regex region
+01991440	cxx-stl	std_vector_length_check_ctor	high	string: cannot create std::vector larger than max_size
+01991680	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+01991730	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+019917e0	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+01991810	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+01991940	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+01991c40	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+01991ca0	cxx-stl	regex_executor_main_loop	low	std::regex region, 683 bytes, byte return
+01991f70	cxx-stl	regex_executor_handle_state	low	std::regex region, 884 bytes
+01992310	cxx-stl	regex_executor_helper	med	vector realloc string, regex region
+01992510	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+01992630	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+01992720	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+019927a0	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+01992870	cxx-stl	regex_executor_helper	low	small leaf, std::regex region
+01992a40	cxx-stl	regex_executor_helper	low	small leaf, std::regex region
+01992d10	cxx-stl	regex_executor_helper	low	small leaf, std::regex region
+01992e10	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+01992fd0	cxx-stl	regex_executor_handle_state	low	std::regex region, near-twin of 01991f70
+019933e0	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+019934d0	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+019935a0	cxx-stl	regex_executor_helper	low	std::regex region, no strings
+01993770	cxx-stl	std_vector_length_check_ctor	high	string: cannot create std::vector larger than max_size
+01993b60	cxx-stl	std_vector_default_append	high	string: vector::_M_default_append
+01993cc0	cxx-stl	std_vector_default_append	high	string: vector::_M_default_append
+01994150	cxx-stl	std_copy_elements_0x148_bytes	med	loop stride 0x29 qwords, copies struct
+01994340	cxx-stl	regex_executor_helper	low	small leaf, std::regex region
+019945c0	crt-runtime	empty_stub	low	1-byte function, likely ret
+01994840	cxx-stl	std_vector_default_append	high	string: vector::_M_default_append
+01994980	cxx-stl	std_sort_int_range	med	int range introsort loop
+01994bd0	cxx-stl	std_sort_int_helper	low	int range sort helper, 1 callee
+01994d50	cxx-stl	std_make_heap_int	med	heap sift on int array, shift by 2
+01994ef0	cxx-stl	std_vector_default_append	high	string: vector::_M_default_append
+01995040	cxx-stl	std_vector_length_check_ctor	high	string: cannot create std::vector larger than max_size
+01995180	cxx-stl	std_vector_realloc_append	high	string: vector::_M_realloc_append
+01995280	cxx-stl	std_vector_int_fill_insert	high	mangled vector<int>::_M_fill_insert
+01995690	crt-runtime	init_flash_model_hip	high	_INIT_2 with flash_model.hip path and build date
+019956f0	util	enum_to_name_lookup_5	low	bounds check under 5, pointer table lookup
+01995710	util	enum_to_name_lookup_25	low	bounds check under 0x19, string offset table
+01995730	hgn-loader	checkpoint_overlay_path	high	HALOGEN_CK_OVERLAY and .overlay.hgn strings
+01995ae0	hgn-loader	checkpoint_overlay_load	low	calls 01995c30 string-building helper
+01995c30	hgn-loader	checkpoint_overlay_path_build	med	string create and vector realloc, 11 callees
+019960d0	hgn-loader	checkpoint_tensor_lookup_helper	low	neighbouring checkpoint.cpp code, no strings
+019961f0	hgn-loader	checkpoint_moe_tensor_names	med	string experts.gate_up_proj.weight
+01996400	hgn-loader	checkpoint_name_helper	low	string create, checkpoint.cpp neighbour
+01996840	hgn-loader	checkpoint_overlay_skip_parse	med	string HALOGEN_CK_OVERLAY_SKIP
+01996d90	hgn-loader	checkpoint_map_weights	high	prints mapped GB, Pin::None, device ptr == host ptr
+01997860	hip-runtime	check_kfd_shared_mem_topology	high	reads /sys/class/kfd topology properties
+01997a30	config-env	weights_lock_getenv	high	string HALOGEN_WEIGHTS_LOCK
+01997a90	hgn-loader	checkpoint_mlock_weights	high	MemAvailable, Mlocked, checkpoint: locked GiB
+01997e40	hgn-loader	checkpoint_find_tensor	high	checkpoint: no tensor named %s, ngram table message
+019981d0	hgn-loader	checkpoint_tensor_data_ptr	med	table index times 0x68 plus base, via 0199bdd0 lookup
+01998200	hgn-loader	checkpoint_tensor_entry_copy	low	copies struct with SSO string, memcpy
+01998570	util	read_meminfo_kb	high	/proc/meminfo parse with %lf kB
+01998690	hgn-loader	range_overlaps_mapped_region	low	scans global range vector for overlap
+019986e0	hgn-loader	checkpoint_helper	low	small, checkpoint.cpp neighbour, no strings
+019996e0	hgn-loader	checkpoint_destroy	med	calls hipHostUnregister, frees members
+01999970	cxx-stl	std_string_append_cstr	high	mangled basic_string operator+=(const char*)
+01999a10	cxx-stl	std_string_dtor	high	mangled basic_string dtor
+01999a30	cxx-stl	std_vector_string_destroy	low	small cleanup helper, 1 callee
+01999aa0	crt-runtime	empty_stub	low	1-byte function
+01999b40	cxx-stl	stl_container_helper	low	small, no strings
+01999be0	cxx-stl	stl_container_helper	low	small, no strings
+01999c10	cxx-stl	std_vector_reserve	high	string: vector::reserve
+01999d70	cxx-stl	std_string_operator_plus	high	mangled operator+ for strings
+01999e60	cxx-stl	stl_container_helper	low	small, 7 callers, no strings
+01999eb0	util	u64_to_decimal_string	high	digit-pair table, std::to_string pattern
+0199a000	cxx-stl	stl_container_helper	low	24 bytes, 1 callee
+0199a020	cxx-stl	std_string_M_replace	high	mangled basic_string::_M_replace
+0199a140	cxx-stl	std_string_M_mutate	high	mangled basic_string::_M_mutate
+0199a2f0	cxx-stl	std_vector_reserve	high	string: vector::reserve
+0199a440	cxx-stl	std_vector_realloc_append	high	string: vector::_M_realloc_append
+0199a610	cxx-stl	std_string_M_assign	high	mangled basic_string::_M_assign
+0199a710	cxx-stl	std_vector_realloc_append	high	string: vector::_M_realloc_append
+0199a920	cxx-stl	std_str_concat	high	mangled __str_concat
+0199aa90	cxx-stl	std_string_reserve	high	mangled basic_string::reserve
+0199ab60	cxx-stl	stl_container_helper	low	string/vector neighbour, no strings
+0199ac60	cxx-stl	std_sort_pair_u64_range	low	ulong pairs, 839 bytes, no calls, sort loop
+0199afe0	cxx-stl	std_heap_pair_u64	low	ulong pair heap, no calls
+0199b140	cxx-stl	std_sort_helper	low	no calls, sort-like, 289 bytes
+0199b280	cxx-stl	std_string_assign_fill	high	mangled basic_string::assign(n, c)
+0199b370	cxx-stl	std_unordered_map_string_u64_subscript	high	mangled _Map_base string to size_t operator[]
+0199b5d0	cxx-stl	stl_hashtable_helper	low	small, near string-keyed hashtable
+0199b610	cxx-stl	std_hashtable_allocate_node	high	mangled _M_allocate_node string-u64 pair
+0199b6f0	cxx-stl	std_hashtable_helper	low	near string-keyed hashtable
+0199b830	cxx-stl	std_unordered_map_string_u64_method	high	mangled _Hashtable string to size_t
+0199b9f0	cxx-stl	std_hashtable_rehash	low	690 bytes, between hashtable instantiations
+0199bcf0	cxx-stl	std_hashtable_helper	low	small, hashtable neighbour
+0199bdd0	hgn-loader	checkpoint_tensor_name_find	med	hash lookup by name, called by tensor_data_ptr
+0199bf90	crt-runtime	init_checkpoint_cpp	high	_INIT_4 with checkpoint.cpp path and build date
+0199c000	hgn-loader	checkpoint_helper	low	checkpoint.cpp neighbour, no strings
+0199c070	hgn-loader	checkpoint_helper	low	checkpoint.cpp neighbour, 10 callees
+0199c220	hgn-loader	checkpoint_parse_hgn_header	high	14KB, tensor name tables, truncated header, tokenizer
+019a14a0	hgn-loader	checkpoint_helper	low	small, 4 callers, follows header parser
+019aa550	sampling-speculation	mtp_head_path_getenv	high	string HALOGEN_MTP_HEAD
+019aa630	gguf-repack	gguf_helper	low	small, follows MTP path function
+019aa6e0	gguf-repack	gguf_helper	low	no strings, between MTP and GGUF loaders
+019aa860	gguf-repack	gguf_load_dir_and_names	med	HALOGEN_GGUF_THREADS, qwen3.8-flash-next-gguf
+019ae820	gguf-repack	gguf_open_file	med	string: cannot open
+019ae9d0	gguf-repack	gguf_repack_helper	low	vector realloc string, near GGUF loader
+019aed10	logging-diag	checkpoint_progress_print	high	prints tensors, GiB, seconds progress line
+019af2e0	gguf-repack	gguf_repack_helper	low	35 bytes, no strings
+019af310	gguf-repack	gguf_repack_helper	low	54 bytes, no strings
+019af350	gguf-repack	gguf_open_and_index	high	gguf: is not a GGUF, HALOGEN_GGUF_THREADS
+019b01a0	gguf-repack	mtp_head_file_load	high	MTP head file carries no mtp.* tensors
+019b0410	gguf-repack	gguf_repack_helper	low	51 bytes, no strings
+019b0450	gguf-repack	gguf_repack_helper	low	650 bytes, 1 callee, no strings
+019b0700	gguf-repack	gguf_repack_helper	low	vector size check strings, near GGUF loader
+019b0bb0	gguf-repack	write_output_file_checked	med	string: write failed on
+019b0d30	gguf-repack	gguf_repack_helper	low	135 bytes, no strings
+019b0dc0	gguf-repack	gguf_open_threaded	med	not a GGUF, HALOGEN_GGUF_THREADS, vector check
+019b1b20	gguf-repack	gguf_repack_helper	low	663 bytes, no strings
+019b1e10	gguf-repack	gguf_repack_helper	low	261 bytes, no strings
+019b1f20	gguf-repack	gguf_read_header	med	string: truncated header
+019b2080	gguf-repack	gguf_read_string	high	string: absurd string length in the header
+019b2160	gguf-repack	gguf_read_kv	high	string: unknown KV type
+019b2670	gguf-repack	gguf_repack_helper	low	30 bytes, no strings
+019b2690	gguf-repack	gguf_repack_helper	low	303 bytes, no strings
+019b2ca0	gguf-repack	gguf_repack_helper	low	72 bytes, no strings
+019b2cf0	gguf-repack	gguf_repack_helper	low	122 bytes, no strings
+019b2d70	gguf-repack	gguf_repack_helper	low	117 bytes, no strings
+019b2df0	gguf-repack	gguf_repack_helper	low	27 bytes, no strings
+019b6d50	gguf-repack	gguf_layer_name_parse	med	layers. prefix, substr error string
+019b7020	gguf-repack	map_sublayer_tensor_name	med	attn_hyper_connection, unmapped sublayer
+019b7250	gguf-repack	gguf_tensor_name_map	low	4KB, 7 callees, big body, no strings
+019b8420	gguf-repack	gguf_tensor_repack	low	945 bytes, 4 params incl ulong, no strings
+019b87e0	gguf-repack	gguf_repack_helper	low	400 bytes, no strings
+019b8970	gguf-repack	gguf_repack_helper	low	996 bytes, no strings
+019b8d90	gguf-repack	gguf_repack_helper	low	439 bytes, no strings
+019b8f50	gguf-repack	gguf_repack_helper	low	53 bytes, no strings
+019b8f90	gguf-repack	gguf_repack_helper	low	50 bytes, no strings
+019bad50	gguf-repack	gguf_repack_helper	low	52 bytes, no strings
+019bad90	gguf-repack	gguf_repack_helper	low	30 bytes, no strings
+019badb0	gguf-repack	gguf_repack_helper	low	132 bytes, no strings
+019bae34	crt-runtime	empty_stub	low	1-byte function
+019bae40	gguf-repack	gguf_repack_helper	low	349 bytes, no strings
+019bafb0	gguf-repack	gguf_repack_helper	low	218 bytes, no strings
+019bb090	cxx-stl	std_sort_or_merge_long_range	low	2964 bytes, 4 long* params, memmove pattern
+019bbcc0	cxx-stl	std_merge_adaptive_helper	low	546 bytes, long* ranges, size comparison
+019bbef0	cxx-stl	std_sort_helper	low	461 bytes, adjacent to merge routines
+019bc0e0	cxx-stl	std_sort_helper	low	490 bytes, adjacent to merge routines
+019bc2f0	cxx-stl	std_sort_helper	low	23 bytes, adjacent to merge routines
+019bc310	cxx-stl	std_sort_helper	low	358 bytes, adjacent to merge routines
+019bc480	gguf-repack	repack_head_file_with_checksum	high	head payload checksum, ssm_a -exp(A_log) check
+019c19b0	gguf-repack	repack_linear_attn_in_proj	high	in_proj_z, in_proj_qkv, in_proj_a/b row checks
+019c1f50	gguf-repack	read_exact	med	string: short read in
+019c2000	gguf-repack	repack_q4cp_band	high	q4cp_band: unexpected type, 5KB
+019c3610	gguf-repack	gguf_repack_helper	low	395 bytes, no strings
+019c37a0	gguf-repack	repack_q5_0_rows	high	Q5_0 repacked rows, fp16 scale check
+019c50a0	gguf-repack	gguf_repack_helper	low	69 bytes, no strings
+019c50f0	gguf-repack	gguf_repack_helper	low	80 bytes, no strings
+019c5140	gguf-repack	affine_scratch_window_check	med	string: affine scratch window past the band
+019c517c	crt-runtime	empty_stub	low	1-byte function
+019c5180	gguf-repack	gguf_repack_helper	low	142 bytes, no strings
+019c5220	gguf-repack	gguf_repack_helper	low	63 bytes, no strings
+019c5260	gguf-repack	output_file_open	low	string: the output file
+019c5310	gguf-repack	gguf_repack_helper	low	23 bytes, no strings

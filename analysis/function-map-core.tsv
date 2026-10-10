@@ -1,0 +1,402 @@
+addr	role	label	confidence	evidence
+0182ea00	unknown	unknown_0182ea00	low	126B, calls 01903630 and 01905000, no strings
+0182ea80	protocol-net	parse_request_json	med	52KB, error/malformed/id out of range strings
+01844d50	scheduler-slots	serve_queue_pending_trace	med	connection queued behind running session strings
+018456c0	protocol-net	recv_line_append	med	calls recv, string append and find
+01845940	protocol-net	send_string	med	calls send, string reserve and append
+01845e50	scheduler-slots	trace_retire_request	med	req retired after tokens, pair joint rounds strings
+018466e0	scheduler-slots	slot_state_release	low	operator delete, memset, calls 01870630
+018469a0	scheduler-slots	slot_dispatch_helper	low	calls 0184d040, 01906050, 01907970
+01846b20	scheduler-slots	prefill_request_with_log	med	prefill %d/%d tokens log strings
+01847a30	scheduler-slots	prefill_cancelled	high	cancelled during its prefill string
+01847c40	scheduler-slots	move_slot_struct	low	field-wise move of large struct, memcpy
+01848190	scheduler-slots	decode_first_token	med	first token, penalty history kPenMax strings
+01849530	scheduler-slots	request_helper_01849530	low	calls 018704e0, no strings
+018497a0	scheduler-slots	refuse_request	med	request refused string, error
+0184a0f0	scheduler-slots	move_request_state	low	moves struct fields, 2KB, memcpy
+0184a9b0	sampling-speculation	prob_helper	low	calls 01907c70, NAN handling
+0184aab0	sampling-speculation	check_token_legal_grammar	high	token illegal under grammar string
+0184ad90	sampling-speculation	sampling_vector_build	low	NAN, vector realloc, calls 01883050
+0184b4c0	sampling-speculation	grammar_state_step_wrapper	low	9B wrapper calling 01864950
+0184b4d0	protocol-net	format_float_list_reply	low	%.7g and %d %.7g formats
+0184be30	scheduler-slots	prefill_chunk_log	med	prefill %d/%d tokens string
+0184c400	model-forward	vision_img_prompt_expand	low	IMG string
+0184c9a0	protocol-net	format_stats_D_line	med	D %ld %s ... format line
+0184cf00	scheduler-slots	slot_release_helper	low	delete, calls 018466e0 and 018541d0
+0184cf80	scheduler-slots	slot_helper_0184cf80	low	calls 0184d040 only
+0184d040	sampling-speculation	grammar_compile_driver	low	large stack, calls grammar arena upload 0184d3a0
+0184d3a0	sampling-speculation	grammar_arena_upload	med	grammar arena, upload strings
+0184de40	kv-cache-prefix	kv_pool_alloc_region	med	kv pool disk-tier wait, grown in place strings
+0184e2f0	kv-cache-prefix	kv_pool_no_room	med	kv pool no room for positions string
+0184e740	kv-cache-prefix	kv_pool_region_op	low	new/delete, calls region helpers 0184f2f0..0184fed0
+0184f280	kv-cache-prefix	kv_pool_wait_disk	high	kv pool waited for disk tier string
+0184f2f0	kv-cache-prefix	kv_region_helper_0184f2f0	low	calls 01850430, 01850af0 in pool cluster
+0184f370	kv-cache-prefix	kv_region_helper_0184f370	low	calls 0184f450, 0184fed0, 01851080
+0184f450	kv-cache-prefix	kv_region_merge	low	2KB, memmove, calls region helpers
+0184fed0	kv-cache-prefix	kv_region_insert	low	memmove, 1KB, pool cluster
+01850430	kv-cache-prefix	kv_region_helper_01850430	low	memmove, calls 018506f0
+018506f0	kv-cache-prefix	kv_region_helper_018506f0	low	pool cluster, no strings
+01850860	kv-cache-prefix	kv_region_helper_01850860	low	memmove, pool cluster
+01850af0	kv-cache-prefix	kv_region_helper_01850af0	low	calls 018506f0, 01850c40, 01850e60
+01850c40	kv-cache-prefix	kv_region_cmp_01850c40	low	pool cluster, no callees
+01850e60	kv-cache-prefix	kv_region_cmp_01850e60	low	pool cluster, no callees
+01851080	kv-cache-prefix	kv_region_helper_01851080	low	calls 0184fed0, 01850c40, 01850e60
+01851210	scheduler-slots	finish_request_log	med	req generated tokens string
+01851420	scheduler-slots	slot_helper_01851420	low	calls 0184d040 only
+018514a0	sampling-speculation	sample_token_wrapper	low	calls 0184a9b0 and 0184ad90, NAN
+01851580	scheduler-slots	finish_request_log2	med	req generated tokens string
+01851770	sampling-speculation	spec_verify_grammar_check	med	flash_spec token illegal under grammar string
+01851dc0	sampling-speculation	spec_round_run	med	flash_spec grammar string, 3KB
+01852ab0	sampling-speculation	sample_token_wrapper2	low	calls 0184a9b0 and 0184ad90, NAN
+01853790	unknown	unknown_01853790	low	calls 01898c30 only
+01853b20	kv-cache-prefix	cache_entry_close_unlink	low	close, unlink, calls 01856070
+01854310	kv-cache-prefix	disk_tier_header_write	high	prompt-cache disk tier v1, /proc/self/exe strings
+01854e90	kv-cache-prefix	disk_tier_open_prune	high	fingerprint, CACHE_PRUNE_OLD, direct-probe strings
+018561f0	kv-cache-prefix	cache_manifest_write	med	manifest fields %llu %016llx =none strings
+01856b80	kv-cache-prefix	cache_manifest_read	med	=none, missing, lld fields strings
+018575b0	kv-cache-prefix	cache_vector_assign_helper	low	cache cluster, memcpy, realloc helper
+01858fb0	kv-cache-prefix	cache_blob_load	high	blob refused short or malformed removed strings
+0185ab40	kv-cache-prefix	cache_blob_path	low	.blob suffix, string append
+0185b560	kv-cache-prefix	cache_name_format	low	digit table, string append, cache cluster
+0185c7e0	scheduler-slots	worker_thread_loop	low	condvar wait, mutex, vector assign, 2KB
+0185d070	kv-cache-prefix	cache_helper_0185d070	low	delete, memcpy, cache cluster
+0185d3a0	kv-cache-prefix	cache_branch_copy	high	branch copy, disk budget strings
+0185dac0	kv-cache-prefix	cache_helper_0185dac0	low	delete only, cache cluster
+0185db90	kv-cache-prefix	cache_index_erase	low	rb-tree erase, calls 01858d30 remove dir
+0185e360	kv-cache-prefix	cache_write_file	high	cannot open for writing strings
+0185e6a0	kv-cache-prefix	cache_write_blob	high	.blob, writing failed strings
+0185ed70	kv-cache-prefix	cache_commit_entry	high	committing failed strings
+018601e0	kv-cache-prefix	cache_group_helper_018601e0	low	calls 0186d0c0, 0186fc70, 0186fd30
+01860330	kv-cache-prefix	cache_group_helper_01860330	low	calls 018708b0, 01870b60, 01870d40
+01860640	logging-diag	log_vprintf_flush	med	vfprintf then fflush
+01860720	kv-cache-prefix	cache_vector_float_helper	low	vector<float> assign, calls 0186f2a0, 01893700
+01860e60	kv-cache-prefix	cache_helper_01860e60	low	calls 01870b60, 01882d20
+01864950	sampling-speculation	grammar_state_step	low	switch on state byte, calls 01864d30 and 01866200
+01864d30	sampling-speculation	grammar_helper_01864d30	low	calls 01864f80, 01865da0, memcpy
+01864f80	sampling-speculation	grammar_big_step	low	3.5KB, calls 01865f80, 01865ff0, 01866060
+01865da0	sampling-speculation	grammar_helper_01865da0	low	memcpy only
+01865f80	sampling-speculation	grammar_helper_01865f80	low	97B, memcpy
+01865ff0	sampling-speculation	grammar_helper_01865ff0	low	101B, no callees
+01866060	sampling-speculation	grammar_helper_01866060	low	memcpy only
+01866200	sampling-speculation	grammar_helper_01866200	low	memcpy only
+01866350	sampling-speculation	grammar_helper_01866350	low	calls 01866200 and 01866f80
+01866520	sampling-speculation	grammar_big_step_2	low	2.5KB, string find, calls 01864f80
+01866f80	sampling-speculation	grammar_helper_01866f80	low	no callees, grammar cluster
+01867b50	sampling-speculation	grammar_helper_01867b50	low	calls 01864d30, memcpy
+018680b0	kv-cache-prefix	cache_lookup_and_store	low	1.6KB, calls snapshot store 0186a470 and 0186f9f0
+01868750	kv-cache-prefix	cache_helper_01868750	low	new/delete, calls 01869af0 and 0186a260
+01868f30	kv-cache-prefix	composable_context_unit	med	composable context unit raw rows at layer string
+0186a470	kv-cache-prefix	snapshot_store	high	snapshot store failed cache DISABLED string
+0186b270	kv-cache-prefix	cache_insert_new_entry	low	a new entry string
+0186b7c0	scheduler-slots	worker_queue_task	low	condvar notify, system_error, vector assign, 2.9KB
+0186cdc0	kv-cache-prefix	cache_entry_kind_name	high	full entry, tail checkpoint, anchor strings
+0186d0c0	scheduler-slots	queue_wait_pop	low	condvar wait, mutex
+0186f7f0	kv-cache-prefix	cache_lookup_wrapper	low	calls snapshot store 0186a470 and 0186d0c0
+0186f9f0	kv-cache-prefix	cache_lookup_full_entry	low	this prompt's full entry string
+01870d40	kv-cache-prefix	cache_group_build	low	790B, vector append, calls 018f5190..018f5380
+01871780	sampling-speculation	float_math_cpu	low	1.2KB double-precision math, no callees
+01872110	sampling-speculation	grammar_helper_01872110	low	calls 01864d30 and 0187d380, memcpy
+018723d0	sampling-speculation	grammar_json_object	low	json_object string
+018725a0	sampling-speculation	compile_json_schema	med	schema is not JSON, json_schema nodes strings
+01874490	protocol-net	json_helper_4490	low	in JSON parse/schema address cluster
+018744f0	protocol-net	schema_node_destroy	low	recursive free of 0x78-byte nodes
+01874630	protocol-net	schema_tree_destroy	low	loops over 0x78 nodes calling destroy
+018746e0	protocol-net	json_parse_top	med	"trailing bytes at" error, hex digit table
+01874b00	protocol-net	json_schema_compile	med	"schema nesting deeper than 64", pattern, enum strings
+01875b80	protocol-net	json_helper_5b80	low	in JSON parse/schema address cluster
+01875d10	protocol-net	json_helper_5d10	low	in JSON parse/schema address cluster
+01875eb0	protocol-net	json_parse_object	high	"expected ':'" "expected ',' or '}'" strings
+01876770	protocol-net	json_error_format	med	" at byte " message builder
+01876c50	protocol-net	json_parse_string	high	"unterminated string" "control byte in string"
+018770a0	protocol-net	json_helper_70a0	low	in JSON parse/schema address cluster
+018771d0	protocol-net	json_parse_unicode_escape	high	"truncated \u escape" "bad hex in \u escape"
+01877320	protocol-net	json_helper_7320	low	in JSON parse/schema address cluster
+01877ad0	protocol-net	json_helper_7ad0	low	in JSON parse/schema address cluster
+01877b40	protocol-net	json_substr_helper	low	basic_string::substr pos check, JSON cluster
+01877ff0	protocol-net	json_helper_7ff0	low	in JSON parse/schema address cluster
+01878050	protocol-net	json_value_serialize	low	"false" literal, string append, JSON cluster
+018785f0	protocol-net	json_helper_85f0	low	in JSON parse/schema address cluster
+01878680	protocol-net	json_schema_validate	med	6KB, type names string/integer/false/array
+0187a180	protocol-net	json_helper_a180	low	in JSON parse/schema address cluster
+0187a340	protocol-net	json_helper_a340	low	in JSON parse/schema address cluster
+0187a5e0	protocol-net	json_helper_a5e0	low	in JSON parse/schema address cluster
+0187a6d0	protocol-net	json_helper_a6d0	low	in JSON parse/schema address cluster
+0187a810	protocol-net	json_helper_a810	low	in JSON parse/schema address cluster
+0187aca0	protocol-net	json_helper_aca0	low	in JSON parse/schema address cluster
+0187adc0	protocol-net	json_helper_adc0	low	in JSON parse/schema address cluster
+0187af00	protocol-net	json_helper_af00	low	in JSON parse/schema address cluster
+0187b210	protocol-net	json_helper_b210	low	in JSON parse/schema address cluster
+0187b5f0	protocol-net	json_helper_b5f0	low	in JSON parse/schema address cluster
+0187b6a0	protocol-net	json_helper_b6a0	low	in JSON parse/schema address cluster
+0187b7a0	protocol-net	json_helper_b7a0	low	in JSON parse/schema address cluster
+0187b8a0	protocol-net	json_helper_b8a0	low	in JSON parse/schema address cluster
+0187bb20	protocol-net	json_escape_string	high	"\u%04x" control-char escaping
+0187be30	protocol-net	json_helper_be30	low	in JSON parse/schema address cluster
+0187c240	protocol-net	json_serialize_or_build	low	3.7KB, memcpy+realloc_append, JSON cluster
+0187d380	protocol-net	json_helper_d380	low	in JSON parse/schema address cluster
+0187d600	protocol-net	json_helper_d600	low	in JSON parse/schema address cluster
+0187d6a0	protocol-net	json_helper_d6a0	low	in JSON parse/schema address cluster
+0187d870	protocol-net	json_helper_d870	low	in JSON parse/schema address cluster
+0187da10	protocol-net	json_helper_da10	low	in JSON parse/schema address cluster
+0187dbe0	protocol-net	json_helper_dbe0	low	in JSON parse/schema address cluster
+0187dc10	protocol-net	json_helper_dc10	low	in JSON parse/schema address cluster
+0187e120	protocol-net	json_helper_e120	low	in JSON parse/schema address cluster
+0187e590	protocol-net	json_helper_e590	low	in JSON parse/schema address cluster
+0187ea60	protocol-net	json_helper_ea60	low	in JSON parse/schema address cluster
+0187ebb0	protocol-net	json_helper_ebb0	low	in JSON parse/schema address cluster
+0187ed50	protocol-net	json_helper_ed50	low	in JSON parse/schema address cluster
+0187f290	unknown	unknown_range_copy	low	1.3KB, recursion+memcpy only, no strings
+0187f7c0	unknown	unknown_f7c0	low	between JSON and prompt-cache clusters, no strings
+0187f980	unknown	unknown_f980	low	between JSON and prompt-cache clusters, no strings
+0187fb00	kv-cache-prefix	prompt_cache_try_restore	high	"prompt cache: ... KV rows are on slot" strings
+018802a0	kv-cache-prefix	prompt_cache_helper_02a0	low	in prompt-cache address cluster
+01880490	kv-cache-prefix	prompt_cache_locked_op	low	mutex lock/unlock only, prompt cache cluster
+018806e0	kv-cache-prefix	prompt_cache_insert	low	2KB, calls disk load and string assign
+01880ff0	kv-cache-prefix	prompt_cache_helper_0ff0	low	in prompt-cache address cluster
+018810e0	kv-cache-prefix	prompt_cache_locked_op2	low	mutex lock/unlock only, prompt cache cluster
+01881240	kv-cache-prefix	prompt_cache_disk_load	med	"size table" ".blob" "blob size" strings
+01882340	kv-cache-prefix	prompt_cache_disk_restore	high	"prompt cache: disk restore of %s failed"
+01882920	kv-cache-prefix	prompt_cache_helper_2920	low	in prompt-cache address cluster
+01882b50	kv-cache-prefix	prompt_cache_helper_2b50	low	in prompt-cache address cluster
+01882cd0	kv-cache-prefix	prompt_cache_helper_2cd0	low	in prompt-cache address cluster
+01882d20	kv-cache-prefix	prompt_cache_helper_2d20	low	in prompt-cache address cluster
+01882ea0	kv-cache-prefix	prompt_cache_helper_2ea0	low	in prompt-cache address cluster
+01882fd0	kv-cache-prefix	prompt_cache_helper_2fd0	low	in prompt-cache address cluster
+01883590	unknown	unknown_3590	low	no strings, not enough context in index
+01884460	hgn-loader	load_checkpoint_with_overlay	med	HALOGEN_CK_OVERLAY, ".overlay.hgn" strings, 9.8KB
+01889430	logging-diag	startup_progress_log	high	"startup [%6.1f s]" HALOGEN_STARTUP_PROGRESS
+01889610	hgn-loader	pin_trunk_weights	med	HALOGEN_FLASH_PIN_TRUNK, hipMemcpy, ngram_embedding
+018897f0	hgn-loader	upload_model_weights	med	19KB, embed_tokens.weight, router/route env flags
+0188f710	hgn-loader	load_mtp_drafter_weights	med	HALOGEN_MTP, mtp.layers.0.self_attn.* tensor names
+01891c50	sampling-speculation	load_draft_vocab_file	med	HALOGEN_DRAFT_VOCAB_FILE getenv
+01893120	unknown	unknown_1_5KB_bitops	low	calls FUN_01994340 5x, no strings
+01893b70	unknown	unknown_set_cleanup	low	erases string rb-tree, calls act_stats
+01893fe0	logging-diag	act_stats_dump	high	"act_stats: %u tensors ... -> %s" strings
+01894600	hgn-loader	find_tensor_by_name	med	9 callers, tensor-name users, table at +0x2a0
+01894750	hgn-loader	get_tensor_wrapper	low	calls find_tensor, 50 bytes
+01894790	sampling-speculation	locate_ngram_table	med	"the n-gram table (%s) is not in %s" string
+01894dd0	unknown	unknown_4dd0	low	no strings, not enough context in index
+01896988	unknown	unknown_6988	low	no strings, not enough context in index
+01897940	unknown	unknown_7940	low	no strings, not enough context in index
+01897c90	kv-cache-prefix	cc_place_copy	med	"cc_place(%d -> %d, %d, at %d): refused: outside the pool"
+01898720	unknown	unknown_8720	low	no strings, not enough context in index
+01898840	unknown	unknown_8840	low	no strings, not enough context in index
+01898c30	hgn-loader	format_hash_hex	low	"%016llx" snprintf, hash string builder
+01899240	hgn-loader	bind_moe_layer_tensors	med	shared_expert.* and experts.* names, find_tensor
+01899dc0	hgn-loader	get_tensor_alloc	low	calls find_tensor and dmalloc
+0189a580	hgn-loader	validate_ht_plane	med	"an HT plane must be f16 of %lld values"
+0189a700	hgn-loader	validate_qparam_layout	med	"qparam layout != table nbytes" string
+0189aa70	hgn-loader	validate_i64_tensor	med	"expected i64[%d], got %s[%llu]"
+0189abe0	model-forward	prefill_forward	med	11KB, HALOGEN_FLASH_PREFILL_GEMM, hc_read, flash_model.hip
+018ab5c0	model-forward	gdn_layer_forward	med	HALOGEN_DN_* flags, "gdn: mixed in-place / ring rows"
+018b0e40	model-forward	linear_attn_ht_forward	low	HALOGEN_HT_LIN_GRP/DIRECT flags, 4KB
+018b4750	model-forward	indexer_select	med	"ix_select: no candidate scratch" string
+018b5ef0	model-forward	qsa_select_blocks	low	HALOGEN_QSA_FORCE_SEL, hip checks, 3KB
+018b86d0	model-forward	sparse_attn_block_select	med	"gives %d blocks > block_topk" HALOGEN_QSA_DENSE
+018be390	model-forward	moe_forward	med	"moe: router produced expert id" 9.7KB
+018ca810	logging-diag	arena_sizing_error	low	prints "internal sizing error in per-forward arena"
+018ca910	unknown	unknown_351b_4callers	low	4 callers, calls FUN_01940a80 twice, no strings
+018caa70	model-forward	moe_deferred_shared_down	med	"moe_ht_: deferred shared down did not launch"
+018d2430	model-forward	moe_i4r_fused_plan_arena	med	HALOGEN_I4R_FUSE/LAST strings, arena sizing error, moe_i4r_ message
+018d5a00	model-forward	moe_i4r_deferred_shared_down	high	string: deferred shared down did not launch; exit(1)
+018d7510	model-forward	moe_layer_forward	med	HALOGEN_FLASH_MOE_TIME, ROUTE_ROWS, ROUTE_SG, I4R_LAST; 27 callees
+018e4580	model-forward	moe_route_decode_fused	med	HALOGEN_HT_DEC_FUSE, I4R_HFUSE, ROUTE_SG, arena sizing
+018e6f20	model-forward	linear_f32	high	string: linear_f32: %s is Q8G64/Q6G64 has no f32 path
+018e8950	hgn-loader	check_q4cp_tensor_layout	high	strings: expected Q4C-P, Q4C-P size != table nbytes
+018e8cf0	logging-diag	moe_size_histogram_update	low	global vector, atexit registration, MOE_SIZE_HIST context
+018ed600	model-forward	q8s32_expert_forward_checked	med	HIP errors flash_ops.h, Q8S32 experts read in place string
+018ede30	model-forward	lookup_table_load_rows	med	strings: lookup table rows for tokens read time; hipMemcpyAsync, condvar
+018f1150	sampling-speculation	ngram_lookup_check	med	strings: lookup check %d tokens, lookup check failed row; n-gram env
+018f2060	model-forward	forward_timed_profile	med	hipEventRecord/ElapsedTime x6, hipDeviceSynchronize, calls moe_layer_forward
+018f2bc0	hgn-loader	build_expert_tensor_names	med	strings shared_expert.gate_proj/up_proj, experts.; string appends
+018f46b0	model-forward	lm_head_forward	med	string lm_head.weight; calls linear_f32
+018f5260	model-forward	tensor_table_count	low	(end-begin)/48 over vector at +0x70, element 0x30 bytes
+018f5280	model-forward	tensor_name_by_index	low	indexes vector of 0x30-byte entries, returns name ptr or default
+018f52d0	sampling-speculation	draft_vocab_limit	low	default 0x3ca00 vocab size, per-slot table; near HALOGEN_DRAFT_VOCAB
+018f5320	sampling-speculation	draft_vocab_token_allowed	low	bitset test of token id <0x3ca00, default true
+018f69f0	model-forward	logits_buffer_copy	low	vocab*4 bytes 0xf2800 alloc/copy, no strings
+018f9940	model-forward	flash_model_hip_helper_018f9940	low	HIP error macro at flash_model.hip, body not decoded
+018f99c0	model-forward	flash_model_hip_helper_018f99c0	low	HIP error macro at flash_model.hip, body not decoded
+018f9a70	model-forward	flash_model_hip_helper_018f9a70	low	HIP error macro at flash_model.hip, body not decoded
+018f9b10	model-forward	flash_model_hip_helper_018f9b10	low	HIP error macro at flash_model.hip, body not decoded
+018f9c60	model-forward	flash_model_hip_helper_018f9c60	low	HIP error macro at flash_model.hip, body not decoded
+018f9dc0	model-forward	flash_model_hip_helper_018f9dc0	low	HIP error macro at flash_model.hip, body not decoded
+018f9fb0	model-forward	flash_model_hip_helper_018f9fb0	low	HIP error macro at flash_model.hip, body not decoded
+018fa080	model-forward	flash_model_hip_helper_018fa080	low	HIP error macro at flash_model.hip, body not decoded
+018fa0e0	sampling-speculation	spec_verify_argcheck	high	spec_verify(n=%d) needs HALOGEN_MTP=1 string
+018fa150	model-forward	forward	high	forward(n=%d): outside [1,%d], HALOGEN_FLASH_MOE_TIME
+018fc360	sampling-speculation	spec_commit	high	spec_commit(%d) string
+018fc7e0	model-forward	nll_rows	med	nll_rows(n=%d) string
+018fdaf0	model-forward	logits_rows	high	logits_rows lm_head GEMM strings
+018fe4f0	kv-cache-prefix	kv_for_each_block	low	1342B, 9 callers, walks per-layer vectors with callback
+018fea50	kv-cache-prefix	kv_collect_segments	low	builds std::function and calls 018fe4f0
+018febf0	kv-cache-prefix	kv_collect_segments_all	low	std::function lambda then 018fe4f0
+018fed70	kv-cache-prefix	kv_snapshot_to_host_thunk	med	11B jump to 018fed80
+018fed80	kv-cache-prefix	kv_snapshot_to_host	med	hipMemcpy D2H of collected segments, flash_model.hip:0x19d6
+018fee80	kv-cache-prefix	kv_segments_free	low	70B, 3 callees, follows kv snapshot code
+018feee0	kv-cache-prefix	kv_thunk	low	11B thunk
+018feef0	kv-cache-prefix	prompt_cache_write	high	prompt cache write/fdatasync failed strings
+018ff310	kv-cache-prefix	prompt_cache_read	high	prompt cache read failed string
+018ff770	model-forward	flash_model_hip_helper_018ff770	low	HIP error macro at flash_model.hip, body not decoded
+018ff7d0	model-forward	flash_model_hip_helper_018ff7d0	low	HIP error macro at flash_model.hip, body not decoded
+018ff830	model-forward	flash_model_hip_helper_018ff830	low	HIP error macro at flash_model.hip, body not decoded
+018ffd00	model-forward	flash_model_hip_helper_018ffd00	low	HIP error macro at flash_model.hip, body not decoded
+01900010	model-forward	flash_model_hip_helper_01900010	low	HIP error macro at flash_model.hip, body not decoded
+019001b0	model-forward	bind_layer_ptr_arrays	low	copies 6 pointer arrays into 0xba0-stride layer structs
+019002f0	scheduler-slots	use_slot	high	use_slot(%d): %d slots exist string
+01900510	scheduler-slots	slots_alloc	high	slots_alloc(%d) strings
+01900aa0	scheduler-slots	slots_alloc_pooled	high	slots_alloc_pooled strings
+01900fc0	kv-cache-prefix	slot_region	high	slot_region(%d,...) strings, pooled KV
+01901390	kv-cache-prefix	kv_rotate	high	kv_rotate(%d,%d,%d) string
+01901c50	kv-cache-prefix	kv_copy_region	high	kv_copy_region string
+01901ee0	kv-cache-prefix	kv_move_region	high	kv_move_region string
+01902090	model-forward	forward_batch	high	forward_batch: row names slot strings
+01902a00	sampling-speculation	joint_verify	high	joint_verify strings
+01902e70	sampling-speculation	joint_commit	high	joint_commit strings
+019034f0	model-forward	flash_model_hip_helper_019034f0	low	HIP error macro at flash_model.hip, body not decoded
+019037d0	sampling-speculation	ngram_job_init	low	fills job struct, copies vector of ints, resets
+01903890	sampling-speculation	ngram_job_reset	low	same body as 019037d0 plus atomic clear
+01903f20	sampling-speculation	ngram_warm_early_policy	low	reads NGRAM_WARM and NGRAM_EARLY
+019041a0	sampling-speculation	ngram_lookup_job_log	med	lookup job: %zu tokens ... paused string
+01904440	sampling-speculation	ngram_lookup_pause	med	mutex lock, sets paused flag, steady_clock stamp
+01904500	sampling-speculation	ngram_lookup_resume	med	clears paused flag, accumulates paused time, notify_all
+019045e0	sampling-speculation	ngram_lookup_wait_yield	med	cond var wait using ENGINE_YIELD_MS
+01904880	sampling-speculation	ngram_lookup_stop_join	med	sets stop flag, thread::join loop
+01904930	sampling-speculation	ngram_early_launch	low	HALOGEN_NGRAM_EARLY plus HIP error macro
+019050c0	model-forward	flash_model_hip_helper_019050c0	low	HIP error macro at flash_model.hip, body not decoded
+01905290	scheduler-slots	slot_state_reset	low	zeroes fields in 0x148-stride slot record
+019052e0	model-forward	vision_hip_step	low	HIP macro with flash_vision.h path
+01905ae0	sampling-speculation	ngram_early_step	low	HALOGEN_NGRAM_EARLY, 1170B
+01906050	sampling-speculation	penalties_state_init	low	zeroes 7 fields at +0xb08; near penalties_set
+01906160	logging-diag	read_buddyinfo_vmstat	med	/proc/buddyinfo, /proc/vmstat compact_stall
+019065d0	logging-diag	report_host_meminfo	med	/proc/meminfo MemAvailable strings
+019067d0	logging-diag	report_memory_plan	high	memory: %.1f GiB of weights locked in RAM string
+01906c60	kv-cache-prefix	kv_pool_fit	med	HALOGEN_KV_POOL_FIT, PREFILL_KEEP_TRUNK, VISION_MAX_PIXELS
+019072c0	logging-diag	mem_budget_fmt	low	host RAM / the device strings, vector append
+01907560	model-forward	flash_model_hip_helper_01907560	low	HIP error macro at flash_model.hip, body not decoded
+01907970	sampling-speculation	penalties_buf_set	low	zeroes/sets penalty fields at +0xac0..0xaf8
+01907b40	model-forward	flash_model_hip_helper_01907b40	low	HIP error macro at flash_model.hip, body not decoded
+01907c70	sampling-speculation	penalties_set	high	penalties_set: slot %d outside 0..%d
+01907ff0	sampling-speculation	target_rows_pen	high	target_rows_: pen %d for %d rows string
+019085c0	sampling-speculation	sample_rows	high	sample_rows string
+01908c30	sampling-speculation	sample_aux	low	284B near sample_rows, no strings
+01908ff0	sampling-speculation	sample_aux2	low	100B near sample_rows, no strings
+01909630	sampling-speculation	sample_row	high	sample_row: row=%d string
+019098d0	sampling-speculation	draft_sample	high	draft_sample: FALSIFIER ACTIVE string
+01909e50	sampling-speculation	accept_probs	high	accept_probs string
+0190aa50	sampling-speculation	residual_sample	high	residual_sample string
+0190b5e0	sampling-speculation	head_logits_check	med	head_logits_: slot %d of %d
+0190b660	model-forward	flash_model_hip_helper_0190b660	low	HIP error macro at flash_model.hip, body not decoded
+0190bb50	sampling-speculation	q_dense_copy	high	q_dense_copy string
+0190bc70	sampling-speculation	row_logprobs	high	row_logprobs string
+0190c3d0	logging-diag	report_frag_wait	high	halogen: still %s after %.0f s string
+0190c5f0	hgn-loader	tensor_bytes_calc	low	quant block byte size math, 64-aligned, no strings
+0190e330	hgn-loader	upload_weight_tensor	low	Q6G64 alignment check, .bf16 string, 24 callees
+0190f1e0	hgn-loader	lm_head_tensor_lookup	low	lm_head string, vector append
+01916a50	logging-diag	act_stats	med	act_stats: seen with K %d/%d nexp string
+01917610	model-forward	ht_linear_prepare	med	HT linear rotation planes strings, FLASH_PREFILL_GEMM
+0194395f	unknown	misdecoded_catch_pad	low	bytes after stubs decoded as catch handlers, not real code
+01946ba0	logging-diag	init_debug_sect_events	high	getenv HALOGEN_DEBUG_SECT, hipEventCreate array for timing
+01946cf0	logging-diag	print_sect_timing	high	prints ms a step over 48 layers per section
+019475a0	model-forward	vision_buffers_grow	med	hipFree many vision buffers when patches exceed capacity
+01947be0	model-forward	vision_patch_embed	high	grid check message, visual_patch_embed.proj, calls launch stub
+0194aee0	model-forward	vision_linear_by_name_weight	med	appends .weight, looks up tensor, vision: no device alias string
+019513c0	model-forward	is_not_ngram_embedding_tensor	med	string find ngram_embedding, else lookup returns null
+01951440	model-forward	ngram_embedding_tensor_lookup	med	find ngram_embedding; else map lookup by name memcmp
+0197a020	hgn-loader	read_model_bound_u32_file	low	fopen rb; not a version 1 file; made for another model; damaged
+01995730	hgn-loader	checkpoint_overlay_path	high	HALOGEN_CK_OVERLAY and .overlay.hgn strings
+01995ae0	hgn-loader	checkpoint_overlay_load	low	calls 01995c30 string-building helper
+01995c30	hgn-loader	checkpoint_overlay_path_build	med	string create and vector realloc, 11 callees
+019960d0	hgn-loader	checkpoint_tensor_lookup_helper	low	neighbouring checkpoint.cpp code, no strings
+019961f0	hgn-loader	checkpoint_moe_tensor_names	med	string experts.gate_up_proj.weight
+01996400	hgn-loader	checkpoint_name_helper	low	string create, checkpoint.cpp neighbour
+01996840	hgn-loader	checkpoint_overlay_skip_parse	med	string HALOGEN_CK_OVERLAY_SKIP
+01996d90	hgn-loader	checkpoint_map_weights	high	prints mapped GB, Pin::None, device ptr == host ptr
+01997a90	hgn-loader	checkpoint_mlock_weights	high	MemAvailable, Mlocked, checkpoint: locked GiB
+01997e40	hgn-loader	checkpoint_find_tensor	high	checkpoint: no tensor named %s, ngram table message
+019981d0	hgn-loader	checkpoint_tensor_data_ptr	med	table index times 0x68 plus base, via 0199bdd0 lookup
+01998200	hgn-loader	checkpoint_tensor_entry_copy	low	copies struct with SSO string, memcpy
+01998690	hgn-loader	range_overlaps_mapped_region	low	scans global range vector for overlap
+019986e0	hgn-loader	checkpoint_helper	low	small, checkpoint.cpp neighbour, no strings
+019996e0	hgn-loader	checkpoint_destroy	med	calls hipHostUnregister, frees members
+0199bdd0	hgn-loader	checkpoint_tensor_name_find	med	hash lookup by name, called by tensor_data_ptr
+0199c000	hgn-loader	checkpoint_helper	low	checkpoint.cpp neighbour, no strings
+0199c070	hgn-loader	checkpoint_helper	low	checkpoint.cpp neighbour, 10 callees
+0199c220	hgn-loader	checkpoint_parse_hgn_header	high	14KB, tensor name tables, truncated header, tokenizer
+019a14a0	hgn-loader	checkpoint_helper	low	small, 4 callers, follows header parser
+019aa550	sampling-speculation	mtp_head_path_getenv	high	string HALOGEN_MTP_HEAD
+019aa630	gguf-repack	gguf_helper	low	small, follows MTP path function
+019aa6e0	gguf-repack	gguf_helper	low	no strings, between MTP and GGUF loaders
+019aa860	gguf-repack	gguf_load_dir_and_names	med	HALOGEN_GGUF_THREADS, qwen3.8-flash-next-gguf
+019ae820	gguf-repack	gguf_open_file	med	string: cannot open
+019ae9d0	gguf-repack	gguf_repack_helper	low	vector realloc string, near GGUF loader
+019aed10	logging-diag	checkpoint_progress_print	high	prints tensors, GiB, seconds progress line
+019af2e0	gguf-repack	gguf_repack_helper	low	35 bytes, no strings
+019af310	gguf-repack	gguf_repack_helper	low	54 bytes, no strings
+019af350	gguf-repack	gguf_open_and_index	high	gguf: is not a GGUF, HALOGEN_GGUF_THREADS
+019b01a0	gguf-repack	mtp_head_file_load	high	MTP head file carries no mtp.* tensors
+019b0410	gguf-repack	gguf_repack_helper	low	51 bytes, no strings
+019b0450	gguf-repack	gguf_repack_helper	low	650 bytes, 1 callee, no strings
+019b0700	gguf-repack	gguf_repack_helper	low	vector size check strings, near GGUF loader
+019b0bb0	gguf-repack	write_output_file_checked	med	string: write failed on
+019b0d30	gguf-repack	gguf_repack_helper	low	135 bytes, no strings
+019b0dc0	gguf-repack	gguf_open_threaded	med	not a GGUF, HALOGEN_GGUF_THREADS, vector check
+019b1b20	gguf-repack	gguf_repack_helper	low	663 bytes, no strings
+019b1e10	gguf-repack	gguf_repack_helper	low	261 bytes, no strings
+019b1f20	gguf-repack	gguf_read_header	med	string: truncated header
+019b2080	gguf-repack	gguf_read_string	high	string: absurd string length in the header
+019b2160	gguf-repack	gguf_read_kv	high	string: unknown KV type
+019b2670	gguf-repack	gguf_repack_helper	low	30 bytes, no strings
+019b2690	gguf-repack	gguf_repack_helper	low	303 bytes, no strings
+019b2ca0	gguf-repack	gguf_repack_helper	low	72 bytes, no strings
+019b2cf0	gguf-repack	gguf_repack_helper	low	122 bytes, no strings
+019b2d70	gguf-repack	gguf_repack_helper	low	117 bytes, no strings
+019b2df0	gguf-repack	gguf_repack_helper	low	27 bytes, no strings
+019b6d50	gguf-repack	gguf_layer_name_parse	med	layers. prefix, substr error string
+019b7020	gguf-repack	map_sublayer_tensor_name	med	attn_hyper_connection, unmapped sublayer
+019b7250	gguf-repack	gguf_tensor_name_map	low	4KB, 7 callees, big body, no strings
+019b8420	gguf-repack	gguf_tensor_repack	low	945 bytes, 4 params incl ulong, no strings
+019b87e0	gguf-repack	gguf_repack_helper	low	400 bytes, no strings
+019b8970	gguf-repack	gguf_repack_helper	low	996 bytes, no strings
+019b8d90	gguf-repack	gguf_repack_helper	low	439 bytes, no strings
+019b8f50	gguf-repack	gguf_repack_helper	low	53 bytes, no strings
+019b8f90	gguf-repack	gguf_repack_helper	low	50 bytes, no strings
+019bad50	gguf-repack	gguf_repack_helper	low	52 bytes, no strings
+019bad90	gguf-repack	gguf_repack_helper	low	30 bytes, no strings
+019badb0	gguf-repack	gguf_repack_helper	low	132 bytes, no strings
+019bae40	gguf-repack	gguf_repack_helper	low	349 bytes, no strings
+019bafb0	gguf-repack	gguf_repack_helper	low	218 bytes, no strings
+019bc480	gguf-repack	repack_head_file_with_checksum	high	head payload checksum, ssm_a -exp(A_log) check
+019c19b0	gguf-repack	repack_linear_attn_in_proj	high	in_proj_z, in_proj_qkv, in_proj_a/b row checks
+019c1f50	gguf-repack	read_exact	med	string: short read in
+019c2000	gguf-repack	repack_q4cp_band	high	q4cp_band: unexpected type, 5KB
+019c3610	gguf-repack	gguf_repack_helper	low	395 bytes, no strings
+019c37a0	gguf-repack	repack_q5_0_rows	high	Q5_0 repacked rows, fp16 scale check
+019c50a0	gguf-repack	gguf_repack_helper	low	69 bytes, no strings
+019c50f0	gguf-repack	gguf_repack_helper	low	80 bytes, no strings
+019c5140	gguf-repack	affine_scratch_window_check	med	string: affine scratch window past the band
+019c5180	gguf-repack	gguf_repack_helper	low	142 bytes, no strings
+019c5220	gguf-repack	gguf_repack_helper	low	63 bytes, no strings
+019c5260	gguf-repack	output_file_open	low	string: the output file
+019c5310	gguf-repack	gguf_repack_helper	low	23 bytes, no strings
+019c5330	gguf-repack	hash_sink_reserve	low	grows per-tensor buffer vector; sibling of hash sink writer
+019c53b0	gguf-repack	hash_sink_write	high	string "hash sink: the table was not committed in order"
+019c55a0	gguf-repack	gguf_repack_tensor_step	low	809 bytes, string/vector ops near hash sink; body unread
+019c58d0	gguf-repack	sha256_block	med	byte-swapped 32-bit loads, no callees, 3 callers
+019c5b00	gguf-repack	gguf_fatal	high	fprintf "gguf: %s" then exit(1)
+019d7b70	model-forward	dn_chunk_forward	high	string "dn_chunk_forward: norm_read set without qinv/kinv", 21 callees
+019e95e0	logging-diag	build_check_print_row	high	build: %-22s %-24s %10s %8s, compiled kCtxCap kSdLen
+019e96a0	logging-diag	build_check_verify_or_die	high	FATAL linked from objects compiled against DIFFERENT constants
+019e9920	model-forward	attn_fa_launch	high	attn_fa HALOGEN_FA_TQ message, calls FA env getters, 21 callees
+019eca20	model-forward	attn_qs_launch	high	HALOGEN_ATTN_QS_BT=0 k_attn_qs indexer budget message
+019ee360	model-forward	attn_qs_bt2_launch	high	BT2_WPE/OPT not instantiated messages
+019f0300	model-forward	attn_qs_bt4_launch	high	BT4_OPT not instantiated (0 1 3 5)
+019f43c0	protocol-net	socket	high	socket import socket
+019f43d0	protocol-net	setsockopt	high	socket import setsockopt
+019f43e0	protocol-net	inet_pton	high	socket import inet_pton
+019f43f0	protocol-net	bind	high	socket import bind
+019f4400	protocol-net	listen	high	socket import listen
+019f44a0	protocol-net	accept	high	socket import accept
+019f4620	protocol-net	send	high	socket import send
+019f46c0	protocol-net	select	high	socket import select
+019f46d0	protocol-net	recv	high	socket import recv

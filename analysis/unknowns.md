@@ -34,9 +34,15 @@ engine, or data not in this workspace.
 | U20 | host feeding of acceptance inputs under falsify mode | kernels-speculation.md s4b | host decompile | OPEN-BOUNDED |
 | U21 | dtype-to-kernel dispatch table; `lq*` template args; `hc*_fused` u64 output; power-of-two group scale source | kernels-dequant.md s5 | host dispatch decompile | OPEN-BOUNDED |
 | U22 | AMDGCN pseudocode (Ghidra has no shader-ISA module) | ghidra-module-writeup.md | a community AMDGCN processor module, if one appears | OPEN-BOUNDED |
+| U23 | seed and counter source of the splitmix64 draw in `k_smpg_pick`/`k_smpg_rpick`; what `s15` in the accept kernel holds | kernels-speculation.md | host caller decompile plus an engine run with a fixed seed | OPEN-BOUNDED |
+| U24 | purpose of the float-key radix select in `k_accept_prob_f32`, `k_sample_f32`, `k_resid_sample_f32` | kernels-speculation.md | trace what the digit `v_bfe_u32 ,16,8` indexes | OPEN-BOUNDED |
+| U25 | what `k_dv_quant` quantizes to (compare ladder, not round-and-clamp) | kernels-speculation.md s4 | decode the compare constants against a codebook | OPEN-BOUNDED |
+| U26 | raw `GEN` over the engine socket on the live 0.17.2 engine got no reply line within 20 s for drafter ids 0, 1 and 2 (evidence file below); GEN framing or a needed prior step is unknown | analysis/evidence/live-0.17.2-gen-drafters.txt | retry with the exact INFO/VOCAB handshake from wire-protocol.md on one connection | OPEN-BOUNDED |
 
-Totals: 22 items, 0 contradicted findings. 16 need a host-side decompile of
-`flash_serve` or `halogen-npu` (U01-U03, U08-U18, U20, U21), 1 needs a real
-HT checkpoint (U19), 1 needs a running engine (U04), 1 is unobservable
-(U05), 1 needs missing releases (U06), 1 is blocked on tooling (U22), 1 is
-partial (U07). None changes a stated verdict; each bounds how far one reaches.
+Totals: 26 items. 3 findings were corrected after an independent review
+(in-kernel RNG exists, `k_dv_scatter` is a gather, `k_dv_quant` is a different
+quantizer); see `kernels-speculation.md`. Closable by decompile: U01-U03,
+U08-U18, U20, U21, U23-U25; needing a live run: U04, U19, U26; named limits by
+decision: U05, U06, U22; U07 partial. Live evidence already gathered
+(2026-10-10, Ai-core, engine 0.17.2): INFO line field 7 (`dflash2`) is 0,
+observed (`analysis/evidence/live-0.17.2-startup-and-info.txt`).

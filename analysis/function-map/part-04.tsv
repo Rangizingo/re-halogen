@@ -1,0 +1,299 @@
+addr	role	label	confidence	evidence
+018f52d0	sampling-speculation	draft_vocab_limit	low	default 0x3ca00 vocab size, per-slot table; near HALOGEN_DRAFT_VOCAB
+018f5320	sampling-speculation	draft_vocab_token_allowed	low	bitset test of token id <0x3ca00, default true
+018f5380	config-env	env_draft_vocab	high	HALOGEN_DRAFT_VOCAB string
+018f5480	config-env	env_ht_deq_flags	high	HALOGEN_HT_DEQ_KFAST/PRE/W16 strings
+018f5c80	gpu-dispatch	launch_gemv_by_format_a	med	switch on format 1..8, hipPushCallConfiguration, cached kernel guard
+018f69f0	model-forward	logits_buffer_copy	low	vocab*4 bytes 0xf2800 alloc/copy, no strings
+018f6d80	gpu-dispatch	launch_gemm_by_format_b	med	switch on format, hipPushCallConfiguration, static kernel guards
+018f9940	model-forward	flash_model_hip_helper_018f9940	low	HIP error macro at flash_model.hip, body not decoded
+018f99c0	model-forward	flash_model_hip_helper_018f99c0	low	HIP error macro at flash_model.hip, body not decoded
+018f9a70	model-forward	flash_model_hip_helper_018f9a70	low	HIP error macro at flash_model.hip, body not decoded
+018f9b10	model-forward	flash_model_hip_helper_018f9b10	low	HIP error macro at flash_model.hip, body not decoded
+018f9c60	model-forward	flash_model_hip_helper_018f9c60	low	HIP error macro at flash_model.hip, body not decoded
+018f9dc0	model-forward	flash_model_hip_helper_018f9dc0	low	HIP error macro at flash_model.hip, body not decoded
+018f9fb0	model-forward	flash_model_hip_helper_018f9fb0	low	HIP error macro at flash_model.hip, body not decoded
+018fa080	model-forward	flash_model_hip_helper_018fa080	low	HIP error macro at flash_model.hip, body not decoded
+018fa0e0	sampling-speculation	spec_verify_argcheck	high	spec_verify(n=%d) needs HALOGEN_MTP=1 string
+018fa150	model-forward	forward	high	forward(n=%d): outside [1,%d], HALOGEN_FLASH_MOE_TIME
+018fc360	sampling-speculation	spec_commit	high	spec_commit(%d) string
+018fc7e0	model-forward	nll_rows	med	nll_rows(n=%d) string
+018fd6e0	hip-runtime	kernel_host_stub_018fd6e0	med	__hipPopCallConfiguration, packs args; k_* device stub
+018fd770	hip-runtime	kernel_host_stub_018fd770	med	__hipPopCallConfiguration, packs args; k_* device stub
+018fd840	gpu-dispatch	launch_cfg_rows16	med	grid from rows*ceil(n/16), hipPushCallConfiguration
+018fd970	hip-runtime	kernel_host_stub_018fd970	med	__hipPopCallConfiguration, packs args; k_* device stub
+018fda40	hip-runtime	kernel_host_stub_018fda40	med	__hipPopCallConfiguration, packs args; k_* device stub
+018fdaf0	model-forward	logits_rows	high	logits_rows lm_head GEMM strings
+018fe4f0	kv-cache-prefix	kv_for_each_block	low	1342B, 9 callers, walks per-layer vectors with callback
+018fea50	kv-cache-prefix	kv_collect_segments	low	builds std::function and calls 018fe4f0
+018febf0	kv-cache-prefix	kv_collect_segments_all	low	std::function lambda then 018fe4f0
+018fed70	kv-cache-prefix	kv_snapshot_to_host_thunk	med	11B jump to 018fed80
+018fed80	kv-cache-prefix	kv_snapshot_to_host	med	hipMemcpy D2H of collected segments, flash_model.hip:0x19d6
+018fee80	kv-cache-prefix	kv_segments_free	low	70B, 3 callees, follows kv snapshot code
+018feee0	kv-cache-prefix	kv_thunk	low	11B thunk
+018feef0	kv-cache-prefix	prompt_cache_write	high	prompt cache write/fdatasync failed strings
+018ff310	kv-cache-prefix	prompt_cache_read	high	prompt cache read failed string
+018ff770	model-forward	flash_model_hip_helper_018ff770	low	HIP error macro at flash_model.hip, body not decoded
+018ff7d0	model-forward	flash_model_hip_helper_018ff7d0	low	HIP error macro at flash_model.hip, body not decoded
+018ff830	model-forward	flash_model_hip_helper_018ff830	low	HIP error macro at flash_model.hip, body not decoded
+018ffd00	model-forward	flash_model_hip_helper_018ffd00	low	HIP error macro at flash_model.hip, body not decoded
+01900010	model-forward	flash_model_hip_helper_01900010	low	HIP error macro at flash_model.hip, body not decoded
+019001b0	model-forward	bind_layer_ptr_arrays	low	copies 6 pointer arrays into 0xba0-stride layer structs
+019002f0	scheduler-slots	use_slot	high	use_slot(%d): %d slots exist string
+01900510	scheduler-slots	slots_alloc	high	slots_alloc(%d) strings
+01900aa0	scheduler-slots	slots_alloc_pooled	high	slots_alloc_pooled strings
+01900fc0	kv-cache-prefix	slot_region	high	slot_region(%d,...) strings, pooled KV
+01901390	kv-cache-prefix	kv_rotate	high	kv_rotate(%d,%d,%d) string
+01901af0	hip-runtime	kernel_host_stub_01901af0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01901bb0	hip-runtime	kernel_host_stub_01901bb0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01901c50	kv-cache-prefix	kv_copy_region	high	kv_copy_region string
+01901ee0	kv-cache-prefix	kv_move_region	high	kv_move_region string
+01902090	model-forward	forward_batch	high	forward_batch: row names slot strings
+01902a00	sampling-speculation	joint_verify	high	joint_verify strings
+01902e70	sampling-speculation	joint_commit	high	joint_commit strings
+019034f0	model-forward	flash_model_hip_helper_019034f0	low	HIP error macro at flash_model.hip, body not decoded
+01903630	config-env	get_prompt_cache_mode	high	static-guard cache of 01903680
+01903680	config-env	parse_env_prompt_cache	high	HALOGEN_PROMPT_CACHE expected 0, 1 or 2
+019036e0	config-env	env_engine_yield_ms	high	HALOGEN_ENGINE_YIELD_MS
+01903710	config-env	env_ngram_gather_threads	high	HALOGEN_NGRAM_GATHER_THREADS
+01903760	config-env	env_ngram_early	high	HALOGEN_NGRAM_EARLY
+019037d0	sampling-speculation	ngram_job_init	low	fills job struct, copies vector of ints, resets
+01903890	sampling-speculation	ngram_job_reset	low	same body as 019037d0 plus atomic clear
+01903940	cxx-stl	vector_realloc_append	high	vector::_M_realloc_append string
+01903eb0	config-env	env_ngram_warm	high	HALOGEN_NGRAM_WARM
+01903f20	sampling-speculation	ngram_warm_early_policy	low	reads NGRAM_WARM and NGRAM_EARLY
+019041a0	sampling-speculation	ngram_lookup_job_log	med	lookup job: %zu tokens ... paused string
+01904440	sampling-speculation	ngram_lookup_pause	med	mutex lock, sets paused flag, steady_clock stamp
+01904500	sampling-speculation	ngram_lookup_resume	med	clears paused flag, accumulates paused time, notify_all
+019045e0	sampling-speculation	ngram_lookup_wait_yield	med	cond var wait using ENGINE_YIELD_MS
+01904880	sampling-speculation	ngram_lookup_stop_join	med	sets stop flag, thread::join loop
+01904930	sampling-speculation	ngram_early_launch	low	HALOGEN_NGRAM_EARLY plus HIP error macro
+01905000	config-env	get_prefill_chunk	high	static-guard cache of 01905050
+01905050	config-env	env_prefill_chunk	high	HALOGEN_PREFILL_CHUNK
+019050c0	model-forward	flash_model_hip_helper_019050c0	low	HIP error macro at flash_model.hip, body not decoded
+01905290	scheduler-slots	slot_state_reset	low	zeroes fields in 0x148-stride slot record
+019052e0	model-forward	vision_hip_step	low	HIP macro with flash_vision.h path
+01905ae0	sampling-speculation	ngram_early_step	low	HALOGEN_NGRAM_EARLY, 1170B
+01905f80	hip-runtime	kernel_host_stub_01905f80	med	__hipPopCallConfiguration, packs args; k_* device stub
+01906040	crt-runtime	thunk_018f4b90	low	12B jump to 018f4b90
+01906050	sampling-speculation	penalties_state_init	low	zeroes 7 fields at +0xb08; near penalties_set
+01906080	config-env	get_rope_yarn	med	static-guard cache of 0190d070
+019060f0	config-env	env_verbose	high	HALOGEN_VERBOSE
+01906160	logging-diag	read_buddyinfo_vmstat	med	/proc/buddyinfo, /proc/vmstat compact_stall
+01906570	config-env	env_frag_warn_blocks	high	HALOGEN_FRAG_WARN_BLOCKS
+019065a0	config-env	env_frag_warn_stalls	high	HALOGEN_FRAG_WARN_STALLS
+019065d0	logging-diag	report_host_meminfo	med	/proc/meminfo MemAvailable strings
+019067b0	util	slots_times_const	low	returns int field * 0x7340, no strings
+019067c0	util	tiny_accessor	low	8-byte function, no callees
+019067d0	logging-diag	report_memory_plan	high	memory: %.1f GiB of weights locked in RAM string
+01906c60	kv-cache-prefix	kv_pool_fit	med	HALOGEN_KV_POOL_FIT, PREFILL_KEEP_TRUNK, VISION_MAX_PIXELS
+019072c0	logging-diag	mem_budget_fmt	low	host RAM / the device strings, vector append
+01907560	model-forward	flash_model_hip_helper_01907560	low	HIP error macro at flash_model.hip, body not decoded
+01907670	hip-runtime	kernel_host_stub_01907670	med	__hipPopCallConfiguration, packs args; k_* device stub
+01907700	hip-runtime	kernel_host_stub_01907700	med	__hipPopCallConfiguration, packs args; k_* device stub
+01907790	hip-runtime	kernel_host_stub_01907790	med	__hipPopCallConfiguration, packs args; k_* device stub
+01907840	hip-runtime	kernel_host_stub_01907840	med	__hipPopCallConfiguration, packs args; k_* device stub
+019078d0	hip-runtime	kernel_host_stub_019078d0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01907970	sampling-speculation	penalties_buf_set	low	zeroes/sets penalty fields at +0xac0..0xaf8
+01907ac0	util	function_member_swap	low	swaps std::function-like at +0xb40/+0xb50
+01907b40	model-forward	flash_model_hip_helper_01907b40	low	HIP error macro at flash_model.hip, body not decoded
+01907c70	sampling-speculation	penalties_set	high	penalties_set: slot %d outside 0..%d
+01907ff0	sampling-speculation	target_rows_pen	high	target_rows_: pen %d for %d rows string
+019085c0	sampling-speculation	sample_rows	high	sample_rows string
+01908c30	sampling-speculation	sample_aux	low	284B near sample_rows, no strings
+01908ff0	sampling-speculation	sample_aux2	low	100B near sample_rows, no strings
+01909630	sampling-speculation	sample_row	high	sample_row: row=%d string
+019098d0	sampling-speculation	draft_sample	high	draft_sample: FALSIFIER ACTIVE string
+01909da0	config-env	env_s2_nucleus	high	HALOGEN_S2_NUCLEUS
+01909dd0	config-env	env_s2_qoff	high	HALOGEN_S2_QOFF
+01909e00	config-env	env_s2_tskew	high	HALOGEN_S2_TSKEW
+01909e50	sampling-speculation	accept_probs	high	accept_probs string
+0190aa50	sampling-speculation	residual_sample	high	residual_sample string
+0190b5e0	sampling-speculation	head_logits_check	med	head_logits_: slot %d of %d
+0190b660	model-forward	flash_model_hip_helper_0190b660	low	HIP error macro at flash_model.hip, body not decoded
+0190bb50	sampling-speculation	q_dense_copy	high	q_dense_copy string
+0190bc70	sampling-speculation	row_logprobs	high	row_logprobs string
+0190c0b0	config-env	env_bf16_override	med	HALOGEN_BF16_OVERRIDE and _DIR strings
+0190c310	cxx-stl	shared_ptr_string_release	med	string free plus shared_ptr refcount release
+0190c3b0	cxx-stl	thread_state_dtor	high	std::thread::_State dtor and operator delete
+0190c3d0	logging-diag	report_frag_wait	high	halogen: still %s after %.0f s string
+0190c570	config-env	env_attn_fd	high	HALOGEN_ATTN_FD
+0190c5b0	config-env	env_dmalloc_log	high	HALOGEN_DMALLOC_LOG
+0190c5f0	hgn-loader	tensor_bytes_calc	low	quant block byte size math, 64-aligned, no strings
+0190c870	cxx-stl	vector_dtor	med	operator delete of buffer
+0190c888	crt-runtime	ret_stub	low	3-byte function
+0190c890	cxx-stl	function_manager	med	std::function manager with type_info vtable
+0190c8b0	cxx-stl	new_0x40_thrower	low	operator new(0x40), 7 callers
+0190caa0	cxx-stl	unordered_map_string_dtor	med	node free loop, memset buckets
+0190cb80	cxx-stl	unordered_map_string_clear	med	node free loop, memset buckets
+0190cc20	cxx-stl	deque_dtor	med	deque map and node free
+0190cf40	hip-runtime	kernel_host_stub_0190cf40	med	__hipPopCallConfiguration, packs args; k_* device stub
+0190cfe0	hip-runtime	kernel_host_stub_0190cfe0	med	__hipPopCallConfiguration, packs args; k_* device stub
+0190d070	config-env	rope_yarn_setup	med	HALOGEN_ROPE_YARN static YaRN string
+0190d290	util	tensor_numel	med	multiplies dims array of ndim at +0x14
+0190dfc0	gpu-dispatch	launch_cfg_0190dfc0	low	computes grid then __hipPushCallConfiguration
+0190e0f0	gpu-dispatch	launch_cfg_0190e0f0	low	computes grid then __hipPushCallConfiguration
+0190e200	hip-runtime	kernel_host_stub_0190e200	med	__hipPopCallConfiguration, packs args; k_* device stub
+0190e2a0	hip-runtime	kernel_host_stub_0190e2a0	med	__hipPopCallConfiguration, packs args; k_* device stub
+0190e330	hgn-loader	upload_weight_tensor	low	Q6G64 alignment check, .bf16 string, 24 callees
+0190f1e0	hgn-loader	lm_head_tensor_lookup	low	lm_head string, vector append
+0190f4b0	hip-runtime	kernel_host_stub_0190f4b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+0190f530	hip-runtime	kernel_host_stub_0190f530	med	__hipPopCallConfiguration, packs args; k_* device stub
+0190f600	config-env	env_route_hl	high	HALOGEN_* getenv string
+0190f630	config-env	env_hc_inj_fuse	high	HALOGEN_* getenv string
+0190f660	gpu-dispatch	hc_q8_dec_select	low	HALOGEN_HC_Q8_DEC kernel selection
+0190f920	gpu-dispatch	hc_q8_dec_select2	low	HALOGEN_HC_Q8_DEC kernel selection
+0190fbc0	config-env	env_hc8_fuse	high	HALOGEN_* getenv string
+0190fc00	config-env	get_hc_fuse_rows	high	static-guard cache of 0190fc80
+0190fc50	config-env	env_lq8_wave	high	HALOGEN_* getenv string
+0190fc80	config-env	env_hc_fuse_rows	high	HALOGEN_* getenv string
+0190fcc0	config-env	env_hc6_fuse	high	HALOGEN_* getenv string
+0190fd00	config-env	env_hc6_ks	high	HALOGEN_* getenv string
+0190fd40	config-env	env_hc6_fuse_rows	high	HALOGEN_* getenv string
+0190fd80	config-env	env_hc_di_merge	high	HALOGEN_* getenv string
+0190fdb0	hip-runtime	kernel_host_stub_0190fdb0	med	__hipPopCallConfiguration, packs args; k_* device stub
+0190ff20	hip-runtime	kernel_host_stub_0190ff20	med	__hipPopCallConfiguration, packs args; k_* device stub
+01910090	hip-runtime	kernel_host_stub_01910090	med	__hipPopCallConfiguration, packs args; k_* device stub
+01910200	hip-runtime	kernel_host_stub_01910200	med	__hipPopCallConfiguration, packs args; k_* device stub
+01910370	hip-runtime	kernel_host_stub_01910370	med	__hipPopCallConfiguration, packs args; k_* device stub
+019104e0	hip-runtime	kernel_host_stub_019104e0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01910650	hip-runtime	kernel_host_stub_01910650	med	__hipPopCallConfiguration, packs args; k_* device stub
+019107c0	hip-runtime	kernel_host_stub_019107c0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01910930	util	check_two_globals	low	aborts via 01892e30 when globals null
+01910a00	hip-runtime	kernel_host_stub_01910a00	med	__hipPopCallConfiguration, packs args; k_* device stub
+01910b70	hip-runtime	kernel_host_stub_01910b70	med	__hipPopCallConfiguration, packs args; k_* device stub
+01910ce0	hip-runtime	kernel_host_stub_01910ce0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01910e50	hip-runtime	kernel_host_stub_01910e50	med	__hipPopCallConfiguration, packs args; k_* device stub
+01910fc0	hip-runtime	kernel_host_stub_01910fc0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01911130	hip-runtime	kernel_host_stub_01911130	med	__hipPopCallConfiguration, packs args; k_* device stub
+019112a0	hip-runtime	kernel_host_stub_019112a0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01911410	hip-runtime	kernel_host_stub_01911410	med	__hipPopCallConfiguration, packs args; k_* device stub
+01911580	config-env	env_hc_mixed_f32_attn	high	HALOGEN_* getenv string
+019115b0	hip-runtime	kernel_host_stub_019115b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+019116b0	hip-runtime	kernel_host_stub_019116b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+019117b0	hip-runtime	kernel_host_stub_019117b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+019118b0	hip-runtime	kernel_host_stub_019118b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+019119b0	hip-runtime	kernel_host_stub_019119b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01911ab0	hip-runtime	kernel_host_stub_01911ab0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01911bb0	hip-runtime	kernel_host_stub_01911bb0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01911cb0	hip-runtime	kernel_host_stub_01911cb0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01911db0	hip-runtime	kernel_host_stub_01911db0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01911eb0	hip-runtime	kernel_host_stub_01911eb0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01911fb0	hip-runtime	kernel_host_stub_01911fb0	med	__hipPopCallConfiguration, packs args; k_* device stub
+019120b0	hip-runtime	kernel_host_stub_019120b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+019121b0	hip-runtime	kernel_host_stub_019121b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+019122b0	hip-runtime	kernel_host_stub_019122b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+019123b0	hip-runtime	kernel_host_stub_019123b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+019124b0	hip-runtime	kernel_host_stub_019124b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+019125b0	gpu-dispatch	set_launch_cfg_arm_0	low	358B loop over arg structs at +0x30 stride 0x48
+01912930	gpu-dispatch	set_launch_cfg_arm_01912930	low	twin of 019125b0, 358B arg struct loop
+01912cb0	gpu-dispatch	set_launch_cfg_arm_01912cb0	low	twin of 019125b0, 358B arg struct loop
+01913030	gpu-dispatch	set_launch_cfg_arm_01913030	low	twin of 019125b0, 358B arg struct loop
+019133b0	gpu-dispatch	set_launch_cfg_arm_019133b0	low	twin of 019125b0, 358B arg struct loop
+01913730	gpu-dispatch	set_launch_cfg_arm_01913730	low	twin of 019125b0, 358B arg struct loop
+01913ab0	gpu-dispatch	set_launch_cfg_arm_01913ab0	low	twin of 019125b0, 358B arg struct loop
+01913e30	gpu-dispatch	set_launch_cfg_arm_01913e30	low	twin of 019125b0, 358B arg struct loop
+019141b0	hip-runtime	kernel_host_stub_019141b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914230	hip-runtime	kernel_host_stub_01914230	med	__hipPopCallConfiguration, packs args; k_* device stub
+019142b0	hip-runtime	kernel_host_stub_019142b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914330	hip-runtime	kernel_host_stub_01914330	med	__hipPopCallConfiguration, packs args; k_* device stub
+019143b0	hip-runtime	kernel_host_stub_019143b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914430	hip-runtime	kernel_host_stub_01914430	med	__hipPopCallConfiguration, packs args; k_* device stub
+019144b0	hip-runtime	kernel_host_stub_019144b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914530	hip-runtime	kernel_host_stub_01914530	med	__hipPopCallConfiguration, packs args; k_* device stub
+019145b0	hip-runtime	kernel_host_stub_019145b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914630	hip-runtime	kernel_host_stub_01914630	med	__hipPopCallConfiguration, packs args; k_* device stub
+019146b0	hip-runtime	kernel_host_stub_019146b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914730	hip-runtime	kernel_host_stub_01914730	med	__hipPopCallConfiguration, packs args; k_* device stub
+019147b0	hip-runtime	kernel_host_stub_019147b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914830	hip-runtime	kernel_host_stub_01914830	med	__hipPopCallConfiguration, packs args; k_* device stub
+019148b0	hip-runtime	kernel_host_stub_019148b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914930	hip-runtime	kernel_host_stub_01914930	med	__hipPopCallConfiguration, packs args; k_* device stub
+019149b0	hip-runtime	kernel_host_stub_019149b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914a30	hip-runtime	kernel_host_stub_01914a30	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914ab0	hip-runtime	kernel_host_stub_01914ab0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914b30	hip-runtime	kernel_host_stub_01914b30	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914bb0	hip-runtime	kernel_host_stub_01914bb0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914c30	hip-runtime	kernel_host_stub_01914c30	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914cb0	hip-runtime	kernel_host_stub_01914cb0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914d30	hip-runtime	kernel_host_stub_01914d30	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914db0	hip-runtime	kernel_host_stub_01914db0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914e30	hip-runtime	kernel_host_stub_01914e30	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914eb0	hip-runtime	kernel_host_stub_01914eb0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914f30	hip-runtime	kernel_host_stub_01914f30	med	__hipPopCallConfiguration, packs args; k_* device stub
+01914fb0	hip-runtime	kernel_host_stub_01914fb0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01915030	hip-runtime	kernel_host_stub_01915030	med	__hipPopCallConfiguration, packs args; k_* device stub
+019150b0	hip-runtime	kernel_host_stub_019150b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01915130	hip-runtime	kernel_host_stub_01915130	med	__hipPopCallConfiguration, packs args; k_* device stub
+019151b0	hip-runtime	kernel_host_stub_019151b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01915230	hip-runtime	kernel_host_stub_01915230	med	__hipPopCallConfiguration, packs args; k_* device stub
+019152b0	hip-runtime	kernel_host_stub_019152b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01915330	hip-runtime	kernel_host_stub_01915330	med	__hipPopCallConfiguration, packs args; k_* device stub
+019153b0	hip-runtime	kernel_host_stub_019153b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01915430	hip-runtime	kernel_host_stub_01915430	med	__hipPopCallConfiguration, packs args; k_* device stub
+019154b0	hip-runtime	kernel_host_stub_019154b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01915530	hip-runtime	kernel_host_stub_01915530	med	__hipPopCallConfiguration, packs args; k_* device stub
+019155b0	gpu-dispatch	launch_cfg_160	med	sets 0xa0, pushes call config grid 164
+01915a00	gpu-dispatch	launch_cfg_80	med	sets 0x50, pushes call config grid 84
+01915e50	hip-runtime	kernel_host_stub_01915e50	med	__hipPopCallConfiguration, packs args; k_* device stub
+01915ed0	hip-runtime	kernel_host_stub_01915ed0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01915f50	hip-runtime	kernel_host_stub_01915f50	med	__hipPopCallConfiguration, packs args; k_* device stub
+01915fd0	hip-runtime	kernel_host_stub_01915fd0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01916050	hip-runtime	kernel_host_stub_01916050	med	__hipPopCallConfiguration, packs args; k_* device stub
+019160d0	hip-runtime	kernel_host_stub_019160d0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01916150	hip-runtime	kernel_host_stub_01916150	med	__hipPopCallConfiguration, packs args; k_* device stub
+019161d0	hip-runtime	kernel_host_stub_019161d0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01916250	hip-runtime	kernel_host_stub_01916250	med	__hipPopCallConfiguration, packs args; k_* device stub
+019162d0	hip-runtime	kernel_host_stub_019162d0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01916350	hip-runtime	kernel_host_stub_01916350	med	__hipPopCallConfiguration, packs args; k_* device stub
+019163d0	hip-runtime	kernel_host_stub_019163d0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01916450	hip-runtime	kernel_host_stub_01916450	med	__hipPopCallConfiguration, packs args; k_* device stub
+019164d0	hip-runtime	kernel_host_stub_019164d0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01916550	hip-runtime	kernel_host_stub_01916550	med	__hipPopCallConfiguration, packs args; k_* device stub
+019165d0	hip-runtime	kernel_host_stub_019165d0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01916650	hip-runtime	kernel_host_stub_01916650	med	__hipPopCallConfiguration, packs args; k_* device stub
+019166d0	hip-runtime	kernel_host_stub_019166d0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01916750	hip-runtime	kernel_host_stub_01916750	med	__hipPopCallConfiguration, packs args; k_* device stub
+019167d0	hip-runtime	kernel_host_stub_019167d0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01916850	hip-runtime	kernel_host_stub_01916850	med	__hipPopCallConfiguration, packs args; k_* device stub
+019168d0	hip-runtime	kernel_host_stub_019168d0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01916950	hip-runtime	kernel_host_stub_01916950	med	__hipPopCallConfiguration, packs args; k_* device stub
+019169d0	hip-runtime	kernel_host_stub_019169d0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01916a50	logging-diag	act_stats	med	act_stats: seen with K %d/%d nexp string
+01917530	hip-runtime	kernel_host_stub_01917530	med	__hipPopCallConfiguration, packs args; k_* device stub
+019175d0	util	string_holder_free	low	frees SSO string then object 0x38
+01917610	model-forward	ht_linear_prepare	med	HT linear rotation planes strings, FLASH_PREFILL_GEMM
+01918180	gpu-dispatch	launch_gemm_select_c	med	format switch up to 8, 0x1400 row thresholds, push config
+0191cd30	gpu-dispatch	launch_gemm_select_d	med	format switch, kernel guard, push config
+0191e8f0	gpu-dispatch	launch_gemm_select_e	med	format switch, push config
+01920310	gpu-dispatch	launch_gemm_select_f	med	twin of 0191cd30 by size
+01921ed0	gpu-dispatch	launch_gemm_select_g	med	twin of 0191e8f0 by size
+01923980	util	cached_static_getter_01923980	low	function-local static guard caching a FUN_ init result
+019239d0	util	cached_static_getter_019239d0	low	function-local static guard caching a FUN_ init result
+01923a20	util	cached_static_getter_01923a20	low	function-local static guard caching a FUN_ init result
+01923a70	util	cached_static_getter_01923a70	low	function-local static guard caching a FUN_ init result
+01923ac0	util	cached_static_getter_01923ac0	low	function-local static guard caching a FUN_ init result
+01923b10	hip-runtime	kernel_host_stub_01923b10	med	__hipPopCallConfiguration, packs args; k_* device stub
+01923bf0	hip-runtime	kernel_host_stub_01923bf0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01923cd0	hip-runtime	kernel_host_stub_01923cd0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01923db0	hip-runtime	kernel_host_stub_01923db0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01923e90	hip-runtime	kernel_host_stub_01923e90	med	__hipPopCallConfiguration, packs args; k_* device stub
+01923f70	hip-runtime	kernel_host_stub_01923f70	med	__hipPopCallConfiguration, packs args; k_* device stub
+01924050	hip-runtime	kernel_host_stub_01924050	med	__hipPopCallConfiguration, packs args; k_* device stub
+01924130	hip-runtime	kernel_host_stub_01924130	med	__hipPopCallConfiguration, packs args; k_* device stub
+01924210	hip-runtime	kernel_host_stub_01924210	med	__hipPopCallConfiguration, packs args; k_* device stub
+019242f0	hip-runtime	kernel_host_stub_019242f0	med	__hipPopCallConfiguration, packs args; k_* device stub
+019243d0	hip-runtime	kernel_host_stub_019243d0	med	__hipPopCallConfiguration, packs args; k_* device stub
+019244b0	hip-runtime	kernel_host_stub_019244b0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01924590	hip-runtime	kernel_host_stub_01924590	med	__hipPopCallConfiguration, packs args; k_* device stub
+01924670	hip-runtime	kernel_host_stub_01924670	med	__hipPopCallConfiguration, packs args; k_* device stub
+01924750	hip-runtime	kernel_host_stub_01924750	med	__hipPopCallConfiguration, packs args; k_* device stub
+01924830	hip-runtime	kernel_host_stub_01924830	med	__hipPopCallConfiguration, packs args; k_* device stub
+01924910	hip-runtime	kernel_host_stub_01924910	med	__hipPopCallConfiguration, packs args; k_* device stub
+019249f0	hip-runtime	kernel_host_stub_019249f0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01924ad0	hip-runtime	kernel_host_stub_01924ad0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01924bb0	hip-runtime	kernel_host_stub_01924bb0	med	__hipPopCallConfiguration, packs args; k_* device stub
+01924c90	hip-runtime	kernel_host_stub_01924c90	med	__hipPopCallConfiguration, packs args; k_* device stub
+01924d70	hip-runtime	kernel_host_stub_01924d70	med	__hipPopCallConfiguration, packs args; k_* device stub
+01924e50	hip-runtime	kernel_host_stub_01924e50	med	__hipPopCallConfiguration, packs args; k_* device stub
+01924f30	hip-runtime	kernel_host_stub_01924f30	med	__hipPopCallConfiguration, packs args; k_* device stub

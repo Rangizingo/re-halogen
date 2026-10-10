@@ -1,0 +1,299 @@
+addr	role	label	confidence	evidence
+019c5330	gguf-repack	hash_sink_reserve	low	grows per-tensor buffer vector; sibling of hash sink writer
+019c53b0	gguf-repack	hash_sink_write	high	string "hash sink: the table was not committed in order"
+019c55a0	gguf-repack	gguf_repack_tensor_step	low	809 bytes, string/vector ops near hash sink; body unread
+019c58d0	gguf-repack	sha256_block	med	byte-swapped 32-bit loads, no callees, 3 callers
+019c5b00	gguf-repack	gguf_fatal	high	fprintf "gguf: %s" then exit(1)
+019c5b26	util	pad_stub	low	2 byte function, no refs
+019c5b30	cxx-stl	string_construct_helper_019c5b30	med	calls basic_string::_M_create
+019c5c20	cxx-stl	stl_019c5c20	high	mangled libstdc++ name _ZNSt7__cxx119to_stringEj
+019c5d30	cxx-stl	stl_019c5d30	high	mangled libstdc++ name _ZNKSt7__cxx1112basic_stringIc
+019c5df0	cxx-stl	stl_019c5df0	high	mangled libstdc++ name _ZNSt7__cxx1112basic_stringIcS
+019c5e80	cxx-stl	map_insert_hint_pos_019c5e80	med	651-byte rb-tree insert pattern, repeated
+019c6110	cxx-stl	tree_node_free_or_wrapper_019c6110	med	small dtor or node free via _ZdlPvm
+019c6160	cxx-stl	string_construct_helper_019c6160	med	calls basic_string::_M_create
+019c6230	cxx-stl	map_get_insert_unique_pos_019c6230	med	rb-tree unique-pos lookup pattern, memcmp keys
+019c6370	cxx-stl	map_insert_hint_pos_019c6370	med	651-byte rb-tree insert pattern, repeated
+019c6600	cxx-stl	tree_node_free_or_wrapper_019c6600	med	small dtor or node free via _ZdlPvm
+019c6650	cxx-stl	string_construct_helper_019c6650	med	calls basic_string::_M_create
+019c6720	cxx-stl	map_get_insert_unique_pos_019c6720	med	rb-tree unique-pos lookup pattern, memcmp keys
+019c6860	cxx-stl	map_insert_hint_pos_019c6860	med	651-byte rb-tree insert pattern, repeated
+019c6af0	cxx-stl	tree_node_free_or_wrapper_019c6af0	med	small dtor or node free via _ZdlPvm
+019c6b30	cxx-stl	string_construct_helper_019c6b30	med	calls basic_string::_M_create
+019c6c00	cxx-stl	map_get_insert_unique_pos_019c6c00	med	rb-tree unique-pos lookup pattern, memcmp keys
+019c6d40	cxx-stl	map_insert_hint_pos_019c6d40	med	651-byte rb-tree insert pattern, repeated
+019c6fd0	cxx-stl	tree_node_free_or_wrapper_019c6fd0	med	small dtor or node free via _ZdlPvm
+019c7010	cxx-stl	string_construct_helper_019c7010	med	calls basic_string::_M_create
+019c70e0	cxx-stl	map_get_insert_unique_pos_019c70e0	med	rb-tree unique-pos lookup pattern, memcmp keys
+019c7220	cxx-stl	stl_019c7220	high	mangled libstdc++ name _ZNSt6vectorIlSaIlEEaSERKS1_
+019c7370	cxx-stl	map_get_insert_unique_pos_019c7370	med	rb-tree unique-pos lookup pattern, memcmp keys
+019c74b0	cxx-stl	stl_019c74b0	high	mangled libstdc++ name _ZNSt6vectorImSaImEE13_M_assig
+019c7600	cxx-stl	string_construct_helper_019c7600	med	calls basic_string::_M_create
+019c7740	cxx-stl	stl_container_helper_019c7740	low	tree and vector pointer ops in gguf_repack TU
+019c7860	cxx-stl	tree_node_free_or_wrapper_019c7860	med	small dtor or node free via _ZdlPvm
+019c78a0	cxx-stl	tree_node_free_or_wrapper_019c78a0	med	small dtor or node free via _ZdlPvm
+019c78c0	cxx-stl	tree_node_free_or_wrapper_019c78c0	med	small dtor or node free via _ZdlPvm
+019c78e0	cxx-stl	map_insert_hint_pos_019c78e0	med	651-byte rb-tree insert pattern, repeated
+019c7b70	cxx-stl	tree_node_free_or_wrapper_019c7b70	med	small dtor or node free via _ZdlPvm
+019c7c70	cxx-stl	map_get_insert_unique_pos_019c7c70	med	rb-tree unique-pos lookup pattern, memcmp keys
+019c7db0	cxx-stl	string_construct_helper_019c7db0	med	calls basic_string::_M_create
+019c7ef0	cxx-stl	tree_node_free_or_wrapper_019c7ef0	med	small dtor or node free via _ZdlPvm
+019c7f70	cxx-stl	map_get_insert_unique_pos_019c7f70	med	rb-tree unique-pos lookup pattern, memcmp keys
+019c80b0	cxx-stl	tree_node_free_or_wrapper_019c80b0	med	small dtor or node free via _ZdlPvm
+019c8250	cxx-stl	tree_node_free_or_wrapper_019c8250	med	small dtor or node free via _ZdlPvm
+019c82a0	cxx-stl	stl_019c82a0	high	mangled libstdc++ name _ZNSt7__cxx1112basic_stringIcS
+019c8410	cxx-stl	tree_node_free_or_wrapper_019c8410	med	small dtor or node free via _ZdlPvm
+019c8590	cxx-stl	tree_node_free_or_wrapper_019c8590	med	small dtor or node free via _ZdlPvm
+019c8600	cxx-stl	tree_node_free_or_wrapper_019c8600	med	small dtor or node free via _ZdlPvm
+019c8680	cxx-stl	tree_node_free_or_wrapper_019c8680	med	small dtor or node free via _ZdlPvm
+019c86f0	cxx-stl	tree_node_free_or_wrapper_019c86f0	med	small dtor or node free via _ZdlPvm
+019c8770	cxx-stl	stl_container_helper_019c8770	low	tree and vector pointer ops in gguf_repack TU
+019c8ca0	cxx-stl	stl_container_helper_019c8ca0	low	tree and vector pointer ops in gguf_repack TU
+019c8e60	cxx-stl	vector_helper_019c8e60	med	vector length_error or max_size string
+019c90b0	cxx-stl	string_construct_helper_019c90b0	med	calls basic_string::_M_create
+019c91c0	cxx-stl	vector_helper_019c91c0	med	vector length_error or max_size string
+019c9430	cxx-stl	string_construct_helper_019c9430	med	calls basic_string::_M_create
+019c9520	cxx-stl	vector_helper_019c9520	med	vector length_error or max_size string
+019c9770	cxx-stl	vector_helper_019c9770	med	vector length_error or max_size string
+019c99a0	cxx-stl	vector_helper_019c99a0	med	vector length_error or max_size string
+019c9c20	cxx-stl	tree_node_free_or_wrapper_019c9c20	med	small dtor or node free via _ZdlPvm
+019c9c80	cxx-stl	vector_helper_019c9c80	med	vector length_error or max_size string
+019c9e50	cxx-stl	string_construct_helper_019c9e50	med	calls basic_string::_M_create
+019c9f30	crt-runtime	static_init_gguf_repack	high	_INIT_5 with gguf_repack.cpp path and build date
+019c9f90	config-env	memo_env_dn_s14	high	cxa_guard memo wrapper calling 019c9fe0 (HALOGEN_DN_S14)
+019c9fe0	config-env	env_dn_s14	high	getenv HALOGEN_DN_S14, cached or default
+019ca020	config-env	memo_env_dn_scan_bool	high	cxa_guard memo wrapper calling 019ca070 (HALOGEN_DN_SCAN)
+019ca070	config-env	env_dn_scan	high	getenv HALOGEN_DN_SCAN, cached or default
+019ca120	gpu-dispatch	dnc_launch_config_stub	med	calls __hipPushCallConfiguration with fixed 256 threads
+019ca1f0	gpu-dispatch	dnc_kernel_stub_019ca1f0	med	hipLaunchKernel host stub pattern, 4 args
+019ca280	gpu-dispatch	dn_scan_launcher	med	switch on cached DN_SCAN mode, __hipPushCallConfiguration
+019cef20	config-env	env_dn_scan	high	getenv HALOGEN_DN_SCAN, cached or default
+019cef50	gpu-dispatch	dnc_kernel_stub_019cef50	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019cf070	gpu-dispatch	dnc_kernel_stub_019cf070	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019cf190	gpu-dispatch	dnc_kernel_stub_019cf190	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019cf2b0	gpu-dispatch	dnc_kernel_stub_019cf2b0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019cf3d0	config-env	env_dn_s14	high	getenv HALOGEN_DN_S14, cached or default
+019cf410	config-env	env_dn_probe	high	getenv HALOGEN_DN_PROBE, prints GDN output WRONG warning
+019cf460	config-env	env_dn_m10p	high	getenv HALOGEN_DN_M10P, cached or default
+019cf4a0	config-env	env_dn_m10g	high	getenv HALOGEN_DN_M10G, cached or default
+019cf4e0	gpu-dispatch	dnc_kernel_stub_019cf4e0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019cf600	gpu-dispatch	dnc_kernel_stub_019cf600	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019cf720	gpu-dispatch	dnc_kernel_stub_019cf720	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019cf840	gpu-dispatch	dnc_kernel_stub_019cf840	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019cf960	gpu-dispatch	dnc_kernel_stub_019cf960	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019cfa80	gpu-dispatch	dnc_kernel_stub_019cfa80	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019cfba0	gpu-dispatch	dnc_kernel_stub_019cfba0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019cfcc0	gpu-dispatch	dnc_kernel_stub_019cfcc0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019cfde0	gpu-dispatch	dnc_kernel_stub_019cfde0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019cff00	gpu-dispatch	dnc_kernel_stub_019cff00	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d0020	gpu-dispatch	dnc_kernel_stub_019d0020	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d0140	gpu-dispatch	dnc_kernel_stub_019d0140	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d0260	gpu-dispatch	dnc_kernel_stub_019d0260	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d0380	gpu-dispatch	dnc_kernel_stub_019d0380	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d04a0	gpu-dispatch	dnc_kernel_stub_019d04a0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d05c0	gpu-dispatch	dnc_kernel_stub_019d05c0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d06e0	gpu-dispatch	dnc_kernel_stub_019d06e0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d0800	gpu-dispatch	dnc_kernel_stub_019d0800	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d0920	gpu-dispatch	dnc_kernel_stub_019d0920	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d0a40	gpu-dispatch	dnc_kernel_stub_019d0a40	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d0b60	gpu-dispatch	dnc_kernel_stub_019d0b60	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d0c80	gpu-dispatch	dnc_kernel_stub_019d0c80	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d0da0	gpu-dispatch	dnc_kernel_stub_019d0da0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d0ec0	gpu-dispatch	dnc_kernel_stub_019d0ec0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d0fe0	gpu-dispatch	dnc_kernel_stub_019d0fe0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d1100	gpu-dispatch	dnc_kernel_stub_019d1100	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d1220	gpu-dispatch	dnc_kernel_stub_019d1220	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d1340	gpu-dispatch	dnc_kernel_stub_019d1340	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d1460	gpu-dispatch	dnc_kernel_stub_019d1460	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d1580	gpu-dispatch	dnc_kernel_stub_019d1580	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d16a0	gpu-dispatch	dnc_kernel_stub_019d16a0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d17c0	gpu-dispatch	dnc_kernel_stub_019d17c0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d18e0	gpu-dispatch	dnc_kernel_stub_019d18e0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d1a00	gpu-dispatch	dnc_kernel_stub_019d1a00	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d1b20	gpu-dispatch	dnc_kernel_stub_019d1b20	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d1c40	gpu-dispatch	dnc_kernel_stub_019d1c40	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d1d60	gpu-dispatch	dnc_kernel_stub_019d1d60	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d1e80	gpu-dispatch	dnc_kernel_stub_019d1e80	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d1fa0	gpu-dispatch	dnc_kernel_stub_019d1fa0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d20c0	gpu-dispatch	dnc_kernel_stub_019d20c0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d21e0	gpu-dispatch	dnc_kernel_stub_019d21e0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d2300	gpu-dispatch	dnc_kernel_stub_019d2300	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d2420	gpu-dispatch	dnc_kernel_stub_019d2420	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d2540	gpu-dispatch	dnc_kernel_stub_019d2540	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d2660	gpu-dispatch	dnc_kernel_stub_019d2660	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d2780	gpu-dispatch	dnc_kernel_stub_019d2780	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d28a0	gpu-dispatch	dnc_kernel_stub_019d28a0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d29c0	gpu-dispatch	dnc_kernel_stub_019d29c0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d2ae0	gpu-dispatch	dnc_kernel_stub_019d2ae0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d2c00	gpu-dispatch	dnc_kernel_stub_019d2c00	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d2d20	gpu-dispatch	dnc_kernel_stub_019d2d20	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d2e40	gpu-dispatch	dnc_kernel_stub_019d2e40	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d2f60	gpu-dispatch	dnc_kernel_stub_019d2f60	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d3080	gpu-dispatch	dnc_kernel_stub_019d3080	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d31a0	gpu-dispatch	dnc_kernel_stub_019d31a0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d32c0	gpu-dispatch	dnc_kernel_stub_019d32c0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d33e0	gpu-dispatch	dnc_kernel_stub_019d33e0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d3500	gpu-dispatch	dnc_kernel_stub_019d3500	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d3620	gpu-dispatch	dnc_kernel_stub_019d3620	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d3740	gpu-dispatch	dnc_kernel_stub_019d3740	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d3860	gpu-dispatch	dnc_kernel_stub_019d3860	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d3980	gpu-dispatch	dnc_kernel_stub_019d3980	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d3aa0	gpu-dispatch	dnc_kernel_stub_019d3aa0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d3bc0	gpu-dispatch	dnc_kernel_stub_019d3bc0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d3ce0	gpu-dispatch	dnc_kernel_stub_019d3ce0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d3e00	gpu-dispatch	dnc_kernel_stub_019d3e00	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d3f20	gpu-dispatch	dnc_kernel_stub_019d3f20	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d4040	gpu-dispatch	dnc_kernel_stub_019d4040	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d4160	gpu-dispatch	dnc_kernel_stub_019d4160	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d4280	gpu-dispatch	dnc_kernel_stub_019d4280	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d43a0	gpu-dispatch	dnc_kernel_stub_019d43a0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d44c0	gpu-dispatch	dnc_kernel_stub_019d44c0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d45e0	gpu-dispatch	dnc_kernel_stub_019d45e0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d4700	gpu-dispatch	dnc_kernel_stub_019d4700	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d4820	gpu-dispatch	dnc_kernel_stub_019d4820	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d4940	gpu-dispatch	dnc_kernel_stub_019d4940	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d4a60	gpu-dispatch	dnc_kernel_stub_019d4a60	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d4b80	gpu-dispatch	dnc_kernel_stub_019d4b80	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d4ca0	gpu-dispatch	dnc_kernel_stub_019d4ca0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d4dc0	gpu-dispatch	dnc_kernel_stub_019d4dc0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d4ee0	gpu-dispatch	dnc_kernel_stub_019d4ee0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d5000	gpu-dispatch	dnc_kernel_stub_019d5000	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d5120	gpu-dispatch	dnc_kernel_stub_019d5120	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d5240	gpu-dispatch	dnc_kernel_stub_019d5240	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d5360	gpu-dispatch	dnc_kernel_stub_019d5360	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d5480	gpu-dispatch	dnc_kernel_stub_019d5480	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d55a0	gpu-dispatch	dnc_kernel_stub_019d55a0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d56c0	gpu-dispatch	dnc_kernel_stub_019d56c0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d57e0	gpu-dispatch	dnc_kernel_stub_019d57e0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d5900	gpu-dispatch	dnc_kernel_stub_019d5900	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d5a20	gpu-dispatch	dnc_ut5_kernel_stub_019d5a20	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d5ba0	config-env	memo_env_dn_scan_ub	high	cxa_guard memo wrapper calling 019ddd90 (HALOGEN_DN_SCAN_UB)
+019d5bf0	gpu-dispatch	dnc_ut5_kernel_stub_019d5bf0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d5d70	gpu-dispatch	dnc_ut5_kernel_stub_019d5d70	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d5ef0	gpu-dispatch	dnc_ut5_kernel_stub_019d5ef0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d6070	gpu-dispatch	dnc_ut5_kernel_stub_019d6070	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d61f0	gpu-dispatch	dnc_ut5_kernel_stub_019d61f0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d6370	config-env	env_dn_lds_bar	high	getenv HALOGEN_DN_LDS_BAR, default true, cached
+019d63d0	gpu-dispatch	dnc_ut5_kernel_stub_019d63d0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d6550	gpu-dispatch	dnc_ut5_kernel_stub_019d6550	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d66d0	gpu-dispatch	dnc_ut5_kernel_stub_019d66d0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d6850	gpu-dispatch	dnc_ut5_kernel_stub_019d6850	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d69d0	gpu-dispatch	dnc_ut5_kernel_stub_019d69d0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d6b50	gpu-dispatch	dnc_ut5_kernel_stub_019d6b50	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d6cd0	gpu-dispatch	dnc_ut5_kernel_stub_019d6cd0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d6e50	gpu-dispatch	dnc_ut5_kernel_stub_019d6e50	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d6fd0	gpu-dispatch	dnc_ut5_kernel_stub_019d6fd0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d7150	gpu-dispatch	dnc_ut5_kernel_stub_019d7150	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d72d0	gpu-dispatch	dnc_ut5_kernel_stub_019d72d0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d7450	gpu-dispatch	dnc_kernel_stub_019d7450	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d75d0	gpu-dispatch	dnc_ut5_kernel_stub_019d75d0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d7750	gpu-dispatch	dnc_ut5_kernel_stub_019d7750	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d78d0	gpu-dispatch	dnc_ut5_kernel_stub_019d78d0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d7a50	gpu-dispatch	dnc_kernel_stub_019d7a50	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019d7b70	model-forward	dn_chunk_forward	high	string "dn_chunk_forward: norm_read set without qinv/kinv", 21 callees
+019dc670	config-env	env_dn_s3a	high	getenv HALOGEN_DN_S3A, cached or default
+019dc6a0	config-env	env_dn_s7	high	getenv HALOGEN_DN_S7, cached or default
+019dc6d0	config-env	env_dn_xh	high	getenv HALOGEN_DN_XH, cached or default
+019dc700	gpu-dispatch	dnc_kernel_stub_019dc700	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dc7f0	config-env	env_dn_prep_w	high	getenv HALOGEN_DN_PREP_W, cached or default
+019dc820	gpu-dispatch	dnc_kernel_stub_019dc820	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dc910	gpu-dispatch	dnc_kernel_stub_019dc910	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dca00	gpu-dispatch	dnc_kernel_stub_019dca00	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dcaf0	gpu-dispatch	dnc_kernel_stub_019dcaf0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dcbe0	config-env	env_dn_s12	high	getenv HALOGEN_DN_S12, cached or default
+019dcc20	config-env	env_dn_s22	high	getenv HALOGEN_DN_S22, cached or default
+019dcc50	gpu-dispatch	dnc_kernel_stub_019dcc50	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dcd20	gpu-dispatch	dnc_kernel_stub_019dcd20	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dcdf0	gpu-dispatch	dnc_kernel_stub_019dcdf0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dcec0	gpu-dispatch	dnc_kernel_stub_019dcec0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dcf90	gpu-dispatch	dnc_kernel_stub_019dcf90	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dd060	gpu-dispatch	dnc_kernel_stub_019dd060	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dd130	gpu-dispatch	dn_scan_launch_select	med	switch on mode, __hipPushCallConfiguration grid dims
+019dda50	gpu-dispatch	dnc_kernel_stub_019dda50	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019ddb20	gpu-dispatch	dnc_kernel_stub_019ddb20	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019ddbf0	gpu-dispatch	dnc_kernel_stub_019ddbf0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019ddca0	gpu-dispatch	dnc_kernel_stub_019ddca0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019ddd70	hip-runtime	dnc_occupancy_query_a	med	hipOccupancyMaxActiveBlocksPerMultiprocessor on kernel ptr
+019ddd80	hip-runtime	dnc_occupancy_query_b	med	same size and shape as 019ddd70
+019ddd90	config-env	env_dn_scan_ub	high	getenv HALOGEN_DN_SCAN_UB, cached or default
+019dddc0	config-env	env_dn_att_ut	high	getenv HALOGEN_DN_ATT_UT, cached or default
+019dddf0	config-env	env_dn_ut_rs	high	getenv HALOGEN_DN_UT_RS, cached or default
+019dde20	config-env	env_dn_ut_burst	high	getenv HALOGEN_DN_UT_BURST, cached or default
+019dde50	config-env	env_dn_ut_kl	high	getenv HALOGEN_DN_UT_KL, cached or default
+019dde80	gpu-dispatch	dnc_kernel_stub_019dde80	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019ddfa0	gpu-dispatch	dnc_kernel_stub_019ddfa0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019de0c0	gpu-dispatch	dnc_kernel_stub_019de0c0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019de1e0	gpu-dispatch	dnc_kernel_stub_019de1e0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019de300	gpu-dispatch	dnc_kernel_stub_019de300	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019de420	gpu-dispatch	dnc_kernel_stub_019de420	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019de540	gpu-dispatch	dnc_kernel_stub_019de540	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019de660	gpu-dispatch	dnc_kernel_stub_019de660	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019de780	gpu-dispatch	dnc_kernel_stub_019de780	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019de8a0	gpu-dispatch	dnc_kernel_stub_019de8a0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019de9c0	gpu-dispatch	dnc_kernel_stub_019de9c0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019deae0	gpu-dispatch	dnc_kernel_stub_019deae0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dec00	gpu-dispatch	dnc_kernel_stub_019dec00	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019ded20	gpu-dispatch	dnc_kernel_stub_019ded20	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dee40	gpu-dispatch	dnc_kernel_stub_019dee40	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019def60	gpu-dispatch	dnc_kernel_stub_019def60	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019df080	gpu-dispatch	dnc_kernel_stub_019df080	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019df1a0	gpu-dispatch	dnc_kernel_stub_019df1a0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019df2c0	gpu-dispatch	dnc_kernel_stub_019df2c0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019df3e0	gpu-dispatch	dnc_kernel_stub_019df3e0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019df500	gpu-dispatch	dnc_kernel_stub_019df500	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019df620	gpu-dispatch	dnc_kernel_stub_019df620	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019df740	gpu-dispatch	dnc_kernel_stub_019df740	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019df860	gpu-dispatch	dnc_kernel_stub_019df860	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019df980	gpu-dispatch	dnc_kernel_stub_019df980	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dfa70	gpu-dispatch	dnc_kernel_stub_019dfa70	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dfb60	gpu-dispatch	dnc_kernel_stub_019dfb60	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dfc10	config-env	env_dn_att_scale	high	getenv HALOGEN_DN_ATT_SCALE, cached or default
+019dfc50	gpu-dispatch	dnc_kernel_stub_019dfc50	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dfd00	gpu-dispatch	dnc_kernel_stub_019dfd00	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dfdb0	gpu-dispatch	dnc_kernel_stub_019dfdb0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dfe60	gpu-dispatch	dnc_kernel_stub_019dfe60	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dff10	gpu-dispatch	dnc_kernel_stub_019dff10	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019dffc0	gpu-dispatch	dnc_kernel_stub_019dffc0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019e0070	gpu-dispatch	dnc_kernel_stub_019e0070	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019e0120	gpu-dispatch	dnc_kernel_stub_019e0120	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019e0210	gpu-dispatch	dnc_kernel_stub_019e0210	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019e0300	gpu-dispatch	dnc_kernel_stub_019e0300	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019e03f0	gpu-dispatch	dnc_kernel_stub_019e03f0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019e04e0	gpu-dispatch	dnc_kernel_stub_019e04e0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019e05d0	gpu-dispatch	dnc_kernel_stub_019e05d0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019e0680	gpu-dispatch	dnc_kernel_stub_019e0680	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019e0730	gpu-dispatch	dnc_kernel_stub_019e0730	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019e07e0	gpu-dispatch	dnc_kernel_stub_019e07e0	med	hipLaunchKernel host stub, __hipPopCallConfiguration, no callers
+019e0890	hip-runtime	register_dnc_kernels	high	_INIT_7 registers k_dnc_* kernel names with fatbin
+019e2840	hip-runtime	unregister_dn_fatbin	high	calls __hipUnregisterFatBinary and clears handle
+019e2870	crt-runtime	static_init_dn_chunk	high	_INIT_6 with dn_chunk.hip path and build date
+019e28d0	hip-runtime	dn_occupancy_256	med	hipOccupancyMaxActiveBlocksPerMultiprocessor, 256 threads, -1 on error
+019e2910	gpu-dispatch	dn_fused16_kernel_stub_019e2910	med	hipLaunchKernel host stub in fused16 range
+019e2a20	gpu-dispatch	dn_fused_launch_select	med	switch on variant, __hipPushCallConfiguration with grid dims
+019e3590	gpu-dispatch	dn_fused16_kernel_stub_019e3590	med	hipLaunchKernel host stub, 0 callees variant
+019e36a0	gpu-dispatch	dn_fused16_kernel_stub_019e36a0	med	206-byte hipLaunchKernel host stub in fused16 range
+019e37b0	gpu-dispatch	dn_fused16_kernel_stub_019e37b0	med	206-byte hipLaunchKernel host stub in fused16 range
+019e38c0	gpu-dispatch	dn_fused16_kernel_stub_019e38c0	med	206-byte hipLaunchKernel host stub in fused16 range
+019e39d0	gpu-dispatch	dn_fused16_kernel_stub_019e39d0	med	206-byte hipLaunchKernel host stub in fused16 range
+019e3ae0	gpu-dispatch	dn_fused16_kernel_stub_019e3ae0	med	206-byte hipLaunchKernel host stub in fused16 range
+019e3bf0	gpu-dispatch	dn_fused16_kernel_stub_019e3bf0	med	206-byte hipLaunchKernel host stub in fused16 range
+019e3d00	gpu-dispatch	dn_fused16_kernel_stub_019e3d00	med	206-byte hipLaunchKernel host stub in fused16 range
+019e3e10	gpu-dispatch	dn_fused16_kernel_stub_019e3e10	med	206-byte hipLaunchKernel host stub in fused16 range
+019e3f20	gpu-dispatch	dn_fused16_kernel_stub_019e3f20	med	206-byte hipLaunchKernel host stub in fused16 range
+019e4030	gpu-dispatch	dn_fused16_kernel_stub_019e4030	med	hipLaunchKernel host stub, 0 callees variant
+019e4140	gpu-dispatch	dn_fused16_kernel_stub_019e4140	med	206-byte hipLaunchKernel host stub in fused16 range
+019e4250	config-env	env_dn_fused_gram	high	getenv HALOGEN_DN_FUSED_GRAM, cached via guard
+019e4b10	gpu-dispatch	dn_fused_launch_wrapper	low	192 bytes, calls env_dn_fused_gram when count>0
+019e4bd0	gpu-dispatch	dn_fused_dispatch	med	reads HALOGEN_DN_FUSED_GRAM/PAIR, picks fused kernel
+019e4e80	gpu-dispatch	dn_fused16_kernel_stub_019e4e80	med	206-byte hipLaunchKernel host stub in fused16 range
+019e4f90	gpu-dispatch	dn_fused16_kernel_stub_019e4f90	med	206-byte hipLaunchKernel host stub in fused16 range
+019e50a0	gpu-dispatch	dn_fused16_kernel_stub_019e50a0	med	206-byte hipLaunchKernel host stub in fused16 range
+019e51b0	gpu-dispatch	dn_fused16_kernel_stub_019e51b0	med	206-byte hipLaunchKernel host stub in fused16 range
+019e52c0	hip-runtime	register_dn_fused16_kernels	high	_INIT_8 registers k_dn_fused16 kernel names
+019e5610	hip-runtime	unregister_fatbin_2	low	34 bytes 1 callee, same shape as fatbin unregister
+019e5640	util	round_up_bucket	med	clz-based rounding of sizes above 31, no callees
+019e5680	hip-runtime	matmul_tuning_init	med	HALOGEN_MATMUL_TUNING_FILE, hipBLASLt and HIP error macros in matmul.cpp
+019e5840	hip-runtime	hipblaslt_tuning_load	high	strings "tuning file %s: absent / TUNED ELSEWHERE", arch check
+019e5e30	hip-runtime	hipblaslt_tuning_save	high	strings "tuning file %s: %u buckets written"
+019e6060	hip-runtime	hipblaslt_teardown	high	saves tuning, calls hipblasLtMatmulDescDestroy over rb-tree
+019e6210	config-env	env_matmul_stats	high	getenv HALOGEN_MATMUL_STATS
