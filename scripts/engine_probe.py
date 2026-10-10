@@ -61,7 +61,8 @@ class Conn:
         return self.read(timeout)
 
 
-def gen(c, ids, max_tokens=24, drafter=None, sample=None, wait=120):
+def gen(c, ids, max_tokens=24, drafter=None, sample=None, wait=120, snap=None):
+    """snap = (SNAP, SNAP2, SNAP3) cache snapshot positions; zeros are omitted (image/serve_api.py:1080-1082)."""
     REQ[0] += 1
     req = REQ[0]
     parts = [f'GEN {req} {max_tokens} 2 151645 151643 {len(ids)}'] + [str(i) for i in ids]
@@ -69,6 +70,9 @@ def gen(c, ids, max_tokens=24, drafter=None, sample=None, wait=120):
         parts.append(str(drafter))
     if sample:
         parts.append('SAMPLE {:.9g} {} {:.9g} {:.9g} {}'.format(*sample))
+    for key, pos in zip(('SNAP', 'SNAP2', 'SNAP3'), snap or ()):
+        if pos:
+            parts.append(f'{key} {pos}')
     c.send(' '.join(parts))
     toks, done = [], None
     end = time.time() + wait

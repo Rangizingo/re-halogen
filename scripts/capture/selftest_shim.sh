@@ -107,6 +107,7 @@ assert L['globals']['norm_fold_mode'] == 1 and L['globals']['unreadable'] == 0, 
 r = L['tap']['regions'][0]
 assert r['slot'] == 2 and r['bytes'] == 3 << 20 and r['words_changed'] == 1024, r
 assert r['vs_state'][0]['dst_is_p'] == 1, r
+assert r['post_head'] == '5a' * 64, r            # the fake kernel's tap write, read back after the launch
 tr = [r for r in rows if r['kind'] in ('trace', 'matmul')]
 assert [r['kind'] for r in tr] == ['trace'] * 4 + ['matmul'] and [r['seq'] for r in tr] == [0, 1, 2, 3, 4], tr
 assert sum(1 for r in rows if r['kind'] == 'kname') == 2   # the scan3x handle and the KNAMES[5] handle
