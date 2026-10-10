@@ -13,7 +13,7 @@ Read order: `start-here.md` (state of play, what remains) > `PLAN.md` (7-phase p
 - `binaries/`: the three shipped ELFs (`flash_serve` engine, `halogen-tools` verify/inspect/repack, `halogen-npu` XRT engine). Stripped, so work by address, not symbol.
 - `image/`: vendor files extracted from the container image layers (entrypoint, `serve_api.py`, EULA).
 - `work/fatbin/` holds the 4 AMDGCN code objects carved from `flash_serve`'s clang offload bundle v2 (`scripts/carve_fatbin.py`). `analysis/kernels-disasm/` (299 MB, 3.34M lines) is their `llvm-objdump --mattr=+gfx1151` output. `work/kernels*/` holds per-kernel `.s` slices cut by `scripts/slice_kernels.py`; `tmp/stats-*.csv` has per-kernel instruction-class counts from `scripts/kernel_stats.py`.
-- `work/hgn/hgnpy.py` is the `.hgn` container parser/builder; its docstring is the spec draft, formalized in `analysis/hgn-format.md`. `work/hgn/files/` has 165 crafted test containers.
+- `work/hgn/hgnpy.py` is the `.hgn` container parser/builder; its docstring is the spec draft, formalized in `analysis/hgn-format.md`. `work/hgn/files/` has 169 crafted test containers.
 - `work/versions/<ver>/` has the 9 pulled releases (0.11.10 to 0.17.3), diffed by `scripts/version_deltas.py`.
 - `analysis/*.md` are the writeups. `analysis/kernels-indexer.md` is the format template for kernel-family writeups.
 
@@ -21,7 +21,7 @@ Read order: `start-here.md` (state of play, what remains) > `PLAN.md` (7-phase p
 
 ```bash
 # Reproduce the .hgn acceptance suites (these run halogen-tools verify/inspect, Linux x86-64 only)
-bash scripts/verify_matrix.sh          # 165-file matrix, expect 9 PASS / 160 designed FAIL
+bash scripts/verify_matrix.sh          # 169-file matrix, expect 9 PASS / 160 designed FAIL
 python3 tmp/rt_roundtrip.py            # 5-test round-trip suite, expect all PASS
 
 # Kernel work: rank from stats, then grep instruction classes, then read 50-150 line windows

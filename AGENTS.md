@@ -12,8 +12,8 @@ the GGUF to .hgn repack driver, fatbin extraction and gfx1151 disassembly,
 the `.hgn` format with passing round trips, the NPU engine, version deltas,
 dflash2, five kernel-family writeups, function maps of all three binaries,
 the wire protocol, a 31-step request trace and a live 0.17.3 engine run.
-Unknowns (`analysis/unknowns.md`, counted from its table): CLOSED 10,
-PARTIAL 12, OPEN-BOUNDED 3 (U03, U06, U22), UNOBSERVABLE 1 (U05).
+Unknowns (`analysis/unknowns.md`, counted from its table): CLOSED 9,
+PARTIAL 13, OPEN-BOUNDED 3 (U03, U06, U22), UNOBSERVABLE 1 (U05).
 
 ## Layout
 

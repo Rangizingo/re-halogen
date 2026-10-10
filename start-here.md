@@ -6,7 +6,7 @@ rebuild a compatible server from the writeups).
 
 **Overall: Phase 7 done at plan scope (2026-10-10).** All phases have
 evidence-backed writeups. Unknowns, counted from the table in
-`analysis/unknowns.md`: CLOSED 10, PARTIAL 12, OPEN-BOUNDED 3 (U03, U06,
+`analysis/unknowns.md`: CLOSED 9, PARTIAL 13, OPEN-BOUNDED 3 (U03, U06,
 U22), UNOBSERVABLE 1 (U05). PARTIAL rows say which half is closed. What is
 left needs data that is not in this workspace (see "Open" below).
 
@@ -17,7 +17,7 @@ left needs data that is not in this workspace (see "Open" below).
 | 0 | Runtime corroboration and version deltas over 9 releases | `analysis/runtime-findings.md`, `analysis/version-deltas.md` |
 | 1 | Fatbin carve and gfx1151 disassembly (4 code objects, 3.34M lines); no Ghidra AMDGCN module exists | `analysis/fatbin-inventory.md`, `analysis/ghidra-module-writeup.md` |
 | 2 | Five kernel families: attention, MoE, indexer, dequant, speculation | `analysis/kernels-*.md` |
-| 3 | `.hgn` container spec, parser/builder, 165-file verify matrix, 5-test round trip | `analysis/hgn-format.md`, `work/hgn/hgnpy.py` |
+| 3 | `.hgn` container spec, parser/builder, 169-file verify matrix, 5-test round trip | `analysis/hgn-format.md`, `work/hgn/hgnpy.py` |
 | 4 | NPU engine: loopback gate, XRT call graph, container formats, serve verbs | `analysis/npu-engine.md` |
 | 5 | dflash2: reserved drafter slot, refused by the 0.17.3 engine | `analysis/dflash2-probe.md` |
 | 6 | Unknowns ledger, coverage, report section 6 | `analysis/unknowns.md`, `analysis/coverage.md`, `analysis/report.md` |

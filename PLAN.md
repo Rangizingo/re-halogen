@@ -94,7 +94,7 @@ Done and pushed on branch `phase6-closure` (PR not yet opened):
 
 Incident: the engine test run deleted the live service's 60 GiB disk prompt cache (details in `runtime-run-0.17.3.md`). Rule from now on: test engines never mount `/srv/halogen-cache`; use their own cache dir and `HALOGEN_CACHE_PRUNE_OLD=0`.
 
-Second Phase 7 session (2026-10-10): `halogen-npu` and `halogen-tools` mapped (1,412 and 3,222 functions), kernel stubs bound 1:1 (1,738), 17 closure reports merged into `analysis/unknowns.md` in two rounds (counted from its table: CLOSED 10, PARTIAL 12, OPEN-BOUNDED 3, UNOBSERVABLE 1), `request-trace.md` updated from them, `rebuild-guide.md` written, closure docs refreshed. Left: the PR, review and merge (p7-3). Parked on Peter (`.claude/needs-human.md`): U03 needs the shipped NPU `.elf` graph files, U19 needs a real HT checkpoint.
+Second Phase 7 session (2026-10-10): `halogen-npu` and `halogen-tools` mapped (1,412 and 3,222 functions), kernel stubs bound 1:1 (1,738), 17 closure reports merged into `analysis/unknowns.md` in two rounds (counted from its table: CLOSED 9, PARTIAL 13, OPEN-BOUNDED 3, UNOBSERVABLE 1; U26 reopened to PARTIAL by the review refuter), `request-trace.md` updated from them, `rebuild-guide.md` written, closure docs refreshed. Left: the PR, review and merge (p7-3). Parked on Peter (`.claude/needs-human.md`): U03 needs the shipped NPU `.elf` graph files, U19 needs a real HT checkpoint.
 
 **Tracking for the next session** (the project plan_path `plan.md` is this same file on the case-insensitive Mac filesystem; never write a separate plan.md). Change `[ ]` to `[x] verified: <proof>` as each is proven.
 

@@ -97,7 +97,7 @@ verify/walk paths (getenv wrappers at 0x1883020 / 0x184bd90 Ghidra-space).
 
 `.hgn` = engine-native container (magic `HGN1`). Full layout recovered from
 `halogen-tools` decompiles and verified by a Python parser/builder
-(`work/hgn/hgnpy.py`; 165 crafted test containers in `work/hgn/files/`,
+(`work/hgn/hgnpy.py`; 169 crafted test containers in `work/hgn/files/`,
 tarred at `analysis/hgn-testfiles.tar.xz`):
 
 - Header 104 B LE: magic, version u32, n_tensors u64, table_off u64 (==104),
@@ -145,9 +145,9 @@ dflash2 (`dflash2-probe.md`). Phase 7: function maps of all three binaries
 0.17.3 engine run (`runtime-run-0.17.3.md`), 17 closure reports
 (`closure/`) and a rebuild guide (`rebuild-guide.md`).
 
-Residual unknowns, counted from the table in `unknowns.md`: CLOSED 10,
-PARTIAL 12, OPEN-BOUNDED 3, UNOBSERVABLE 1 (26 rows). The PARTIAL rows
-(U01, U02, U07, U09, U10, U11, U12, U14, U18, U19, U21, U23) each say
+Residual unknowns, counted from the table in `unknowns.md`: CLOSED 9,
+PARTIAL 13, OPEN-BOUNDED 3, UNOBSERVABLE 1 (26 rows). The PARTIAL rows
+(U01, U02, U07, U09, U10, U11, U12, U14, U18, U19, U21, U23, U26) each say
 which half is closed and which is not. What stays open and why:
 
 - U03 NPU graph names: they live in the shipped `.elf` graph files, not in

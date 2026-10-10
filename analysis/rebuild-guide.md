@@ -58,7 +58,7 @@ Source: `analysis/wire-protocol.md`, written from `image/serve_api.py`, so it de
 
 Handshake [proven from client code, wire-protocol.md s1]: open one stream; `INFO\n`, up to 3 attempts, 5 s each; accept a line starting `I` with at least 6 fields; if INFO says `grammar=1`, send `VOCAB`. A second short connection sends `PING\n` and expects `PONG` (used by `/health` and the healthcheck, hc:8-11).
 
-Engine side [proven, S6, `main_pseudo.c:1070-1135`]: `main` binds and loops `accept`; each connection is served to completion in `FUN_0182ea80` before the next accept. So only the first connection gets request verbs; later connections got `INFO` and `PING` answers only (U26 CLOSED, observed, section 12).
+Engine side [proven, S6, `main_pseudo.c:1070-1135`]: `main` binds and loops `accept`; each connection is served to completion in `FUN_0182ea80` before the next accept. Observed on 0.17.3: a second connection got `INFO` and `PING` answers and no `CSTAT` reply; its `GEN` result was not recorded. How a second fd is answered while the first is served is not found (no `accept` in `0182ea80.c`) [U26 PARTIAL, unreconciled with the accept loop].
 
 Verbs the client sends: `PING`, `INFO`, `VOCAB`, `VIMG`, `GEN`, `X`, `CSTAT`.
 - `VOCAB <n> <base64 blob>`: blob is `HGV1`, LE u32 n, then per id a `<BH` record (flag, u16 length) plus bytes. Flag 0 is an ordinary token (GPT-2 byte-level decode), flag 1 a special token (UTF-8), missing id is flag 1 length 0 (wire-protocol.md s2, `serve_api.py:479-501`). Reply `V ok`.
@@ -149,8 +149,8 @@ F. End
 | `k_ngram_*` | integer hash and modulo producing n-gram embedding row ids | lookup-embedding path; NOT used by PLD | kernels-speculation.md s3; closure/ngram-dv-host.md U17 |
 | `k_dv_quant`, `k_dv_quant8`, `k_dv_scatter` | draft-vocab (shortlist) quantization and scatter | draft-vocab setup, once | closure/ngram-dv-host.md; closure/moe-dv-host-r2.md U18 |
 
-### 6.4 Dtype to kernel table (decode, 1 to 8 tokens) [proven for decode and small batch, `closure/dequant-host-r2.md`]
-The binder `upload_weight_tensor` `0190e330` fills one slot of a 128 B descriptor by dtype; the non-null slot is the dispatch key (`closure/dequant-host.md`): +0x00 q4c planar (qparam 2), +0x08 bf16 and fallback, +0x10 q8g64, +0x18 q8s32, +0x20 q6k, +0x28 q6g64, +0x30 ht (pinned memory only), +0x48 HT bit width = `(qparam >> 1) & 0x7f`. Launch helpers: bf16 `k_lbfw` (`01927700`); q4c planar `k_lq4w` (`018f6d80`, K-aware `01918180`); q8g64 `k_lq8w` (`0191cd30`); q8s32 `k_lq8s32` (`018f5c80`, `01920310`); q6k `k_lq6k` (`018e6f20`, `01921ed0`); q6g64 `k_lq6w` (`0191e8f0`); ht `k_ht_lin` (`01928f40`, `0192c1d0`) and `k_ht_lin_grp` (`018b0e40`); i4r experts `k_i4r_rows*` from `018d2430`; plain 4-bit experts `k_q4moe` from `018d2430` and `018d7510`. q4a and q5a go through `k_deq_aff<4|5>` then `k_lbfw` [pairing inferred]. f32, f16, fp8r, fp8g, i4l, iq4nl, q5_0, q5_1, q8_0 and interleaved q4c have no dedicated kernel in the stub list and take the bf16 fallback [round-1 reading holds; converter not identified]. Gates: `HALOGEN_LIN_WAVE` (default 1), token count 1 to 8, `(K & 0x1f) == 0` for the K-aware variants. Template meanings: `k_lq4w<M,R,W,bool,E,F>` is M tokens, R lanes per row, W waves per row (R and W inferred from rows per block), bool K-aware, E epilogue id (call-site constants known, meaning open), F = `HALOGEN_LQ4W_SH`.
+### 6.4 Dtype to kernel table (decode, 1 to 8 tokens) [proven for decode and small batch except rows marked inferred, `closure/dequant-host-r2.md`]
+The binder `upload_weight_tensor` `0190e330` fills one slot of a 128 B descriptor by dtype; the non-null slot is the dispatch key (`closure/dequant-host.md`): +0x00 q4c planar (qparam 2), +0x08 bf16 and fallback, +0x10 q8g64, +0x18 q8s32, +0x20 q6k, +0x28 q6g64, +0x30 ht (pinned memory only), +0x48 HT bit width = `(qparam >> 1) & 0x7f`. Launch helpers: bf16 `k_lbfw` (`01927700`); q4c planar `k_lq4w` (`018f6d80`, K-aware `01918180`); q8g64 `k_lq8w` (`0191cd30`) [pairing inferred from kernel name]; q8s32 `k_lq8s32` (`018f5c80`, `01920310`); q6k `k_lq6k` (`018e6f20`, `01921ed0`); q6g64 `k_lq6w` (`0191e8f0`) [pairing inferred from kernel name]; ht `k_ht_lin` (`01928f40`, `0192c1d0`) and `k_ht_lin_grp` (`018b0e40`); i4r experts `k_i4r_rows*` from `018d2430`; plain 4-bit experts `k_q4moe` from `018d2430` and `018d7510`. q4a and q5a go through `k_deq_aff<4|5>` then `k_lbfw` [pairing inferred]. f32, f16, fp8r, fp8g, i4l, iq4nl, q5_0, q5_1, q8_0 and interleaved q4c have no dedicated kernel in the stub list and take the bf16 fallback [round-1 reading holds; converter not identified]. Gates: `HALOGEN_LIN_WAVE` (default 1), token count 1 to 8, `(K & 0x1f) == 0` for the K-aware variants. Template meanings: `k_lq4w<M,R,W,bool,E,F>` is M tokens, R lanes per row, W waves per row (R and W inferred from rows per block), bool K-aware, E epilogue id (call-site constants known, meaning open), F = `HALOGEN_LQ4W_SH`.
 
 The prefill choice between dequant-then-GEMM and a fused kernel, and the case-to-stub map of `01920310`, are not extracted (kernel-binding.md "Runtime selection"; section 11).
 
@@ -238,7 +238,7 @@ Sources: `analysis/npu-engine.md`, `closure/npu-closure.md`, `closure/npu-closur
 
 ## 11. Proven versus inferred: what a rebuild can rely on
 
-Unknowns ledger counts from `analysis/unknowns.md` (26 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 10, PARTIAL 12, OPEN-BOUNDED 3, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 26.
+Unknowns ledger counts from `analysis/unknowns.md` (26 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 9, PARTIAL 13, OPEN-BOUNDED 3, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 26.
 
 Can rely on [proven]:
 - The `.hgn` container: header, table, checksums, size rules, dtype codes, `verify` and `inspect` behavior (169 vendor-checked files, round trips).
@@ -266,7 +266,7 @@ Cannot rely on (PARTIAL, OPEN-BOUNDED, UNOBSERVABLE rows; what is missing):
 - U21 PARTIAL: decode and small-batch launch CLOSED; the prefill dequant-versus-fused choice, per-dtype helper reach, `lq*` epilogue id E and HT template args S, B, C, D are open.
 - U22 OPEN-BOUNDED: Ghidra has no AMDGCN module, so device code stays at disassembly level; rebuilding kernels means writing from instruction listings.
 - U23 PARTIAL: the seed-to-state copy is not located.
-- CLOSED rows (U04, U08, U13, U15, U16, U17, U20, U24, U25, U26) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
+- CLOSED rows (U04, U08, U13, U15, U16, U17, U20, U24, U25) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
 
 Other gaps a rebuild hits (request-trace.md "Gaps" and the closure reports):
 - MTP head layer kernels, the fusion of `fc_embedding` and `fc_hidden`, router top-k, the greedy draft step (mtp-head.md s7).
@@ -286,7 +286,7 @@ Source disagreements found while writing this guide (later or more specific sour
 - `cache_mode`: wire-protocol.md s3.1 says 1 is the default; the live INFO shows 2 and entrypoint-flow.md s3 gives `HALOGEN_PROMPT_CACHE` default 2.
 - PLD defaults: pld.md s1 gives N=3, K=3; the live INFO shows `pld_n 2`, `pld_k 6` (set by the live service env, not read).
 - Lookup table size: entrypoint-flow.md and hgn-format.md s6 say 47.7 GiB; the live engine log says "26.8 GiB lookup table" (different checkpoint).
-- Round-trip suite: CLAUDE.md says a 5-test suite and a 165-file matrix; hgn-format.md s8 says 3/3 round trips and 169 files, and `work/hgn/files` holds 169 `.hgn`.
+- Round-trip suite: CLAUDE.md said a 165-file matrix (corrected to 169: `ls work/hgn/files/*.hgn | wc -l` and `tmp/verify_matrix.tsv` both give 169, 9 PASS and 160 FAIL); hgn-format.md s8 says 3/3 round trips and 169 files, and `work/hgn/files` holds 169 `.hgn`.
 - NPU header offsets and DEC reply prefix: npu-engine.md versus npu-closure.md and npu-closure-r2.md (the closure reports are the corrected ones).
 
 ## 12. Acceptance checks from the live run
