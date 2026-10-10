@@ -28,7 +28,7 @@ Confidence: high 1546, med 1380, low 642. The gpu-dispatch rows (1680) are host 
 
 ## Engine logic
 
-401 functions carry the actual engine logic (rows in `function-map-core.tsv`): model-forward 56, sampling-speculation 60, kv-cache-prefix 73, protocol-net 61, gguf-repack 58, hgn-loader 38, scheduler-slots 24, logging-diag 16. These are the groups for the deep passes that close the host-code unknowns (`unknowns.md`) and feed `request-trace.md`.
+386 functions carry the actual engine logic (the 8 groups below); `function-map-core.tsv` has 401 rows because it also holds the 15 `unknown` rows: model-forward 56, sampling-speculation 60, kv-cache-prefix 73, protocol-net 61, gguf-repack 58, hgn-loader 38, scheduler-slots 24, logging-diag 16. These are the groups for the deep passes that close the host-code unknowns (`unknowns.md`) and feed `request-trace.md`.
 
 ## Unexplained
 

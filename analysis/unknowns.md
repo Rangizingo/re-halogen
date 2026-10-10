@@ -42,7 +42,7 @@ engine, or data not in this workspace.
 Totals: 26 items, 2 closed by the 2026-10-10 engine run (U04, U26). 3 findings were corrected after an independent review
 (in-kernel RNG exists, `k_dv_scatter` is a gather, `k_dv_quant` is a different
 quantizer); see `kernels-speculation.md`. Closable by decompile: U01-U03,
-U08-U18, U20, U21, U23-U25; needing a live run: U04, U19, U26; named limits by
+U08-U18, U20, U21, U23-U25; needing a live run: U19 (U04 and U26 are closed); named limits by
 decision: U05, U06, U22; U07 partial. Live evidence already gathered
 (2026-10-10, Ai-core, engine 0.17.2): INFO line field 7 (`dflash2`) is 0,
-observed (`analysis/evidence/live-0.17.2-startup-and-info.txt`).
+observed (`analysis/evidence/live-0.17.2-startup-and-info.txt`); the 0.17.3 engine run adds `analysis/runtime-run-0.17.3.md`. U26 is closed for CSTAT on 0.17.3 and for GEN on live 0.17.2 only (see that doc for the exact scope).

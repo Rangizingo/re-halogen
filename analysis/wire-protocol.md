@@ -171,7 +171,7 @@ Meaning, from how the front end uses them:
 - `dv_*`: not explained anywhere in the file. Inferred: dflash2 verify stats. Unverified.
 - `prefix_n` is read from `d` at :2587-2588 but `_done_dict` never sets it, so it is not from the wire here.
 
-Error: `D <req> error ...`. HTTP 400 via `engine_refusal` (:1046-1049, :1151-1152). `engine_refusal` (:643-656) takes `parts[7:]`, skips leading numeric tokens, and joins the rest as the reason. So an error line is expected to carry the five numeric fields after the reason, as a normal done line does, then optional text (inferred from the `[7:]` slice). No text gives a generic message. The engine's real error strings are not in this file.
+Error: `D <req> error ...`. HTTP 400 via `engine_refusal` (:1046-1049, :1151-1152). `engine_refusal` (:643-656) takes `parts[7:]`, skips leading numeric tokens, and joins the rest as the reason. So an error line is expected to carry numeric fields after the reason (observed on 0.17.3: four, `error 0 0 0 0 asked for drafter 2 (unknown)`), as a normal done line does, then optional text (inferred from the `[7:]` slice). No text gives a generic message. The engine's real error strings are not in this file.
 
 ### 3.4 Failure signals
 - EOF on readline: HTTP 502 "engine closed the connection" (:1134-1138, :1036-1039).

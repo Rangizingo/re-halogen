@@ -419,7 +419,7 @@ Old functions 3564, new functions 3568. Method: `scripts/compare_versions.py`, n
 ## Reading the numbers
 
 - Matching is heuristic and the first run over-counted: switch-table labels (`switchD_<addr>_caseD_<n>`) were not normalized, which made relocated switch functions look changed. Fixed in `scripts/compare_versions.py`; totals above are from the fixed run (171 changed, 138 changed-shape, 906 added, 902 removed).
-- Size of the 171 `changed` functions, by number of differing normalized lines: 1 to 4 lines, 53; 5 to 20, 43; 21 to 100, 42; over 100, 33. Many are small edits (for example env getters `env_cache_dir_disk`, `env_indexer_budget`, 2 to 4 lines); 33 are large rewrites.
+- Size of the 171 `changed` functions, by number of added plus removed lines in a unified diff of the normalized bodies (zero context): 1 to 4 lines, 53; 5 to 20, 43; 21 to 100, 42; over 100, 33. Many are small edits (for example env getters `env_cache_dir_disk`, `env_indexer_budget`, 2 to 4 lines); 33 are large rewrites.
 - Added and removed are inflated by functions whose strings and bodies both changed, and by compiler layout and inlining drift between builds. Treat them as upper bounds, not as feature counts.
 - Device code is unchanged between the two releases (`analysis/version-deltas.md`), so all of this is host code. Rows that match the 0.17.3 release story (sampled speculation, `HALOGEN_SAMPLED_*`): `spec_round_run` (3,103 B) and `spec_verify_grammar_check` added, `sampling_vector_build` added, `check_token_legal_grammar` changed. These are role labels from the function map, not verified semantics.
 - Comparison used our own Ghidra export of both binaries, not REA: REA's compare commands cover JavaScript, .NET and web targets, not native functions.
