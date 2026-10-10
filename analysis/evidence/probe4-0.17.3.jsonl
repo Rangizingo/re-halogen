@@ -1,0 +1,220 @@
+{"conn": "first", "line": "INFO", "kind": "send", "t": 1791659206.305}
+{"conn": "first", "line": "I 1 0 262144 7 1 1 0 110 64 4 262144 2 1 1 524288 1 0.17.3 2 6 gguf 1 0 0 0 0 - 2048", "kind": "recv", "t": 1791659206.305}
+{"name": "first_info", "v": "I 1 0 262144 7 1 1 0 110 64 4 262144 2 1 1 524288 1 0.17.3 2 6 gguf 1 0 0 0 0 - 2048", "kind": "result", "t": 1791659206.305}
+{"conn": "second", "line": "INFO", "kind": "send", "t": 1791659206.305}
+{"conn": "second", "line": "I 1 0 262144 7 1 1 0 110 64 4 262144 2 1 1 524288 1 0.17.3 2 6 gguf 1 0 0 0 0 - 2048", "kind": "recv", "t": 1791659207.028}
+{"name": "second_info", "v": "I 1 0 262144 7 1 1 0 110 64 4 262144 2 1 1 524288 1 0.17.3 2 6 gguf 1 0 0 0 0 - 2048", "kind": "result", "t": 1791659207.028}
+{"conn": "second", "line": "GEN 900001 8 2 151645 151643 40 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374", "kind": "send", "t": 1791659207.028}
+{"conn": "second", "secs": 30, "kind": "timeout", "t": 1791659237.058}
+{"conn": "second", "secs": 29.97037434577942, "kind": "timeout", "t": 1791659267.059}
+{"name": "second_gen", "tokens": [], "done": null, "kind": "result", "t": 1791659267.06}
+{"conn": "second", "line": "PING", "kind": "send", "t": 1791659267.06}
+{"conn": "second", "secs": 10, "kind": "timeout", "t": 1791659277.071}
+{"name": "second_after_gen_ping", "v": null, "kind": "result", "t": 1791659277.071}
+{"conn": "first", "line": "GEN 900002 8 2 151645 151643 40 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374", "kind": "send", "t": 1791659277.071}
+{"conn": "first", "line": "T 900002 785", "kind": "recv", "t": 1791659277.551}
+{"conn": "first", "line": "T 900002 6722", "kind": "recv", "t": 1791659277.609}
+{"conn": "first", "line": "T 900002 315", "kind": "recv", "t": 1791659277.609}
+{"conn": "first", "line": "T 900002 9625", "kind": "recv", "t": 1791659277.609}
+{"conn": "first", "line": "T 900002 374", "kind": "recv", "t": 1791659277.609}
+{"conn": "first", "line": "T 900002 785", "kind": "recv", "t": 1791659277.609}
+{"conn": "first", "line": "T 900002 6722", "kind": "recv", "t": 1791659277.609}
+{"conn": "first", "line": "T 900002 315", "kind": "recv", "t": 1791659277.647}
+{"conn": "first", "line": "D 900002 length 40 8 476.9 95.6 1 1 7 0 1 1 5 5 0 -1 8 256 524288 0 0 0 0 0 0.0 0 0 0 0", "kind": "recv", "t": 1791659277.647}
+{"name": "first_gen", "tokens": [785, 6722, 315, 9625, 374, 785, 6722, 315], "done": "D 900002 length 40 8 476.9 95.6 1 1 7 0 1 1 5 5 0 -1 8 256 524288 0 0 0 0 0 0.0 0 0 0 0", "kind": "result", "t": 1791659277.647}
+{"conn": "second", "line": "GEN 900003 8 2 151645 151643 40 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374", "kind": "send", "t": 1791659277.647}
+{"conn": "second", "line": "T 900001 785", "kind": "recv", "t": 1791659277.649}
+{"conn": "second", "line": "T 900001 6722", "kind": "recv", "t": 1791659277.707}
+{"conn": "second", "line": "T 900001 315", "kind": "recv", "t": 1791659277.707}
+{"conn": "second", "line": "T 900001 9625", "kind": "recv", "t": 1791659277.707}
+{"conn": "second", "line": "T 900001 374", "kind": "recv", "t": 1791659277.707}
+{"conn": "second", "line": "T 900001 785", "kind": "recv", "t": 1791659277.707}
+{"conn": "second", "line": "T 900001 6722", "kind": "recv", "t": 1791659277.707}
+{"conn": "second", "line": "PONG", "kind": "recv", "t": 1791659277.711}
+{"conn": "second", "line": "T 900001 315", "kind": "recv", "t": 1791659277.747}
+{"conn": "second", "line": "D 900001 length 40 8 0.1 97.7 1 1 7 40 1 1 5 5 0 -1 8 512 524288 0 0 0 0 0 0.0 0 0 0 0", "kind": "recv", "t": 1791659277.747}
+{"conn": "second", "line": "T 900003 785", "kind": "recv", "t": 1791659277.747}
+{"conn": "second", "line": "T 900003 6722", "kind": "recv", "t": 1791659277.805}
+{"conn": "second", "line": "T 900003 315", "kind": "recv", "t": 1791659277.805}
+{"conn": "second", "line": "T 900003 9625", "kind": "recv", "t": 1791659277.805}
+{"conn": "second", "line": "T 900003 374", "kind": "recv", "t": 1791659277.805}
+{"conn": "second", "line": "T 900003 785", "kind": "recv", "t": 1791659277.805}
+{"conn": "second", "line": "T 900003 6722", "kind": "recv", "t": 1791659277.805}
+{"conn": "second", "line": "T 900003 315", "kind": "recv", "t": 1791659277.842}
+{"conn": "second", "line": "D 900003 length 40 8 0.2 94.9 1 1 7 40 1 1 5 5 0 -1 8 512 524288 0 0 0 0 0 0.0 0 0 0 0", "kind": "recv", "t": 1791659277.842}
+{"name": "second_gen_after_first_closed", "tokens": [785, 6722, 315, 9625, 374, 785, 6722, 315], "done": "D 900003 length 40 8 0.2 94.9 1 1 7 40 1 1 5 5 0 -1 8 512 524288 0 0 0 0 0 0.0 0 0 0 0", "kind": "result", "t": 1791659277.842}
+{"conn": "third", "line": "GEN 900004 8 2 151645 151643 40 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374", "kind": "send", "t": 1791659277.842}
+{"conn": "third", "secs": 30, "kind": "timeout", "t": 1791659307.873}
+{"conn": "third", "secs": 29.969247102737427, "kind": "timeout", "t": 1791659337.874}
+{"name": "third_gen_after_first_closed", "tokens": [], "done": null, "kind": "result", "t": 1791659337.874}
+{"conn": "second", "line": "GEN 900005 32 2 151645 151643 40 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 0 SAMPLE 1.2 0 1 0 111", "kind": "send", "t": 1791659337.874}
+{"conn": "second", "line": "T 900005 785", "kind": "recv", "t": 1791659337.88}
+{"conn": "second", "line": "T 900005 6722", "kind": "recv", "t": 1791659337.913}
+{"conn": "second", "line": "T 900005 315", "kind": "recv", "t": 1791659337.944}
+{"conn": "second", "line": "T 900005 9625", "kind": "recv", "t": 1791659337.975}
+{"conn": "second", "line": "T 900005 374", "kind": "recv", "t": 1791659338.006}
+{"conn": "second", "line": "T 900005 785", "kind": "recv", "t": 1791659338.036}
+{"conn": "second", "line": "T 900005 97016", "kind": "recv", "t": 1791659338.067}
+{"conn": "second", "line": "T 900005 95854", "kind": "recv", "t": 1791659338.104}
+{"conn": "second", "line": "T 900005 46784", "kind": "recv", "t": 1791659338.139}
+{"conn": "second", "line": "T 900005 271", "kind": "recv", "t": 1791659338.174}
+{"conn": "second", "line": "T 900005 248068", "kind": "recv", "t": 1791659338.209}
+{"conn": "second", "line": "T 900005 198", "kind": "recv", "t": 1791659338.244}
+{"conn": "second", "line": "T 900005 760", "kind": "recv", "t": 1791659338.275}
+{"conn": "second", "line": "T 900005 1156", "kind": "recv", "t": 1791659338.306}
+{"conn": "second", "line": "T 900005 369", "kind": "recv", "t": 1791659338.337}
+{"conn": "second", "line": "T 900005 9859", "kind": "recv", "t": 1791659338.368}
+{"conn": "second", "line": "T 900005 728", "kind": "recv", "t": 1791659338.404}
+{"conn": "second", "line": "T 900005 310", "kind": "recv", "t": 1791659338.44}
+{"conn": "second", "line": "T 900005 9150", "kind": "recv", "t": 1791659338.473}
+{"conn": "second", "line": "T 900005 25407", "kind": "recv", "t": 1791659338.506}
+{"conn": "second", "line": "T 900005 314", "kind": "recv", "t": 1791659338.539}
+{"conn": "second", "line": "T 900005 328", "kind": "recv", "t": 1791659338.574}
+{"conn": "second", "line": "T 900005 83486", "kind": "recv", "t": 1791659338.607}
+{"conn": "second", "line": "T 900005 374", "kind": "recv", "t": 1791659338.642}
+{"conn": "second", "line": "T 900005 785", "kind": "recv", "t": 1791659338.674}
+{"conn": "second", "line": "T 900005 1", "kind": "recv", "t": 1791659338.705}
+{"conn": "second", "line": "T 900005 471", "kind": "recv", "t": 1791659338.739}
+{"conn": "second", "line": "T 900005 11352", "kind": "recv", "t": 1791659338.774}
+{"conn": "second", "line": "T 900005 25456", "kind": "recv", "t": 1791659338.808}
+{"conn": "second", "line": "T 900005 328", "kind": "recv", "t": 1791659338.843}
+{"conn": "second", "line": "T 900005 83204", "kind": "recv", "t": 1791659338.878}
+{"conn": "second", "line": "T 900005 46784", "kind": "recv", "t": 1791659338.912}
+{"conn": "second", "line": "D 900005 length 40 32 0.2 1031.9 0 0 0 40 0 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 0 0 0 0", "kind": "recv", "t": 1791659338.912}
+{"conn": "second", "line": "GEN 900006 32 2 151645 151643 40 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 0 SAMPLE 1.2 0 1 0 111", "kind": "send", "t": 1791659338.912}
+{"conn": "second", "line": "T 900006 785", "kind": "recv", "t": 1791659338.915}
+{"conn": "second", "line": "T 900006 6722", "kind": "recv", "t": 1791659338.946}
+{"conn": "second", "line": "T 900006 315", "kind": "recv", "t": 1791659338.977}
+{"conn": "second", "line": "T 900006 9625", "kind": "recv", "t": 1791659339.008}
+{"conn": "second", "line": "T 900006 374", "kind": "recv", "t": 1791659339.039}
+{"conn": "second", "line": "T 900006 785", "kind": "recv", "t": 1791659339.069}
+{"conn": "second", "line": "T 900006 97016", "kind": "recv", "t": 1791659339.1}
+{"conn": "second", "line": "T 900006 95854", "kind": "recv", "t": 1791659339.131}
+{"conn": "second", "line": "T 900006 46784", "kind": "recv", "t": 1791659339.162}
+{"conn": "second", "line": "T 900006 271", "kind": "recv", "t": 1791659339.193}
+{"conn": "second", "line": "T 900006 248068", "kind": "recv", "t": 1791659339.224}
+{"conn": "second", "line": "T 900006 198", "kind": "recv", "t": 1791659339.255}
+{"conn": "second", "line": "T 900006 760", "kind": "recv", "t": 1791659339.286}
+{"conn": "second", "line": "T 900006 1156", "kind": "recv", "t": 1791659339.317}
+{"conn": "second", "line": "T 900006 369", "kind": "recv", "t": 1791659339.348}
+{"conn": "second", "line": "T 900006 9859", "kind": "recv", "t": 1791659339.378}
+{"conn": "second", "line": "T 900006 728", "kind": "recv", "t": 1791659339.409}
+{"conn": "second", "line": "T 900006 310", "kind": "recv", "t": 1791659339.44}
+{"conn": "second", "line": "T 900006 9150", "kind": "recv", "t": 1791659339.471}
+{"conn": "second", "line": "T 900006 25407", "kind": "recv", "t": 1791659339.502}
+{"conn": "second", "line": "T 900006 314", "kind": "recv", "t": 1791659339.533}
+{"conn": "second", "line": "T 900006 328", "kind": "recv", "t": 1791659339.564}
+{"conn": "second", "line": "T 900006 83486", "kind": "recv", "t": 1791659339.595}
+{"conn": "second", "line": "T 900006 374", "kind": "recv", "t": 1791659339.626}
+{"conn": "second", "line": "T 900006 785", "kind": "recv", "t": 1791659339.657}
+{"conn": "second", "line": "T 900006 1", "kind": "recv", "t": 1791659339.688}
+{"conn": "second", "line": "T 900006 471", "kind": "recv", "t": 1791659339.719}
+{"conn": "second", "line": "T 900006 11352", "kind": "recv", "t": 1791659339.75}
+{"conn": "second", "line": "T 900006 25456", "kind": "recv", "t": 1791659339.781}
+{"conn": "second", "line": "T 900006 328", "kind": "recv", "t": 1791659339.811}
+{"conn": "second", "line": "T 900006 83204", "kind": "recv", "t": 1791659339.842}
+{"conn": "second", "line": "T 900006 46784", "kind": "recv", "t": 1791659339.873}
+{"conn": "second", "line": "D 900006 length 40 32 0.1 958.6 0 0 0 40 0 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 0 0 0 0", "kind": "recv", "t": 1791659339.873}
+{"conn": "second", "line": "GEN 900007 32 2 151645 151643 40 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 0 SAMPLE 1.2 0 1 0 222", "kind": "send", "t": 1791659339.873}
+{"conn": "second", "line": "T 900007 785", "kind": "recv", "t": 1791659339.876}
+{"conn": "second", "line": "T 900007 6722", "kind": "recv", "t": 1791659339.907}
+{"conn": "second", "line": "T 900007 315", "kind": "recv", "t": 1791659339.938}
+{"conn": "second", "line": "T 900007 9625", "kind": "recv", "t": 1791659339.969}
+{"conn": "second", "line": "T 900007 374", "kind": "recv", "t": 1791659340.0}
+{"conn": "second", "line": "T 900007 785", "kind": "recv", "t": 1791659340.031}
+{"conn": "second", "line": "T 900007 393", "kind": "recv", "t": 1791659340.062}
+{"conn": "second", "line": "T 900007 15", "kind": "recv", "t": 1791659340.098}
+{"conn": "second", "line": "T 900007 22", "kind": "recv", "t": 1791659340.134}
+{"conn": "second", "line": "T 900007 220", "kind": "recv", "t": 1791659340.169}
+{"conn": "second", "line": "T 900007 133461", "kind": "recv", "t": 1791659340.203}
+{"conn": "second", "line": "T 900007 98920", "kind": "recv", "t": 1791659340.235}
+{"conn": "second", "line": "T 900007 135234", "kind": "recv", "t": 1791659340.27}
+{"conn": "second", "line": "T 900007 52558", "kind": "recv", "t": 1791659340.305}
+{"conn": "second", "line": "T 900007 140732", "kind": "recv", "t": 1791659340.339}
+{"conn": "second", "line": "T 900007 112625", "kind": "recv", "t": 1791659340.371}
+{"conn": "second", "line": "T 900007 96844", "kind": "recv", "t": 1791659340.405}
+{"conn": "second", "line": "T 900007 271", "kind": "recv", "t": 1791659340.439}
+{"conn": "second", "line": "T 900007 248068", "kind": "recv", "t": 1791659340.471}
+{"conn": "second", "line": "T 900007 198", "kind": "recv", "t": 1791659340.503}
+{"conn": "second", "line": "T 900007 97237", "kind": "recv", "t": 1791659340.534}
+{"conn": "second", "line": "T 900007 109044", "kind": "recv", "t": 1791659340.568}
+{"conn": "second", "line": "T 900007 96876", "kind": "recv", "t": 1791659340.603}
+{"conn": "second", "line": "T 900007 32615", "kind": "recv", "t": 1791659340.634}
+{"conn": "second", "line": "T 900007 15", "kind": "recv", "t": 1791659340.667}
+{"conn": "second", "line": "T 900007 22", "kind": "recv", "t": 1791659340.698}
+{"conn": "second", "line": "T 900007 220", "kind": "recv", "t": 1791659340.732}
+{"conn": "second", "line": "T 900007 133461", "kind": "recv", "t": 1791659340.763}
+{"conn": "second", "line": "T 900007 98920", "kind": "recv", "t": 1791659340.794}
+{"conn": "second", "line": "T 900007 1", "kind": "recv", "t": 1791659340.825}
+{"conn": "second", "line": "T 900007 135234", "kind": "recv", "t": 1791659340.861}
+{"conn": "second", "line": "T 900007 1", "kind": "recv", "t": 1791659340.893}
+{"conn": "second", "line": "D 900007 length 40 32 0.1 1016.4 0 0 0 40 0 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 0 0 0 0", "kind": "recv", "t": 1791659340.893}
+{"conn": "second", "line": "GEN 900008 32 2 151645 151643 40 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 1 SAMPLE 1.2 0 1 0 111", "kind": "send", "t": 1791659340.893}
+{"conn": "second", "line": "T 900008 785", "kind": "recv", "t": 1791659340.895}
+{"conn": "second", "line": "T 900008 6722", "kind": "recv", "t": 1791659340.931}
+{"conn": "second", "line": "T 900008 315", "kind": "recv", "t": 1791659340.931}
+{"conn": "second", "line": "T 900008 987", "kind": "recv", "t": 1791659340.973}
+{"conn": "second", "line": "T 900008 90", "kind": "recv", "t": 1791659341.016}
+{"conn": "second", "line": "T 900008 426", "kind": "recv", "t": 1791659341.057}
+{"conn": "second", "line": "T 900008 13609", "kind": "recv", "t": 1791659341.101}
+{"conn": "second", "line": "T 900008 8681", "kind": "recv", "t": 1791659341.101}
+{"conn": "second", "line": "T 900008 220", "kind": "recv", "t": 1791659341.144}
+{"conn": "second", "line": "T 900008 17", "kind": "recv", "t": 1791659341.144}
+{"conn": "second", "line": "T 900008 68", "kind": "recv", "t": 1791659341.186}
+{"conn": "second", "line": "T 900008 2205", "kind": "recv", "t": 1791659341.186}
+{"conn": "second", "line": "T 900008 220", "kind": "recv", "t": 1791659341.229}
+{"conn": "second", "line": "T 900008 16711", "kind": "recv", "t": 1791659341.229}
+{"conn": "second", "line": "T 900008 271", "kind": "recv", "t": 1791659341.269}
+{"conn": "second", "line": "T 900008 1803", "kind": "recv", "t": 1791659341.309}
+{"conn": "second", "line": "T 900008 72280", "kind": "recv", "t": 1791659341.309}
+{"conn": "second", "line": "T 900008 276", "kind": "recv", "t": 1791659341.352}
+{"conn": "second", "line": "T 900008 271", "kind": "recv", "t": 1791659341.352}
+{"conn": "second", "line": "T 900008 96006", "kind": "recv", "t": 1791659341.394}
+{"conn": "second", "line": "T 900008 246934", "kind": "recv", "t": 1791659341.394}
+{"conn": "second", "line": "T 900008 109900", "kind": "recv", "t": 1791659341.437}
+{"conn": "second", "line": "T 900008 115735", "kind": "recv", "t": 1791659341.437}
+{"conn": "second", "line": "T 900008 67428", "kind": "recv", "t": 1791659341.478}
+{"conn": "second", "line": "T 900008 381", "kind": "recv", "t": 1791659341.478}
+{"conn": "second", "line": "T 900008 1801", "kind": "recv", "t": 1791659341.521}
+{"conn": "second", "line": "T 900008 1282", "kind": "recv", "t": 1791659341.562}
+{"conn": "second", "line": "T 900008 95377", "kind": "recv", "t": 1791659341.562}
+{"conn": "second", "line": "T 900008 657", "kind": "recv", "t": 1791659341.603}
+{"conn": "second", "line": "T 900008 1", "kind": "recv", "t": 1791659341.646}
+{"conn": "second", "line": "T 900008 785", "kind": "recv", "t": 1791659341.646}
+{"conn": "second", "line": "T 900008 134423", "kind": "recv", "t": 1791659341.683}
+{"conn": "second", "line": "D 900008 length 40 32 0.1 788.2 1 18 31 40 1 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 18 0 0 0", "kind": "recv", "t": 1791659341.683}
+{"conn": "second", "line": "GEN 900009 32 2 151645 151643 40 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 785 6722 315 9625 374 1 SAMPLE 1.2 0 1 0 111", "kind": "send", "t": 1791659341.683}
+{"conn": "second", "line": "T 900009 785", "kind": "recv", "t": 1791659341.686}
+{"conn": "second", "line": "T 900009 6722", "kind": "recv", "t": 1791659341.722}
+{"conn": "second", "line": "T 900009 315", "kind": "recv", "t": 1791659341.722}
+{"conn": "second", "line": "T 900009 987", "kind": "recv", "t": 1791659341.763}
+{"conn": "second", "line": "T 900009 90", "kind": "recv", "t": 1791659341.802}
+{"conn": "second", "line": "T 900009 426", "kind": "recv", "t": 1791659341.842}
+{"conn": "second", "line": "T 900009 13609", "kind": "recv", "t": 1791659341.882}
+{"conn": "second", "line": "T 900009 8681", "kind": "recv", "t": 1791659341.882}
+{"conn": "second", "line": "T 900009 220", "kind": "recv", "t": 1791659341.921}
+{"conn": "second", "line": "T 900009 17", "kind": "recv", "t": 1791659341.921}
+{"conn": "second", "line": "T 900009 68", "kind": "recv", "t": 1791659341.96}
+{"conn": "second", "line": "T 900009 2205", "kind": "recv", "t": 1791659341.96}
+{"conn": "second", "line": "T 900009 220", "kind": "recv", "t": 1791659341.999}
+{"conn": "second", "line": "T 900009 16711", "kind": "recv", "t": 1791659341.999}
+{"conn": "second", "line": "T 900009 271", "kind": "recv", "t": 1791659342.039}
+{"conn": "second", "line": "T 900009 1803", "kind": "recv", "t": 1791659342.078}
+{"conn": "second", "line": "T 900009 72280", "kind": "recv", "t": 1791659342.078}
+{"conn": "second", "line": "T 900009 276", "kind": "recv", "t": 1791659342.117}
+{"conn": "second", "line": "T 900009 271", "kind": "recv", "t": 1791659342.117}
+{"conn": "second", "line": "T 900009 96006", "kind": "recv", "t": 1791659342.157}
+{"conn": "second", "line": "T 900009 246934", "kind": "recv", "t": 1791659342.157}
+{"conn": "second", "line": "T 900009 109900", "kind": "recv", "t": 1791659342.197}
+{"conn": "second", "line": "T 900009 115735", "kind": "recv", "t": 1791659342.197}
+{"conn": "second", "line": "T 900009 67428", "kind": "recv", "t": 1791659342.237}
+{"conn": "second", "line": "T 900009 381", "kind": "recv", "t": 1791659342.237}
+{"conn": "second", "line": "T 900009 1801", "kind": "recv", "t": 1791659342.276}
+{"conn": "second", "line": "T 900009 1282", "kind": "recv", "t": 1791659342.316}
+{"conn": "second", "line": "T 900009 95377", "kind": "recv", "t": 1791659342.316}
+{"conn": "second", "line": "T 900009 657", "kind": "recv", "t": 1791659342.356}
+{"conn": "second", "line": "T 900009 1", "kind": "recv", "t": 1791659342.395}
+{"conn": "second", "line": "T 900009 785", "kind": "recv", "t": 1791659342.395}
+{"conn": "second", "line": "T 900009 134423", "kind": "recv", "t": 1791659342.432}
+{"conn": "second", "line": "D 900009 length 40 32 0.1 745.6 1 18 31 40 1 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 18 0 0 0", "kind": "recv", "t": 1791659342.432}
+{"name": "seeds", "serial_111_equal": true, "serial_111_vs_222_equal": false, "mtp_111_equal": true, "serial_vs_mtp_111_equal": false, "lens": {"serial_111_a": 32, "serial_111_b": 32, "serial_222": 32, "mtp_111_a": 32, "mtp_111_b": 32}, "done": {"serial_111_a": "D 900005 length 40 32 0.2 1031.9 0 0 0 40 0 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 0 0 0 0", "serial_111_b": "D 900006 length 40 32 0.1 958.6 0 0 0 40 0 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 0 0 0 0", "serial_222": "D 900007 length 40 32 0.1 1016.4 0 0 0 40 0 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 0 0 0 0", "mtp_111_a": "D 900008 length 40 32 0.1 788.2 1 18 31 40 1 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 18 0 0 0", "mtp_111_b": "D 900009 length 40 32 0.1 745.6 1 18 31 40 1 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 18 0 0 0"}, "kind": "result", "t": 1791659342.432}

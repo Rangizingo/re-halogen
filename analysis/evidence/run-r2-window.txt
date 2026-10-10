@@ -1,0 +1,4 @@
+window: stopping halogen-swift.service at 2026-10-10T19:05:59Z
+flash_serve: listening on 127.0.0.1:8730, 4 slots over ONE 524288-position KV pool, each request up to 262144 (it reserves prompt + max_tokens), max_tok 32768, BATCHED greedy or sampled; MTP depth-2 (up to 3) selectable (drafter 1, speculates while alone)
+restore: starting halogen-swift.service at 2026-10-10T19:09:03Z
+restore: /health 200 at 2026-10-10T19:09:54Z

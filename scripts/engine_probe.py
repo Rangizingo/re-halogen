@@ -32,23 +32,27 @@ class Conn:
     def __init__(self, name):
         self.name = name
         self.s = socket.create_connection((HOST, PORT))
-        self.f = self.s.makefile('rwb', buffering=0)
+        self.buf = b''
 
     def send(self, line):
         log('send', conn=self.name, line=line[:300])
-        self.f.write((line + '\n').encode())
+        self.s.sendall((line + '\n').encode())
 
     def read(self, timeout):
+        # recv into our own buffer: a socket file object is unusable after one timeout
         self.s.settimeout(timeout)
-        try:
-            raw = self.f.readline()
-        except TimeoutError:
-            log('timeout', conn=self.name, secs=timeout)
-            return None
-        if not raw:
-            log('eof', conn=self.name)
-            return ''
-        line = raw.decode(errors='replace').rstrip('\n')
+        while b'\n' not in self.buf:
+            try:
+                chunk = self.s.recv(65536)
+            except TimeoutError:
+                log('timeout', conn=self.name, secs=timeout)
+                return None
+            if not chunk:
+                log('eof', conn=self.name)
+                return ''
+            self.buf += chunk
+        raw, self.buf = self.buf.split(b'\n', 1)
+        line = raw.decode(errors='replace')
         log('recv', conn=self.name, line=line[:300])
         return line
 

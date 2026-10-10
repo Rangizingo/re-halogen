@@ -1,0 +1,8 @@
+RESULT first_info {"v": "I 1 0 262144 7 1 1 0 110 64 4 262144 2 1 1 524288 1 0.17.3 2 6 gguf 1 0 0 0 0 - 2048"}
+RESULT second_info {"v": "I 1 0 262144 7 1 1 0 110 64 4 262144 2 1 1 524288 1 0.17.3 2 6 gguf 1 0 0 0 0 - 2048"}
+RESULT second_gen {"tokens": [], "done": null}
+RESULT second_after_gen_ping {"v": null}
+RESULT first_gen {"tokens": [785, 6722, 315, 9625, 374, 785, 6722, 315], "done": "D 900002 length 40 8 476.9 95.6 1 1 7 0 1 1 5 5 0 -1 8 256 524288 0 0 0 0 0 0.0 0 0 0 0"}
+RESULT second_gen_after_first_closed {"tokens": [785, 6722, 315, 9625, 374, 785, 6722, 315], "done": "D 900003 length 40 8 0.2 94.9 1 1 7 40 1 1 5 5 0 -1 8 512 524288 0 0 0 0 0 0.0 0 0 0 0"}
+RESULT third_gen_after_first_closed {"tokens": [], "done": null}
+RESULT seeds {"serial_111_equal": true, "serial_111_vs_222_equal": false, "mtp_111_equal": true, "serial_vs_mtp_111_equal": false, "lens": {"serial_111_a": 32, "serial_111_b": 32, "serial_222": 32, "mtp_111_a": 32, "mtp_111_b": 32}, "done": {"serial_111_a": "D 900005 length 40 32 0.2 1031.9 0 0 0 40 0 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 0 0 0 0", "serial_111_b": "D 900006 length 40 32 0.1 958.6 0 0 0 40 0 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 0 0 0 0", "serial_222": "D 900007 length 40 32 0.1 1016.4 0 0 0 40 0 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 0 0 0 0", "mtp_111_a": "D 900008 length 40 32 0.1 788.2 1 18 31 40 1 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 18 0 0 0", "mtp_111_b": "D 900009 length 40 32 0.1 745.6 1 18 31 40 1 0 0 0 0 -1 32 256 524288 0 0 0 0 0 0.0 18 0 0 0"}}
