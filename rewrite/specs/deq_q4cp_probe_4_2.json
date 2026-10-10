@@ -1,0 +1,25 @@
+{
+  "grid": ["=ceil_div(N,256)", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "x": {"bytes": 8192, "fill": {"kind": "iota", "dtype": "u32", "start": 1985229312, "step": 1}},
+    "y": {"bytes": 1024, "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "x"},
+    {"offset": 8, "buffer": "y"},
+    {"offset": 16, "type": "u32", "value": 256},
+    {"offset": 20, "type": "u32", "value": "=N"},
+    {"offset": 24, "type": "i64", "value": 2048},
+    {"offset": 32, "type": "i64", "value": 64},
+    {"offset": 40, "type": "i64", "value": 4096},
+    {"offset": 48, "type": "i64", "value": 0},
+    {"offset": 56, "hex": "abaa7605abaaf2e3abaa2a40abaa2a40abaa2a40abaa2a40abaa2a40abaa2a400000000000000000000000000000000000000000000000000000000000000000"}
+  ],
+  "dump": ["y"],
+  "compare": {
+    "rewrite_src": "../kernels/deq_q4cp.hip",
+    "rewrite_kernel": "k_deq_q4cp_probe_4_2",
+    "outputs": [{"buffer": "y", "dtype": "u16"}]
+  }
+}

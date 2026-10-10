@@ -56,3 +56,8 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 - Instance selection: one templated lq4w.hip; each instance is compiled with `HIPCC_COMPILE_FLAGS_APPEND="-DLQ_N.. -DLQ_F.."` set by `rewrite/specs/lq4w{,_pair,_grp}_run_all.sh` (needs `LQ_TSV`, a copy of function-map-kernel-stubs.tsv, on Ai-core). A row is still a comparison against the named vendor instance, whatever the flags.
 - Re-run seeds 7 and 11: k_lq4w<1,16,1,true,3,1> at N 1000 and 2800, 4 of 4 MATCH; k_lq4w<1,32,8,false,5,1> seed 7 at 1024 and 3072, 2 of 2 MATCH.
 - Controls: building the E=5 instance with LQ_F=0 instead of 1 still MATCHes at N 3072 (F changes the loop structure only, no numeric effect; not a valid control). RNE bias 0x7fff to 0 (lq4w.hip:15) on <1,16,1,true,3,1>: MISMATCH, 171 of 1,000 outputs differ.
+
+## g05 (exp_gu, exp_dn, deq_q4cp, q4moe_items), 2026-10-10, partial
+
+- 66 of 86 instances MATCH, 0 MISMATCH rows; negctl 11 MISMATCH rows. sha1 of 4 .hip: Mac equals Ai-core. The 20 k_q4moe GEMM instances are BLOCKED (5,476 to 41,499 listing lines each), continued by agent g05b.
+- Re-run seeds 7 and 11: k_exp_gu_w<16,2,0> on exp_gu_w_16_2_0_small.json, 2 of 2 MATCH. Control, silu log2e 1.44269502 to 1.4426 (exp_gu.hip:114): MISMATCH, 278 of 6,432 outputs differ.
