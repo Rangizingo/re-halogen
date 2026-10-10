@@ -242,7 +242,7 @@ Sources: `analysis/npu-engine.md`, `closure/npu-closure.md`, `closure/npu-closur
 
 ## 11. Proven versus inferred: what a rebuild can rely on
 
-Unknowns ledger counts from `analysis/unknowns.md` (27 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 16, PARTIAL 8, OPEN-BOUNDED 2, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 27.
+Unknowns ledger counts from `analysis/unknowns.md` (27 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 20, PARTIAL 4, OPEN-BOUNDED 2, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 27.
 
 Can rely on [proven]:
 - The `.hgn` container: header, table, checksums, size rules, dtype codes, `verify` and `inspect` behavior (169 vendor-checked files, round trips).
@@ -266,12 +266,12 @@ Cannot rely on (PARTIAL, OPEN-BOUNDED, UNOBSERVABLE rows; what is missing):
 - U14 is CLOSED (moved out of this list): FaSel +0x08 ids are ascending 4-token block indices, +0x10 is the per-row id count (`closure/fasel-r3.md`, `closure/fasel-r4.md`).
 - U18 is CLOSED (moved out of this list): the draft-vocab table feeds the draft-vocab lm_head GEMV then `k_dv_scatter`; 4-bit NF4 is the default, 8-bit needs `HALOGEN_DRAFT_VOCAB_Q8=1` (`closure/dv-quant-r4.md`).
 - U19 is CLOSED (moved out of this list): `scripts/ht_decode.py` decodes real 3 and 4 bit HT weights, Pearson 0.98 to 0.99 against q4c references (`closure/ht-decode.md`). qparam is a fixed tag 0x1200 plus bits << 1 (loader check). gate_up experts use their own tile walk (`decode_codes_gate_up`, 0.9922 measured).
-- U21 PARTIAL: dense Linear dispatch is closed, dtype to decode and prefill kernel (`closure/dequant-dispatch-r3.md`); routed-expert prefill kernels by token count and the dtype 23 binder path are open.
+- U21 PARTIAL: dense Linear dispatch (`closure/dequant-dispatch-r3.md`), the expert dtype binder and routed-expert prefill kernels by token count (k_q4moe for i4r from n >= 9 and plain Q4C-P from n >= 64, tile 64 up to n = 4966 then 128; HT gu3/dn3 with 128-row tiles from n = 4096 and 16384; `closure/expert-dispatch-r4.md`) are closed. Open: HT_MOE_V2 mode 2, the kernel choice in the plain path below 64 tokens, k_q4moe template-arg names.
 - U22 OPEN-BOUNDED: Ghidra has no AMDGCN module, so device code stays at disassembly level; rebuilding kernels means writing from instruction listings.
 - U23 is CLOSED (moved out of this list): the wire seed reaches SampleRow+0x10 unchanged; the splitmix64 counter is the token's sequence position (`closure/sampler-seed-r3.md`).
 - U26 PARTIAL: a second connection's GEN waits until the first connection is done and closed, then is served in order (`runtime-run-0.17.3-r2.md`); a rebuild should serve one client connection at a time for GEN. CSTAT on a waiting connection and the code answering INFO/PING there are open.
 - U27 is CLOSED (moved out of this list): i4r (dtype 23) decodes as planar signed nibbles times one fp16 scale per 128, then the HT rotation (`decode_codes_i4r`, 0.9876 and 0.9885 measured, `closure/ht-decode.md`).
-- CLOSED rows (U03, U04, U07, U08, U09, U10, U13, U15, U16, U17, U19, U20, U23, U24, U25, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
+- CLOSED rows (U01, U03, U04, U07, U08, U09, U10, U11, U13, U14, U15, U16, U17, U18, U19, U20, U23, U24, U25, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
 
 Other gaps a rebuild hits (request-trace.md "Gaps" and the closure reports):
 - MTP head layer kernels, the fusion of `fc_embedding` and `fc_hidden`, router top-k, the greedy draft step (mtp-head.md s7).
