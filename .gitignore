@@ -1,0 +1,6 @@
+tmp/
+work/
+analysis/kernels-disasm/
+__pycache__/
+*.pyc
+f32report.txt

@@ -22,6 +22,64 @@ report.md's §6 "Not yet done" is empty.
 
 ---
 
+## Progress log (updated 2026-10-10)
+
+Evidence lives in `analysis/` and `work/`; decompiles in `work/hgn/*.c`
+(27 Ghidra JSON passes, 17 cleaned pseudocode files).
+
+**Phase 0 — PARTIAL.** Live probes skipped honestly: engine pid 2918 gone,
+127.0.0.1:8730 refuses; 8731 is the bits-live llama stack (not the target).
+Protocol grammar corroborated statically (client-side) in
+`analysis/runtime-findings.md`. **Version pull stalled**: `scripts/pull_versions.sh`
+started 2026-10-09T21:32Z and died at the token step (`work/pull.status` has
+only the start line; `work/versions/` empty). Rerun, then
+`compare_functions`/`find_changed_behavior` → `analysis/version-deltas.md`.
+
+**Phase 1 — DONE at disassembly level.** Clang offload bundle v2 walked
+(`scripts/carve_fatbin.py`): 4 code objects in `work/fatbin/` (largest
+17.7 MB, 2,982 symbols; `work/fatbin-manifest.json` has offsets/sha256s).
+llvm-objdump 21 `--mattr=+gfx1151` disassembled all four →
+`analysis/kernels-disasm/*.s` (3.34M lines). 214 per-kernel slices in
+`work/kernels/` (k_attn_fa2/qs*, k_dnc_att*/scan3*/prep, k_dn_fused16,
+k_lq8w/k_lq4w, k_i4r_rows, k_linear_f32_q4_mt, k_smpg_accept_final,
+k_ngram_*). Ghidra AMDGCN: **no module exists** for shader ISA — probed and
+documented in `analysis/ghidra-module-writeup.md` (only the F32 management-CPU
+module, installed + tested, irrelevant to kernels). Per plan's fallback:
+kernel analysis proceeds at objdump level; Ghidra pseudocode for AMDGCN is a
+bounded, documented open item. `analysis/fatbin-inventory.md` still to write
+from the manifest.
+
+**Phase 2 — IN PROGRESS (objdump-level path).** Kernel families inventoried
+(counts above). No `analysis/kernels-<family>.md` writeups yet. The four
+acceptance claims need kernel-level evidence read out of the slices.
+
+**Phase 3 — MOSTLY DONE, writeup pending.** `.hgn` format fully recovered and
+implemented round-trip in `work/hgn/hgnpy.py` (docstring = the spec draft):
+104-B header (magic HGN1, version, n_tensors, table_off, data_off, file_bytes,
+model_id[64]); 160-B table entries (name[96], dtype, rank≤4, dims u64[4],
+absolute payload_off, nbytes, xor32 = XOR of LE u32 words, qparam); payloads
+64-B aligned in table order; zero pads at [4,table_off), post-table, inter-
+payload, tail; header_sha256 = sha256(file[0:data_off]). 24 dtype codes
+(bf16/f32/f16/q4c/fp8r/q8g64/i4l/fp8g/q8s32/q6k/iq4nl/q4a/q5a/ht/q8_0/q5_0/
+q5_1/i4r/q6g64…). 165 crafted test containers in `work/hgn/files/`
+(valid/bad-xor/truncated/bad-pad/bad-header variants). Repack driver
+decompiled: `flash_serve` 0x19af350 (`work/hgn/gs_0x19af350.c`) — GGUF magic
+gate, n-gram table requirement (`layers.1.ple.ngram_embedding.weight` /
+`per_layer_token_embd.weight`, fatal "Nothing was written" path), 64-B
+aligned layout from 0x80, sparse `ftruncate`, `HALOGEN_GGUF_THREADS`
+(default 8, clamp 1..64), thread-pool spawn. TODO: `analysis/hgn-format.md`
++ run `halogen-tools verify` on the crafted files (pre-approved) → 3
+round-trip tests.
+
+**Phase 4 — STARTED.** `halogen-npu` overview + `serve` decompiled
+(`analysis/npu_server_pseudo.c`, FUN_00133090: socket/poll loop). getaddrinfo
+call-site enumeration, XRT call graph, `consts.hnpb`/`devices.hnpm`/`hnpw`
+readers, `analysis/npu-engine.md`: open.
+
+**Phase 5 — NOT STARTED.** dflash2 probe-field trace.
+
+**Phase 6 — NOT STARTED.** Ledger, coverage, evidence bundle, report rewrite.
+
 ## Phase 0 — Runtime corroboration (cheapest, do first)
 
 Goal: turn inference into observation on the live engine family.

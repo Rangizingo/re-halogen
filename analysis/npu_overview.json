@@ -1,0 +1,275 @@
+{
+  "evidence_id": "ev_167acbf8555db33ab0f2955d136f2e9bb96f2a777bc312962ad8af84a4c47c8f",
+  "subject": {
+    "name": "halogen-npu",
+    "digest": {
+      "sha256": "3931bc34d0ff0f66a786f8823994f846d0e11fd1af74bdf7d5b1675fb93db174"
+    },
+    "format": "elf",
+    "architecture": "x86_64",
+    "local_path": "/home/rangizingo/re-halogen/binaries/halogen-npu"
+  },
+  "provider": {
+    "id": "rea-workflow",
+    "name": "REA composed investigation workflow",
+    "version": "1"
+  },
+  "predicate_type": "rea.analysis",
+  "operation": "binary_overview",
+  "parameters": {},
+  "raw_result": null,
+  "normalized_result": {
+    "document": "target-3931bc34d0ff.bin",
+    "segments": [
+      {
+        "name": "segment_2.1",
+        "start": "0x100000",
+        "end": "0x100350",
+        "length": 848
+      },
+      {
+        "name": ".note.gnu.property",
+        "start": "0x100350",
+        "end": "0x100370",
+        "length": 32
+      },
+      {
+        "name": ".note.gnu.build-id",
+        "start": "0x100370",
+        "end": "0x100394",
+        "length": 36
+      },
+      {
+        "name": ".interp",
+        "start": "0x100394",
+        "end": "0x1003b0",
+        "length": 28
+      },
+      {
+        "name": ".gnu.hash",
+        "start": "0x1003b0",
+        "end": "0x10048c",
+        "length": 220
+      },
+      {
+        "name": ".dynsym",
+        "start": "0x100490",
+        "end": "0x1017f8",
+        "length": 4968
+      },
+      {
+        "name": ".dynstr",
+        "start": "0x1017f8",
+        "end": "0x1030ed",
+        "length": 6389
+      },
+      {
+        "name": ".gnu.version",
+        "start": "0x1030ee",
+        "end": "0x10328c",
+        "length": 414
+      },
+      {
+        "name": ".gnu.version_r",
+        "start": "0x103290",
+        "end": "0x1034c0",
+        "length": 560
+      },
+      {
+        "name": ".rela.dyn",
+        "start": "0x1034c0",
+        "end": "0x105368",
+        "length": 7848
+      },
+      {
+        "name": ".rela.plt",
+        "start": "0x105368",
+        "end": "0x106310",
+        "length": 4008
+      },
+      {
+        "name": ".init",
+        "start": "0x107000",
+        "end": "0x107017",
+        "length": 23
+      },
+      {
+        "name": ".plt",
+        "start": "0x107020",
+        "end": "0x107aa0",
+        "length": 2688
+      },
+      {
+        "name": ".plt.got",
+        "start": "0x107aa0",
+        "end": "0x107aa8",
+        "length": 8
+      },
+      {
+        "name": ".text",
+        "start": "0x107ac0",
+        "end": "0x1eebaf",
+        "length": 946415
+      },
+      {
+        "name": ".fini",
+        "start": "0x1eebb0",
+        "end": "0x1eebb9",
+        "length": 9
+      },
+      {
+        "name": ".rodata",
+        "start": "0x1ef000",
+        "end": "0x1fa480",
+        "length": 46208
+      },
+      {
+        "name": ".eh_frame_hdr",
+        "start": "0x1fa480",
+        "end": "0x1fc424",
+        "length": 8100
+      },
+      {
+        "name": ".eh_frame",
+        "start": "0x1fc428",
+        "end": "0x20a164",
+        "length": 56636
+      },
+      {
+        "name": ".gcc_except_table",
+        "start": "0x20a164",
+        "end": "0x211a23",
+        "length": 30911
+      },
+      {
+        "name": ".note.ABI-tag",
+        "start": "0x211a24",
+        "end": "0x211a44",
+        "length": 32
+      },
+      {
+        "name": ".init_array",
+        "start": "0x212120",
+        "end": "0x212138",
+        "length": 24
+      },
+      {
+        "name": ".fini_array",
+        "start": "0x212138",
+        "end": "0x212140",
+        "length": 8
+      },
+      {
+        "name": ".data.rel.ro",
+        "start": "0x212140",
+        "end": "0x212d78",
+        "length": 3128
+      },
+      {
+        "name": ".dynamic",
+        "start": "0x212d78",
+        "end": "0x212fa8",
+        "length": 560
+      },
+      {
+        "name": ".got",
+        "start": "0x212fa8",
+        "end": "0x212fd8",
+        "length": 48
+      },
+      {
+        "name": ".got.plt",
+        "start": "0x212fe8",
+        "end": "0x213538",
+        "length": 1360
+      },
+      {
+        "name": ".data",
+        "start": "0x213538",
+        "end": "0x213560",
+        "length": 40
+      },
+      {
+        "name": ".bss",
+        "start": "0x213580",
+        "end": "0x214198",
+        "length": 3096
+      },
+      {
+        "name": "EXTERNAL",
+        "start": "0x215000",
+        "end": "0x2155a8",
+        "length": 1448
+      },
+      {
+        "name": ".comment",
+        "start": ".comment:0x0",
+        "end": ".comment:0x1f",
+        "length": 31
+      },
+      {
+        "name": ".shstrtab",
+        "start": ".shstrtab:0x0",
+        "end": ".shstrtab:0x129",
+        "length": 297
+      },
+      {
+        "name": "_elfSectionHeaders",
+        "start": "_elfSectionHeaders:0x0",
+        "end": "_elfSectionHeaders:0x7c0",
+        "length": 1984
+      }
+    ],
+    "segment_count": 33,
+    "procedure_count": 1577,
+    "string_count": 985
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Derived by an REA composed workflow."
+  ],
+  "locations": [],
+  "evidence_links": [],
+  "analysis_profile": {
+    "provider": {
+      "id": "rea-workflow",
+      "name": "REA composed investigation workflow",
+      "version": "1"
+    },
+    "parameters": {
+      "upstream_analysis_profile": {
+        "provider": {
+          "id": "ghidra",
+          "name": "Ghidra",
+          "version": "12.1.2"
+        },
+        "parameters": {
+          "target_kind": "executable",
+          "target_format": "elf",
+          "architecture": "x86_64",
+          "available_architectures": [
+            "x86_64"
+          ],
+          "import_mode": "ephemeral-source-immutable",
+          "annotation_policy": "atomic-function-entry-metadata-v1",
+          "load_image_observations": "source-mappings-entry-context-v2",
+          "function_body_evidence": "complete-inclusive-ranges-v1",
+          "function_references": "complete-body-and-entry-reference-manager-v2",
+          "location_resolution": "explicit-address-exact-name-first-v2",
+          "process_launch": "inspected-jvm-launch-support-v1",
+          "jump_table_evidence": "typed-case-default-blocks-v1",
+          "decompiler_jump_loads": true,
+          "loader": "auto-from-header",
+          "language_id": "auto-from-header",
+          "compiler_spec_id": "auto-default",
+          "analyzer_preset": "ghidra-default"
+        },
+        "digest": "ba88e8d100e584e6260e624e381fcaa755b93412540d7bc571ccdca0efeeaeeb"
+      },
+      "workflow_revision": 2
+    },
+    "digest": "83ad2527175370a5213233e3f33507a0a8e64afa0d65a115ab1e2ba4c3edf344"
+  }
+}

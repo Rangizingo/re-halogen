@@ -5,10 +5,16 @@ the OpenAI-compatible inference server for Qwen3.8-Flash-Next on AMD Strix
 Halo (gfx1151). Target image: `ghcr.io/peonist-ai/halogen-flash-server:0.17.3`
 (manifest sha256:3bca0132db3c…, built 2026-10-08).
 
-Status: **in progress.** Architecture, network surface, and the falsifier
-question are settled with evidence; kernel-level decompilation has not started.
-`PLAN.md` = the approved autonomous completion plan (Phases 0-6); execute it
-when Peter says "run the halogen plan".
+Status: **in progress (see PLAN.md "Progress log" for per-phase state).**
+Settled with evidence: architecture, network surface, falsifier question,
+`main()`, `draft_sample` + falsifier callers, the GGUF→.hgn repack driver
+(0x19af350), fatbin v2 extraction + full gfx1151 disassembly (llvm-objdump),
+and a working Python parser/builder for the `.hgn` container (`work/hgn/hgnpy.py`,
+spec draft in PLAN.md progress log). Open: kernel pseudocode (no Ghidra AMDGCN
+module exists — objdump-level is the working path), `.hgn` writeup + round-trip
+tests, npu XRT call graph + getaddrinfo, dflash2, closure. `PLAN.md` = the
+approved autonomous completion plan (Phases 0-6); execute it when Peter says
+"run the halogen plan".
 
 ## Layout
 
@@ -56,16 +62,18 @@ Ghidra 12.1.2 lives at `~/.hermes/tools/ghidra-12.1.2` (JAVA_HOME=
 
 ## Open questions / next targets
 
-- gfx1151 device code: 23 MB `.hip_fatbin` section (file 0x52000,
-  0x16a3aa0 bytes). The clang offload bundle v2 header parses (magic at
-  0x52000, version 2) but the offset-table walk needs the v2 layout
-  (offset-table-size field at +32, entries follow content). Extract per-target
-  code objects, then Ghidra AMDGCN analysis. This is the kernel-level work.
+- Kernel algorithm writeups from `work/kernels/*.s` slices (Phase 2):
+  attention (k_attn_fa2/qs*), MoE (k_dn_fused16, k_lq8w/k_lq4w, k_i4r_rows,
+  k_linear_f32_q4_mt), dnc indexer (k_dnc_att*/scan3*/prep), speculation
+  (k_smpg_accept_final, k_ngram_*). Ghidra cannot decompile AMDGCN (no
+  module; see analysis/ghidra-module-writeup.md) — objdump-level analysis.
 - `halogen-npu`'s getaddrinfo: which host:port pairs, any non-loopback use.
-- `.hgn` container format spec from `halogen-tools` (magic `HGN1` strings,
-  tensor families, xor32/sha256 fields per `inspect --json`).
+- `.hgn` format: recovered + implemented (`work/hgn/hgnpy.py`); formal
+  `analysis/hgn-format.md` + verify round-trips pending.
 - The `dflash2` drafter (id 2 in serve_api) — no matching strings in
   flash_serve 0.17.3; engine reports capability via probe flags.
+- Version deltas 0.17.2/0.17.0/0.16.4/0.15.0: pull stalled at token step,
+  rerun `scripts/pull_versions.sh`.
 
 ## Ground rules
 

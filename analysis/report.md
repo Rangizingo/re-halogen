@@ -91,25 +91,61 @@ verify/walk paths (getenv wrappers at 0x1883020 / 0x184bd90 Ghidra-space).
   no redistribution of modified builds as halogen; benchmark publication
   expressly permitted (ask: name the version + prompt set).
 
-## 5. Checkpoint format (from halogen-tools strings)
+## 5. Checkpoint format (.hgn) — recovered, round-trip implemented
 
-`.hgn` = engine-native container (magic `HGN1`), tensor families with
-class/format/count/params/bytes/bpw, per-tensor xor32 + sha256, header sha256,
-pads_zero. Quant families seen: 4-bit grouped (experts/trunk), 6-bit mixing
+`.hgn` = engine-native container (magic `HGN1`). Full layout recovered from
+`halogen-tools` decompiles and verified by a Python parser/builder
+(`work/hgn/hgnpy.py`; 165 crafted test containers in `work/hgn/files/`,
+tarred at `analysis/hgn-testfiles.tar.xz`):
+
+- Header 104 B LE: magic, version u32, n_tensors u64, table_off u64 (==104),
+  data_off u64, file_bytes u64, model_id[64] NUL-padded.
+- Tensor table at table_off: 160 B/entry — name[96], dtype u32, rank u32 (≤4),
+  dims u64[4], absolute payload_off u64, nbytes u64, xor32 u32 (XOR of LE u32
+  words of payload, zero-padded tail), qparam u32 (quant group size; 0 plain).
+- Payloads at data_off, 64 B aligned, table order. Pads must be zero:
+  [4,table_off), post-table, inter-payload, tail. header_sha256 =
+  sha256(file[0:data_off]).
+- 24 dtype codes: bf16, f32, f16, i32, i64, q4c, fp8r, q8g64, i4l, fp8g,
+  q8s32, q6k, iq4nl, q4a, q5a, ht, q8_0, q5_0, q5_1, i4r, q6g64 (family
+  grouping per tensor table).
+
+Repack (GGUF→.hgn) driver decompiled in `flash_serve` at 0x19af350
+(`work/hgn/gs_0x19af350.c`): GGUF magic gate (`gguf: %s is not a GGUF`);
+requires the n-gram table (`layers.1.ple.ngram_embedding.weight` /
+`per_layer_token_embd.weight`) — missing table is fatal, "Nothing was
+written"; layout from 0x80 with 64 B alignment per tensor; sparse
+`ftruncate` then parallel fill on `HALOGEN_GGUF_THREADS` threads (default 8,
+clamped 1..64); banner `repack: %zu tensors, %.2f GiB -> %s on %d threads%s%s`
+with ", with the table" / ", NO head" / ", head from <path>" suffixes.
+Formal spec writeup (`analysis/hgn-format.md`) + `halogen-tools verify`
+round-trips pending (Phase 3 acceptance).
+
+Quant families seen: 4-bit grouped (experts/trunk), 6-bit mixing
 layers, 8-bit draft-head projections, FP8 n-gram table, HT (rotation-plane)
 and I4R variants with strict shape/group checks. GGUF (`qwen4exp`) repacked
 losslessly in RAM at start (~20 s) or once via `convert`.
 
 ## 6. Not yet done (next passes)
 
-1. **gfx1151 device kernels** — 23 MB `.hip_fatbin` (clang offload bundle v2,
-   magic at file 0x52000). Needs v2 offset-table walk → per-target code
-   objects → AMDGCN disassembly. The attention/MoE/dequant kernels live here.
-2. **halogen-tools deep pass** — `.hgn` writer/verifier logic, repack path.
-3. **halogen-npu** — XRT call graph, consts.hnpb/devices.hnpm formats,
-   getaddrinfo call sites.
+1. **gfx1151 device kernels** — DONE through disassembly: fatbin v2 carved
+   (4 code objects, `work/fatbin/`, manifest `work/fatbin-manifest.json`),
+   llvm-objdump gfx1151 disassembly complete (`analysis/kernels-disasm/`,
+   3.34M lines; 214 per-kernel slices `analysis/kernels-slices.tar.xz`).
+   Remaining: per-family algorithm writeups (Phase 2) from the slices;
+   Ghidra pseudocode for AMDGCN is blocked — no shader-ISA module exists
+   (`analysis/ghidra-module-writeup.md`); objdump-level is the accepted path.
+2. **halogen-tools deep pass** — format recovered + round-trip implemented
+   (§5); remaining: `analysis/hgn-format.md` writeup + `verify` round-trip
+   acceptance tests.
+3. **halogen-npu** — overview + `serve` loop decompiled
+   (`analysis/npu_server_pseudo.c`); remaining: XRT call graph,
+   consts.hnpb/devices.hnpm formats, getaddrinfo call sites.
 4. **dflash2 drafter** — front-end exposes it (id 2); engine 0.17.3 has no
    matching strings; capability comes from the probe. Trace the probe fields.
+5. **Version deltas** — 0.17.2/0.17.0/0.16.4/0.15.0 pull stalled at the
+   token step (`work/pull.status`); rerun `scripts/pull_versions.sh`, then
+   `compare_functions` / `find_changed_behavior`.
 
 ## 7. Method notes (reproducibility)
 
