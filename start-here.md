@@ -28,6 +28,9 @@ left needs data that is not in this workspace (see "Open" below).
 
 ## Open
 
+- PARTIAL rows U01, U02, U11, U12, U14, U18, U21, U26: each row says
+  which half is closed and what is left (most need a runtime probe or a
+  vendor file not shipped).
 - U06 old patch releases, U05 future releases, U22 no AMDGCN decompiler:
   named limits by decision.
 - The inferred steps of the request trace are listed in its Gaps section.
