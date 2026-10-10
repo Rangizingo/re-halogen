@@ -5,15 +5,15 @@ the OpenAI-compatible inference server for Qwen3.8-Flash-Next on AMD Strix
 Halo (gfx1151). Target image: `ghcr.io/peonist-ai/halogen-flash-server:0.17.3`
 (manifest sha256:3bca0132db3c…, built 2026-10-08).
 
-Status: **plan scope complete (Phases 0-6, see `start-here.md`, `PLAN.md`);
-Phase 7 (complete reverse engineering) in progress.** Settled with evidence:
-architecture, network surface, falsifier question, `main()`, the GGUF to .hgn
-repack driver, fatbin extraction and gfx1151 disassembly, the `.hgn` format
-with passing round trips, the NPU engine, version deltas, dflash2, and all
-five kernel-family writeups (attention, MoE, indexer, dequant, speculation).
-Open: 22 bounded unknowns (`analysis/unknowns.md`); Phase 7 closes 19 of them
-and builds a full function map, an end-to-end request trace and a rebuild
-guide (`PLAN.md` Phase 7).
+Status: **Phase 7 (complete reverse engineering) done at plan scope,
+2026-10-10; see `start-here.md` and `analysis/rebuild-guide.md`.** Settled
+with evidence: architecture, network surface, falsifier question, `main()`,
+the GGUF to .hgn repack driver, fatbin extraction and gfx1151 disassembly,
+the `.hgn` format with passing round trips, the NPU engine, version deltas,
+dflash2, five kernel-family writeups, function maps of all three binaries,
+the wire protocol, a 31-step request trace and a live 0.17.3 engine run.
+Unknowns (`analysis/unknowns.md`, counted from its table): CLOSED 10,
+PARTIAL 12, OPEN-BOUNDED 3 (U03, U06, U22), UNOBSERVABLE 1 (U05).
 
 ## Layout
 

@@ -130,19 +130,36 @@ losslessly in RAM at start (~20 s) or once via `convert`.
 
 ## 6. Findings complete at plan scope; residual unknowns
 
-All seven phases of `PLAN.md` have evidence-backed writeups: version deltas
-(`version-deltas.md`), fatbin + gfx1151 disassembly (`fatbin-inventory.md`),
-five kernel families (`kernels-attention.md`, `kernels-moe.md`,
-`kernels-indexer.md`, `kernels-dequant.md`, `kernels-speculation.md`), the
-`.hgn` format with round-trip tests (`hgn-format.md`), the NPU engine
-(`npu-engine.md`), and dflash2 (`dflash2-probe.md`). Closure artifacts:
-`unknowns.md` (22 bounded items) and `coverage.md`.
+All seven phases of `PLAN.md` plus Phase 7 have evidence-backed writeups.
+Phases 0 to 6: version deltas (`version-deltas.md`), fatbin and gfx1151
+disassembly (`fatbin-inventory.md`), five kernel families
+(`kernels-attention.md`, `kernels-moe.md`, `kernels-indexer.md`,
+`kernels-dequant.md`, `kernels-speculation.md`), the `.hgn` format with
+round-trip tests (`hgn-format.md`), the NPU engine (`npu-engine.md`) and
+dflash2 (`dflash2-probe.md`). Phase 7: function maps of all three binaries
+(`function-map.tsv` 3,568 rows, `function-map-halogen-tools.tsv` 3,222,
+`function-map-halogen-npu.tsv` 1,412, `function-map-kernel-stubs.tsv`
+1,738; data rows, `wc -l` minus the header), the wire protocol
+(`wire-protocol.md`), entrypoint and API layer (`entrypoint-flow.md`,
+`api-layer.md`), a 31-step request trace (`request-trace.md`), a live
+0.17.3 engine run (`runtime-run-0.17.3.md`), 17 closure reports
+(`closure/`) and a rebuild guide (`rebuild-guide.md`).
 
-Not a full reverse engineering of the product. The residual unknowns are
-mostly host-side: 16 of the 22 need a decompile of `flash_serve` or
-`halogen-npu` dispatch code (struct layouts, which kernel variant runs when,
-per-verb protocol grammars). Ghidra has no AMDGCN module, so device code
-stays at disassembly level. See `unknowns.md` for each item and what closes it.
+Residual unknowns, counted from the table in `unknowns.md`: CLOSED 10,
+PARTIAL 12, OPEN-BOUNDED 3, UNOBSERVABLE 1 (26 rows). The PARTIAL rows
+(U01, U02, U07, U09, U10, U11, U12, U14, U18, U19, U21, U23) each say
+which half is closed and which is not. What stays open and why:
+
+- U03 NPU graph names: they live in the shipped `.elf` graph files, not in
+  this workspace.
+- U19 HT codebook decode: recovered statically, needs a real HT checkpoint
+  to confirm.
+- U06 0.14.x and 0.15.x patch deltas: those tags were not pulled (no
+  downloads in scope).
+- U22 AMDGCN pseudocode: Ghidra has no shader-ISA module; device code stays
+  at disassembly level.
+- U05 a future flip of the dflash2 literal: not observable from shipped
+  releases.
 
 ## 7. Method notes (reproducibility)
 
