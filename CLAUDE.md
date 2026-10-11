@@ -32,9 +32,9 @@ grep -c 'v_exp\|v_rcp\|v_mfma\|v_permlane\|v_bfe' work/kernels-spec/<slice>.s
 npx -y rea-agents@6.3.0 doctor --provider ghidra --json
 
 # Tests (pytest; 3 real-data HT tests skip unless HT_TESTDATA is set)
-python3 -m pytest -q tests                                   # 130 pass, 4 skip (s6)
+python3 -m pytest -q tests                                   # 145 pass, 4 skip (s7)
 bash scripts/fetch_ht_testdata.sh <dir>                      # ~496 MB of vendor slices by HTTP range read
-HT_TESTDATA=<dir> python3 -m pytest -q tests                 # 134 pass (derived: 130 + the 4 data skips; not re-run in s6)
+HT_TESTDATA=<dir> python3 -m pytest -q tests                 # 149 pass (derived: 145 + the 4 data skips; not re-run in s7)
 python3 -I scripts/ht_decode.py <dir>                        # HT and i4r decode scores vs q4c references
 
 # Kernel rewrite harness (U22): on Ai-core, after rsync -a --exclude __pycache__ rewrite/ ai-core:re-halogen/rewrite/
