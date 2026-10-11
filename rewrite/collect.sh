@@ -3,13 +3,17 @@
 set -euo pipefail
 g=$1; wt=$2/rewrite; repo=/Users/peterb/Documents/AI/re-halogen
 cd "$repo"
-for d in kernels specs; do
-  for f in "$wt/$d"/*; do b=$(basename "$f"); case $b in scale.hip|k_scale_silu*) continue;; esac; cp -R "$f" rewrite/$d/; done
+# Copy only what the agent changed or added in its worktree: a worktree made from an older commit
+# also holds stale tracked copies of other groups' files, which must not overwrite newer ones here.
+changed=$(git -C "$2" status --porcelain --untracked-files=all -- rewrite/kernels rewrite/specs | awk '{print $NF}')
+for p in $changed; do
+  case $(basename "$p") in scale.hip|k_scale_silu*) continue;; esac
+  mkdir -p "$(dirname "$p")"; cp "$2/$p" "$p"
 done
 cp "$wt/reports/$g.md" rewrite/reports/
 for t in $(ssh ai-core "cd ~/re-halogen/rewrite/tables && ls $g.md $g-*.md 2>/dev/null | grep -v -e scratch -e dev"); do scp -q "ai-core:re-halogen/rewrite/tables/$t" rewrite/tables/; done
 # Mac vs Ai-core sha1 of every kernel the group wrote
-ks=$(cd "$wt" && ls kernels | grep -v "^scale.hip$" | tr "\n" " ")
+ks=$(for p in $changed; do case $p in rewrite/kernels/*) basename "$p";; esac; done | grep -v "^scale.hip$" | tr "\n" " ")
 (cd rewrite && for k in $ks; do shasum kernels/$k; done) > /tmp/c.sha
 ssh ai-core "cd ~/re-halogen/rewrite && for k in $ks; do shasum kernels/\$k; done" | diff - /tmp/c.sha && echo "sha SAME ($(echo $ks | wc -w) kernels)"
 echo "MATCH instances: $(awk -F'|' '$5 ~ /^ *MATCH/ {print $2}' rewrite/tables/$g.md | sort -u | wc -l)  MISMATCH rows: $(grep -c MISMATCH rewrite/tables/$g.md || true)  negctl MISMATCH rows: $(grep -c MISMATCH rewrite/tables/$g-negctl.md 2>/dev/null || echo 0)"
