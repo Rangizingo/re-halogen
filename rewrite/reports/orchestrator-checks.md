@@ -192,3 +192,7 @@ Every family's NaN specs include one that fails on the original and passes on th
 ## g33 (integer-bound review: sampling, ix, gather/embed/hyper, argmax, route_logits), s7 2026-10-11
 
 182 pairs, all EQUIVALENT (rewrite/const-audit-exceptions.d/g33.tsv), 0 REAL. Cites re-read in kernels-disasm-v2/codeobj_53000.s: :1213 `v_cmp_gt_f32_e64 s0, 0x7f800000, v6` (a float compare against +inf, rewrite smpg_common.h:189 `0x7f800000 > fabsf(l2)` folded to v_cmp_class 0x1f8), :45383 `v_add_nc_u32 v7, -4, v7` (the blockDim==1 unrolled-loop counter), :894540 `s_lshr_b32 s2, s2, 27` (K/32 round-toward-zero bias). All as the rows say. New blockDim-1 specs re-run, fresh seeds: gather_slots_h_b1 seeds 51,52 x N 5,17 4 of 4 MATCH; hyper_seed_b1 seed 51 N=17 MATCH.
+
+## g31 (integer-bound review: dnc scan/ut/att/prep), s7 2026-10-11
+
+240 pairs, all EQUIVALENT (const-audit-exceptions.d/g31.tsv), 0 REAL; agent QA PASS. Cite fix: report row scan3x_b cited :256907 (the s_load of k); the unsigned compare `s_cmp_gt_u32 s87, 59` is codeobj_1146000.s:257010 (re-read), corrected. Re-run, fresh seed 61, dnc_scan3x_b_a4t.json on k_dnc_scan3x<4,4,1,0,1,1,0,0,0> at k = 18, 19 (first-chunk guard edge) and 82, 83 (second 64-token chunk, the QA minor): 4 of 4 MATCH.
