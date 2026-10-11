@@ -77,3 +77,9 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 - 32 distinct instances with MATCH, 0 MISMATCH; specs all committed. Agent wrote directly into the main checkout; tables copied from Ai-core.
 - Re-run seeds 7 and 11: k_hcup8<1> at N 37, 2 of 2 MATCH.
 - Controls: the agent's sigmoid constant change -1.44269502 to -1.4427 (4e-6 relative) is not detected (bf16 output rounding, the MATCH limit). Mine, 1.44269502 to 1.40 (hcup8.hip:24): MISMATCH, 956 of 5,248 outputs differ.
+
+## g18 (vis_*, vis_attn), 2026-10-10, partial
+
+- 21 of 53 instances MATCH; 32 attn_qs not started (agent g18b). Specs all committed. The 2 MISMATCH rows (k_vis_bias_gelu, vis_bias_gelu.json seeds 1 and 3, N 100003, 1-2 ulp on 1-2 outputs) predate the agent's `fp contract(off)` fix; the same spec MATCHes afterwards (g18.md:59-64), and a 1e6-point sweep MATCHes.
+- Re-run seed 7: k_vis_bias_gelu on vis_bias_gelu_sweep.json, 1,000,064 outputs, MATCH.
+- BRIEF.md second addendum: fp contract(off) and dense sweeps for element-wise f32 kernels.

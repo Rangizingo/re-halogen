@@ -1,0 +1,24 @@
+{
+  "grid": [4, 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "x": {"bytes": "=4*N*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED", "lo": -3, "hi": 5}},
+    "gamma": {"bytes": "=N*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+3", "lo": 0.5, "hi": 1.5}},
+    "beta": {"bytes": "=N*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+4", "lo": -1, "hi": 1}},
+    "out": {"bytes": "=4*N*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "x"},
+    {"offset": 8, "buffer": "gamma"},
+    {"offset": 16, "buffer": "beta"},
+    {"offset": 24, "buffer": "out"},
+    {"offset": 32, "type": "i32", "value": "=N"},
+    {"offset": 36, "type": "f32", "value": 1e-6}
+  ],
+  "dump": ["out"],
+  "compare": {
+    "rewrite_src": "../kernels/vis_ln.hip",
+    "rewrite_kernel": "k_vis_ln",
+    "outputs": [{"buffer": "out", "dtype": "bf16"}]
+  }
+}
