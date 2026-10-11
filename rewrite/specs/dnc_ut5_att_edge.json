@@ -1,0 +1,37 @@
+{
+  "grid": [48, "=ceil_div(N,64)", 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "qkv":  {"bytes": "=ceil_div(N,64)*64*10240*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED*10+1", "lo": -2, "hi": 2}},
+    "beta": {"bytes": "=ceil_div(N,64)*64*48*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED*10+2", "lo": 0.05, "hi": 1.0}},
+    "k":    {"bytes": "=ceil_div(N,64)*64*48*128*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED*10+3", "lo": -0.2, "hi": 0.2}},
+    "a":    {"bytes": "=ceil_div(N,64)*64*48*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED*10+4", "lo": -70, "hi": 70}},
+    "u":    {"bytes": "=ceil_div(N,64)*64*48*128*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}},
+    "w":    {"bytes": "=ceil_div(N,64)*64*48*128*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}},
+    "wh":   {"bytes": "=ceil_div(N,64)*64*48*128*2", "fill": {"kind": "const", "dtype": "u16", "value": 1}},
+    "ks":   {"bytes": "=ceil_div(N,64)*64*48*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED*10+5", "lo": 0.05, "hi": 1.0}},
+    "qh":   {"bytes": "=ceil_div(N,64)*64*48*128*2", "fill": {"kind": "rand", "dtype": "f16", "seed": "=SEED*10+6", "lo": -2, "hi": 2}},
+    "att16": {"bytes": "=ceil_div(N,64)*48*4096*2", "fill": {"kind": "const", "dtype": "u16", "value": 1}},
+    "att32": {"bytes": "=ceil_div(N,64)*48*4096*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "qkv"},
+    {"offset": 8, "buffer": "beta"},
+    {"offset": 16, "buffer": "k"},
+    {"offset": 24, "buffer": "a"},
+    {"offset": 32, "buffer": "u"},
+    {"offset": 40, "buffer": "w"},
+    {"offset": 48, "type": "i32", "value": "=N"},
+    {"offset": 56, "buffer": "wh"},
+    {"offset": 64, "buffer": "ks"},
+    {"offset": 72, "buffer": "qh"},
+    {"offset": 80, "buffer": "att16"},
+    {"offset": 88, "buffer": "att32"}
+  ],
+  "dump": ["u", "w", "wh", "att16", "att32"],
+  "compare": {
+    "rewrite_src": "../kernels/dnc_ut5.hip",
+    "rewrite_kernel": "dnc_ut5_n0_r3_a1_k0",
+    "outputs": [{"buffer": "u", "dtype": "f32"}, {"buffer": "w", "dtype": "f32"}, {"buffer": "wh", "dtype": "u16"}, {"buffer": "att16", "dtype": "u16"}, {"buffer": "att32", "dtype": "f32"}]
+  }
+}

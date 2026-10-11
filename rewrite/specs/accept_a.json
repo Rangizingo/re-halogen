@@ -1,0 +1,108 @@
+{
+ "grid": [
+  4,
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=4*N*4+256",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED",
+    "lo": -5,
+    "hi": 5
+   }
+  },
+  "rows": {
+   "bytes": 128,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g23_data/rows_a.bin"
+   }
+  },
+  "ids": {
+   "bytes": 16,
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED+51",
+    "lo": -2,
+    "hi": "=N"
+   }
+  },
+  "out_acc": {
+   "bytes": 64,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 9
+   }
+  },
+  "out_lp": {
+   "bytes": 64,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 9
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x",
+   "byte_offset": 256
+  },
+  {
+   "offset": 8,
+   "buffer": "ids"
+  },
+  {
+   "offset": 16,
+   "buffer": "rows"
+  },
+  {
+   "offset": 24,
+   "buffer": "out_acc"
+  },
+  {
+   "offset": 32,
+   "buffer": "out_lp"
+  },
+  {
+   "offset": 40,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 44,
+   "type": "i32",
+   "value": 0
+  }
+ ],
+ "dump": [
+  "out_acc",
+  "out_lp"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/accept.hip",
+  "rewrite_kernel": "k_accept",
+  "outputs": [
+   {
+    "buffer": "out_acc",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "out_lp",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

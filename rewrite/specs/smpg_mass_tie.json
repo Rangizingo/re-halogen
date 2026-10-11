@@ -1,0 +1,110 @@
+{
+ "grid": [
+  64,
+  4,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=4*N*4+256",
+   "fill": {
+    "kind": "rand",
+    "dtype": "u16",
+    "seed": "=SEED",
+    "lo": 16000,
+    "hi": 16640
+   }
+  },
+  "rows": {
+   "bytes": 128,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g23_data/rows_a.bin"
+   }
+  },
+  "scratch": {
+   "bytes": 65824,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g23_data/scr_after_L3_tie.bin"
+   }
+  },
+  "out_scan": {
+   "bytes": 1048576,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 7
+   }
+  },
+  "out_part": {
+   "bytes": 1048576,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 7
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x",
+   "byte_offset": 256
+  },
+  {
+   "offset": 8,
+   "buffer": "rows"
+  },
+  {
+   "offset": 16,
+   "buffer": "scratch"
+  },
+  {
+   "offset": 24,
+   "buffer": "out_scan"
+  },
+  {
+   "offset": 32,
+   "buffer": "out_part"
+  },
+  {
+   "offset": 40,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 44,
+   "type": "i32",
+   "value": 64
+  }
+ ],
+ "dump": [
+  "scratch",
+  "out_scan",
+  "out_part"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/smpg_mass.hip",
+  "rewrite_kernel": "k_smpg_mass",
+  "outputs": [
+   {
+    "buffer": "scratch",
+    "dtype": "u32"
+   },
+   {
+    "buffer": "out_scan",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "out_part",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

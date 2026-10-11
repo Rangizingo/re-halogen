@@ -1,0 +1,27 @@
+{
+  "grid": [48, "=ceil_div(N,64)", 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "qkv":  {"bytes": "=ceil_div(N,64)*64*10240*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED*10+1", "lo": -2, "hi": 2}},
+    "beta": {"bytes": "=ceil_div(N,64)*64*48*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED*10+2", "lo": 0.05, "hi": 1.0}},
+    "k":    {"bytes": "=ceil_div(N,64)*64*48*128*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED*10+3", "lo": -0.2, "hi": 0.2}},
+    "a":    {"bytes": "=ceil_div(N,64)*64*48*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED*10+4", "lo": -2, "hi": 2}},
+    "u":    {"bytes": "=ceil_div(N,64)*64*48*128*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}},
+    "w":    {"bytes": "=ceil_div(N,64)*64*48*128*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "qkv"},
+    {"offset": 8, "buffer": "beta"},
+    {"offset": 16, "buffer": "k"},
+    {"offset": 24, "buffer": "a"},
+    {"offset": 32, "buffer": "u"},
+    {"offset": 40, "buffer": "w"},
+    {"offset": 48, "type": "i32", "value": "=N"}
+  ],
+  "dump": ["u", "w"],
+  "compare": {
+    "rewrite_src": "../kernels/dnc_ut4.hip",
+    "rewrite_kernel": "dnc_ut4_sw_mp",
+    "outputs": [{"buffer": "u", "dtype": "f32"}, {"buffer": "w", "dtype": "f32"}]
+  }
+}

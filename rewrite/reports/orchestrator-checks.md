@@ -104,3 +104,10 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 - g15: 74 instances MATCH, 0 MISMATCH; negctl 45. g17: 71 MATCH, 0 MISMATCH; negctl 16. g19c: 17 MATCH, 0 MISMATCH; negctl 10 (agent wrote into the main checkout). Specs all committed; sha1 Mac equals Ai-core for g15 (1 .hip) and g17 (5 .hip).
 - Re-runs seeds 7 and 11 (2 of 2 MATCH each): k_linear_q4 on linear_q4_single_small.json N 1024; k_ht_items_group<2> on ht_items_group2.json N 100; k_dn_fused16<1,F,F,F> on dn_fused16_base.json N 100.
 - Control, RNE bias 0x7fff to 0 (dn_fused16.hip:42): MISMATCH, 307,007 of 1,400,832 outputs differ.
+
+## g23 (sample, accept, pen_scatter, pen_rep, smpg_*, nll, resid) and g10 (dnc_ut5, dnc_prep, dnc_ut4), 2026-10-11
+
+- g23: 20 of 20 instances MATCH (the families hold 20 instances, not the 22 in the brief), 0 MISMATCH; negctl 107; input data files in rewrite/specs/g23_data/ (collect.sh now copies directories). sha1 of 15 .hip Mac equals Ai-core.
+- g10: 35 of 35 MATCH; the one MISMATCH row (dnc_ut5_norm_rs3.json seed 2 N 1000, n=12,582,912, max_abs inf with diff 0) is from an earlier spec version (later rows of the same case have n=18,874,368 and MATCH); negctl 8.
+- Re-runs seeds 7 and 11 (2 of 2 MATCH each): k_pen_scatter_rows_f32 on pen_scatter_rows.json N 100003; k_dnc_ut4<4,4,F,F,F> on dnc_ut4_base.json N 1000.
+- Control on pen_scatter: my first attempt edited 0x3ca00, which appears only in a comment (no-op, MATCH); the code constant 248320 to 248319: MISMATCH, 6 of 1,489,920 outputs differ (only rows whose ids land past the shifted slot change).

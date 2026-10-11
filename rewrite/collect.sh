@@ -4,7 +4,7 @@ set -euo pipefail
 g=$1; wt=$2/rewrite; repo=/Users/peterb/Documents/AI/re-halogen
 cd "$repo"
 for d in kernels specs; do
-  for f in "$wt/$d"/*; do b=$(basename "$f"); case $b in scale.hip|k_scale_silu*) continue;; esac; cp "$f" rewrite/$d/; done
+  for f in "$wt/$d"/*; do b=$(basename "$f"); case $b in scale.hip|k_scale_silu*) continue;; esac; cp -R "$f" rewrite/$d/; done
 done
 cp "$wt/reports/$g.md" rewrite/reports/
 for t in $(ssh ai-core "cd ~/re-halogen/rewrite/tables && ls $g.md $g-*.md 2>/dev/null | grep -v -e scratch -e dev"); do scp -q "ai-core:re-halogen/rewrite/tables/$t" rewrite/tables/; done
