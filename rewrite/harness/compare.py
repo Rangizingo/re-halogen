@@ -16,6 +16,8 @@ import datetime
 import importlib.util
 import json
 import operator
+import os
+import shutil
 import struct
 import subprocess
 import sys
@@ -248,7 +250,21 @@ def main(argv=None):
         raise SystemExit(f'{a.kernel} not in {a.kernargs}')
     vend = kd[a.kernel]
     gk = _load_gen_kernargs()
-    work = Path(a.workdir or tempfile.mkdtemp(prefix='cmp_')).resolve()
+    # Own work dir on disk (CMP_TMP, default <repo>/work/cmp), removed after the run: on Ai-core /tmp is RAM-backed,
+    # and leftover dirs there starved the live service of memory (p7-12, 2026-10-11).
+    auto = a.workdir is None
+    if auto:
+        base = Path(os.environ.get('CMP_TMP') or HERE.parent.parent / 'work' / 'cmp')
+        base.mkdir(parents=True, exist_ok=True)
+    work = Path(a.workdir or tempfile.mkdtemp(prefix='cmp_', dir=base)).resolve()
+    try:
+        return _run(a, template, cmp_cfg, vend, gk, work)
+    finally:
+        if auto:
+            shutil.rmtree(work, ignore_errors=True)
+
+
+def _run(a, template, cmp_cfg, vend, gk, work):
     work.mkdir(parents=True, exist_ok=True)
     src = Path(a.rewrite_src or cmp_cfg['rewrite_src'])
     if not src.is_absolute() and not src.exists():

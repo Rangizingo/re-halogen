@@ -1,4 +1,5 @@
 """Tests for rewrite/harness/compare.py: expression resolution, tolerance logic, spec building, table rows."""
+import json
 import struct
 import sys
 from pathlib import Path
@@ -147,3 +148,37 @@ def test_untouched_output_detected():
     pre = b'\x9d\xc2' * 8
     assert c.untouched(pre, pre)
     assert not c.untouched(b'\x00\x00' + pre[2:], pre)
+
+
+def _spec_and_kernargs(tmp_path):
+    spec = tmp_path / 's.json'
+    spec.write_text(json.dumps({'grid': [1, 1, 1], 'block': [1, 1, 1], 'buffers': {}, 'args': [], 'dump': [],
+                                'compare': {'rewrite_src': 'x.hip', 'rewrite_kernel': 'k', 'outputs': []}}))
+    ka = tmp_path / 'ka.json'
+    ka.write_text(json.dumps({'kernels': {'K': {'object': 'o', 'family': 'f', 'args': []}}}))
+    return spec, ka
+
+
+def test_auto_workdir_is_on_cmp_tmp_and_removed_even_on_error(tmp_path, monkeypatch):
+    base = tmp_path / 'cmpbase'
+    monkeypatch.setenv('CMP_TMP', str(base))
+    seen = []
+
+    def boom(src, out):
+        seen.append(Path(out).parent)
+        raise RuntimeError('compile failed')
+    monkeypatch.setattr(c, 'compile_rewrite', boom)
+    spec, ka = _spec_and_kernargs(tmp_path)
+    with pytest.raises(RuntimeError):
+        c.main([str(spec), '--kernel', 'K', '--kernargs', str(ka), '--no-table'])
+    assert seen and seen[0].parent == base   # created under CMP_TMP, not /tmp
+    assert not seen[0].exists()              # and removed
+
+
+def test_given_workdir_is_kept(tmp_path, monkeypatch):
+    monkeypatch.setattr(c, 'compile_rewrite', lambda src, out: (_ for _ in ()).throw(RuntimeError('x')))
+    spec, ka = _spec_and_kernargs(tmp_path)
+    wd = tmp_path / 'keep'
+    with pytest.raises(RuntimeError):
+        c.main([str(spec), '--kernel', 'K', '--kernargs', str(ka), '--no-table', '--workdir', str(wd)])
+    assert wd.is_dir()
