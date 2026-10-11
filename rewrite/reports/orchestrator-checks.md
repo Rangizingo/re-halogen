@@ -200,3 +200,7 @@ Every family's NaN specs include one that fails on the original and passes on th
 ## g25 (attn_fa2 block-wide tile bound, attn_fa2_c.hip), s7 2026-10-11
 
 Collected by cherry-pick (18f7124, e12321c); agent QA PASS; g25.md 1,578 MATCH rows over 26 instances. 174 rows had run 29 committed specs with `--rewrite-src ../kernels/attn_fa2_c.hip`; to keep each row reproducible from its spec file, the orchestrator wrote copies `attn_fa2_c_<name>.json` (identical but for rewrite_src) and renamed those rows to the copies. superseded.tsv: attn_fa2.hip > attn_fa2_c.hip. Re-run, seed 71, N=48, k_attn_fa2<2,1,1,5,1,1>: g25_c2e29 MATCH, g25_vinf MATCH; g25_c2e29 repointed at the ORIGINAL attn_fa2.hip MISMATCH diff=86016 (negative control). Renamed copy attn_fa2_c_1_1_0_0_0_0.json on k_attn_fa2<1,1,0,0,0,0>, seed 72, N=48: MATCH.
+
+## g30 (integer-bound review: lq4w/lq6k/lq8*/linear*/deq_q4cp/q4moe/expert/exp_gu), s7 2026-10-11
+
+835 pairs, all EQUIVALENT (const-audit-exceptions.d/g30.tsv, per-instance cites after the QA fix b6fcfa8), 0 REAL; agent QA PASS twice. Cites re-read: codeobj_53000.s:873341 and :876929 are `v_add_co_u32 v3, s1, 0x700, v3` as the k_linear_f32_q4_mt<8,2,4,256> and <8,4,4,256> rows say. Re-run, fresh seeds 81,82: lq4w_g30_thr_c5.json on k_lq4w<5,16,1,0,0,1> (flags -DLQ_N=5 ...) N=1: 2 of 2 MATCH; same spec built with -DLQ_N=4 (negative control): MISMATCH diff=24.
