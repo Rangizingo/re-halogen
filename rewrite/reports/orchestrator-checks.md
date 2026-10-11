@@ -146,3 +146,7 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 - g18b's rewrite was wrong in the score range near the -1e29 sentinel (no `ST` handling) for bt4, bt4x, bt2w and bt2<0,x>; its recorded specs never reached that range. Orchestrator check: attn_qs_c_bt4_0_mid.json N 40: g18c rewrite seeds 7 and 11 MATCH; g18b's attn_qs.hip on the same spec MISMATCH, 18,432 outputs differ. For these instances the g18c rows are the evidence; match-table.md must cite them.
 - qs<2,0>, qs<3,0>: V comes from 48 KiB of LDS the kernel never writes (no global V load); 5 vendor runs differ in 21-27k of 37,120 bytes. Deterministic and bitwise under a priming kernel (agent's scratch runs, 36 of 36, controls mismatch); needs a compare.py prime option before rows exist (agent g18d).
 - attn_qs_c_3_0.json N+700: the kernel masks the K row with v_and 0x1ff, so rows up to 511 are read (report g18c.md); keeps reads in bounds.
+
+## g18d (prime option; attn_qs qs<2,0>, qs<3,0>), 2026-10-11
+
+- compare.py/run_kernel.cpp "prime" option (spec field, `primed` in every row, --prime-src for controls); tests/test_compare.py 39 pass; run_kernel.cpp sha1 Mac equals Ai-core. 18 MATCH and 24 MISMATCH control rows, all primed. Negctl priming sources copied from Ai-core into rewrite/specs/g18d_negctl/. Re-run seed 7: attn_qs_d_2_0.json N 40 primed MATCH. attn_qs now 32 of 32 (2 conditional on priming).

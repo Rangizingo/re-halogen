@@ -16,6 +16,10 @@
 //   args          [{"offset":O, "buffer":NAME, "byte_offset":B} |
 //                  {"offset":O, "type":T, "value":V} | {"offset":O, "hex":"aabb.."}]
 //   dump          [buffer names] written to DIR/NAME.bin after the launch
+//   prime         optional {"src":"FILE.{hsaco,co,hip}", "kernel":NAME, "grid":[3], "block":[3], "lds_bytes":N,
+//                 "kernarg_size":K, "args":[same forms as above]}: a priming kernel launched on the same device and
+//                 stream right before the measured kernel, then hipDeviceSynchronize. For vendor kernels that read LDS
+//                 they never write. No "args" and no "kernarg_size": launched without a kernarg block.
 #include <hip/hip_runtime.h>
 #include <cstdint>
 #include <cstdio>
@@ -205,29 +209,36 @@ int main(int argc, char** argv) {
   }
   size_t ksz = (size_t)spec.at("kernarg_size").i();
   std::vector<uint8_t> ka(ksz, 0);
-  auto room = [&](size_t off, size_t n) {
-    if (off + n > ksz) { fprintf(stderr, "arg at %zu+%zu beyond kernarg_size %zu\n", off, n, ksz); exit(2); }
-  };
-  for (auto& a : spec.at("args").a) {
-    size_t off = (size_t)a.at("offset").i();
-    if (a.has("buffer")) {
-      auto it = bufs.find(a.at("buffer").s);
-      if (it == bufs.end()) { fprintf(stderr, "unknown buffer %s\n", a.at("buffer").s.c_str()); return 2; }
-      uint64_t ptr = (uint64_t)(uintptr_t)it->second.d + (a.has("byte_offset") ? a.at("byte_offset").i() : 0);
-      room(off, 8); memcpy(&ka[off], &ptr, 8);
-    } else if (a.has("hex")) {
-      const std::string& h = a.at("hex").s;
-      room(off, h.size() / 2);
-      for (size_t k = 0; k + 1 < h.size(); k += 2) ka[off + k / 2] = (uint8_t)strtoul(h.substr(k, 2).c_str(), nullptr, 16);
-    } else {
-      std::string t = a.at("type").s; room(off, dsize(t));
-      put(&ka[off], t, a.at("value").n);
+  auto fill_args = [&](const J& list, std::vector<uint8_t>& kb) {
+    size_t sz = kb.size();
+    auto room = [&](size_t off, size_t n) {
+      if (off + n > sz) { fprintf(stderr, "arg at %zu+%zu beyond kernarg_size %zu\n", off, n, sz); exit(2); }
+    };
+    for (auto& a : list.a) {
+      size_t off = (size_t)a.at("offset").i();
+      if (a.has("buffer")) {
+        auto it = bufs.find(a.at("buffer").s);
+        if (it == bufs.end()) { fprintf(stderr, "unknown buffer %s\n", a.at("buffer").s.c_str()); exit(2); }
+        uint64_t ptr = (uint64_t)(uintptr_t)it->second.d + (a.has("byte_offset") ? a.at("byte_offset").i() : 0);
+        room(off, 8); memcpy(&kb[off], &ptr, 8);
+      } else if (a.has("hex")) {
+        const std::string& h = a.at("hex").s;
+        room(off, h.size() / 2);
+        for (size_t k = 0; k + 1 < h.size(); k += 2) kb[off + k / 2] = (uint8_t)strtoul(h.substr(k, 2).c_str(), nullptr, 16);
+      } else {
+        std::string t = a.at("type").s; room(off, dsize(t));
+        put(&kb[off], t, a.at("value").n);
+      }
     }
-  }
+  };
+  fill_args(spec.at("args"), ka);
   auto g = spec.at("grid").a, bl = spec.at("block").a;
   if (g.size() != 3 || bl.size() != 3) { fprintf(stderr, "grid and block need 3 values each\n"); return 2; }
   if (spec.has("hidden")) {
     const J& h = spec.at("hidden");
+    auto room = [&](size_t off, size_t n) {
+      if (off + n > ksz) { fprintf(stderr, "arg at %zu+%zu beyond kernarg_size %zu\n", off, n, ksz); exit(2); }
+    };
     auto w32 = [&](const std::string& k, uint32_t v) { if (h.has(k)) { room(h.at(k).i(), 4); memcpy(&ka[h.at(k).i()], &v, 4); } };
     auto w16 = [&](const std::string& k, uint16_t v) { if (h.has(k)) { room(h.at(k).i(), 2); memcpy(&ka[h.at(k).i()], &v, 2); } };
     auto w64 = [&](const std::string& k, uint64_t v) { if (h.has(k)) { room(h.at(k).i(), 8); memcpy(&ka[h.at(k).i()], &v, 8); } };
@@ -252,6 +263,30 @@ int main(int argc, char** argv) {
     if (!h.empty()) CK(hipMemcpy(h.data(), it->second.d, h.size(), hipMemcpyDeviceToHost));
     std::ofstream o(out + "/" + nm.s + ".pre.bin", std::ios::binary);
     o.write((char*)h.data(), h.size());
+  }
+  if (spec.has("prime")) {
+    const J& pr = spec.at("prime");
+    std::string psrc = pr.at("src").s;
+    if (ends(psrc, ".hip")) {
+      std::string pobj = out + "/prime.co";
+      std::string cmd = "hipcc --genco --no-gpu-bundle-output --offload-arch=gfx1151 -O3 -o '" + pobj + "' '" + psrc + "' 2>&1";
+      if (system(cmd.c_str()) != 0) { fprintf(stderr, "hipcc failed for prime\n"); return 4; }
+      psrc = pobj;
+    }
+    hipModule_t pmod; CK(hipModuleLoad(&pmod, psrc.c_str()));
+    hipFunction_t pfn; CK(hipModuleGetFunction(&pfn, pmod, pr.at("kernel").s.c_str()));
+    auto pg = pr.at("grid").a, pb = pr.at("block").a;
+    if (pg.size() != 3 || pb.size() != 3) { fprintf(stderr, "prime: grid and block need 3 values each\n"); return 2; }
+    unsigned plds = pr.has("lds_bytes") ? (unsigned)pr.at("lds_bytes").i() : 0;
+    bool pargs = pr.has("args") && !pr.at("args").a.empty();
+    if (pargs && !pr.has("kernarg_size")) { fprintf(stderr, "prime: args need kernarg_size\n"); return 2; }
+    std::vector<uint8_t> pka(pr.has("kernarg_size") ? (size_t)pr.at("kernarg_size").i() : 0, 0);
+    if (pargs) fill_args(pr.at("args"), pka);
+    size_t pksz = pka.size();
+    void* pcfg[] = {HIP_LAUNCH_PARAM_BUFFER_POINTER, pka.data(), HIP_LAUNCH_PARAM_BUFFER_SIZE, &pksz, HIP_LAUNCH_PARAM_END};
+    CK(hipModuleLaunchKernel(pfn, pg[0].i(), pg[1].i(), pg[2].i(), pb[0].i(), pb[1].i(), pb[2].i(), plds, nullptr, nullptr,
+                             pksz ? pcfg : nullptr));
+    CK(hipDeviceSynchronize());
   }
   CK(hipModuleLaunchKernel(fn, g[0].i(), g[1].i(), g[2].i(), bl[0].i(), bl[1].i(), bl[2].i(), lds, nullptr, nullptr, cfg));
   CK(hipDeviceSynchronize());

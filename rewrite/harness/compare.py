@@ -9,6 +9,11 @@ N (size), SEED and ceil_div(a, b). The "compare" block names the rewrite:
   {"rewrite_src": "rewrite/kernels/scale.hip", "rewrite_kernel": "k_scale_silu",
    "outputs": [{"buffer": "y", "dtype": "bf16"}], "tol": {"max_abs": 1e-3, "max_ulp": 2}}
 No "tol" (or an empty one) means bitwise equality. Exit 0 if every case MATCHes, 1 otherwise.
+
+Optional top-level "prime" (see run_kernel.cpp): {"src": "<.hip path relative to the spec>", "kernel": ..., "grid": ...,
+"block": ..., "lds_bytes": N, "args": [...]} launches a priming kernel right before the vendor kernel and before the
+rewrite. For vendor kernels that read LDS they never write: the result is only defined after priming. Every result
+line and table row of such a spec carries `primed`. --prime-src overrides the path (negative controls).
 """
 import argparse
 import ast
@@ -80,9 +85,30 @@ def explicit_args(args):
     return [(o, s, k) for o, s, k in args if not k.startswith('hidden_')]
 
 
-def build_run_spec(template, kernel_name, layout, env):
-    """Resolve a template for one kernel layout ({kernarg_size, args}); drops the compare block."""
+def prime_src_path(template, spec_path, override=None):
+    """Absolute path of the spec's priming source, or None when the spec has no "prime".
+
+    A relative "src" is taken from the spec file's directory; `override` (relative: from the cwd) replaces it.
+    """
+    pr = template.get('prime')
+    if not pr:
+        return None
+    src = Path(override or pr['src'])
+    if not src.is_absolute():
+        src = (Path.cwd() if override else Path(spec_path).resolve().parent) / src
+    return src.resolve()
+
+
+def build_run_spec(template, kernel_name, layout, env, prime_src=None):
+    """Resolve a template for one kernel layout ({kernarg_size, args}); drops the compare block.
+
+    A "prime" block keeps its fields but its src becomes `prime_src` (absolute), because run_kernel runs elsewhere.
+    """
     spec = resolve({k: v for k, v in template.items() if k != 'compare'}, env)
+    if 'prime' in spec:
+        if prime_src is None:
+            raise ValueError('spec has "prime" but no prime_src was given')
+        spec['prime']['src'] = str(prime_src)
     spec['kernel'] = kernel_name
     spec['kernarg_size'] = layout['kernarg_size']
     spec['hidden'] = {k[len('hidden_'):]: o for o, _, k in layout['args'] if k.startswith('hidden_')}
@@ -220,7 +246,8 @@ def result_text(r):
     word = 'MATCH' if r['match'] else 'MISMATCH'
     return (f"{word} n={r['n']} diff={r['n_diff']} max_abs={r['max_abs']:g} max_ulp={r['max_ulp']:g}"
             + (f" first_diff={r['first_diff']}" if r['first_diff'] is not None else '')
-            + (f" excluded={r['excluded']}" if r.get('excluded') else ''))
+            + (f" excluded={r['excluded']}" if r.get('excluded') else '')
+            + (' primed' if r.get('primed') else ''))
 
 
 def _load_gen_kernargs():
@@ -314,6 +341,7 @@ def main(argv=None):
     ap.add_argument('--kernargs', default=str(HERE / 'kernargs.json'))
     ap.add_argument('--fatbin-dir', default=str(Path.home() / 're-halogen/work/fatbin'))
     ap.add_argument('--rewrite-src', help='override compare.rewrite_src (relative paths: from the spec file)')
+    ap.add_argument('--prime-src', help='override the spec "prime".src (relative paths: from the cwd)')
     ap.add_argument('--table', default=str(HERE.parent / 'match-table.md'))
     ap.add_argument('--no-table', action='store_true')
     ap.add_argument('--workdir')
@@ -351,6 +379,7 @@ def _run(a, template, cmp_cfg, vend, gk, work):
     src = Path(a.rewrite_src or cmp_cfg['rewrite_src'])
     if not src.is_absolute() and not src.exists():
         src = Path(a.spec).resolve().parent / src
+    prime_src = prime_src_path(template, a.spec, a.prime_src)
     rco = work / 'rewrite.co'
     compile_rewrite(src, rco)
     rname = cmp_cfg['rewrite_kernel']
@@ -369,9 +398,10 @@ def _run(a, template, cmp_cfg, vend, gk, work):
             env = {'N': size, 'SEED': seed}
             case = f'{Path(a.spec).name} seed={seed} N={size}'
             vdir, rdir = work / f'v_{seed}_{size}', work / f'r_{seed}_{size}'
-            run_kernel(vco.resolve(), build_run_spec(template, a.kernel, vend, env), vdir)
-            run_kernel(rco.resolve(), build_run_spec(template, rname, rlay, env), rdir)
-            res = {'match': True, 'n': 0, 'n_diff': 0, 'max_abs': 0.0, 'max_ulp': 0, 'first_diff': None, 'excluded': 0}
+            run_kernel(vco.resolve(), build_run_spec(template, a.kernel, vend, env, prime_src), vdir)
+            run_kernel(rco.resolve(), build_run_spec(template, rname, rlay, env, prime_src), rdir)
+            res = {'match': True, 'n': 0, 'n_diff': 0, 'max_abs': 0.0, 'max_ulp': 0, 'first_diff': None, 'excluded': 0,
+                   'primed': prime_src is not None}
             for out in cmp_cfg['outputs']:
                 name = out['buffer']
                 vb, rb = (vdir / f'{name}.bin').read_bytes(), (rdir / f'{name}.bin').read_bytes()
