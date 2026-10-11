@@ -134,3 +134,8 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 - 83 of 83 MATCH (882 rows, 0 MISMATCH), including g16's 20 re-run from committed specs dnc_scan3_sw_A*.json; negctl 18 MISMATCH and 8 designed-insensitive MATCH rows. sha1 Mac equals Ai-core.
 - Listing cites re-checked in kernels-disasm-v2/codeobj_1146000.s: :139471 and :146343 are the <8,8,8,F> and <8,8,8,T> kernel starts; global_load count 14 and 14 in their ranges; G=1 range :149995-152141 has 22 v_movrel and 16 global_load; :150241-150245 `s_mov_b32 m0, s11` ... `v_movreld_b32 v3, v44`, :150267-150269 `v_movrels_b32 v46, v3`.
 - Re-run seeds 7 and 11 at N 1 and 300 on dnc_scan3_b_base.json: <8,8,8,T,0,15,0> and <8,8,8,T,0,15,1>, 8 of 8 MATCH.
+
+## g13 (ht_lin, 97) and g22b (11 left from g22), 2026-10-11
+
+- g13: 97 of 97 MATCH, 0 MISMATCH; negctl 7; sha1 equal; collected after the session's hook pause, not yet re-run by the orchestrator.
+- g22b: 11 of 11 MATCH (414 rows), negctl 44 (4 explained insensitive mutants in its report); cites in kernels-disasm-v2; data files in rewrite/specs/g22b_data. With g22: 44 of 44. Re-run seeds 7 and 11: k_i4r_rows_gl_g<1,2> on g22b_glg12_p1_edge.json N 1, 2 of 2 MATCH. g22b found I4rSd = HtSd (passed to g14b) and corrected g22's fl_g block-to-item map (blockIdx/40).
