@@ -67,3 +67,7 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 - 20 of 83 instances MATCH in g16.md, but the rows name specs `sw_A{2,4,8,16,32}.json` that exist only in /tmp/g16/specs on Ai-core, not in rewrite/specs. Not reproducible from the repo: g16b asked to commit them and re-run the 20 instances into g16b.md. g16.md rows do not count until then.
 - U12 B, C, D, G (report g16.md "U12"): instances differing in one of them match the same rewrite, so no numeric effect on the tested inputs. Open before U12 closes: what D's extra global_load_b32 reads (a spec that varies it), G's index range, listing cites for B/C. Assigned to g16b.
 - spec check (all collected groups g01, g02, g04-g09, g11, g12, g11-lq, orch): every spec named by a MATCH row exists in rewrite/specs. Only g16 failed it.
+
+## g19 (dnc_scan3w, dn_fused16), 2026-10-10, partial
+
+- 4 of 29 instances MATCH (the 4 non-probe dnc_scan3w); negctl 15 MISMATCH rows; specs all committed. Left: 8 scan3w timing probes (agent g19b: reproduce the probe's skipped-work output bitwise) and 17 dn_fused16 (agent g19c).
