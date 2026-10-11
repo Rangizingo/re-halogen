@@ -61,3 +61,8 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 
 - 66 of 86 instances MATCH, 0 MISMATCH rows; negctl 11 MISMATCH rows. sha1 of 4 .hip: Mac equals Ai-core. The 20 k_q4moe GEMM instances are BLOCKED (5,476 to 41,499 listing lines each), continued by agent g05b.
 - Re-run seeds 7 and 11: k_exp_gu_w<16,2,0> on exp_gu_w_16_2_0_small.json, 2 of 2 MATCH. Control, silu log2e 1.44269502 to 1.4426 (exp_gu.hip:114): MISMATCH, 278 of 6,432 outputs differ.
+
+## g16 (dnc_scan3 family), 2026-10-10, partial
+
+- 20 of 83 instances MATCH in g16.md, but the rows name specs `sw_A{2,4,8,16,32}.json` that exist only in /tmp/g16/specs on Ai-core, not in rewrite/specs. Not reproducible from the repo: g16b asked to commit them and re-run the 20 instances into g16b.md. g16.md rows do not count until then.
+- U12 B, C, D, G (report g16.md "U12"): instances differing in one of them match the same rewrite, so no numeric effect on the tested inputs. Open before U12 closes: what D's extra global_load_b32 reads (a spec that varies it), G's index range, listing cites for B/C. Assigned to g16b.
