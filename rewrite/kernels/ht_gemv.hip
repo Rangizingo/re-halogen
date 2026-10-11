@@ -100,15 +100,13 @@ __device__ static inline void wht128(float (&s)[8], int r) {
 // Wave partials: own + permlanex16 (h1) -> LDS [w][j][r], wave 0 sums waves 0..7 in order starting from 0+,
 // WHT-128 over rows 16j+r, times 1/sqrt(128) = 0x3db504f3, times sv (v_fma_mix ... neg(0)), bf16 RNE.
 // Output: out[begin*2560 + t*128 + 16j + r], only when end > begin (v_cmp_gt_u32 exec, min(cnt,1), wave id).
+// dn core: one 128-row x 640 tile (tb) against one x row; on return s[j] holds WHT row 16j + r (post sum, pre scale) for wave 0, lanes < 16.
+// Returns true for the threads that own an output (wave 0, lane < 16, wr set).
 template <int BITS>
-__device__ static inline void ht_dn11(const unsigned* W, const _Float16* x, const HtItem* items, const _Float16* sv, unsigned short* out) {
+__device__ static inline bool dn_core(const unsigned* tb, const _Float16* xrow, float (&s)[8], bool wr) {
   __shared__ float P[8][8][16];
   const int tid = threadIdx.x, w = tid >> 5, lane = tid & 31, r = lane & 15, hh = lane >> 4;
-  const HtItem it = items[blockIdx.x];
-  const int xr = it.begin < it.end - 1 ? it.begin : it.end - 1;
-  const _Float16* xrow = x + (long)xr * 640;
   constexpr int NW = 8 * BITS;  // words per 16x16 tile
-  const unsigned* tb = W + ((long)it.expert * (2560 * 640 / 8 * BITS) + (long)it.tile * (128 * 640 / 8 * BITS)) / 4;
   float acc[8];
   for (int j = 0; j < 8; j++) acc[j] = 0.f;
   for (int i = 0; i < 5; i++) {
@@ -127,25 +125,52 @@ __device__ static inline void ht_dn11(const unsigned* W, const _Float16* x, cons
     if (hh == 0) P[w][j][r] = acc[j] + o;
   }
   __syncthreads();
-  const int cnt = it.end - it.begin;
-  if (w != 0 || cnt < 1) return;
-  float s[8];
+  if (w != 0 || !wr) return false;
   for (int j = 0; j < 8; j++) {
     float a = 0.f + P[0][j][r];
     for (int q = 1; q < 8; q++) a = a + P[q][j][r];
     s[j] = a;
   }
   wht128(s, r);
-  if (hh != 0) return;
-  const _Float16* svp = sv + (long)it.expert * 2560 + it.tile * 128;
-  unsigned short* op = out + (long)it.begin * 2560 + it.tile * 128;
+  return hh == 0;
+}
+__device__ static inline void dn_store(const float (&s)[8], const _Float16* svp, unsigned short* op) {
+  const int r = threadIdx.x & 15;
   for (int j = 0; j < 8; j++) {
     float y = s[j] * INV_SQRT128;  // 0x3db504f3
     y = (float)svp[16 * j + r] * y;
     op[16 * j + r] = f2bf_rne(y);
   }
 }
+template <int BITS>
+__device__ static inline void ht_dn11(const unsigned* W, const _Float16* x, const HtItem* items, const _Float16* sv, unsigned short* out) {
+  const HtItem it = items[blockIdx.x];
+  const int xr = it.begin < it.end - 1 ? it.begin : it.end - 1;
+  const unsigned* tb = W + ((long)it.expert * (2560 * 640 / 8 * BITS) + (long)it.tile * (128 * 640 / 8 * BITS)) / 4;
+  float s[8];
+  if (dn_core<BITS>(tb, x + (long)xr * 640, s, it.end - it.begin >= 1))
+    dn_store(s, sv + (long)it.expert * 2560 + it.tile * 128, out + (long)it.begin * 2560 + it.tile * 128);
+}
 
+// k_ht_gemv_dn_t<BITS,8,0,false>(W@0, x@8, ids@16 (int), sv@24, out@32, HtFold@40 unused here): token-indexed. wg = 20*pos + tile
+// (@A65308 magic 0x66666667 >> 3, @A65398-A653D8), expert = ids[pos] (@A65340), x row pos (0x500 B, @A65358), W offset expert*0xc8000 +
+// tile*0xa000 (@A653E0-A653F8), sv + expert*0x1400 + tile*256 (@A66AB4-A66AE0), out + pos*0x1400 + tile*256 (@A66BE0-A66C00). Always writes.
+template <int BITS>
+__device__ static inline void ht_dn_t0(const unsigned* W, const _Float16* x, const int* ids, const _Float16* sv, unsigned short* out) {
+  const int pos = blockIdx.x / 20, tile = blockIdx.x - 20 * pos, e = ids[pos];
+  const unsigned* tb = W + ((long)e * (2560 * 640 / 8 * BITS) + (long)tile * (128 * 640 / 8 * BITS)) / 4;
+  float s[8];
+  if (dn_core<BITS>(tb, x + (long)pos * 640, s, true))
+    dn_store(s, sv + (long)e * 2560 + tile * 128, out + (long)pos * 2560 + tile * 128);
+}
+
+struct HtFold { long raw[5]; };  // 40 bytes by value at kernarg 40 (layout: see the fold variants)
+extern "C" __global__ void k_ht_gemv_dn_t_4_8_0_0(const unsigned* W, const _Float16* x, const int* ids, const _Float16* sv, unsigned short* out, HtFold) {
+  ht_dn_t0<4>(W, x, ids, sv, out);
+}
+extern "C" __global__ void k_ht_gemv_dn_t_3_8_0_0(const unsigned* W, const _Float16* x, const int* ids, const _Float16* sv, unsigned short* out, HtFold) {
+  ht_dn_t0<3>(W, x, ids, sv, out);
+}
 extern "C" __global__ void k_ht_gemv_dn_4_8_1(const unsigned* W, const _Float16* x, const HtItem* items, const _Float16* sv, unsigned short* out) {
   ht_dn11<4>(W, x, items, sv, out);
 }
@@ -167,20 +192,14 @@ extern "C" __global__ void k_ht_gemv_dn_3_8_1(const unsigned* W, const _Float16*
 // Z * su (su[e*640 + b*128 + 16j + r]) enters a second WHT-128; its first stage is fused: t[2m] = fma(Z[2m], su[2m], rn(Z[2m+1]*su[2m+1])),
 // t[2m+1] = fma(Z[2m], su[2m], -rn(...)) (v_fma_mix_f32 ... op_sel_hi:[0,1,0], @A82E84-A82EE8). Then v_fma_mixlo_f16 with 0x3db504f3
 // (f16 of the exact f32*f32 product, @A831FC-A83230). out[begin*640 + b*128 + 16j + r], only when end > begin.
+// One wave (global wave index gw = 0..7 of the 8 that cover K) accumulates 20 column tiles for the 16 row tiles; returns acc + other half (lanes < 16).
 template <int BITS>
-__device__ static inline void ht_gu11(const unsigned* W, const _Float16* x, const HtItem* items, const int* tok, const _Float16* sv,
-                                     const _Float16* su, _Float16* out) {
-  __shared__ float P[8][16][16];
-  const int tid = threadIdx.x, w = tid >> 5, lane = tid & 31, r = lane & 15, hh = lane >> 4;
-  const HtItem it = items[blockIdx.x];
-  const int xi = it.begin < it.end - 1 ? it.begin : it.end - 1;
-  const _Float16* xrow = x + (long)tok[xi] * 2560;
+__device__ static inline void gu_wave_acc(const unsigned* tb, const _Float16* xrow, int gw, int lane, float (&acc)[16]) {
+  const int hh = lane >> 4;
   constexpr int NW = 8 * BITS;
-  const unsigned* tb = W + ((long)it.expert * (1280L * 2560 / 8 * BITS) + (long)it.tile * (256L * 2560 / 8 * BITS)) / 4;
-  float acc[16];
   for (int k = 0; k < 16; k++) acc[k] = 0.f;
   for (int i = 0; i < 20; i++) {
-    const int ct = 20 * w + i;
+    const int ct = 20 * gw + i;
     _Float16 xv[8];
     for (int c = 0; c < 8; c++) xv[c] = xrow[16 * ct + 8 * hh + c];
     for (int k = 0; k < 16; k++) {
@@ -190,23 +209,19 @@ __device__ static inline void ht_gu11(const unsigned* W, const _Float16* x, cons
       acc[k] = dot8(wt, xv, acc[k]);
     }
   }
-  for (int k = 0; k < 16; k++) {
-    float o = __shfl_xor(acc[k], 16, 32);
-    if (hh == 0) P[w][k][r] = acc[k] + o;
-  }
-  __syncthreads();
-  const int cnt = it.end - it.begin;
-  if (w != 0 || cnt < 1) return;
+  for (int k = 0; k < 16; k++) acc[k] = acc[k] + __shfl_xor(acc[k], 16, 32);  // lanes < 16: own (h0) + other (h1)
+}
+// Wave 0 finish: P is [wave 0..7][k 0..15][r 0..15]; sums waves in order from 0 + P0, then WHT / SiLU / second WHT as documented above.
+__device__ static inline void gu_finish(const volatile float* P, const _Float16* svg, const _Float16* sus, _Float16* op) {
+  const int r = threadIdx.x & 15, hh = (threadIdx.x >> 4) & 1;
   float g[8], u[8];
   for (int k = 0; k < 16; k++) {
-    float a = 0.f + P[0][k][r];
-    for (int q = 1; q < 8; q++) a = a + P[q][k][r];
+    float a = 0.f + P[k * 16 + r];
+    for (int q = 1; q < 8; q++) a = a + P[(q * 16 + k) * 16 + r];
     if (k < 8) g[k] = a; else u[k - 8] = a;
   }
   wht128(g, r);
   wht128(u, r);
-  const _Float16* svg = sv + (long)it.expert * 1280 + it.tile * 128;
-  const _Float16* sus = su + (long)it.expert * 640 + it.tile * 128;
   float z[8], zs[8];
   for (int j = 0; j < 8; j++) {
     float G = (float)svg[16 * j + r] * (g[j] * INV_SQRT128);
@@ -224,12 +239,50 @@ __device__ static inline void ht_gu11(const unsigned* W, const _Float16* x, cons
   }
   wht128_rest(t, o, r);
   if (hh != 0) return;
-  _Float16* op = out + (long)it.begin * 640 + it.tile * 128;
   for (int j = 0; j < 8; j++) {
     unsigned h;
     asm("v_fma_mixlo_f16 %0, %1, %2, 0" : "=v"(h) : "v"(o[j]), "v"(INV_SQRT128));
     op[16 * j + r] = __builtin_bit_cast(_Float16, (unsigned short)h);
   }
+}
+template <int BITS>
+__device__ static inline void gu_core(const unsigned* tb, const _Float16* xrow, const _Float16* svg, const _Float16* sus, _Float16* op, bool wr) {
+  __shared__ float P[8][16][16];
+  const int tid = threadIdx.x, w = tid >> 5, lane = tid & 31, r = lane & 15, hh = lane >> 4;
+  float acc[16];
+  gu_wave_acc<BITS>(tb, xrow, w, lane, acc);
+  if (hh == 0) for (int k = 0; k < 16; k++) P[w][k][r] = acc[k];
+  __syncthreads();
+  if (w == 0 && wr) gu_finish(&P[0][0][0], svg, sus, op);
+}
+template <int BITS>
+__device__ static inline void ht_gu11(const unsigned* W, const _Float16* x, const HtItem* items, const int* tok, const _Float16* sv,
+                                     const _Float16* su, _Float16* out) {
+  const HtItem it = items[blockIdx.x];
+  const int xi = it.begin < it.end - 1 ? it.begin : it.end - 1;
+  const unsigned* tb = W + ((long)it.expert * (1280L * 2560 / 8 * BITS) + (long)it.tile * (256L * 2560 / 8 * BITS)) / 4;
+  gu_core<BITS>(tb, x + (long)tok[xi] * 2560, sv + (long)it.expert * 1280 + it.tile * 128, su + (long)it.expert * 640 + it.tile * 128,
+                out + (long)it.begin * 640 + it.tile * 128, it.end - it.begin >= 1);
+}
+
+// k_ht_gemv_gu_t<BITS,8,T,U>(W@0, x@8, ids@16 (int), sv@24, su@32, out@40, HtSd@48 (88 B), int@136): slot-indexed. wg = 5*pos + tile
+// (@A78908-A78920 magic 0x66666667 >> 1 = wg/5; tile = wg - 5*pos), x row = pos/10 (wg/50, 0x1400 B rows, @A78958-A7897C),
+// expert = ids[pos] (@A7893C), sv + expert*0xa00 B + tile*256, su + expert*0x500 + tile*256 (@99B8AC-A99B8F8), out + pos*0x500 + tile*256.
+template <int BITS>
+__device__ static inline void ht_gu_t(const unsigned* W, const _Float16* x, const int* ids, const _Float16* sv, const _Float16* su, _Float16* out) {
+  const int pos = blockIdx.x / 5, tile = blockIdx.x - 5 * pos, e = ids[pos];
+  const unsigned* tb = W + ((long)e * (1280L * 2560 / 8 * BITS) + (long)tile * (256L * 2560 / 8 * BITS)) / 4;
+  gu_core<BITS>(tb, x + (long)(pos / 10) * 2560, sv + (long)e * 1280 + tile * 128, su + (long)e * 640 + tile * 128,
+                out + (long)pos * 640 + tile * 128, true);
+}
+struct HtSd { long raw[11]; };  // 88 bytes by value at kernarg 48
+extern "C" __global__ void k_ht_gemv_gu_t_4_8_0_0(const unsigned* W, const _Float16* x, const int* ids, const _Float16* sv, const _Float16* su,
+                                                  _Float16* out, HtSd, int) {
+  ht_gu_t<4>(W, x, ids, sv, su, out);
+}
+extern "C" __global__ void k_ht_gemv_gu_t_3_8_0_0(const unsigned* W, const _Float16* x, const int* ids, const _Float16* sv, const _Float16* su,
+                                                  _Float16* out, HtSd, int) {
+  ht_gu_t<3>(W, x, ids, sv, su, out);
 }
 
 extern "C" __global__ void k_ht_gemv_gu_4_8_1(const unsigned* W, const _Float16* x, const HtItem* items, const int* tok, const _Float16* sv,
@@ -240,3 +293,98 @@ extern "C" __global__ void k_ht_gemv_gu_3_8_1(const unsigned* W, const _Float16*
                                               const _Float16* su, _Float16* out) {
   ht_gu11<3>(W, x, items, tok, sv, su, out);
 }
+
+// k_ht_gemv_gu_ts<BITS,S>(W@0, x@8, ids@16, sv@24, su@32, out@40, Pf@48 (float scratch), Pj@56 (uint counters)): the gu_t computation with the
+// 8 waves of one (pos, tile) spread over S blocks of 8/S waves (block size 32*8/S = 128/64/32 threads). wg = (pos*5 + tile)*S + split
+// (S=2: pos = wg/10, tile = wg/2 - 5*pos, @943108-943244). Wave gw = split*(8/S) + wave covers column tiles 20gw..20gw+19, as in gu.
+// Each wave stores its 16x16 partials to Pf, thread 0 does atomic_add on Pj[pos*5 + tile] (@945414); the block that sees S-1 runs the gu finish
+// on wave 0 over the 8 wave slots in order. Pf layout here is the rewrite's own ([pt][gw][k][r]); only `out` is compared.
+template <int BITS, int S>
+__device__ static inline void ht_gu_ts(const unsigned* W, const _Float16* x, const int* ids, const _Float16* sv, const _Float16* su, _Float16* out,
+                                      float* Pf, unsigned* Pj) {
+  __shared__ int last;
+  const int tid = threadIdx.x, w = tid >> 5, lane = tid & 31, r = lane & 15, hh = lane >> 4;
+  const int split = blockIdx.x % S, pt = blockIdx.x / S, pos = pt / 5, tile = pt - 5 * pos, e = ids[pos];
+  const unsigned* tb = W + ((long)e * (1280L * 2560 / 8 * BITS) + (long)tile * (256L * 2560 / 8 * BITS)) / 4;
+  float acc[16];
+  const int gw = split * (8 / S) + w;
+  gu_wave_acc<BITS>(tb, x + (long)(pos / 10) * 2560, gw, lane, acc);
+  float* slot = Pf + ((long)pt * 8 + gw) * 256;
+  if (hh == 0) for (int k = 0; k < 16; k++) slot[k * 16 + r] = acc[k];
+  __threadfence();
+  __syncthreads();
+  if (tid == 0) last = (atomicAdd(Pj + pt, 1u) == (unsigned)(S - 1));
+  __syncthreads();
+  if (!last) return;
+  __threadfence();
+  if (w == 0) gu_finish(Pf + (long)pt * 8 * 256, sv + (long)e * 1280 + tile * 128, su + (long)e * 640 + tile * 128, out + (long)pos * 640 + tile * 128);
+}
+#define GU_TS(B, S)                                                                                                                         \
+  extern "C" __global__ void __launch_bounds__(32 * 8 / S) k_ht_gemv_gu_ts_##B##_##S(const unsigned* W, const _Float16* x, const int* ids,    \
+                                                                                  const _Float16* sv, const _Float16* su, _Float16* out,   \
+                                                                                  float* Pf, unsigned* Pj) {                                \
+    ht_gu_ts<B, S>(W, x, ids, sv, su, out, Pf, Pj);                                                                                         \
+  }
+GU_TS(4, 2) GU_TS(4, 4) GU_TS(4, 8) GU_TS(3, 2) GU_TS(3, 4) GU_TS(3, 8)
+
+// k_ht_gemv_gu_gs<BITS,8,G>(W@0, x@8, A@16 (HtItem), cnt@24 (int), tok@32 (int), sv@40, su@48, out@56, Pf@64, Pj@72): grouped GEMV, one wave per block,
+// wg = 8*I + split, I < 5*(*cnt) (@903509-903534: wg/8 >= cnt*5 exits). Record A[I] = {expert, tile, begin, end}; window of G positions
+// begin..begin+G-1 (x row tok[min(begin+g, end-1)], @903568-9035F4), n = min(end-begin, G) of them are real. Wave = split covers column tiles
+// 20*split..+19 (@903694 s12*20) for all G tokens with the same decode. Partials go to slot ((begin+g)*5 + tile)*8 + split (@905A58-905BF0, 1024 B each);
+// the block that brings the counter to 7 finishes each real token g (gu_finish) into out[(begin+g)*640 + tile*128 + ..].
+template <int BITS, int G>
+__device__ static inline void ht_gu_gs(const unsigned* W, const _Float16* x, const HtItem* A, const int* cnt, const int* tok, const _Float16* sv,
+                                      const _Float16* su, _Float16* out, float* Pf, unsigned* Pj) {
+  const int I = blockIdx.x >> 3, split = blockIdx.x & 7;
+  if (I >= 5 * cnt[0]) return;
+  const HtItem it = A[I];
+  const int lane = threadIdx.x, r = lane & 15, hh = lane >> 4;
+  const int n = (it.end - it.begin) < G ? (it.end - it.begin) : G;
+  constexpr int NW = 8 * BITS;
+  const unsigned* tb = W + ((long)it.expert * (1280L * 2560 / 8 * BITS) + (long)it.tile * (256L * 2560 / 8 * BITS)) / 4;
+  const _Float16* xr[G];
+  for (int g = 0; g < G; g++) {
+    int p = it.begin + g; if (p > it.end - 1) p = it.end - 1;
+    xr[g] = x + (long)tok[p] * 2560;
+  }
+  float acc[G][16];
+  for (int g = 0; g < G; g++) for (int k = 0; k < 16; k++) acc[g][k] = 0.f;
+  for (int i = 0; i < 20; i++) {
+    const int ct = 20 * split + i;
+    _Float16 xv[G][8];
+    for (int g = 0; g < G; g++) for (int c = 0; c < 8; c++) xv[g][c] = xr[g][16 * ct + 8 * hh + c];
+    for (int k = 0; k < 16; k++) {
+      const unsigned* tp = tb + ct * (16 * NW) + k * NW;
+      _Float16 wt[8];
+      ht_dec<BITS>(tp, lane, wt);
+      for (int g = 0; g < G; g++) acc[g][k] = dot8(wt, xv[g], acc[g][k]);
+    }
+  }
+  for (int g = 0; g < G; g++) {
+    float v[16];
+    for (int k = 0; k < 16; k++) v[k] = acc[g][k] + __shfl_xor(acc[g][k], 16, 32);
+    if (g < n && hh == 0) {
+      float* slot = Pf + ((((long)(it.begin + g) * 5 + it.tile) * 8) + split) * 256;
+      for (int k = 0; k < 16; k++) slot[k * 16 + r] = v[k];
+    }
+  }
+  __threadfence();
+  __syncthreads();
+  unsigned old = 0;
+  if (lane == 0) old = atomicAdd(Pj + I, 1u);
+  old = __shfl(old, 0, 32);
+  if (old != 7) return;
+  __threadfence();
+  for (int g = 0; g < n; g++) {
+    const long pos = it.begin + g;
+    gu_finish(Pf + (pos * 5 + it.tile) * 8 * 256, sv + (long)it.expert * 1280 + it.tile * 128, su + (long)it.expert * 640 + it.tile * 128,
+              out + pos * 640 + it.tile * 128);
+  }
+}
+#define GU_GS(B, G)                                                                                                                         \
+  extern "C" __global__ void __launch_bounds__(32) k_ht_gemv_gu_gs_##B##_8_##G(                                                            \
+      const unsigned* W, const _Float16* x, const HtItem* A, const int* cnt, const int* tok, const _Float16* sv, const _Float16* su,        \
+      _Float16* out, float* Pf, unsigned* Pj) {                                                                                             \
+    ht_gu_gs<B, G>(W, x, A, cnt, tok, sv, su, out, Pf, Pj);                                                                                 \
+  }
+GU_GS(4, 2) GU_GS(4, 4) GU_GS(3, 2) GU_GS(3, 4)

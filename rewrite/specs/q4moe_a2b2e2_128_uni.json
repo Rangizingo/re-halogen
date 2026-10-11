@@ -1,0 +1,109 @@
+{
+ "grid": [
+  13,
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "kernarg_size": 152,
+ "buffers": {
+  "w": {
+   "bytes": 3379200,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/q4s/data/uni_b2e2.bin"
+   }
+  },
+  "items": {
+   "bytes": 208,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/q4moe_items_b2_128.bin"
+   }
+  },
+  "count": {
+   "bytes": 16,
+   "fill": {
+    "kind": "const",
+    "dtype": "i32",
+    "value": 13
+   }
+  },
+  "x": {
+   "bytes": "=(679+N)*640*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+7",
+    "lo": -3,
+    "hi": 3
+   }
+  },
+  "y": {
+   "bytes": "=(679+N)*2560*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "w"
+  },
+  {
+   "offset": 8,
+   "type": "i64",
+   "value": 0
+  },
+  {
+   "offset": 16,
+   "type": "i64",
+   "value": 3276800
+  },
+  {
+   "offset": 24,
+   "type": "i64",
+   "value": 10
+  },
+  {
+   "offset": 32,
+   "hex": "000080bf2a3a32bff46c06bf5530cabee09c91be363c3dbea392babd000000005305a33df8c2243ea3017c3e3b01ad3e6ea3e13e8e06103f8716393f0000803f"
+  },
+  {
+   "offset": 128,
+   "buffer": "items"
+  },
+  {
+   "offset": 136,
+   "buffer": "count"
+  },
+  {
+   "offset": 144,
+   "buffer": "y"
+  },
+  {
+   "offset": 112,
+   "buffer": "x"
+  }
+ ],
+ "dump": [
+  "y"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/q4moe.hip",
+  "rewrite_kernel": "k_q4moe_a2b2e2_128",
+  "outputs": [
+   {
+    "buffer": "y",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

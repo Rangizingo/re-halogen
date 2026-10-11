@@ -122,3 +122,9 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 
 - 33 of 44 MATCH, 0 MISMATCH; negctl 52; specs committed. Worktree i4r_gu.hip / i4r_rows.hip differed from the Ai-core copies that produced the rows by two comment lines only (diff), synced. In-kernel :NNNNN cites may be off by tens of lines (agent note). 11 left (HtItem group, gl/gl_o, k_dv_quant) to agent g22b using committed file fills.
 - Re-run seeds 7 and 11 on dv_scatter.json N 100003: MATCH seed=7 N=100003 diff=0;MATCH seed=11 N=100003 diff=0;
+
+## g05b (20 k_q4moe GEMMs), g14 (ht_gemv, partial), 2026-10-11
+
+- g05b: 20 of 20 MATCH (207 rows), negctl 22; sha1 Mac equals Ai-core. Re-run seeds 7 and 11: q4moe_a1b2e0_128.json N 16 (1,779,200 outputs), 2 of 2 MATCH. Control, RNE bias 0x7fff to 0 (q4moe.hip:65): MISMATCH, 142,375 outputs differ (a first sed matched nothing because the literal has no `u` suffix; checked with diff before running).
+- g14: 64 of 94 MATCH (1,082 rows, 0 MISMATCH), negctl 36; agent wrote into the main checkout. Re-run seeds 7 and 11: ht_gemv_gu_t_4_8_0_0.json N 400, 2 of 2 MATCH. 30 BLOCKED (HtFold, HtSd layouts) to agent g14b.
+- Listing defect found by g18c: old kernels-disasm has 212,067 `.long` lines; kernels-disasm-v2 (llvm-objdump 23.1.3) has 0. BRIEF fifth addendum.
