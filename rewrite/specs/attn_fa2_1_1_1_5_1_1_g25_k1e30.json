@@ -113,7 +113,7 @@
   "o"
  ],
  "compare": {
-  "rewrite_src": "../kernels/attn_fa2.hip",
+  "rewrite_src": "../kernels/attn_fa2_c.hip",
   "rewrite_kernel": "k_attn_fa2_1_1_1_5_1_1",
   "outputs": [
    {
