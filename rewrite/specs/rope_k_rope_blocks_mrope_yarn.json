@@ -1,0 +1,86 @@
+{
+ "grid": [
+  "=N",
+  1,
+  1
+ ],
+ "block": [
+  32,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=N*128*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "pos": {
+   "bytes": "=(N+16)*12*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED+10",
+    "lo": 0,
+    "hi": 20000
+   }
+  },
+  "frq": {
+   "bytes": "=64*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+20",
+    "lo": 0.0005,
+    "hi": 1.5
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": 80
+  },
+  {
+   "offset": 12,
+   "type": "i32",
+   "value": 5
+  },
+  {
+   "offset": 16,
+   "buffer": "pos"
+  },
+  {
+   "offset": 24,
+   "buffer": "frq"
+  },
+  {
+   "offset": 32,
+   "type": "f32",
+   "value": 1.25
+  }
+ ],
+ "dump": [
+  "x"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/rope.hip",
+  "rewrite_kernel": "k_rope_blocks_mrope_yarn",
+  "outputs": [
+   {
+    "buffer": "x",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

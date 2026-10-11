@@ -6,8 +6,8 @@ rebuild a compatible server from the writeups).
 
 **Overall: Phase 7 done at plan scope (2026-10-10).** All phases have
 evidence-backed writeups. Unknowns, counted from the table in
-`analysis/unknowns.md`: CLOSED 23, PARTIAL 1, OPEN-BOUNDED 2 (U06,
-U22), UNOBSERVABLE 1 (U05). PARTIAL rows say which half is closed. What is
+`analysis/unknowns.md`: CLOSED 24, PARTIAL 0, OPEN-BOUNDED 2 (U06,
+U22), UNOBSERVABLE 1 (U05). What is
 left needs data that is not in this workspace (see "Open" below).
 
 ## Done (with artifacts)
@@ -28,8 +28,7 @@ left needs data that is not in this workspace (see "Open" below).
 
 ## Open
 
-- PARTIAL row U12: the row says which half is closed; what is left needs
-  a kernarg capture on Ai-core (p7-11) and the kernel rewrite (p7-12).
+- U12 CLOSED in s6 (run 5 Tap payload, dnc-scan3-r6 n1/n2, scan3 B, C, D, G value-neutral by the rewrites).
 - U06 old patch releases, U05 future releases, U22 no AMDGCN decompiler:
   named limits by decision.
 - The inferred steps of the request trace are listed in its Gaps section.

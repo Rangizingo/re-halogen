@@ -1,0 +1,25 @@
+{
+  "grid": [3, 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "q": {"bytes": "=64+24*(N//2)+24*(2*((N+31)//32)+6)+256", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED", "lo": -1, "hi": 1}},
+    "x": {"bytes": "=2*5*N+64", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+100", "lo": -2, "hi": 2}},
+    "c": {"bytes": 354, "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "q"},
+    {"offset": 8, "buffer": "x"},
+    {"offset": 16, "buffer": "c"},
+    {"offset": 24, "type": "i64", "value": "=N"},
+    {"offset": 32, "type": "i64", "value": 29},
+    {"offset": 40, "type": "i64", "value": 64},
+    {"offset": 48, "type": "i64", "value": "=64+24*(N//2)"},
+    {"offset": 56, "type": "i64", "value": "=2*((N+31)//32)+6"}
+  ],
+  "dump": ["c"],
+  "compare": {
+    "rewrite_src": "../kernels/linear_q4.hip",
+    "rewrite_kernel": "k_linear_q4_mt_8_5_1_256",
+    "outputs": [{"buffer": "c", "dtype": "bf16"}]
+  }
+}

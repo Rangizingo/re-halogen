@@ -1,0 +1,65 @@
+{
+ "grid": [
+  "=ceil_div(16*N,8)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "w": {
+   "bytes": "=16*N*96",
+   "fill": {
+    "kind": "rand",
+    "dtype": "u32",
+    "seed": "=SEED",
+    "lo": 0,
+    "hi": 4294967296
+   }
+  },
+  "out": {
+   "bytes": "=(256*16*N+64)*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "u16",
+    "value": 12345
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "w"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": "=16*N"
+  },
+  {
+   "offset": 12,
+   "type": "i32",
+   "value": 256
+  },
+  {
+   "offset": 16,
+   "buffer": "out"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ht_deq.hip",
+  "rewrite_kernel": "k_ht_deq_t3",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

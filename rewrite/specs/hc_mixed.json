@@ -1,0 +1,24 @@
+{
+  "grid": ["=N", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "a": {"bytes": "=N*20480", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED", "lo": -4, "hi": 4}},
+    "b": {"bytes": "=N*20480", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+100", "lo": -4, "hi": 4}},
+    "y": {"bytes": "=(N*2560+64)*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}},
+    "f": {"bytes": "=(N*2560+64)*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}},
+    "lo": {"bytes": "=(N*5120+64)*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "a"},
+    {"offset": 8, "buffer": "b"},
+    {"offset": 16, "buffer": "y"},
+    {"offset": 24, "buffer": "f"},
+    {"offset": 32, "buffer": "lo"}
+  ],
+  "dump": ["y", "f", "lo"],
+  "compare": {
+    "rewrite_src": "../kernels/hc_mixed.hip",
+    "rewrite_kernel": "k_hc_mixed",
+    "outputs": [{"buffer": "y", "dtype": "bf16"}, {"buffer": "f", "dtype": "f32"}, {"buffer": "lo", "dtype": "bf16"}]
+  }
+}

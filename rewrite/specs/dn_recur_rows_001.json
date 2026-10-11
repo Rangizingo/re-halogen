@@ -1,0 +1,294 @@
+{
+ "grid": [
+  48,
+  "=N",
+  1
+ ],
+ "block": [
+  128,
+  1,
+  1
+ ],
+ "buffers": {
+  "qkv": {
+   "bytes": "=N*20480",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+1",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "g": {
+   "bytes": "=N*192",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*16+2",
+    "lo": -2,
+    "hi": 0
+   }
+  },
+  "beta": {
+   "bytes": "=N*192",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*16+3",
+    "lo": 0,
+    "hi": 1
+   }
+  },
+  "stW": {
+   "bytes": "=N*3145728",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*16+4",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "stR": {
+   "bytes": "=N*3145728",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*16+5",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "out": {
+   "bytes": "=N*12288+64",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "nw": {
+   "bytes": 256,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+6",
+    "lo": 0.5,
+    "hi": 1.5
+   }
+  },
+  "z": {
+   "bytes": "=N*12288",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+7",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "nout": {
+   "bytes": "=N*12288+64",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "a_in": {
+   "bytes": "=N*96",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+8",
+    "lo": -30,
+    "hi": 30
+   }
+  },
+  "b_in": {
+   "bytes": "=N*96",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+9",
+    "lo": -8,
+    "hi": 8
+   }
+  },
+  "A_log": {
+   "bytes": 192,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*16+10",
+    "lo": -3,
+    "hi": 3
+   }
+  },
+  "dt_bias": {
+   "bytes": 192,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*16+11",
+    "lo": -3,
+    "hi": 3
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "qkv"
+  },
+  {
+   "offset": 8,
+   "buffer": "g"
+  },
+  {
+   "offset": 16,
+   "buffer": "beta"
+  },
+  {
+   "offset": 280,
+   "buffer": "out"
+  },
+  {
+   "offset": 288,
+   "buffer": "nw"
+  },
+  {
+   "offset": 296,
+   "buffer": "z"
+  },
+  {
+   "offset": 304,
+   "buffer": "nout"
+  },
+  {
+   "offset": 312,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 320,
+   "buffer": "a_in"
+  },
+  {
+   "offset": 328,
+   "buffer": "b_in"
+  },
+  {
+   "offset": 336,
+   "buffer": "A_log"
+  },
+  {
+   "offset": 344,
+   "buffer": "dt_bias"
+  },
+  {
+   "offset": 152,
+   "buffer": "stW",
+   "byte_offset": "=0*3145728"
+  },
+  {
+   "offset": 216,
+   "buffer": "stR",
+   "byte_offset": "=0*3145728"
+  },
+  {
+   "offset": 160,
+   "buffer": "stW",
+   "byte_offset": "=1*3145728"
+  },
+  {
+   "offset": 224,
+   "buffer": "stR",
+   "byte_offset": "=1*3145728"
+  },
+  {
+   "offset": 168,
+   "buffer": "stW",
+   "byte_offset": "=2*3145728"
+  },
+  {
+   "offset": 232,
+   "buffer": "stR",
+   "byte_offset": "=2*3145728"
+  },
+  {
+   "offset": 176,
+   "buffer": "stW",
+   "byte_offset": "=3*3145728"
+  },
+  {
+   "offset": 240,
+   "buffer": "stR",
+   "byte_offset": "=3*3145728"
+  },
+  {
+   "offset": 184,
+   "buffer": "stW",
+   "byte_offset": "=4*3145728"
+  },
+  {
+   "offset": 248,
+   "buffer": "stR",
+   "byte_offset": "=4*3145728"
+  },
+  {
+   "offset": 192,
+   "buffer": "stW",
+   "byte_offset": "=5*3145728"
+  },
+  {
+   "offset": 256,
+   "buffer": "stR",
+   "byte_offset": "=5*3145728"
+  },
+  {
+   "offset": 200,
+   "buffer": "stW",
+   "byte_offset": "=6*3145728"
+  },
+  {
+   "offset": 264,
+   "buffer": "stR",
+   "byte_offset": "=6*3145728"
+  },
+  {
+   "offset": 208,
+   "buffer": "stW",
+   "byte_offset": "=7*3145728"
+  },
+  {
+   "offset": 272,
+   "buffer": "stR",
+   "byte_offset": "=7*3145728"
+  }
+ ],
+ "dump": [
+  "out",
+  "nout",
+  "stW"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/dn_recur.hip",
+  "rewrite_kernel": "k_dn_recur_rows_001",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "nout",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "stW",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

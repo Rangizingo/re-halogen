@@ -1,0 +1,68 @@
+{
+ "grid": [
+  64,
+  4,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=4*N*4+256",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED",
+    "lo": -5,
+    "hi": 5
+   }
+  },
+  "scratch": {
+   "bytes": 65824,
+   "fill": {
+    "kind": "rand",
+    "dtype": "u32",
+    "seed": "=SEED+3",
+    "lo": 1,
+    "hi": 4000000000
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x",
+   "byte_offset": 256
+  },
+  {
+   "offset": 8,
+   "buffer": "scratch"
+  },
+  {
+   "offset": 16,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 20,
+   "type": "i32",
+   "value": 64
+  }
+ ],
+ "dump": [
+  "scratch"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/smpg_max.hip",
+  "rewrite_kernel": "k_smpg_max",
+  "outputs": [
+   {
+    "buffer": "scratch",
+    "dtype": "u32"
+   }
+  ]
+ }
+}

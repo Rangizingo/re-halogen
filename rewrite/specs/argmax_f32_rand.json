@@ -1,0 +1,60 @@
+{
+ "grid": [
+  4,
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=4*N*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED",
+    "lo": -10,
+    "hi": 10
+   }
+  },
+  "out": {
+   "bytes": "=(4+4)*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "i32",
+    "value": -77
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 16,
+   "buffer": "out"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/argmax.hip",
+  "rewrite_kernel": "k_argmax_f32",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "i32"
+   }
+  ]
+ }
+}

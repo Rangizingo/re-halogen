@@ -1,0 +1,58 @@
+{
+ "grid": [
+  "=N",
+  1,
+  1
+ ],
+ "block": [
+  32,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=N*128*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED",
+    "lo": -4,
+    "hi": 4
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": 80
+  },
+  {
+   "offset": 12,
+   "type": "f32",
+   "value": 1e-40
+  },
+  {
+   "offset": 16,
+   "type": "i32",
+   "value": 5
+  }
+ ],
+ "dump": [
+  "x"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/rope.hip",
+  "rewrite_kernel": "k_rope_blocks",
+  "outputs": [
+   {
+    "buffer": "x",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

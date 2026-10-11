@@ -1,0 +1,121 @@
+{
+ "grid": [
+  1,
+  1,
+  1
+ ],
+ "block": [
+  32,
+  1,
+  1
+ ],
+ "buffers": {
+  "ids": {
+   "bytes": 4,
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED",
+    "lo": 0,
+    "hi": 100000
+   }
+  },
+  "ctx": {
+   "bytes": 16,
+   "fill": {
+    "kind": "iota",
+    "dtype": "i64",
+    "start": 8,
+    "step": -1
+   }
+  },
+  "c": {
+   "bytes": 32,
+   "fill": {
+    "kind": "rand",
+    "dtype": "i64",
+    "seed": "=SEED+1",
+    "lo": 1000,
+    "hi": 4000000000000
+   }
+  },
+  "d": {
+   "bytes": 128,
+   "fill": {
+    "kind": "rand",
+    "dtype": "i64",
+    "seed": "=SEED+2",
+    "lo": 1000,
+    "hi": 3000017
+   }
+  },
+  "e": {
+   "bytes": 128,
+   "fill": {
+    "kind": "rand",
+    "dtype": "i64",
+    "seed": "=SEED+4",
+    "lo": 0,
+    "hi": 100000
+   }
+  },
+  "out": {
+   "bytes": 128,
+   "fill": {
+    "kind": "const",
+    "dtype": "i64",
+    "value": -7
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "ids"
+  },
+  {
+   "offset": 72,
+   "buffer": "ctx",
+   "byte_offset": 0
+  },
+  {
+   "offset": 136,
+   "buffer": "c"
+  },
+  {
+   "offset": 144,
+   "buffer": "d"
+  },
+  {
+   "offset": 152,
+   "buffer": "e"
+  },
+  {
+   "offset": 160,
+   "type": "i32",
+   "value": 7
+  },
+  {
+   "offset": 168,
+   "buffer": "out"
+  }
+ ],
+ "dump": [
+  "out",
+  "ctx"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ple.hip",
+  "rewrite_kernel": "k_ple_ids_rows",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "i64"
+   },
+   {
+    "buffer": "ctx",
+    "dtype": "i64"
+   }
+  ]
+ }
+}

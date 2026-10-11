@@ -1,0 +1,65 @@
+{
+ "grid": [
+  1,
+  1,
+  1
+ ],
+ "block": [
+  1,
+  1,
+  1
+ ],
+ "buffers": {
+  "seq": {
+   "bytes": "=(N+8)*8",
+   "fill": {
+    "kind": "rand",
+    "dtype": "i64",
+    "seed": "=SEED+3",
+    "lo": 0,
+    "hi": 4
+   }
+  },
+  "out": {
+   "bytes": "=(N+8)*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "i32",
+    "value": -7
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "seq"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 12,
+   "type": "i32",
+   "value": 2
+  },
+  {
+   "offset": 16,
+   "buffer": "out"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ngram.hip",
+  "rewrite_kernel": "k_ngram_segstart",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "i32"
+   }
+  ]
+ }
+}

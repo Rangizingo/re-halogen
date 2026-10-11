@@ -1,0 +1,16 @@
+# Kernel match table (U22, PLAN.md p7-12)
+
+| instance | family | test spec | result | tolerance | date |
+| --- | --- | --- | --- | --- | --- |
+| _ZN7halogen12_GLOBAL__N_112k_dn_fused16ILi0ELb0ELb0ELb0EEEvPKtPKfS5_PfPKilPtiPyNS0_7DnfTapsENS0_7DnfNormE | dn_fused16 | dn_fused16_small.json seed=1 N=100 | MISMATCH n=1400832 diff=1395139 max_abs=1.1571e-05 max_ulp=1.79071e+09 first_diff=0 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_112k_dn_fused16ILi0ELb0ELb0ELb0EEEvPKtPKfS5_PfPKilPtiPyNS0_7DnfTapsENS0_7DnfNormE | dn_fused16 | dn_fused16_base.json seed=1 N=100 | MISMATCH n=1400832 diff=15231 max_abs=0.000244141 max_ulp=587062 first_diff=5383 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_112k_dn_fused16ILi0ELb0ELb0ELb0EEEvPKtPKfS5_PfPKilPtiPyNS0_7DnfTapsENS0_7DnfNormE | dn_fused16 | dn_fused16_edge_big.json seed=1 N=100 | MATCH n=1400832 diff=0 max_abs=0 max_ulp=0 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_112k_dn_fused16ILi0ELb0ELb0ELb0EEEvPKtPKfS5_PfPKilPtiPyNS0_7DnfTapsENS0_7DnfNormE | dn_fused16 | dn_fused16_edge_gpos.json seed=1 N=100 | MATCH n=1400832 diff=0 max_abs=0 max_ulp=0 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_112k_dn_fused16ILi0ELb0ELb1ELb0EEEvPKtPKfS5_PfPKilPtiPyNS0_7DnfTapsENS0_7DnfNormE | dn_fused16 | dn_fused16_b2_base.json seed=1 N=100 | MISMATCH n=1400832 diff=304197 max_abs=0.000488281 max_ulp=1.88216e+09 first_diff=18 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_112k_dn_fused16ILi0ELb0ELb0ELb1EEEvPKtPKfS5_PfPKilPtiPyNS0_7DnfTapsENS0_7DnfNormE | dn_fused16 | dn_fused16_b3_small.json seed=1 N=100 | MISMATCH n=1400832 diff=614400 max_abs=0.487305 max_ulp=222 first_diff=0 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_112k_dn_fused16ILi0ELb0ELb0ELb1EEEvPKtPKfS5_PfPKilPtiPyNS0_7DnfTapsENS0_7DnfNormE | dn_fused16 | dn_fused16_b3.json seed=1 N=100 | MISMATCH n=1400832 diff=610005 max_abs=2.20312 max_ulp=208 first_diff=0 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_112k_dn_fused16ILi0ELb0ELb0ELb1EEEvPKtPKfS5_PfPKilPtiPyNS0_7DnfTapsENS0_7DnfNormE | dn_fused16 | dn_fused16_b3.json seed=1 N=100 | MISMATCH n=1400832 diff=7402 max_abs=0.03125 max_ulp=1 first_diff=47 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_112k_dn_fused16ILi0ELb0ELb0ELb0EEEvPKtPKfS5_PfPKilPtiPyNS0_7DnfTapsENS0_7DnfNormE | dn_fused16 | dn_fused16_base.json seed=1 N=100 | MISMATCH n=1400832 diff=170067 max_abs=1.90735e-06 max_ulp=108385 first_diff=137527 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_112k_dn_fused16ILi0ELb1ELb0ELb0EEEvPKtPKfS5_PfPKilPtiPyNS0_7DnfTapsENS0_7DnfNormE | dn_fused16 | dn_fused16_b1_base.json seed=1 N=100 | MISMATCH n=1400832 diff=2379 max_abs=3.05176e-05 max_ulp=1.31756e+07 first_diff=38397 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_112k_dn_fused16ILi0ELb0ELb0ELb0EEEvPKtPKfS5_PfPKilPtiPyNS0_7DnfTapsENS0_7DnfNormE | dn_fused16 | dn_fused16_edge_state.json seed=1 N=100 | MISMATCH n=1400832 diff=1400832 max_abs=inf max_ulp=4.29497e+09 first_diff=0 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_112k_dn_fused16ILi0ELb0ELb0ELb0EEEvPKtPKfS5_PfPKilPtiPyNS0_7DnfTapsENS0_7DnfNormE | dn_fused16 | dn_fused16_base.json seed=1 N=100 | MISMATCH n=1400832 diff=221 max_abs=6.14673e-08 max_ulp=4102 first_diff=476651 | bitwise | 2026-10-11 |

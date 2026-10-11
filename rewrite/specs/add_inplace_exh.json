@@ -1,0 +1,60 @@
+{
+ "grid": [
+  "=ceil_div(N,256)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "a": {
+   "bytes": 131072,
+   "fill": {
+    "kind": "iota",
+    "dtype": "u16",
+    "start": 0,
+    "step": 1
+   }
+  },
+  "b": {
+   "bytes": 131072,
+   "fill": {
+    "kind": "iota",
+    "dtype": "u16",
+    "start": 0,
+    "step": 40503
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "a"
+  },
+  {
+   "offset": 8,
+   "buffer": "b"
+  },
+  {
+   "offset": 16,
+   "type": "i64",
+   "value": "=N"
+  }
+ ],
+ "dump": [
+  "a"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/add.hip",
+  "rewrite_kernel": "k_add_bf16_inplace",
+  "outputs": [
+   {
+    "buffer": "a",
+    "dtype": "u16"
+   }
+  ]
+ }
+}

@@ -1,0 +1,19 @@
+{
+  "grid": ["=ceil_div(N,256)", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "a": {"bytes": "=(N+64)*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED", "lo": -100, "hi": 100}},
+    "b": {"bytes": "=N*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED+50", "lo": -100, "hi": 100}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "a"},
+    {"offset": 8, "buffer": "b"},
+    {"offset": 16, "type": "i64", "value": "=N"}
+  ],
+  "dump": ["a"],
+  "compare": {
+    "rewrite_src": "../kernels/vis_acc.hip",
+    "rewrite_kernel": "k_vis_acc",
+    "outputs": [{"buffer": "a", "dtype": "f32"}]
+  }
+}

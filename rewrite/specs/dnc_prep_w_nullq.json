@@ -1,0 +1,29 @@
+{
+  "grid": [16, "=ceil_div(N,64)", 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "qkv":  {"bytes": "=ceil_div(N,64)*64*10240*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED*10+1", "lo": -2, "hi": 2}},
+    "gate": {"bytes": "=ceil_div(N,64)*64*48*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED*10+2", "lo": -1, "hi": 0.2}},
+    "kn":   {"bytes": "=ceil_div(N,64)*64*48*128*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}},
+    "csum": {"bytes": "=ceil_div(N,64)*64*48*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}},
+    "qs":   {"bytes": "=ceil_div(N,64)*64*48*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}},
+    "ks":   {"bytes": "=ceil_div(N,64)*64*48*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "qkv"},
+    {"offset": 8, "buffer": "gate"},
+    {"offset": 16, "type": "u64", "value": 0},
+    {"offset": 24, "buffer": "kn"},
+    {"offset": 32, "buffer": "csum"},
+    {"offset": 40, "type": "i32", "value": "=N"},
+    {"offset": 48, "type": "u64", "value": 0},
+    {"offset": 56, "buffer": "qs"},
+    {"offset": 64, "buffer": "ks"}
+  ],
+  "dump": ["kn", "qs", "ks"],
+  "compare": {
+    "rewrite_src": "../kernels/dnc_prep.hip",
+    "rewrite_kernel": "dnc_prep_w",
+    "outputs": [{"buffer": "kn", "dtype": "f32"}, {"buffer": "qs", "dtype": "f32"}, {"buffer": "ks", "dtype": "f32"}]
+  }
+}

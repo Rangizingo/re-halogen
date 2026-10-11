@@ -1,0 +1,279 @@
+{
+ "grid": [
+  48,
+  2,
+  1
+ ],
+ "block": [
+  128,
+  1,
+  1
+ ],
+ "buffers": {
+  "qkv": {
+   "bytes": "=ceil_div(N,64)*64*10240*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "g": {
+   "bytes": "=ceil_div(N,64)*64*48*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+10",
+    "lo": -0.4,
+    "hi": 0
+   }
+  },
+  "vv": {
+   "bytes": "=ceil_div(N,64)*64*48*128*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+11",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "unused": {
+   "bytes": 64,
+   "fill": "zero"
+  },
+  "out": {
+   "bytes": 3145728,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+12",
+    "lo": -0.5,
+    "hi": 0.5
+   }
+  },
+  "idx": {
+   "bytes": 16,
+   "fill": "zero"
+  },
+  "sel": {
+   "bytes": "=ceil_div(N,64)*64*6144*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": 7
+   }
+  },
+  "mir0": {
+   "bytes": "=ceil_div(N,64)*64*48*128*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+13",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "mir1": {
+   "bytes": "=ceil_div(N,64)*64*48*128*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+14",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "mir2": {
+   "bytes": "=ceil_div(N,64)*64*48*64*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+15",
+    "lo": -0.5,
+    "hi": 0.5
+   }
+  },
+  "kinv": {
+   "bytes": "=ceil_div(N,64)*64*48*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+16",
+    "lo": 0.05,
+    "hi": 0.15
+   }
+  },
+  "tap0": {
+   "bytes": 16,
+   "fill": "zero"
+  },
+  "n0": {
+   "bytes": 256,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+17",
+    "lo": 0.5,
+    "hi": 1.5
+   }
+  },
+  "n1": {
+   "bytes": "=ceil_div(N,64)*64*6144*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+18",
+    "lo": -3,
+    "hi": 3
+   }
+  },
+  "n2": {
+   "bytes": "=ceil_div(N,64)*64*6144*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": 7
+   }
+  },
+  "n3": {
+   "bytes": "=ceil_div(N,64)*48*4",
+   "fill": "zero"
+  },
+  "kf": {
+   "bytes": "=ceil_div(N,64)*64*48*128*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+20",
+    "lo": -0.3,
+    "hi": 0.3
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "qkv"
+  },
+  {
+   "offset": 8,
+   "buffer": "unused"
+  },
+  {
+   "offset": 16,
+   "buffer": "kf"
+  },
+  {
+   "offset": 24,
+   "buffer": "g"
+  },
+  {
+   "offset": 32,
+   "buffer": "vv"
+  },
+  {
+   "offset": 40,
+   "buffer": "unused"
+  },
+  {
+   "offset": 48,
+   "buffer": "unused"
+  },
+  {
+   "offset": 56,
+   "buffer": "out"
+  },
+  {
+   "offset": 64,
+   "buffer": "idx"
+  },
+  {
+   "offset": 72,
+   "type": "i64",
+   "value": 0
+  },
+  {
+   "offset": 80,
+   "buffer": "sel"
+  },
+  {
+   "offset": 88,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 96,
+   "buffer": "mir0"
+  },
+  {
+   "offset": 104,
+   "buffer": "mir1"
+  },
+  {
+   "offset": 112,
+   "buffer": "mir2"
+  },
+  {
+   "offset": 120,
+   "buffer": "kinv"
+  },
+  {
+   "offset": 128,
+   "hex": "ffffffffffffffffffffffff"
+  },
+  {
+   "offset": 144,
+   "buffer": "tap0"
+  },
+  {
+   "offset": 152,
+   "buffer": "tap0"
+  },
+  {
+   "offset": 160,
+   "buffer": "tap0"
+  },
+  {
+   "offset": 168,
+   "buffer": "n0"
+  },
+  {
+   "offset": 176,
+   "buffer": "n1"
+  },
+  {
+   "offset": 184,
+   "buffer": "n2"
+  },
+  {
+   "offset": 192,
+   "buffer": "n3"
+  },
+  {
+   "offset": 200,
+   "type": "i32",
+   "value": 128
+  }
+ ],
+ "dump": [
+  "sel",
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/dnc_scan3x_b.hip",
+  "rewrite_kernel": "k_s3x_b0_i2_4",
+  "outputs": [
+   {
+    "buffer": "sel",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "out",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

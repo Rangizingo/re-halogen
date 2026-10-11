@@ -242,7 +242,7 @@ Sources: `analysis/npu-engine.md`, `closure/npu-closure.md`, `closure/npu-closur
 
 ## 11. Proven versus inferred: what a rebuild can rely on
 
-Unknowns ledger counts from `analysis/unknowns.md` (27 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 23, PARTIAL 1, OPEN-BOUNDED 2, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 27.
+Unknowns ledger counts from `analysis/unknowns.md` (27 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 24, PARTIAL 0, OPEN-BOUNDED 2, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 27.
 
 Can rely on [proven]:
 - The `.hgn` container: header, table, checksums, size rules, dtype codes, `verify` and `inspect` behavior (169 vendor-checked files, round trips).
@@ -262,7 +262,7 @@ Cannot rely on (PARTIAL, OPEN-BOUNDED, UNOBSERVABLE rows; what is missing):
 - U09 is CLOSED (moved out of this list): HtItem = {expert, tile, begin, end}, 16 B, written on the GPU by `k_ht_items_group` (`closure/htitem-r3.md`).
 - U10 is CLOSED (moved out of this list): `k_ht_tg` and `k_ht_tg_sum` are launched by slot in FUN_01928680, by default on the n >= 9 prefill path; tg_sum is split-K sum plus inverse Hadamard plus scales to bf16 (`closure/ht-tg-r3.md`).
 - U11 is CLOSED (moved out of this list): the probe variants are dead code; matmul tensors in GGUF Q5_0/Q5_1/Q8_0 are repacked to q5a and q8s32; dtypes 20/21/22 exist only for the n-gram table (`closure/dnftaps-r4.md`, `closure/q5-consumer-r5.md`).
-- U12 PARTIAL: ut4/ut5, scan3 A/E/F, case-to-stub maps, Tap and NormFold layouts and the `dnc` name (`closure/dnc-scan3-r3.md`); Tap writers (recurrent-state checkpoints), the n == 1 decode path (k_dn_conv_ab_rows then k_dn_recur_step) and NormFold's inline rsqrt(sum(x^2)/128) (`closure/dnc-scan3-r4.md`) are closed. Open: labels for scan3 B, C, D, G (compile-time constants), NormFold n1/n2 buffer identity, Tap payload size.
+- U12 CLOSED: ut4/ut5, scan3 A/E/F, case-to-stub maps, Tap and NormFold layouts and the `dnc` name (`closure/dnc-scan3-r3.md`, `-r4.md`); NormFold n1 = in_proj_z output and n2 = gated-norm output (`closure/dnc-scan3-r6.md`); the Tap payload is the 3 MiB per-layer DeltaNet state, hash-identical to the on-disk cache blob slices (`runtime-run-0.17.3-r5.md`); scan3 B, C, D, G are value-neutral code-generation constants (`rewrite/reports/g16b.md`, names inferred).
 - U14 is CLOSED (moved out of this list): FaSel +0x08 ids are ascending 4-token block indices, +0x10 is the per-row id count (`closure/fasel-r3.md`, `closure/fasel-r4.md`).
 - U18 is CLOSED (moved out of this list): the draft-vocab table feeds the draft-vocab lm_head GEMV then `k_dv_scatter`; 4-bit NF4 is the default, 8-bit needs `HALOGEN_DRAFT_VOCAB_Q8=1` (`closure/dv-quant-r4.md`). Not decoded: nibble order inside a 16-byte block.
 - U19 is CLOSED (moved out of this list): `scripts/ht_decode.py` decodes real 3 and 4 bit HT weights, Pearson 0.98 to 0.99 against q4c references (`closure/ht-decode.md`). qparam is a fixed tag 0x1200 plus bits << 1 (loader check). gate_up experts use their own tile walk (`decode_codes_gate_up`, 0.9922 measured).
@@ -271,7 +271,7 @@ Cannot rely on (PARTIAL, OPEN-BOUNDED, UNOBSERVABLE rows; what is missing):
 - U23 is CLOSED (moved out of this list): the wire seed reaches SampleRow+0x10 unchanged; the splitmix64 counter is the token's sequence position (`closure/sampler-seed-r3.md`).
 - U26 is CLOSED (moved out of this list): one connection is served at a time; a waiting connection gets only exact `INFO\n`/`PING\n` first lines answered inline (FUN_01844d50), everything else waits and is released in order when the served connection closes, not when its GEN ends (`runtime-run-0.17.3-r3.md`, `closure/serve-pending-fd-r4.md`).
 - U27 is CLOSED (moved out of this list): i4r (dtype 23) decodes as planar signed nibbles times one fp16 scale per 128, then the HT rotation (`decode_codes_i4r`, 0.9876 and 0.9885 measured, `closure/ht-decode.md`).
-- CLOSED rows (U01, U02, U03, U04, U07, U08, U09, U10, U11, U13, U14, U15, U16, U17, U18, U19, U20, U21, U23, U24, U25, U26, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
+- CLOSED rows (U01, U02, U03, U04, U07, U08, U09, U10, U11, U12, U13, U14, U15, U16, U17, U18, U19, U20, U21, U23, U24, U25, U26, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
 
 Other gaps a rebuild hits (request-trace.md "Gaps" and the closure reports):
 - MTP head: fc_embedding/fc_hidden fusion, router top-k and the greedy draft step are CLOSED (`closure/mtp-head-r5.md`); the head step's ordered kernels (39 launches at decode width 1, 78 over the prompt rows), its Linear kernels and router path are CLOSED from the run 4 launch trace (`closure/mtp-head-r6.md`); each request is prefill, a head step over the prompt, then rounds of [head step, target verify step], then a trailing head step.

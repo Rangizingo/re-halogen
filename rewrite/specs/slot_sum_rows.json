@@ -1,0 +1,83 @@
+{
+ "grid": [
+  10,
+  "=N",
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "tab": {
+   "bytes": 163840,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "ids": {
+   "bytes": "=(N*10+0)*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED+7",
+    "lo": 0,
+    "hi": 32
+   }
+  },
+  "w": {
+   "bytes": "=(N*10+0)*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+9",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "out": {
+   "bytes": "=(N*2560+64)*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "tab"
+  },
+  {
+   "offset": 8,
+   "buffer": "ids"
+  },
+  {
+   "offset": 16,
+   "buffer": "w"
+  },
+  {
+   "offset": 24,
+   "buffer": "out"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/slot.hip",
+  "rewrite_kernel": "k_slot_sum_rows",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "u16"
+   }
+  ]
+ }
+}

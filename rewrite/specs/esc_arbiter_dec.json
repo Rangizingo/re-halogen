@@ -1,0 +1,76 @@
+{
+ "grid": [
+  8,
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=8*N*4",
+   "fill": {
+    "kind": "iota",
+    "dtype": "f32",
+    "start": 0,
+    "step": -1
+   }
+  },
+  "out": {
+   "bytes": "=8*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "i32",
+    "value": -1
+   }
+  },
+  "lst": {
+   "bytes": 20,
+   "fill": {
+    "kind": "iota",
+    "dtype": "i32",
+    "start": -1000,
+    "step": 1000
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 16,
+   "buffer": "out"
+  },
+  {
+   "offset": 24,
+   "hex": "01000000000000000100000000000000000000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000"
+  },
+  {
+   "offset": 88,
+   "buffer": "lst"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/esc.hip",
+  "rewrite_kernel": "k_esc_arbiter",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "i32"
+   }
+  ]
+ }
+}

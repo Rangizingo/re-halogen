@@ -1,0 +1,250 @@
+{
+ "grid": [
+  7,
+  2,
+  2
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "q": {
+   "bytes": "=2*24*256*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "kp": {
+   "bytes": "=2*(N+8)*1024",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+1",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "vp": {
+   "bytes": "=2*(N+8)*1024",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+2",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "part": {
+   "bytes": "=2*2*7*12*256*4+64",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -77.0
+   }
+  },
+  "ml": {
+   "bytes": "=2*2*7*12*2*4+64",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -77.0
+   }
+  },
+  "tab": {
+   "bytes": 2048,
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED+3",
+    "lo": 0,
+    "hi": "=(N+8)//4"
+   }
+  },
+  "nb": {
+   "bytes": 8,
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED+4",
+    "lo": "=N//8",
+    "hi": "=N//8+1"
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "q"
+  },
+  {
+   "offset": 8,
+   "buffer": "kp",
+   "byte_offset": "=0*(N+8)*1024"
+  },
+  {
+   "offset": 72,
+   "buffer": "vp",
+   "byte_offset": "=0*(N+8)*1024"
+  },
+  {
+   "offset": 16,
+   "buffer": "kp",
+   "byte_offset": "=1*(N+8)*1024"
+  },
+  {
+   "offset": 80,
+   "buffer": "vp",
+   "byte_offset": "=1*(N+8)*1024"
+  },
+  {
+   "offset": 24,
+   "buffer": "kp",
+   "byte_offset": "=1*(N+8)*1024"
+  },
+  {
+   "offset": 88,
+   "buffer": "vp",
+   "byte_offset": "=1*(N+8)*1024"
+  },
+  {
+   "offset": 32,
+   "buffer": "kp",
+   "byte_offset": "=1*(N+8)*1024"
+  },
+  {
+   "offset": 96,
+   "buffer": "vp",
+   "byte_offset": "=1*(N+8)*1024"
+  },
+  {
+   "offset": 40,
+   "buffer": "kp",
+   "byte_offset": "=1*(N+8)*1024"
+  },
+  {
+   "offset": 104,
+   "buffer": "vp",
+   "byte_offset": "=1*(N+8)*1024"
+  },
+  {
+   "offset": 48,
+   "buffer": "kp",
+   "byte_offset": "=1*(N+8)*1024"
+  },
+  {
+   "offset": 112,
+   "buffer": "vp",
+   "byte_offset": "=1*(N+8)*1024"
+  },
+  {
+   "offset": 56,
+   "buffer": "kp",
+   "byte_offset": "=1*(N+8)*1024"
+  },
+  {
+   "offset": 120,
+   "buffer": "vp",
+   "byte_offset": "=1*(N+8)*1024"
+  },
+  {
+   "offset": 64,
+   "buffer": "kp",
+   "byte_offset": "=1*(N+8)*1024"
+  },
+  {
+   "offset": 128,
+   "buffer": "vp",
+   "byte_offset": "=1*(N+8)*1024"
+  },
+  {
+   "offset": 136,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 140,
+   "type": "i32",
+   "value": "=N//2+3"
+  },
+  {
+   "offset": 144,
+   "type": "i32",
+   "value": 0
+  },
+  {
+   "offset": 148,
+   "type": "i32",
+   "value": 0
+  },
+  {
+   "offset": 152,
+   "type": "i32",
+   "value": 0
+  },
+  {
+   "offset": 156,
+   "type": "i32",
+   "value": 0
+  },
+  {
+   "offset": 160,
+   "type": "i32",
+   "value": 0
+  },
+  {
+   "offset": 164,
+   "type": "i32",
+   "value": 0
+  },
+  {
+   "offset": 168,
+   "buffer": "tab"
+  },
+  {
+   "offset": 176,
+   "buffer": "nb"
+  },
+  {
+   "offset": 184,
+   "type": "i32",
+   "value": 7
+  },
+  {
+   "offset": 192,
+   "buffer": "part"
+  },
+  {
+   "offset": 200,
+   "buffer": "ml"
+  },
+  {
+   "offset": 208,
+   "type": "i32",
+   "value": 256
+  }
+ ],
+ "dump": [
+  "part",
+  "ml"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/attn_fd.hip",
+  "rewrite_kernel": "k_attn_fd_true",
+  "outputs": [
+   {
+    "buffer": "part",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "ml",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

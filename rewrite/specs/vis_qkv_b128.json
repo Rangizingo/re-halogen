@@ -1,0 +1,23 @@
+{
+  "grid": ["=N", 16, 1],
+  "block": [128, 1, 1],
+  "buffers": {
+    "qkv": {"bytes": "=N*3456*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED", "lo": -4, "hi": 4}},
+    "q": {"bytes": "=16*N*72*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}},
+    "k": {"bytes": "=16*N*72*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}},
+    "v": {"bytes": "=16*N*72*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "qkv"},
+    {"offset": 8, "buffer": "q"},
+    {"offset": 16, "buffer": "k"},
+    {"offset": 24, "buffer": "v"},
+    {"offset": 32, "type": "i32", "value": "=N"}
+  ],
+  "dump": ["q", "k", "v"],
+  "compare": {
+    "rewrite_src": "../kernels/vis_qkv.hip",
+    "rewrite_kernel": "k_vis_qkv_split",
+    "outputs": [{"buffer": "q", "dtype": "bf16"}, {"buffer": "k", "dtype": "bf16"}, {"buffer": "v", "dtype": "bf16"}]
+  }
+}

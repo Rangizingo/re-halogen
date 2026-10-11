@@ -1,0 +1,21 @@
+{
+  "grid": [3, 2, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "a": {"bytes": "=3*N*2+64", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED", "lo": -2, "hi": 2}},
+    "b": {"bytes": "=2*N*2+64", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+100", "lo": -2, "hi": 2}},
+    "c": {"bytes": 256, "fill": {"kind": "const", "dtype": "f32", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "a"},
+    {"offset": 8, "buffer": "b"},
+    {"offset": 16, "buffer": "c"},
+    {"offset": 24, "type": "i64", "value": "=N"}
+  ],
+  "dump": ["c"],
+  "compare": {
+    "rewrite_src": "../kernels/linear_f32.hip",
+    "rewrite_kernel": "k_linear_f32",
+    "outputs": [{"buffer": "c", "dtype": "f32"}]
+  }
+}

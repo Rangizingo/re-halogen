@@ -1,4 +1,5 @@
 """Tests for rewrite/harness/compare.py: expression resolution, tolerance logic, spec building, table rows."""
+import json
 import struct
 import sys
 from pathlib import Path
@@ -147,3 +148,126 @@ def test_untouched_output_detected():
     pre = b'\x9d\xc2' * 8
     assert c.untouched(pre, pre)
     assert not c.untouched(b'\x00\x00' + pre[2:], pre)
+
+
+def _spec_and_kernargs(tmp_path):
+    spec = tmp_path / 's.json'
+    spec.write_text(json.dumps({'grid': [1, 1, 1], 'block': [1, 1, 1], 'buffers': {}, 'args': [], 'dump': [],
+                                'compare': {'rewrite_src': 'x.hip', 'rewrite_kernel': 'k', 'outputs': []}}))
+    ka = tmp_path / 'ka.json'
+    ka.write_text(json.dumps({'kernels': {'K': {'object': 'o', 'family': 'f', 'args': []}}}))
+    return spec, ka
+
+
+def test_auto_workdir_is_on_cmp_tmp_and_removed_even_on_error(tmp_path, monkeypatch):
+    base = tmp_path / 'cmpbase'
+    monkeypatch.setenv('CMP_TMP', str(base))
+    seen = []
+
+    def boom(src, out):
+        seen.append(Path(out).parent)
+        raise RuntimeError('compile failed')
+    monkeypatch.setattr(c, 'compile_rewrite', boom)
+    spec, ka = _spec_and_kernargs(tmp_path)
+    with pytest.raises(RuntimeError):
+        c.main([str(spec), '--kernel', 'K', '--kernargs', str(ka), '--no-table'])
+    assert seen and seen[0].parent == base   # created under CMP_TMP, not /tmp
+    assert not seen[0].exists()              # and removed
+
+
+def test_given_workdir_is_kept(tmp_path, monkeypatch):
+    monkeypatch.setattr(c, 'compile_rewrite', lambda src, out: (_ for _ in ()).throw(RuntimeError('x')))
+    spec, ka = _spec_and_kernargs(tmp_path)
+    wd = tmp_path / 'keep'
+    with pytest.raises(RuntimeError):
+        c.main([str(spec), '--kernel', 'K', '--kernargs', str(ka), '--no-table', '--workdir', str(wd)])
+    assert wd.is_dir()
+
+
+def test_mem_available_parses_meminfo(tmp_path):
+    p = tmp_path / 'meminfo'
+    p.write_text('MemTotal:       126877820 kB\nMemAvailable:    15474356 kB\n')
+    assert abs(c.mem_available_gib(str(p)) - 15474356 / 1048576) < 1e-9
+    assert c.mem_available_gib(str(tmp_path / 'missing')) is None
+
+
+def test_wait_for_host_waits_until_memory_is_free(tmp_path, monkeypatch):
+    seen = iter([10.0, 12.0, 30.0])
+    monkeypatch.setattr(c, 'mem_available_gib', lambda path='/proc/meminfo': next(seen))
+    monkeypatch.setattr(c, 'service_healthy', lambda url=None: True)
+    slept = []
+    monkeypatch.setattr(c.time, 'sleep', slept.append)
+    with c.host_slot(tmp_path / 'lock', min_free_gib=20.0):
+        pass
+    assert len(slept) == 2
+
+
+def test_wait_for_host_waits_while_service_unhealthy(tmp_path, monkeypatch):
+    health = iter([False, False, True])
+    monkeypatch.setattr(c, 'mem_available_gib', lambda path='/proc/meminfo': 50.0)
+    monkeypatch.setattr(c, 'service_healthy', lambda url=None: next(health))
+    slept = []
+    monkeypatch.setattr(c.time, 'sleep', slept.append)
+    with c.host_slot(tmp_path / 'lock', min_free_gib=8.0):
+        pass
+    assert len(slept) == 2
+
+
+def test_service_healthy_false_when_unreachable():
+    assert c.service_healthy('http://127.0.0.1:9/health') is False
+    assert c.service_healthy('') is True
+
+
+def test_service_healthy_rejects_non_http_urls():
+    with pytest.raises(ValueError):
+        c.service_healthy('file:///etc/passwd')
+
+
+def test_service_down_marker_skips_the_host_gate(tmp_path, monkeypatch):
+    here = tmp_path / 'repo' / 'rewrite' / 'harness'
+    (tmp_path / 'repo' / 'work' / 'cmp').mkdir(parents=True)
+    monkeypatch.setattr(c, 'HERE', here)
+    monkeypatch.setattr(c, '_load_gen_kernargs', lambda: None)
+    monkeypatch.setenv('CMP_TMP', str(tmp_path / 'base'))
+
+    def no_gate(*a, **k):
+        raise AssertionError('host_slot used')
+    monkeypatch.setattr(c, 'host_slot', no_gate)
+    monkeypatch.setattr(c, 'compile_rewrite', lambda src, out: (_ for _ in ()).throw(RuntimeError('compiled')))
+    spec, ka = _spec_and_kernargs(tmp_path)
+    args = [str(spec), '--kernel', 'K', '--kernargs', str(ka), '--no-table']
+    with pytest.raises(AssertionError):
+        c.main(args)
+    (tmp_path / 'repo' / 'work' / 'cmp' / '.service-down').touch()
+    with pytest.raises(RuntimeError, match='compiled'):
+        c.main(args)
+
+
+def test_mask_excluded_blanks_ranges_in_both_and_counts():
+    a = f32s(1.0, 2.0, 3.0, 4.0)
+    b = f32s(1.0, 9.0, 8.0, 4.0)
+    ma, mb, n = c.mask_excluded(a, b, 'f32', [[1, 3]])
+    assert n == 2
+    assert c.compare_bytes(ma, mb, 'f32')['match']
+    assert not c.compare_bytes(*c.mask_excluded(a, b, 'f32', [[2, 3]])[:2], 'f32')['match']
+
+
+def test_mask_excluded_rejects_bad_ranges():
+    with pytest.raises(ValueError):
+        c.mask_excluded(f32s(1.0), f32s(1.0), 'f32', [[0, 5]])
+    with pytest.raises(ValueError):
+        c.mask_excluded(f32s(1.0, 2.0), f32s(1.0, 2.0), 'f32', [[1, 1]])
+
+
+def test_result_text_shows_excluded_count():
+    r = {'match': True, 'n': 10, 'n_diff': 0, 'max_abs': 0.0, 'max_ulp': 0, 'first_diff': None, 'excluded': 3}
+    assert c.result_text(r).split()[0] == 'MATCH' and 'excluded=3' in c.result_text(r)
+    r['excluded'] = 0
+    assert 'excluded' not in c.result_text(r)
+
+
+def test_mask_excluded_overlap_counts_each_element_once_and_short_b_is_a_mismatch():
+    a = f32s(1.0, 2.0, 3.0, 4.0)
+    assert c.mask_excluded(a, a, 'f32', [[0, 2], [1, 3]])[2] == 3
+    ma, mb, _ = c.mask_excluded(a, f32s(1.0), 'f32', [[2, 4]])
+    assert not c.compare_bytes(ma, mb, 'f32')['match']

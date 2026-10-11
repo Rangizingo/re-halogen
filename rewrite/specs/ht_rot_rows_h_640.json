@@ -1,0 +1,79 @@
+{
+ "grid": [
+  "=ceil_div(5*N,8)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=N*640*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "sv": {
+   "bytes": "=640*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "out": {
+   "bytes": "=(N*640+64)*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "u16",
+    "value": 12345
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x"
+  },
+  {
+   "offset": 8,
+   "buffer": "sv"
+  },
+  {
+   "offset": 16,
+   "buffer": "out"
+  },
+  {
+   "offset": 24,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 28,
+   "type": "i32",
+   "value": 640
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ht_rot.hip",
+  "rewrite_kernel": "k_ht_rot_rows_h",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "f16"
+   }
+  ]
+ }
+}

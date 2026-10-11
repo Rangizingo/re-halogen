@@ -1,0 +1,21 @@
+{
+  "grid": ["=ceil_div(N,1024)", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "ids": {"bytes": "=N*4", "fill": {"kind": "rand", "dtype": "i32", "seed": "=SEED", "lo": 500, "hi": 524}},
+    "hist": {"bytes": "=ceil_div(N,1024)*2048", "fill": {"kind": "const", "dtype": "i32", "value": -7}},
+    "rank": {"bytes": "=(N+256)*4", "fill": {"kind": "const", "dtype": "i32", "value": -7}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "ids"},
+    {"offset": 8, "type": "i32", "value": "=N"},
+    {"offset": 16, "buffer": "hist"},
+    {"offset": 24, "buffer": "rank"}
+  ],
+  "dump": ["hist", "rank"],
+  "compare": {
+    "rewrite_src": "../kernels/route_hist.hip",
+    "rewrite_kernel": "k_route_hist",
+    "outputs": [{"buffer": "hist", "dtype": "i32"}, {"buffer": "rank", "dtype": "i32"}]
+  }
+}

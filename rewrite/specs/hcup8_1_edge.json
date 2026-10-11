@@ -1,0 +1,100 @@
+{
+ "grid": [
+  "=N",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "w": {
+   "bytes": 3481600,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED",
+    "lo": -0.4,
+    "hi": 0.4
+   }
+  },
+  "x": {
+   "bytes": 704,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+100",
+    "lo": -8,
+    "hi": 8
+   }
+  },
+  "wm": {
+   "bytes": 20480,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+200",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "y": {
+   "bytes": 5248,
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "f": {
+   "bytes": 10496,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "w"
+  },
+  {
+   "offset": 8,
+   "buffer": "x"
+  },
+  {
+   "offset": 16,
+   "buffer": "wm"
+  },
+  {
+   "offset": 24,
+   "buffer": "y"
+  },
+  {
+   "offset": 32,
+   "buffer": "f"
+  }
+ ],
+ "dump": [
+  "y",
+  "f"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/hcup8.hip",
+  "rewrite_kernel": "k_hcup8_1",
+  "outputs": [
+   {
+    "buffer": "y",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "f",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

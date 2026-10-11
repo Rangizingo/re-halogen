@@ -1,0 +1,182 @@
+{
+ "grid": [
+  "=N",
+  1,
+  1
+ ],
+ "block": [
+  192,
+  1,
+  1
+ ],
+ "buffers": {
+  "ks": {
+   "bytes": 8192,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "vs": {
+   "bytes": 8192,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+30",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "kd": {
+   "bytes": 16640,
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "vd": {
+   "bytes": 16640,
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "ks"
+  },
+  {
+   "offset": 8,
+   "buffer": "vs"
+  },
+  {
+   "offset": 16,
+   "buffer": "kd"
+  },
+  {
+   "offset": 80,
+   "buffer": "vd"
+  },
+  {
+   "offset": 144,
+   "type": "i32",
+   "value": 1
+  },
+  {
+   "offset": 24,
+   "buffer": "kd"
+  },
+  {
+   "offset": 88,
+   "buffer": "vd"
+  },
+  {
+   "offset": 148,
+   "type": "i32",
+   "value": 4
+  },
+  {
+   "offset": 32,
+   "buffer": "kd"
+  },
+  {
+   "offset": 96,
+   "buffer": "vd"
+  },
+  {
+   "offset": 152,
+   "type": "i32",
+   "value": 7
+  },
+  {
+   "offset": 40,
+   "buffer": "kd"
+  },
+  {
+   "offset": 104,
+   "buffer": "vd"
+  },
+  {
+   "offset": 156,
+   "type": "i32",
+   "value": 10
+  },
+  {
+   "offset": 48,
+   "buffer": "kd"
+  },
+  {
+   "offset": 112,
+   "buffer": "vd"
+  },
+  {
+   "offset": 160,
+   "type": "i32",
+   "value": 13
+  },
+  {
+   "offset": 56,
+   "buffer": "kd"
+  },
+  {
+   "offset": 120,
+   "buffer": "vd"
+  },
+  {
+   "offset": 164,
+   "type": "i32",
+   "value": 0
+  },
+  {
+   "offset": 64,
+   "buffer": "kd"
+  },
+  {
+   "offset": 128,
+   "buffer": "vd"
+  },
+  {
+   "offset": 168,
+   "type": "i32",
+   "value": 3
+  },
+  {
+   "offset": 72,
+   "buffer": "kd"
+  },
+  {
+   "offset": 136,
+   "buffer": "vd"
+  },
+  {
+   "offset": 172,
+   "type": "i32",
+   "value": 6
+  }
+ ],
+ "dump": [
+  "kd",
+  "vd"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/kv.hip",
+  "rewrite_kernel": "k_kv_scatter_rows",
+  "outputs": [
+   {
+    "buffer": "kd",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "vd",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

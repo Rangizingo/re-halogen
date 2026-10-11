@@ -1,0 +1,18 @@
+{
+  "grid": ["=N", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "x": {"bytes": "=N*5120", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED", "lo": -8, "hi": 8}},
+    "y": {"bytes": "=N*20480", "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "x"},
+    {"offset": 8, "buffer": "y"}
+  ],
+  "dump": ["y"],
+  "compare": {
+    "rewrite_src": "../kernels/hyper.hip",
+    "rewrite_kernel": "k_hyper_seed",
+    "outputs": [{"buffer": "y", "dtype": "bf16"}]
+  }
+}

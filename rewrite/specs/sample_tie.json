@@ -1,0 +1,106 @@
+{
+ "grid": [
+  4,
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=4*N*4+256",
+   "fill": {
+    "kind": "rand",
+    "dtype": "u16",
+    "seed": "=SEED",
+    "lo": 16000,
+    "hi": 16640
+   }
+  },
+  "rows": {
+   "bytes": 128,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g23_data/rows_a.bin"
+   }
+  },
+  "ids": {
+   "bytes": 64,
+   "fill": {
+    "kind": "const",
+    "dtype": "i32",
+    "value": -7
+   }
+  },
+  "lp_all": {
+   "bytes": 64,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 9
+   }
+  },
+  "lp_kept": {
+   "bytes": 64,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 9
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x",
+   "byte_offset": 256
+  },
+  {
+   "offset": 8,
+   "buffer": "rows"
+  },
+  {
+   "offset": 16,
+   "buffer": "ids"
+  },
+  {
+   "offset": 24,
+   "buffer": "lp_all"
+  },
+  {
+   "offset": 32,
+   "buffer": "lp_kept"
+  },
+  {
+   "offset": 40,
+   "type": "i32",
+   "value": "=N"
+  }
+ ],
+ "dump": [
+  "ids",
+  "lp_all",
+  "lp_kept"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/sample.hip",
+  "rewrite_kernel": "k_sample",
+  "outputs": [
+   {
+    "buffer": "ids",
+    "dtype": "i32"
+   },
+   {
+    "buffer": "lp_all",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "lp_kept",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

@@ -1,0 +1,18 @@
+{
+  "grid": ["=N", 2, 1],
+  "block": [64, 1, 1],
+  "buffers": {
+    "qkv": {"bytes": "=N*3456*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED", "lo": -2, "hi": 2}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "qkv"},
+    {"offset": 8, "type": "i32", "value": 7},
+    {"offset": 12, "type": "i32", "value": 1}
+  ],
+  "dump": ["qkv"],
+  "compare": {
+    "rewrite_src": "../kernels/vis_rope.hip",
+    "rewrite_kernel": "k_vis_rope",
+    "outputs": [{"buffer": "qkv", "dtype": "f32"}]
+  }
+}

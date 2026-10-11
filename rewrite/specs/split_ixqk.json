@@ -1,0 +1,21 @@
+{
+  "grid": [64, 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "x": {"bytes": "=N*1280", "fill": {"kind": "rand", "dtype": "u8", "seed": "=SEED", "lo": 0, "hi": 255}},
+    "a": {"bytes": "=(N*512+64)*2", "fill": {"kind": "const", "dtype": "u16", "value": 4660}},
+    "b": {"bytes": "=(N*128+64)*2", "fill": {"kind": "const", "dtype": "u16", "value": 4660}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "x"},
+    {"offset": 8, "buffer": "a"},
+    {"offset": 16, "buffer": "b"},
+    {"offset": 24, "type": "i32", "value": "=N"}
+  ],
+  "dump": ["a", "b"],
+  "compare": {
+    "rewrite_src": "../kernels/split.hip",
+    "rewrite_kernel": "k_split_ixqk",
+    "outputs": [{"buffer": "a", "dtype": "u16"}, {"buffer": "b", "dtype": "u16"}]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "grid": [5, 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "x": {"bytes": "=64+3*(N//2+8)+16+3*(N//32*2+16)+64", "fill": {"kind": "rand", "dtype": "u8", "seed": "=SEED", "lo": 0, "hi": 256}},
+    "y": {"bytes": "=(3*N+64)*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "x"},
+    {"offset": 8, "buffer": "y"},
+    {"offset": 16, "type": "u32", "value": "=N//8"},
+    {"offset": 20, "type": "u32", "value": "=3*(N//8)"},
+    {"offset": 24, "type": "i64", "value": "=N"},
+    {"offset": 32, "type": "i64", "value": 64},
+    {"offset": 40, "type": "i64", "value": "=64+3*(N//2+8)+16"},
+    {"offset": 48, "type": "i64", "value": "=N//32*2+16"}
+  ],
+  "dump": ["y"],
+  "compare": {
+    "rewrite_src": "../kernels/deq_q4cp.hip",
+    "rewrite_kernel": "k_deq_q4cp_v8u_8_0",
+    "outputs": [{"buffer": "y", "dtype": "bf16"}]
+  }
+}

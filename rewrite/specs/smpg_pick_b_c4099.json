@@ -1,0 +1,144 @@
+{
+ "grid": [
+  64,
+  4,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=4*4099*4+256",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=1",
+    "lo": -5,
+    "hi": 5
+   }
+  },
+  "rows": {
+   "bytes": 128,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g23_data/rows_b.bin"
+   }
+  },
+  "scratch": {
+   "bytes": 65824,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g23_data/scr_after_mass_rb_n4099.bin"
+   }
+  },
+  "scan": {
+   "bytes": 1048576,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g23_data/out_scan_after_mass_rb_n4099.bin"
+   }
+  },
+  "part": {
+   "bytes": 1048576,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g23_data/out_part_after_mass_rb_n4099.bin"
+   }
+  },
+  "ids": {
+   "bytes": 64,
+   "fill": {
+    "kind": "const",
+    "dtype": "i32",
+    "value": -7
+   }
+  },
+  "lp_all": {
+   "bytes": 64,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 9
+   }
+  },
+  "lp_kept": {
+   "bytes": 64,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 9
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x",
+   "byte_offset": 256
+  },
+  {
+   "offset": 8,
+   "buffer": "rows"
+  },
+  {
+   "offset": 16,
+   "buffer": "scratch"
+  },
+  {
+   "offset": 24,
+   "buffer": "scan"
+  },
+  {
+   "offset": 32,
+   "buffer": "part"
+  },
+  {
+   "offset": 40,
+   "buffer": "ids"
+  },
+  {
+   "offset": 48,
+   "buffer": "lp_all"
+  },
+  {
+   "offset": 56,
+   "buffer": "lp_kept"
+  },
+  {
+   "offset": 64,
+   "type": "i32",
+   "value": "=4099"
+  },
+  {
+   "offset": 68,
+   "type": "i32",
+   "value": 64
+  }
+ ],
+ "dump": [
+  "ids",
+  "lp_all",
+  "lp_kept"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/smpg_pick.hip",
+  "rewrite_kernel": "k_smpg_pick",
+  "outputs": [
+   {
+    "buffer": "ids",
+    "dtype": "i32"
+   },
+   {
+    "buffer": "lp_all",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "lp_kept",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

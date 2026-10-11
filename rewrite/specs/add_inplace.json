@@ -1,0 +1,62 @@
+{
+ "grid": [
+  "=ceil_div(N,256)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "a": {
+   "bytes": "=(N+0)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+0",
+    "lo": -8,
+    "hi": 8
+   }
+  },
+  "b": {
+   "bytes": "=(N+0)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+100",
+    "lo": -8,
+    "hi": 8
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "a"
+  },
+  {
+   "offset": 8,
+   "buffer": "b"
+  },
+  {
+   "offset": 16,
+   "type": "i64",
+   "value": "=N"
+  }
+ ],
+ "dump": [
+  "a"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/add.hip",
+  "rewrite_kernel": "k_add_bf16_inplace",
+  "outputs": [
+   {
+    "buffer": "a",
+    "dtype": "u16"
+   }
+  ]
+ }
+}

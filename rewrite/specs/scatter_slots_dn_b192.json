@@ -1,0 +1,87 @@
+{
+ "grid": [
+  "=N",
+  1,
+  1
+ ],
+ "block": [
+  192,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=N*5120",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "slot": {
+   "bytes": "=N*4",
+   "fill": {
+    "kind": "iota",
+    "dtype": "i32",
+    "start": "=N-1",
+    "step": -1
+   }
+  },
+  "scale": {
+   "bytes": "=N*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+5",
+    "lo": -3,
+    "hi": 3
+   }
+  },
+  "y": {
+   "bytes": "=N*10240+256",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 16,
+   "buffer": "slot"
+  },
+  {
+   "offset": 24,
+   "buffer": "scale"
+  },
+  {
+   "offset": 32,
+   "buffer": "y"
+  }
+ ],
+ "dump": [
+  "y"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/scatter.hip",
+  "rewrite_kernel": "k_scatter_slots_dn",
+  "outputs": [
+   {
+    "buffer": "y",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

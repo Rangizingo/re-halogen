@@ -1,0 +1,120 @@
+{
+ "grid": [
+  4,
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "w": {
+   "bytes": 6553600,
+   "fill": {
+    "kind": "rand",
+    "dtype": "u32",
+    "seed": "=SEED+0",
+    "lo": 0,
+    "hi": 4294967296
+   }
+  },
+  "x": {
+   "bytes": 163840,
+   "fill": {
+    "kind": "const",
+    "dtype": "f16",
+    "value": 0
+   }
+  },
+  "items": {
+   "bytes": 64,
+   "fill": {
+    "kind": "file",
+    "path": "/tmp/g17/items_gu_a.bin"
+   }
+  },
+  "ids": {
+   "bytes": 640,
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED+5",
+    "lo": 0,
+    "hi": 32
+   }
+  },
+  "sv": {
+   "bytes": 10240,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+23",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "suh": {
+   "bytes": 5120,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+29",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "out": {
+   "bytes": 205312,
+   "fill": {
+    "kind": "const",
+    "dtype": "u16",
+    "value": 12345
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "w"
+  },
+  {
+   "offset": 8,
+   "buffer": "x"
+  },
+  {
+   "offset": 16,
+   "buffer": "items"
+  },
+  {
+   "offset": 24,
+   "buffer": "ids"
+  },
+  {
+   "offset": 32,
+   "buffer": "sv"
+  },
+  {
+   "offset": 40,
+   "buffer": "suh"
+  },
+  {
+   "offset": 48,
+   "buffer": "out"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ht_moe.hip",
+  "rewrite_kernel": "k_ht_moe_gu_b4",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "f16"
+   }
+  ]
+ }
+}

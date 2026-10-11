@@ -15,11 +15,17 @@ import ast
 import datetime
 import importlib.util
 import json
+import contextlib
+import fcntl
 import operator
+import os
+import shutil
 import struct
 import subprocess
 import sys
 import tempfile
+import time
+import urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -188,10 +194,33 @@ def append_row(table_path, row):
         f.write(row)
 
 
+def mask_excluded(a, b, dtype, ranges):
+    """Zero element ranges [start, end) in both buffers; returns (a, b, n_excluded).
+
+    For outputs that depend on state the vendor kernel never writes (stale LDS, unset VGPRs),
+    stated per spec in "exclude" and reported as excluded=N in every result line. Ranges are
+    checked against the vendor buffer; overlapping ranges count each element once.
+    """
+    w = 2 if dtype in ('bf16', 'f16') else (FLOAT_FMT.get(dtype) or INT_FMT[dtype])[1]
+    n_el = len(a) // w
+    idx = set()
+    for lo, hi in ranges or []:
+        if not 0 <= lo < hi <= n_el:
+            raise ValueError(f'exclude range [{lo}, {hi}) outside 0..{n_el}')
+        idx.update(range(lo, hi))
+    a, b = bytearray(a), bytearray(b)
+    for k in idx:
+        a[k * w:(k + 1) * w] = bytes(w)
+        if (k + 1) * w <= len(b):
+            b[k * w:(k + 1) * w] = bytes(w)
+    return bytes(a), bytes(b), len(idx)
+
+
 def result_text(r):
     word = 'MATCH' if r['match'] else 'MISMATCH'
     return (f"{word} n={r['n']} diff={r['n_diff']} max_abs={r['max_abs']:g} max_ulp={r['max_ulp']:g}"
-            + (f" first_diff={r['first_diff']}" if r['first_diff'] is not None else ''))
+            + (f" first_diff={r['first_diff']}" if r['first_diff'] is not None else '')
+            + (f" excluded={r['excluded']}" if r.get('excluded') else ''))
 
 
 def _load_gen_kernargs():
@@ -227,6 +256,55 @@ def run_kernel(co, spec, outdir):
         raise RuntimeError(f'run_kernel rc={r.returncode}: {r.stderr.strip()}')
 
 
+def mem_available_gib(path='/proc/meminfo'):
+    """MemAvailable in GiB, or None where /proc/meminfo does not exist."""
+    try:
+        for line in open(path):
+            if line.startswith('MemAvailable:'):
+                return int(line.split()[1]) / 1048576
+    except OSError:
+        return None
+    return None
+
+
+def service_healthy(url=None):
+    """True when the live service answers /health with 200 (or CMP_HEALTH_URL is set to empty)."""
+    url = os.environ.get('CMP_HEALTH_URL', 'http://127.0.0.1:8307/health') if url is None else url
+    if not url:
+        return True
+    if not url.startswith(('http://', 'https://')):
+        raise ValueError(f'CMP_HEALTH_URL must be http(s): {url!r}')
+    try:
+        with urllib.request.urlopen(url, timeout=5) as r:  # nosemgrep: scheme checked above
+            return r.status == 200
+    except OSError:
+        return False
+
+
+@contextlib.contextmanager
+def host_slot(lock_path, min_free_gib):
+    """One compare run per host at a time, started only while the live service is healthy and
+    min_free_gib of host memory is free (no run competes with a service start).
+
+    Ai-core shares its memory with the live halogen-swift service, which refuses to start under
+    16 GiB MemAvailable; parallel agent runs pushed it below that (p7-12, 2026-10-11).
+    """
+    lock_path = Path(lock_path)
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(lock_path, 'w') as f:
+        fcntl.flock(f, fcntl.LOCK_EX)
+        while True:
+            free = mem_available_gib()
+            if free is None or (free >= min_free_gib and service_healthy()):
+                break
+            print(f'host_slot: waiting (free {free:.1f} GiB, need {min_free_gib}; or service not healthy)', file=sys.stderr, flush=True)
+            time.sleep(30)
+        try:
+            yield
+        finally:
+            fcntl.flock(f, fcntl.LOCK_UN)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument('spec')
@@ -248,7 +326,27 @@ def main(argv=None):
         raise SystemExit(f'{a.kernel} not in {a.kernargs}')
     vend = kd[a.kernel]
     gk = _load_gen_kernargs()
-    work = Path(a.workdir or tempfile.mkdtemp(prefix='cmp_')).resolve()
+    # Own work dir on disk (CMP_TMP, default <repo>/work/cmp), removed after the run: on Ai-core /tmp is RAM-backed,
+    # and leftover dirs there starved the live service of memory (p7-12, 2026-10-11).
+    auto = a.workdir is None
+    if auto:
+        base = Path(os.environ.get('CMP_TMP') or HERE.parent.parent / 'work' / 'cmp')
+        base.mkdir(parents=True, exist_ok=True)
+    work = Path(a.workdir or tempfile.mkdtemp(prefix='cmp_', dir=base)).resolve()
+    lock = HERE.parent.parent / 'work' / 'cmp' / '.host.lock'
+    # work/cmp/.service-down marks a window where Peter approved halogen-swift being stopped (ruling 5):
+    # no lock, no /health or free-memory wait; runs go in parallel.
+    gate = contextlib.nullcontext() if (lock.parent / '.service-down').exists() else \
+        host_slot(lock, float(os.environ.get('CMP_MIN_FREE_GIB', '8')))
+    try:
+        with gate:
+            return _run(a, template, cmp_cfg, vend, gk, work)
+    finally:
+        if auto:
+            shutil.rmtree(work, ignore_errors=True)
+
+
+def _run(a, template, cmp_cfg, vend, gk, work):
     work.mkdir(parents=True, exist_ok=True)
     src = Path(a.rewrite_src or cmp_cfg['rewrite_src'])
     if not src.is_absolute() and not src.exists():
@@ -273,11 +371,13 @@ def main(argv=None):
             vdir, rdir = work / f'v_{seed}_{size}', work / f'r_{seed}_{size}'
             run_kernel(vco.resolve(), build_run_spec(template, a.kernel, vend, env), vdir)
             run_kernel(rco.resolve(), build_run_spec(template, rname, rlay, env), rdir)
-            res = {'match': True, 'n': 0, 'n_diff': 0, 'max_abs': 0.0, 'max_ulp': 0, 'first_diff': None}
+            res = {'match': True, 'n': 0, 'n_diff': 0, 'max_abs': 0.0, 'max_ulp': 0, 'first_diff': None, 'excluded': 0}
             for out in cmp_cfg['outputs']:
                 name = out['buffer']
                 vb, rb = (vdir / f'{name}.bin').read_bytes(), (rdir / f'{name}.bin').read_bytes()
-                r = compare_bytes(vb, rb, out['dtype'], max_abs, max_ulp)
+                cvb, crb, nx = mask_excluded(vb, rb, out['dtype'], out.get('exclude'))
+                res['excluded'] += nx
+                r = compare_bytes(cvb, crb, out['dtype'], max_abs, max_ulp)
                 # Agreeing on an output neither kernel wrote proves nothing.
                 for side, d, b in (('vendor', vdir, vb), ('rewrite', rdir, rb)):
                     if untouched(b, (d / f'{name}.pre.bin').read_bytes()):

@@ -1,0 +1,19 @@
+{
+  "grid": ["=ceil_div(N,256)", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "x": {"bytes": "=N*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED", "lo": -1e-37, "hi": 1e-37}},
+    "y": {"bytes": "=(N+64)*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "x"},
+    {"offset": 8, "buffer": "y"},
+    {"offset": 16, "type": "i64", "value": "=N"}
+  ],
+  "dump": ["y"],
+  "compare": {
+    "rewrite_src": "../kernels/vis_narrow.hip",
+    "rewrite_kernel": "k_vis_narrow",
+    "outputs": [{"buffer": "y", "dtype": "bf16"}]
+  }
+}

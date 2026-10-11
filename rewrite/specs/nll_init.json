@@ -1,0 +1,80 @@
+{
+ "grid": [
+  "=ceil_div(N,256)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "m": {
+   "bytes": "=(N+64)*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 7
+   }
+  },
+  "s": {
+   "bytes": "=(N+64)*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 7
+   }
+  },
+  "t": {
+   "bytes": "=(N+64)*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 7
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "m"
+  },
+  {
+   "offset": 8,
+   "buffer": "s"
+  },
+  {
+   "offset": 16,
+   "buffer": "t"
+  },
+  {
+   "offset": 24,
+   "type": "i32",
+   "value": "=N"
+  }
+ ],
+ "dump": [
+  "m",
+  "s",
+  "t"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/nll.hip",
+  "rewrite_kernel": "k_nll_init",
+  "outputs": [
+   {
+    "buffer": "m",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "s",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "t",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

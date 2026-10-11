@@ -1,0 +1,40 @@
+{
+  "grid": [48, 1, 1],
+  "block": [256, 1, 1],
+  "kernarg_size": 136,
+  "buffers": {
+    "rows": {"bytes": "=N*20480", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED*16+1", "lo": -80000, "hi": 80000}},
+    "g":    {"bytes": "=N*192", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED*16+2", "lo": -0.5, "hi": 0}},
+    "beta": {"bytes": "=N*192", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED*16+3", "lo": 0, "hi": 1}},
+    "st":   {"bytes": 3145728, "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED*16+4", "lo": -80000, "hi": 80000}},
+    "idx":  {"bytes": 16, "fill": {"kind": "const", "dtype": "i32", "value": 0}},
+    "o":    {"bytes": "=N*12288", "fill": {"kind": "const", "dtype": "bf16", "value": -99}},
+    "py":   {"bytes": 256, "fill": "zero"},
+    "tap0": {"bytes": 3145728, "fill": {"kind": "const", "dtype": "f32", "value": -7}},
+    "tap1": {"bytes": 3145728, "fill": {"kind": "const", "dtype": "f32", "value": -7}},
+    "tap2": {"bytes": 3145728, "fill": {"kind": "const", "dtype": "f32", "value": -7}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "rows"},
+    {"offset": 8, "buffer": "g"},
+    {"offset": 16, "buffer": "beta"},
+    {"offset": 24, "buffer": "st"},
+    {"offset": 32, "buffer": "idx"},
+    {"offset": 40, "type": "i64", "value": 0},
+    {"offset": 48, "buffer": "o"},
+    {"offset": 56, "type": "i32", "value": "=N"},
+    {"offset": 64, "buffer": "py"},
+    {"offset": 72, "type": "i32", "value": -1},
+    {"offset": 76, "type": "i32", "value": -1},
+    {"offset": 80, "type": "i32", "value": -1},
+    {"offset": 88, "buffer": "tap0"},
+    {"offset": 96, "buffer": "tap1"},
+    {"offset": 104, "buffer": "tap2"}
+  ],
+  "dump": ["o", "st"],
+  "compare": {
+    "rewrite_src": "../kernels/dn_fused16.hip",
+    "rewrite_kernel": "k_dnf_p0",
+    "outputs": [{"buffer": "o", "dtype": "bf16"}, {"buffer": "st", "dtype": "f32"}]
+  }
+}

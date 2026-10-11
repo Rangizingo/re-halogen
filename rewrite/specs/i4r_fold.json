@@ -1,0 +1,116 @@
+{
+ "grid": [
+  "=ceil_div(N*20,8)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "sc": {
+   "bytes": "=N*10*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+1",
+    "lo": 0.05,
+    "hi": 2
+   }
+  },
+  "h": {
+   "bytes": 5120,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+2",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "r": {
+   "bytes": "=N*2560*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+3",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "z": {
+   "bytes": "=N*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+4",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "out": {
+   "bytes": "=N*2560*2+128",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "x": {
+   "bytes": "=N*10*2560*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED",
+    "lo": -3,
+    "hi": 3
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 16,
+   "buffer": "sc"
+  },
+  {
+   "offset": 24,
+   "buffer": "h"
+  },
+  {
+   "offset": 32,
+   "buffer": "r"
+  },
+  {
+   "offset": 40,
+   "buffer": "z"
+  },
+  {
+   "offset": 48,
+   "buffer": "out"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/i4r_fold.hip",
+  "rewrite_kernel": "k_i4r_fold",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

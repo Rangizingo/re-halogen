@@ -1,0 +1,18 @@
+{
+  "grid": ["=ceil_div(10240,N)", 1, 1],
+  "block": ["=N", 1, 1],
+  "buffers": {
+    "in": {"bytes": 81920, "fill": {"kind": "iota", "dtype": "u16", "start": 24576, "step": 1}},
+    "out": {"bytes": 61568, "fill": {"kind": "const", "dtype": "u16", "value": 65535}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "in"},
+    {"offset": 8, "buffer": "out"}
+  ],
+  "dump": ["out"],
+  "compare": {
+    "rewrite_src": "../kernels/hist.hip",
+    "rewrite_kernel": "k_hist_from_cstate",
+    "outputs": [{"buffer": "out", "dtype": "u16"}]
+  }
+}

@@ -1,0 +1,118 @@
+{
+ "grid": [
+  4,
+  40,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "a": {
+   "bytes": "=(4*10240+0)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+1",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "x": {
+   "bytes": "=(4*10240+0)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+2",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "w": {
+   "bytes": "=(10240*4+0)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+3",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "hist": {
+   "bytes": "=(4*10240*9+0)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+4",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "out": {
+   "bytes": "=(4*10240+64)*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "a"
+  },
+  {
+   "offset": 8,
+   "buffer": "x"
+  },
+  {
+   "offset": 16,
+   "buffer": "w"
+  },
+  {
+   "offset": 24,
+   "buffer": "hist",
+   "byte_offset": 0
+  },
+  {
+   "offset": 32,
+   "buffer": "hist",
+   "byte_offset": 184320
+  },
+  {
+   "offset": 40,
+   "buffer": "hist",
+   "byte_offset": 368640
+  },
+  {
+   "offset": 48,
+   "buffer": "hist",
+   "byte_offset": 552960
+  },
+  {
+   "offset": 152,
+   "buffer": "out"
+  }
+ ],
+ "dump": [
+  "out",
+  "hist"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ple.hip",
+  "rewrite_kernel": "k_ple_out_rows",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "u16"
+   },
+   {
+    "buffer": "hist",
+    "dtype": "u16"
+   }
+  ]
+ }
+}

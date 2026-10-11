@@ -1,0 +1,33 @@
+{
+  "grid": [1, 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "x": {"bytes": "=N*2048", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED", "lo": -4, "hi": 4}},
+    "idx": {"bytes": "=(N*10+16)*4", "fill": {"kind": "const", "dtype": "i32", "value": -7}},
+    "w": {"bytes": "=(N*10+16)*4", "fill": {"kind": "const", "dtype": "f32", "value": -7}},
+    "A": {"bytes": "=N*10*80+256", "fill": {"kind": "const", "dtype": "i32", "value": -7}},
+    "B": {"bytes": "=N*10*320+256", "fill": {"kind": "const", "dtype": "i32", "value": -7}},
+    "tok": {"bytes": "=(N*10+16)*4", "fill": {"kind": "const", "dtype": "i32", "value": -7}},
+    "rank": {"bytes": "=(N*10+16)*4", "fill": {"kind": "const", "dtype": "i32", "value": -7}},
+    "total": {"bytes": 64, "fill": {"kind": "const", "dtype": "i32", "value": -7}},
+    "inv": {"bytes": "=(N*10+16)*4", "fill": {"kind": "const", "dtype": "i32", "value": -7}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "x"},
+    {"offset": 8, "buffer": "idx"},
+    {"offset": 16, "buffer": "w"},
+    {"offset": 24, "type": "i32", "value": "=N"},
+    {"offset": 32, "buffer": "A"},
+    {"offset": 40, "buffer": "B"},
+    {"offset": 48, "buffer": "tok"},
+    {"offset": 56, "buffer": "rank"},
+    {"offset": 64, "buffer": "total"},
+    {"offset": 72, "buffer": "inv"}
+  ],
+  "dump": ["idx", "w", "A", "B", "tok", "rank", "total", "inv"],
+  "compare": {
+    "rewrite_src": "../kernels/route_topk.hip",
+    "rewrite_kernel": "k_route_topk_w_grp4",
+    "outputs": [{"buffer": "idx", "dtype": "i32"}, {"buffer": "w", "dtype": "f32"}, {"buffer": "A", "dtype": "i32"}, {"buffer": "B", "dtype": "i32"}, {"buffer": "tok", "dtype": "i32"}, {"buffer": "rank", "dtype": "i32"}, {"buffer": "total", "dtype": "i32"}, {"buffer": "inv", "dtype": "i32"}]
+  }
+}

@@ -1,0 +1,96 @@
+{
+ "grid": [
+  "=ceil_div(N,4)",
+  2,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "a": {
+   "bytes": "=N*512*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "u16",
+    "seed": "=SEED",
+    "lo": 0,
+    "hi": 65535
+   }
+  },
+  "b": {
+   "bytes": "=N*512*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "u16",
+    "seed": "=SEED+30",
+    "lo": 0,
+    "hi": 65535
+   }
+  },
+  "c": {
+   "bytes": "=ceil_div(N,4)*4096+256",
+   "fill": {
+    "kind": "const",
+    "dtype": "u16",
+    "value": 65535
+   }
+  },
+  "d": {
+   "bytes": "=ceil_div(N,4)*4096+256",
+   "fill": {
+    "kind": "const",
+    "dtype": "u16",
+    "value": 65535
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "a"
+  },
+  {
+   "offset": 8,
+   "buffer": "b"
+  },
+  {
+   "offset": 16,
+   "type": "i64",
+   "value": 512
+  },
+  {
+   "offset": 24,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 32,
+   "buffer": "c"
+  },
+  {
+   "offset": 40,
+   "buffer": "d"
+  }
+ ],
+ "dump": [
+  "c",
+  "d"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/kv.hip",
+  "rewrite_kernel": "k_kv_bt",
+  "outputs": [
+   {
+    "buffer": "c",
+    "dtype": "u16"
+   },
+   {
+    "buffer": "d",
+    "dtype": "u16"
+   }
+  ]
+ }
+}

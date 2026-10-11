@@ -1,0 +1,69 @@
+{
+ "grid": [
+  "=N",
+  16,
+  1
+ ],
+ "block": [
+  64,
+  1,
+  1
+ ],
+ "buffers": {
+  "tab": {
+   "bytes": 3600,
+   "fill": {
+    "kind": "rand",
+    "dtype": "u8",
+    "seed": "=SEED",
+    "lo": 0,
+    "hi": 256
+   }
+  },
+  "rows": {
+   "bytes": "=N*16*8",
+   "fill": {
+    "kind": "rand",
+    "dtype": "i64",
+    "seed": "=SEED+3",
+    "lo": 0,
+    "hi": 40
+   }
+  },
+  "out": {
+   "bytes": "=(N*2560+64)*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "tab"
+  },
+  {
+   "offset": 8,
+   "buffer": "rows"
+  },
+  {
+   "offset": 16,
+   "buffer": "out"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/gather.hip",
+  "rewrite_kernel": "k_gather_iq4nl",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "u16"
+   }
+  ]
+ }
+}

@@ -1,0 +1,181 @@
+{
+ "grid": [
+  64,
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=4*100003*4+256",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=1",
+    "lo": -5,
+    "hi": 5
+   }
+  },
+  "rows": {
+   "bytes": 128,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g23_data/rows_a.bin"
+   }
+  },
+  "scratch": {
+   "bytes": 65824,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g23_data/scr_after_rmass.bin"
+   }
+  },
+  "q": {
+   "bytes": "=100003*4+64",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=1+61",
+    "lo": 0,
+    "hi": "=2.0/100003"
+   }
+  },
+  "scanP": {
+   "bytes": 262144,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g23_data/out_scan_after_mass.bin"
+   }
+  },
+  "partP": {
+   "bytes": 262144,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g23_data/out_part_after_mass.bin"
+   }
+  },
+  "scanR": {
+   "bytes": 262144,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g23_data/out_scan_after_rmass.bin"
+   }
+  },
+  "partR": {
+   "bytes": 262144,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g23_data/out_part_after_rmass.bin"
+   }
+  },
+  "idout": {
+   "bytes": 16,
+   "fill": {
+    "kind": "const",
+    "dtype": "i32",
+    "value": -7
+   }
+  },
+  "lp": {
+   "bytes": 16,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 9
+   }
+  },
+  "cnt": {
+   "bytes": 16,
+   "fill": {
+    "kind": "const",
+    "dtype": "i32",
+    "value": 0
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x",
+   "byte_offset": 256
+  },
+  {
+   "offset": 8,
+   "buffer": "q"
+  },
+  {
+   "offset": 16,
+   "buffer": "rows"
+  },
+  {
+   "offset": 24,
+   "buffer": "scratch"
+  },
+  {
+   "offset": 32,
+   "buffer": "scanP"
+  },
+  {
+   "offset": 40,
+   "buffer": "partP"
+  },
+  {
+   "offset": 48,
+   "buffer": "scanR"
+  },
+  {
+   "offset": 56,
+   "buffer": "partR"
+  },
+  {
+   "offset": 64,
+   "buffer": "idout"
+  },
+  {
+   "offset": 72,
+   "buffer": "lp"
+  },
+  {
+   "offset": 80,
+   "buffer": "cnt"
+  },
+  {
+   "offset": 88,
+   "type": "i32",
+   "value": "=100003"
+  },
+  {
+   "offset": 92,
+   "type": "i32",
+   "value": 64
+  },
+  {
+   "offset": 96,
+   "type": "i32",
+   "value": 0
+  }
+ ],
+ "dump": [
+  "idout",
+  "lp",
+  "cnt"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/smpg_rpick.hip",
+  "rewrite_kernel": "k_smpg_rpick",
+  "outputs": [
+   {
+    "buffer": "idout",
+    "dtype": "i32"
+   },
+   {
+    "buffer": "lp",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

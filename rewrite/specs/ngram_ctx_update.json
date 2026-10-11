@@ -1,0 +1,62 @@
+{
+ "grid": [
+  1,
+  1,
+  1
+ ],
+ "block": [
+  1,
+  1,
+  1
+ ],
+ "buffers": {
+  "tokens": {
+   "bytes": "=(N+4)*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED+0",
+    "lo": -1000,
+    "hi": 100000
+   }
+  },
+  "ctx": {
+   "bytes": 32,
+   "fill": {
+    "kind": "rand",
+    "dtype": "i64",
+    "seed": "=SEED",
+    "lo": 5,
+    "hi": 1000000
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "tokens"
+  },
+  {
+   "offset": 8,
+   "buffer": "ctx"
+  },
+  {
+   "offset": 16,
+   "type": "i32",
+   "value": "=N"
+  }
+ ],
+ "dump": [
+  "ctx"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ngram.hip",
+  "rewrite_kernel": "k_ngram_ctx_update",
+  "outputs": [
+   {
+    "buffer": "ctx",
+    "dtype": "i64"
+   }
+  ]
+ }
+}

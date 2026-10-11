@@ -1,0 +1,20 @@
+{
+  "grid": ["=ceil_div(N,16*1)", 16, 1],
+  "block": [32, 1, 1],
+  "buffers": {
+    "qkv": {"bytes": "=N*3456*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED", "lo": -2, "hi": 2}},
+    "out": {"bytes": "=N*1152*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "qkv"},
+    {"offset": 8, "buffer": "out"},
+    {"offset": 16, "type": "i32", "value": "=N"},
+    {"offset": 20, "type": "f32", "value": 0.11785}
+  ],
+  "dump": ["out"],
+  "compare": {
+    "rewrite_src": "../kernels/vis_attn.hip",
+    "rewrite_kernel": "k_vis_attn_w_1_1",
+    "outputs": [{"buffer": "out", "dtype": "f32"}]
+  }
+}

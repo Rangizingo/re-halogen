@@ -1,0 +1,219 @@
+{
+ "grid": [
+  "=40+ceil_div(N*48,256)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=N*20480",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+1",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "w": {
+   "bytes": 81920,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+2",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "stA": {
+   "bytes": 655360,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+3",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "y": {
+   "bytes": "=N*20480+64",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "a_in": {
+   "bytes": "=N*96",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+4",
+    "lo": 17,
+    "hi": 23
+   }
+  },
+  "b_in": {
+   "bytes": "=N*96",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+5",
+    "lo": -8,
+    "hi": 8
+   }
+  },
+  "A_log": {
+   "bytes": 192,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*16+6",
+    "lo": -3,
+    "hi": 3
+   }
+  },
+  "dt_bias": {
+   "bytes": 192,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*16+7",
+    "lo": -0.5,
+    "hi": 0.5
+   }
+  },
+  "beta": {
+   "bytes": "=N*192+64",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  },
+  "g": {
+   "bytes": "=N*192+64",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x"
+  },
+  {
+   "offset": 8,
+   "buffer": "w"
+  },
+  {
+   "offset": 272,
+   "buffer": "y"
+  },
+  {
+   "offset": 280,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 288,
+   "buffer": "a_in"
+  },
+  {
+   "offset": 296,
+   "buffer": "b_in"
+  },
+  {
+   "offset": 304,
+   "buffer": "A_log"
+  },
+  {
+   "offset": 312,
+   "buffer": "dt_bias"
+  },
+  {
+   "offset": 320,
+   "buffer": "beta"
+  },
+  {
+   "offset": 328,
+   "buffer": "g"
+  },
+  {
+   "offset": 16,
+   "buffer": "stA",
+   "byte_offset": 0
+  },
+  {
+   "offset": 24,
+   "buffer": "stA",
+   "byte_offset": 81920
+  },
+  {
+   "offset": 32,
+   "buffer": "stA",
+   "byte_offset": 163840
+  },
+  {
+   "offset": 40,
+   "buffer": "stA",
+   "byte_offset": 245760
+  },
+  {
+   "offset": 48,
+   "buffer": "stA",
+   "byte_offset": 327680
+  },
+  {
+   "offset": 56,
+   "buffer": "stA",
+   "byte_offset": 409600
+  },
+  {
+   "offset": 64,
+   "buffer": "stA",
+   "byte_offset": 491520
+  },
+  {
+   "offset": 72,
+   "buffer": "stA",
+   "byte_offset": 573440
+  }
+ ],
+ "dump": [
+  "y",
+  "stA",
+  "beta",
+  "g"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/dn_conv.hip",
+  "rewrite_kernel": "k_dn_conv_rows",
+  "outputs": [
+   {
+    "buffer": "y",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "stA",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "beta",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "g",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

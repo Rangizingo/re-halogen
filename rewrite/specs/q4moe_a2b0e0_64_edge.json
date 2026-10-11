@@ -1,0 +1,126 @@
+{
+ "grid": [
+  9,
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "kernarg_size": 152,
+ "buffers": {
+  "w": {
+   "bytes": 7372800,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED",
+    "lo": -0.9,
+    "hi": 0.9
+   }
+  },
+  "items": {
+   "bytes": 144,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/q4moe_items_b0_64.bin"
+   }
+  },
+  "count": {
+   "bytes": 16,
+   "fill": {
+    "kind": "const",
+    "dtype": "i32",
+    "value": 9
+   }
+  },
+  "x": {
+   "bytes": "=(N+8)*2560*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+7",
+    "lo": -100000,
+    "hi": 100000
+   }
+  },
+  "idx": {
+   "bytes": 1120,
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED+11",
+    "lo": 0,
+    "hi": "=N*10"
+   }
+  },
+  "y": {
+   "bytes": "=(264+N)*640*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "w"
+  },
+  {
+   "offset": 8,
+   "type": "i64",
+   "value": 0
+  },
+  {
+   "offset": 16,
+   "type": "i64",
+   "value": 6553600
+  },
+  {
+   "offset": 24,
+   "type": "i64",
+   "value": 160
+  },
+  {
+   "offset": 32,
+   "hex": "00606ac7000080bf82a87bb895bfd6b395bfd63382a87b380000803f00606a47000000006f12833a6f1283ba0000c8420000c8c20060ea460060eac600e87d47"
+  },
+  {
+   "offset": 128,
+   "buffer": "items"
+  },
+  {
+   "offset": 136,
+   "buffer": "count"
+  },
+  {
+   "offset": 144,
+   "buffer": "y"
+  },
+  {
+   "offset": 112,
+   "buffer": "x"
+  },
+  {
+   "offset": 120,
+   "buffer": "idx"
+  }
+ ],
+ "dump": [
+  "y"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/q4moe.hip",
+  "rewrite_kernel": "k_q4moe_a2b0e0_64",
+  "outputs": [
+   {
+    "buffer": "y",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

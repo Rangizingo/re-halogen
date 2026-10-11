@@ -1,0 +1,73 @@
+{
+ "grid": [
+  "=ceil_div(N,256)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "src": {
+   "bytes": 4194304,
+   "fill": {
+    "kind": "iota",
+    "dtype": "f16",
+    "start": -5,
+    "step": 1
+   }
+  },
+  "dst": {
+   "bytes": "=(N+64)*32*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "u16",
+    "value": 4660
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "src"
+  },
+  {
+   "offset": 8,
+   "buffer": "dst"
+  },
+  {
+   "offset": 16,
+   "hex": "0c0000000000000000001000000000000c00000000000000000000000000000008000000000000000000000000000000"
+  },
+  {
+   "offset": 64,
+   "type": "u32",
+   "value": 1
+  },
+  {
+   "offset": 68,
+   "type": "u32",
+   "value": "=N"
+  },
+  {
+   "offset": 72,
+   "type": "i64",
+   "value": 0
+  }
+ ],
+ "dump": [
+  "dst"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/deq_aff.hip",
+  "rewrite_kernel": "k_deq_aff_5t",
+  "outputs": [
+   {
+    "buffer": "dst",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

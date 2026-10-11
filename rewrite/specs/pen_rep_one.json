@@ -1,0 +1,153 @@
+{
+ "grid": [
+  "=ceil_div(N,256)",
+  2,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "logits": {
+   "bytes": 5959680,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED",
+    "lo": -10,
+    "hi": 10
+   }
+  },
+  "ids": {
+   "bytes": 2979840,
+   "fill": {
+    "kind": "iota",
+    "dtype": "i32",
+    "start": -3,
+    "step": 1
+   }
+  },
+  "delta": {
+   "bytes": 2979840,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+7",
+    "lo": -5,
+    "hi": 5
+   }
+  },
+  "A": {
+   "bytes": 2979840,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+13",
+    "lo": -3,
+    "hi": 3
+   }
+  },
+  "B": {
+   "bytes": 2979840,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+17",
+    "lo": -3,
+    "hi": 3
+   }
+  },
+  "flags": {
+   "bytes": 744960,
+   "fill": {
+    "kind": "rand",
+    "dtype": "u8",
+    "seed": "=SEED+19",
+    "lo": 0,
+    "hi": 2
+   }
+  },
+  "rep": {
+   "bytes": 16,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 1.0
+   }
+  },
+  "counts": {
+   "bytes": 16,
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED+11",
+    "lo": "=N-20",
+    "hi": "=N"
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "logits"
+  },
+  {
+   "offset": 8,
+   "buffer": "ids"
+  },
+  {
+   "offset": 16,
+   "buffer": "delta"
+  },
+  {
+   "offset": 24,
+   "buffer": "A"
+  },
+  {
+   "offset": 32,
+   "buffer": "B"
+  },
+  {
+   "offset": 40,
+   "buffer": "flags"
+  },
+  {
+   "offset": 48,
+   "buffer": "rep"
+  },
+  {
+   "offset": 56,
+   "buffer": "counts"
+  },
+  {
+   "offset": 64,
+   "type": "i32",
+   "value": 1
+  },
+  {
+   "offset": 68,
+   "type": "i32",
+   "value": 1
+  },
+  {
+   "offset": 72,
+   "type": "i32",
+   "value": 744960
+  }
+ ],
+ "dump": [
+  "logits"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/pen_rep.hip",
+  "rewrite_kernel": "k_pen_rep",
+  "outputs": [
+   {
+    "buffer": "logits",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

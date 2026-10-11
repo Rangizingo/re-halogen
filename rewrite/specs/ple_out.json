@@ -1,0 +1,102 @@
+{
+ "grid": [
+  "=N",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "a": {
+   "bytes": "=(N*10240+0)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+1",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "in": {
+   "bytes": "=(N*10240+0)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+2",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "w": {
+   "bytes": "=(10240*4+0)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+3",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "hist": {
+   "bytes": "=(10240*9+0)*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+4",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "out": {
+   "bytes": "=(N*10240+64)*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "a"
+  },
+  {
+   "offset": 8,
+   "buffer": "in"
+  },
+  {
+   "offset": 16,
+   "buffer": "w"
+  },
+  {
+   "offset": 24,
+   "buffer": "hist"
+  },
+  {
+   "offset": 32,
+   "type": "i32",
+   "value": "=N-2"
+  },
+  {
+   "offset": 40,
+   "buffer": "out"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ple.hip",
+  "rewrite_kernel": "k_ple_out",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "u16"
+   }
+  ]
+ }
+}

@@ -1,0 +1,28 @@
+{
+  "grid": ["=N", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "y0": {"bytes": "=(N*2560+64)*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED", "lo": -0.001, "hi": 0.001}},
+    "p": {"bytes": "=((N+3)//4*2560+64)*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+100", "lo": -0.001, "hi": 0.001}},
+    "w": {"bytes": "=N*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED+200", "lo": -0.001, "hi": 0.001}},
+    "g": {"bytes": "=4*2560*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+300", "lo": -1, "hi": 1}},
+    "out": {"bytes": "=(N*2560+64)*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}},
+    "tab": {"bytes": "=4*4*2560*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+400", "lo": -1, "hi": 1}},
+    "f": {"bytes": "=(N*4+16)*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "y0"},
+    {"offset": 8, "buffer": "p"},
+    {"offset": 16, "buffer": "w"},
+    {"offset": 24, "buffer": "g"},
+    {"offset": 32, "buffer": "out"},
+    {"offset": 40, "buffer": "tab"},
+    {"offset": 48, "buffer": "f"}
+  ],
+  "dump": ["y0", "out"],
+  "compare": {
+    "rewrite_src": "../kernels/hc_scatter.hip",
+    "rewrite_kernel": "k_hc_scatter_norm_f",
+    "outputs": [{"buffer": "y0", "dtype": "bf16"}, {"buffer": "out", "dtype": "bf16"}]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "grid": ["=N", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "x": {"bytes": "=N*1152*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED", "lo": -3, "hi": 3}},
+    "pos": {"bytes": "=48*48*1152*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+9", "lo": -2, "hi": 2}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "x"},
+    {"offset": 8, "buffer": "pos"},
+    {"offset": 16, "type": "i32", "value": "=N"},
+    {"offset": 20, "type": "i32", "value": 12},
+    {"offset": 24, "type": "i32", "value": 16},
+    {"offset": 28, "type": "i32", "value": 8}
+  ],
+  "dump": ["x"],
+  "compare": {
+    "rewrite_src": "../kernels/vis_pos.hip",
+    "rewrite_kernel": "k_vis_pos_add",
+    "outputs": [{"buffer": "x", "dtype": "f32"}]
+  }
+}

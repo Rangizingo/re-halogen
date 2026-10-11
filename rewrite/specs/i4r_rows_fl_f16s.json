@@ -1,0 +1,164 @@
+{
+ "grid": [
+  "=400*N",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "w": {
+   "bytes": 3145728,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+3",
+    "lo": -0.5,
+    "hi": 0.5
+   }
+  },
+  "x": {
+   "bytes": "=N*10*640*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "rm": {
+   "bytes": "=N*10*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED+1",
+    "lo": 0,
+    "hi": 2
+   }
+  },
+  "y": {
+   "bytes": "=N*10*2560*4+256",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  },
+  "wt": {
+   "bytes": "=N*10*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+2",
+    "lo": 0.05,
+    "hi": 1
+   }
+  },
+  "h": {
+   "bytes": 5120,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+3",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "r": {
+   "bytes": "=N*2560*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+4",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "z": {
+   "bytes": "=N*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+5",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "out": {
+   "bytes": "=N*2560*2+128",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "ctr": {
+   "bytes": "=N*20*4+64",
+   "fill": "zero"
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "w"
+  },
+  {
+   "offset": 8,
+   "type": "i64",
+   "value": 2097152
+  },
+  {
+   "offset": 16,
+   "buffer": "x"
+  },
+  {
+   "offset": 24,
+   "buffer": "rm"
+  },
+  {
+   "offset": 32,
+   "buffer": "y"
+  },
+  {
+   "offset": 40,
+   "buffer": "wt"
+  },
+  {
+   "offset": 48,
+   "buffer": "h"
+  },
+  {
+   "offset": 56,
+   "buffer": "r"
+  },
+  {
+   "offset": 64,
+   "buffer": "z"
+  },
+  {
+   "offset": 72,
+   "buffer": "out"
+  },
+  {
+   "offset": 80,
+   "buffer": "ctr"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/i4r_rows.hip",
+  "rewrite_kernel": "k_i4r_rows_fl",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

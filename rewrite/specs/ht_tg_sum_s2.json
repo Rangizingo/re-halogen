@@ -1,0 +1,84 @@
+{
+ "grid": [
+  "=ceil_div(5*N,8)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "part": {
+   "bytes": "=2*N*640*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED",
+    "lo": -50,
+    "hi": 50
+   }
+  },
+  "sv": {
+   "bytes": "=640*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+7",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "out": {
+   "bytes": "=(N*640+64)*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "u16",
+    "value": 12345
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "part"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": 2
+  },
+  {
+   "offset": 16,
+   "buffer": "sv"
+  },
+  {
+   "offset": 24,
+   "buffer": "out"
+  },
+  {
+   "offset": 32,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 36,
+   "type": "i32",
+   "value": 640
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ht_tg.hip",
+  "rewrite_kernel": "k_ht_tg_sum",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

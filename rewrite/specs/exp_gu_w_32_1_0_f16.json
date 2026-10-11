@@ -1,0 +1,25 @@
+{
+  "grid": ["=800*N", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "x": {"bytes": "=N*5120+64", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED", "lo": -2, "hi": 2}},
+    "w": {"bytes": 3686592, "fill": {"kind": "rand", "dtype": "f16", "seed": "=SEED+7", "lo": -1, "hi": 1}},
+    "idx": {"bytes": "=N*40+64", "fill": {"kind": "rand", "dtype": "i32", "seed": "=SEED+3", "lo": 0, "hi": 2}},
+    "out": {"bytes": "=N*12800+64", "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "x"},
+    {"offset": 8, "buffer": "w"},
+    {"offset": 16, "buffer": "idx"},
+    {"offset": 24, "type": "i64", "value": 64},
+    {"offset": 32, "type": "i64", "value": 3276928},
+    {"offset": 40, "type": "i64", "value": 160},
+    {"offset": 48, "buffer": "out"}
+  ],
+  "dump": ["out"],
+  "compare": {
+    "rewrite_src": "../kernels/exp_gu.hip",
+    "rewrite_kernel": "k_exp_gu_w_32_1_0",
+    "outputs": [{"buffer": "out", "dtype": "bf16"}]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "grid": ["=ceil_div(N,4)+5+ceil_div(N+3,4)+8", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "w0": {"bytes": "=N*2516+64", "fill": {"kind": "rand", "dtype": "f16", "seed": "=SEED", "lo": -1, "hi": 1}},
+    "w1": {"bytes": "=5*2516+64", "fill": {"kind": "rand", "dtype": "f16", "seed": "=SEED+7", "lo": -1, "hi": 1}},
+    "w2": {"bytes": "=(N+3)*2516+64", "fill": {"kind": "rand", "dtype": "f16", "seed": "=SEED", "lo": -1, "hi": 1}},
+    "w3": {"bytes": "=8*2516+64", "fill": {"kind": "rand", "dtype": "f16", "seed": "=SEED+7", "lo": -1, "hi": 1}},
+    "x": {"bytes": "=1*2368*2+64", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+100", "lo": -2, "hi": 2}},
+    "o0": {"bytes": "=(1*N+64)*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}},
+    "o1": {"bytes": "=(1*5+64)*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}},
+    "o2": {"bytes": "=(1*(N+3)+64)*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}},
+    "o3": {"bytes": "=(1*8+64)*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "w0"}, {"offset": 8, "buffer": "o0"}, {"offset": 48, "type": "i64", "value": "=N"},
+    {"offset": 56, "type": "f32", "value": 0.75}, {"offset": 60, "type": "i32", "value": 1}, {"offset": 64, "type": "i32", "value": 0},
+    {"offset": 72, "buffer": "w1"}, {"offset": 80, "buffer": "o1"}, {"offset": 120, "type": "i64", "value": 5},
+    {"offset": 128, "type": "f32", "value": 1.25}, {"offset": 132, "type": "i32", "value": 2}, {"offset": 136, "type": "i32", "value": "=ceil_div(N,4)"},
+    {"offset": 144, "buffer": "w2"}, {"offset": 152, "buffer": "o2"}, {"offset": 192, "type": "i64", "value": "=N+3"},
+    {"offset": 200, "type": "f32", "value": 0.5}, {"offset": 204, "type": "i32", "value": 3}, {"offset": 208, "type": "i32", "value": "=ceil_div(N,4)+5"},
+    {"offset": 216, "buffer": "w3"}, {"offset": 224, "buffer": "o3"}, {"offset": 264, "type": "i64", "value": 8},
+    {"offset": 272, "type": "f32", "value": 2.0}, {"offset": 276, "type": "i32", "value": 0}, {"offset": 280, "type": "i32", "value": "=ceil_div(N,4)+5+ceil_div(N+3,4)"},
+    {"offset": 288, "type": "i32", "value": 4},
+    {"offset": 296, "buffer": "x"}, {"offset": 304, "type": "i64", "value": 2368}
+  ],
+  "dump": ["o0", "o1", "o2", "o3"],
+  "compare": {
+    "rewrite_src": "../kernels/lq8w_grp.hip",
+    "rewrite_kernel": "lq8w_grp_m1_r32_w2",
+    "outputs": [{"buffer": "o0", "dtype": "bf16"}, {"buffer": "o1", "dtype": "bf16"}, {"buffer": "o2", "dtype": "f32"}, {"buffer": "o3", "dtype": "bf16"}]
+  }
+}

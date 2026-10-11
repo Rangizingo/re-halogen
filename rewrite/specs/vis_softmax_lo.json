@@ -1,0 +1,22 @@
+{
+  "grid": [4, 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "s": {"bytes": "=4*N*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED", "lo": -20, "hi": 20}},
+    "hi": {"bytes": "=4*N*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}},
+    "lo": {"bytes": "=4*N*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "s"},
+    {"offset": 8, "buffer": "hi"},
+    {"offset": 16, "buffer": "lo"},
+    {"offset": 24, "type": "i32", "value": "=N"},
+    {"offset": 28, "type": "f32", "value": 0.125}
+  ],
+  "dump": ["hi", "lo"],
+  "compare": {
+    "rewrite_src": "../kernels/vis_softmax.hip",
+    "rewrite_kernel": "k_vis_softmax",
+    "outputs": [{"buffer": "hi", "dtype": "bf16"}, {"buffer": "lo", "dtype": "bf16"}]
+  }
+}

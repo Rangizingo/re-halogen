@@ -1,0 +1,32 @@
+{
+ "grid": [3, 2, 1],
+ "block": [64, 1, 1],
+ "buffers": {
+  "q": {"bytes": "=3*6144*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED", "lo": -2.0, "hi": 2.0}},
+  "kp": {"bytes": "=((N+8)//4)*4096", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+1", "lo": -2.0, "hi": 2.0}},
+  "vp": {"bytes": "=((N+8)//4)*4096", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+2", "lo": -1, "hi": 1}},
+  "gate": {"bytes": "=3*6144*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+3", "lo": -4.0, "hi": 4.0}},
+  "o": {"bytes": "=3*6144*2+256", "fill": {"kind": "const", "dtype": "bf16", "value": -99}},
+  "sel": {"bytes": 64, "fill": {"kind": "const", "dtype": "i32", "value": "=N+1"}},
+  "tbl": {"bytes": "=3*128*4", "fill": {"kind": "rand", "dtype": "i32", "seed": "=SEED+4", "lo": 0, "hi": "=(N+8)//4"}},
+  "nblk": {"bytes": 64, "fill": {"kind": "rand", "dtype": "i32", "seed": "=SEED+5", "lo": "=N//4-2", "hi": "=N//4+1"}}
+ },
+ "args": [
+  {"offset": 0, "buffer": "q"},
+  {"offset": 8, "buffer": "kp"},
+  {"offset": 16, "buffer": "vp"},
+  {"offset": 24, "buffer": "gate"},
+  {"offset": 32, "buffer": "o"},
+  {"offset": 40, "buffer": "sel"},
+  {"offset": 48, "type": "i32", "value": "=N"},
+  {"offset": 56, "buffer": "tbl"},
+  {"offset": 64, "buffer": "nblk"},
+  {"offset": 72, "type": "i32", "value": 128}
+ ],
+ "dump": ["o"],
+ "compare": {
+  "rewrite_src": "../kernels/attn_qs.hip",
+  "rewrite_kernel": "k_attn_qs_bt2_0_7",
+  "outputs": [{"buffer": "o", "dtype": "bf16"}]
+ }
+}

@@ -1,0 +1,91 @@
+{
+ "grid": [
+  "=ceil_div(N*3*40,64)",
+  1,
+  1
+ ],
+ "block": [
+  64,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=N*3*96*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "frq": {
+   "bytes": "=64*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+20",
+    "lo": 0.0005,
+    "hi": 1.5
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": "=N*3"
+  },
+  {
+   "offset": 12,
+   "type": "i32",
+   "value": 96
+  },
+  {
+   "offset": 16,
+   "type": "i32",
+   "value": 80
+  },
+  {
+   "offset": 20,
+   "type": "i32",
+   "value": 9
+  },
+  {
+   "offset": 24,
+   "type": "i32",
+   "value": 3
+  },
+  {
+   "offset": 32,
+   "hex": "0000000000000000"
+  },
+  {
+   "offset": 40,
+   "buffer": "frq"
+  },
+  {
+   "offset": 48,
+   "type": "f32",
+   "value": 1.25
+  }
+ ],
+ "dump": [
+  "x"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/rope.hip",
+  "rewrite_kernel": "k_rope_w_yarn",
+  "outputs": [
+   {
+    "buffer": "x",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

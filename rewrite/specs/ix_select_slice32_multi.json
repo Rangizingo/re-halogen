@@ -1,0 +1,121 @@
+{
+ "grid": [
+  4,
+  2,
+  1
+ ],
+ "block": [
+  1024,
+  1,
+  1
+ ],
+ "buffers": {
+  "sc": {
+   "bytes": "=4*(N+30)*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED",
+    "lo": 0,
+    "hi": 40
+   }
+  },
+  "o1": {
+   "bytes": "=(6*64+8)*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "i32",
+    "value": -7
+   }
+  },
+  "o2": {
+   "bytes": "=(6+8)*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "i32",
+    "value": -5
+   }
+  },
+  "o3": {
+   "bytes": "=(4*2*64+8)*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "i32",
+    "value": -9
+   }
+  },
+  "o4": {
+   "bytes": "=(4*2+8)*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "i32",
+    "value": -3
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "sc"
+  },
+  {
+   "offset": 8,
+   "type": "i64",
+   "value": "=N+30"
+  },
+  {
+   "offset": 16,
+   "type": "i32",
+   "value": 2
+  },
+  {
+   "offset": 20,
+   "type": "i32",
+   "value": "=4*N-4"
+  },
+  {
+   "offset": 24,
+   "type": "i32",
+   "value": 64
+  },
+  {
+   "offset": 28,
+   "type": "i32",
+   "value": 2
+  },
+  {
+   "offset": 32,
+   "buffer": "o1"
+  },
+  {
+   "offset": 40,
+   "buffer": "o2"
+  },
+  {
+   "offset": 48,
+   "buffer": "o3"
+  },
+  {
+   "offset": 56,
+   "buffer": "o4"
+  }
+ ],
+ "dump": [
+  "o3",
+  "o4"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ix.hip",
+  "rewrite_kernel": "k_ix_select_slice32",
+  "outputs": [
+   {
+    "buffer": "o3",
+    "dtype": "i32"
+   },
+   {
+    "buffer": "o4",
+    "dtype": "i32"
+   }
+  ]
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "grid": [
+  "=ceil_div(N,256)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": "=(N+0)*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+0",
+    "lo": -30,
+    "hi": 30
+   }
+  },
+  "y": {
+   "bytes": "=(N+64)*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x"
+  },
+  {
+   "offset": 8,
+   "buffer": "y"
+  },
+  {
+   "offset": 16,
+   "type": "i64",
+   "value": "=N"
+  }
+ ],
+ "dump": [
+  "y"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/sigmoid.hip",
+  "rewrite_kernel": "k_sigmoid_f32",
+  "outputs": [
+   {
+    "buffer": "y",
+    "dtype": "f32"
+   }
+  ]
+ }
+}
