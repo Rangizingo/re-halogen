@@ -1,0 +1,107 @@
+{
+ "grid": [
+  "=N",
+  48,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "mirror": {
+   "bytes": "=N*64*10240*2",
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g24_data/dnc_nan_mirror.bin"
+   }
+  },
+  "beta": {
+   "bytes": "=N*64*48*4",
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g24_data/dnc_nan_beta.bin"
+   }
+  },
+  "kk": {
+   "bytes": "=N*64*48*128*4",
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g24_data/dnc_nan_kk.bin"
+   }
+  },
+  "g": {
+   "bytes": "=N*64*48*4",
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g24_data/dnc_nan_g.bin"
+   }
+  },
+  "out1": {
+   "bytes": "=N*64*48*128*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  },
+  "out2": {
+   "bytes": "=N*64*48*128*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "mirror"
+  },
+  {
+   "offset": 8,
+   "buffer": "beta"
+  },
+  {
+   "offset": 16,
+   "buffer": "kk"
+  },
+  {
+   "offset": 24,
+   "buffer": "g"
+  },
+  {
+   "offset": 32,
+   "buffer": "out1"
+  },
+  {
+   "offset": 40,
+   "buffer": "out2"
+  },
+  {
+   "offset": 48,
+   "type": "i32",
+   "value": "=N*64-17"
+  }
+ ],
+ "dump": [
+  "out1",
+  "out2"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/dnc_ut_c.hip",
+  "rewrite_kernel": "k_dnc_ut",
+  "outputs": [
+   {
+    "buffer": "out1",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "out2",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

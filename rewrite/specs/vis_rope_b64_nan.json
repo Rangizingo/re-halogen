@@ -1,0 +1,50 @@
+{
+ "grid": [
+  "=N",
+  16,
+  1
+ ],
+ "block": [
+  64,
+  1,
+  1
+ ],
+ "buffers": {
+  "qkv": {
+   "bytes": "=N*3456*4",
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g24_data/vis_rope_nan_qkv.bin"
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "qkv"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": 7
+  },
+  {
+   "offset": 12,
+   "type": "i32",
+   "value": 8
+  }
+ ],
+ "dump": [
+  "qkv"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/vis_rope_c.hip",
+  "rewrite_kernel": "k_vis_rope",
+  "outputs": [
+   {
+    "buffer": "qkv",
+    "dtype": "f32"
+   }
+  ]
+ }
+}
