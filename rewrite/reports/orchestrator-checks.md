@@ -71,3 +71,9 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 ## g19 (dnc_scan3w, dn_fused16), 2026-10-10, partial
 
 - 4 of 29 instances MATCH (the 4 non-probe dnc_scan3w); negctl 15 MISMATCH rows; specs all committed. Left: 8 scan3w timing probes (agent g19b: reproduce the probe's skipped-work output bitwise) and 17 dn_fused16 (agent g19c).
+
+## g21 (hc6, hcup8, hcup8w, hcup6, hcup6w), 2026-10-10
+
+- 32 distinct instances with MATCH, 0 MISMATCH; specs all committed. Agent wrote directly into the main checkout; tables copied from Ai-core.
+- Re-run seeds 7 and 11: k_hcup8<1> at N 37, 2 of 2 MATCH.
+- Controls: the agent's sigmoid constant change -1.44269502 to -1.4427 (4e-6 relative) is not detected (bf16 output rounding, the MATCH limit). Mine, 1.44269502 to 1.40 (hcup8.hip:24): MISMATCH, 956 of 5,248 outputs differ.
