@@ -196,3 +196,7 @@ Every family's NaN specs include one that fails on the original and passes on th
 ## g31 (integer-bound review: dnc scan/ut/att/prep), s7 2026-10-11
 
 240 pairs, all EQUIVALENT (const-audit-exceptions.d/g31.tsv), 0 REAL; agent QA PASS. Cite fix: report row scan3x_b cited :256907 (the s_load of k); the unsigned compare `s_cmp_gt_u32 s87, 59` is codeobj_1146000.s:257010 (re-read), corrected. Re-run, fresh seed 61, dnc_scan3x_b_a4t.json on k_dnc_scan3x<4,4,1,0,1,1,0,0,0> at k = 18, 19 (first-chunk guard edge) and 82, 83 (second 64-token chunk, the QA minor): 4 of 4 MATCH.
+
+## g25 (attn_fa2 block-wide tile bound, attn_fa2_c.hip), s7 2026-10-11
+
+Collected by cherry-pick (18f7124, e12321c); agent QA PASS; g25.md 1,578 MATCH rows over 26 instances. 174 rows had run 29 committed specs with `--rewrite-src ../kernels/attn_fa2_c.hip`; to keep each row reproducible from its spec file, the orchestrator wrote copies `attn_fa2_c_<name>.json` (identical but for rewrite_src) and renamed those rows to the copies. superseded.tsv: attn_fa2.hip > attn_fa2_c.hip. Re-run, seed 71, N=48, k_attn_fa2<2,1,1,5,1,1>: g25_c2e29 MATCH, g25_vinf MATCH; g25_c2e29 repointed at the ORIGINAL attn_fa2.hip MISMATCH diff=86016 (negative control). Renamed copy attn_fa2_c_1_1_0_0_0_0.json on k_attn_fa2<1,1,0,0,0,0>, seed 72, N=48: MATCH.
