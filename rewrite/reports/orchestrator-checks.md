@@ -93,3 +93,8 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 
 - 24 distinct instances with MATCH, 0 MISMATCH; negctl 13 MISMATCH rows; specs all committed; sha1 of 10 .hip Mac equals Ai-core.
 - Re-run seeds 7 and 11: k_dnc_att9 m8 on dnc_att9_m8.json at N 2 and 5, 4 of 4 MATCH. Control, causal mask `j <= row` to `j < row` (dnc_att9.hip:64): MISMATCH, 14,544 outputs differ.
+
+## g19b (dnc_scan3w timing probes P=1..8), 2026-10-10
+
+- 8 of 8 instances MATCH (240 rows, 0 MISMATCH); specs committed (48). Re-run seeds 7 and 11: probe P8 at N 128, 2 of 2 MATCH.
+- Caveats carried into match-table.md for these two rows: P5 reads LDS 0x2800.. that the kernel never writes; the vendor output equals the rewrite with that table = 0 in every run here, which is empirical (LDS is not zeroed by hardware in general). P8 uses VGPRs v10..v13 that the listing never writes; their content was measured on the hardware (a fixed pattern) and the rewrite reproduces it. Both are debug probes (HALOGEN_DN_PROBE timing decomposition) whose outputs are not meaningful values.
