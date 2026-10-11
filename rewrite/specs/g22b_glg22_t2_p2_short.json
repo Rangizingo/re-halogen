@@ -1,0 +1,297 @@
+{
+ "grid": [
+  220,
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "w": {
+   "bytes": 3379200,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+2",
+    "lo": 0.01,
+    "hi": 0.5
+   }
+  },
+  "x": {
+   "bytes": 10240,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED",
+    "lo": -2.0,
+    "hi": 2.0
+   }
+  },
+  "items": {
+   "bytes": 880,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g22b_data/glg2_t2_items.bin"
+   }
+  },
+  "ids": {
+   "bytes": 80,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g22b_data/glg2_t2_ids.bin"
+   }
+  },
+  "cnt": {
+   "bytes": 16,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g22b_data/glg2_t2_cnt_short.bin"
+   }
+  },
+  "y": {
+   "bytes": 102656,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  },
+  "a": {
+   "bytes": 2560,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+3",
+    "lo": -2.0,
+    "hi": 2.0
+   }
+  },
+  "bq": {
+   "bytes": 1280,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+4",
+    "lo": -2.0,
+    "hi": 2.0
+   }
+  },
+  "h": {
+   "bytes": 25664,
+   "fill": {
+    "kind": "const",
+    "dtype": "f16",
+    "value": -99
+   }
+  },
+  "ctr": {
+   "bytes": 464,
+   "fill": "zero"
+  },
+  "wht": {
+   "bytes": 655360,
+   "fill": {
+    "kind": "rand",
+    "dtype": "u8",
+    "seed": "=SEED+5",
+    "lo": 0,
+    "hi": 255
+   }
+  },
+  "su": {
+   "bytes": 5120,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+6",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "sv": {
+   "bytes": 1024,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+7",
+    "lo": -3,
+    "hi": 3
+   }
+  },
+  "ga": {
+   "bytes": 10240,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+8",
+    "lo": -4.0,
+    "hi": 4.0
+   }
+  },
+  "up": {
+   "bytes": 10240,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+9",
+    "lo": -4.0,
+    "hi": 4.0
+   }
+  },
+  "ob": {
+   "bytes": 2176,
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "pf": {
+   "bytes": 4352,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -77
+   }
+  },
+  "cnt1": {
+   "bytes": 80,
+   "fill": "zero"
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "w"
+  },
+  {
+   "offset": 8,
+   "type": "i64",
+   "value": 3276800
+  },
+  {
+   "offset": 16,
+   "buffer": "x"
+  },
+  {
+   "offset": 24,
+   "buffer": "items"
+  },
+  {
+   "offset": 32,
+   "buffer": "ids"
+  },
+  {
+   "offset": 40,
+   "buffer": "cnt"
+  },
+  {
+   "offset": 48,
+   "buffer": "y"
+  },
+  {
+   "offset": 56,
+   "buffer": "a"
+  },
+  {
+   "offset": 64,
+   "buffer": "bq"
+  },
+  {
+   "offset": 72,
+   "buffer": "h"
+  },
+  {
+   "offset": 80,
+   "buffer": "ctr"
+  },
+  {
+   "offset": 88,
+   "buffer": "wht"
+  },
+  {
+   "offset": 96,
+   "buffer": "su"
+  },
+  {
+   "offset": 104,
+   "buffer": "sv"
+  },
+  {
+   "offset": 112,
+   "buffer": "ga"
+  },
+  {
+   "offset": 120,
+   "buffer": "up"
+  },
+  {
+   "offset": 128,
+   "buffer": "ob"
+  },
+  {
+   "offset": 136,
+   "buffer": "pf"
+  },
+  {
+   "offset": 144,
+   "buffer": "cnt1"
+  },
+  {
+   "offset": 152,
+   "type": "i32",
+   "value": 2
+  },
+  {
+   "offset": 156,
+   "type": "i32",
+   "value": 512
+  },
+  {
+   "offset": 160,
+   "type": "i32",
+   "value": 2560
+  },
+  {
+   "offset": 164,
+   "type": "i32",
+   "value": 20
+  },
+  {
+   "offset": 168,
+   "type": "i32",
+   "value": 1
+  },
+  {
+   "offset": 172,
+   "type": "i32",
+   "value": 0
+  },
+  {
+   "offset": 176,
+   "type": "i32",
+   "value": 220
+  }
+ ],
+ "dump": [
+  "y",
+  "h"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/i4r_rows_b.hip",
+  "rewrite_kernel": "k_i4r_rows_gl_g22",
+  "outputs": [
+   {
+    "buffer": "y",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "h",
+    "dtype": "f16"
+   }
+  ]
+ }
+}

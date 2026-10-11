@@ -134,3 +134,85 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 - 83 of 83 MATCH (882 rows, 0 MISMATCH), including g16's 20 re-run from committed specs dnc_scan3_sw_A*.json; negctl 18 MISMATCH and 8 designed-insensitive MATCH rows. sha1 Mac equals Ai-core.
 - Listing cites re-checked in kernels-disasm-v2/codeobj_1146000.s: :139471 and :146343 are the <8,8,8,F> and <8,8,8,T> kernel starts; global_load count 14 and 14 in their ranges; G=1 range :149995-152141 has 22 v_movrel and 16 global_load; :150241-150245 `s_mov_b32 m0, s11` ... `v_movreld_b32 v3, v44`, :150267-150269 `v_movrels_b32 v46, v3`.
 - Re-run seeds 7 and 11 at N 1 and 300 on dnc_scan3_b_base.json: <8,8,8,T,0,15,0> and <8,8,8,T,0,15,1>, 8 of 8 MATCH.
+
+## g13 (ht_lin, 97) and g22b (11 left from g22), 2026-10-11
+
+- g13: 97 of 97 MATCH, 0 MISMATCH; negctl 7; sha1 equal; collected after the session's hook pause, not yet re-run by the orchestrator.
+- g22b: 11 of 11 MATCH (414 rows), negctl 44 (4 explained insensitive mutants in its report); cites in kernels-disasm-v2; data files in rewrite/specs/g22b_data. With g22: 44 of 44. Re-run seeds 7 and 11: k_i4r_rows_gl_g<1,2> on g22b_glg12_p1_edge.json N 1, 2 of 2 MATCH. g22b found I4rSd = HtSd (passed to g14b) and corrected g22's fl_g block-to-item map (blockIdx/40).
+
+## g18c (attn_qs remaining 5 + g18b weak controls), 2026-10-11
+
+- 30 of 32 attn_qs instances MATCH with g18b + g18c (614 g18c rows, 0 MISMATCH, no exclusions); spec check clean; attn_qs_c.hip sha1 Mac equals Ai-core. bt2<2,0>, <32,0>, <64,0> were a listing artifact (old kernels-disasm `.long`), now bitwise.
+- g18b's rewrite was wrong in the score range near the -1e29 sentinel (no `ST` handling) for bt4, bt4x, bt2w and bt2<0,x>; its recorded specs never reached that range. Orchestrator check: attn_qs_c_bt4_0_mid.json N 40: g18c rewrite seeds 7 and 11 MATCH; g18b's attn_qs.hip on the same spec MISMATCH, 18,432 outputs differ. For these instances the g18c rows are the evidence; match-table.md must cite them.
+- qs<2,0>, qs<3,0>: V comes from 48 KiB of LDS the kernel never writes (no global V load); 5 vendor runs differ in 21-27k of 37,120 bytes. Deterministic and bitwise under a priming kernel (agent's scratch runs, 36 of 36, controls mismatch); needs a compare.py prime option before rows exist (agent g18d).
+- attn_qs_c_3_0.json N+700: the kernel masks the K row with v_and 0x1ff, so rows up to 511 are read (report g18c.md); keeps reads in bounds.
+
+## g18d (prime option; attn_qs qs<2,0>, qs<3,0>), 2026-10-11
+
+- compare.py/run_kernel.cpp "prime" option (spec field, `primed` in every row, --prime-src for controls); tests/test_compare.py 39 pass; run_kernel.cpp sha1 Mac equals Ai-core. 18 MATCH and 24 MISMATCH control rows, all primed. Negctl priming sources copied from Ai-core into rewrite/specs/g18d_negctl/. Re-run seed 7: attn_qs_d_2_0.json N 40 primed MATCH. attn_qs now 32 of 32 (2 conditional on priming).
+
+## g14b (ht_gemv 30: dn_t fold, dn_ts, dn_g), 2026-10-11
+
+- 30 of 30 MATCH (528 rows, 0 MISMATCH); with g14: ht_gemv 94 of 94. Spec check clean; ht_gemv_b.hip sha1 Mac equals Ai-core. HtFold (40 B, five pointers) and HtSd (88 B, same as g22b's I4rSd) decoded. Vendor has no chunk-count check (5120 B of LDS per rotated row, at most 20 chunks); the rewrite traps above and specs sit at the limit. negctl 58 MISMATCH, 37 MATCH from four weak mutants (named in the report).
+- Re-run seeds 7 and 11: ht_gemv_b_dn_g_3_8_2_0.json N 200, 2 of 2 MATCH.
+
+## p7-12c constant audit triage, 2026-10-11
+
+- Agent result: 1,616 AUDIT OK (227 via sign-flipped twin, 1 explained exception: k_dv_quant -0.05 folded to the eight fma results), 0 GAP, 122 ERROR (the q6 instances without MATCH rows yet). 39 tests pass. Cause of most first-pass gaps: rewrite helpers called through s_swappc_b64 were not scanned; now resolved transitively for both sides.
+- Orchestrator check: compiled rewrite/kernels/attn_fa2.hip on Ai-core: 0x42b17218 and 0xc2ce8ed0 appear 17 times each, s_swappc_b64 26 times (the first pass flagged 22 attn_fa2 instances for these). The vendor k_ht_gemv_gu_t<3,8,1,1> body (kernels-disasm-v2/codeobj_53000.s:1204106-1207447) has none of the clamp constants, so its first-pass gaps were the helper constants (1.0, -log2e, 1/sqrt(128)), consistent with the agent.
+- Limit (report p712c.md): presence of a constant does not prove it is used the same way; MATCH rows and edge specs carry that.
+
+## g03 (lq6k, lq6w, lq6w_grp, deq_q6k, deq_q6g64), 2026-10-11
+
+- 122 of 122 MATCH, 0 MISMATCH; negctl 5; sha1 of 4 .hip Mac equals Ai-core; specs clean.
+- Re-run seeds 7 and 11: lq6k_1_32_1_1.json N 4096, 2 of 2 MATCH. Control, RNE bias 0x7fff to 0 (lq6k.hip:13): MISMATCH, 3,536 of 4,096 outputs differ.
+
+## g19d (dnc_scan3w probes P5 and P8 re-examined with the v2 listing), 2026-10-11
+
+- P5 and P8 are defined; g19b's caveats came from the old listing's hidden `.long` instructions. P5: the prologue zero-fills LDS [0x2800, 0x3200) before the first barrier (kernels-disasm-v2/codeobj_1146000.s:176815-176816 `v_mov_b16 v2.l, 0` / `ds_store_b16 v3, v2 offset:10240`, :176821-176822 offset:10496, `s_barrier` :176828; orchestrator re-read). P8: v10..v13 = 0.125 times defined data (`v_pk_mul_f16 ..., 0x3000`, :188337 onward; orchestrator re-read). Rows g19d.md all MATCH, controls 3 of 3 MISMATCH.
+- collect.sh incident: the g19d worktree was made from an older commit; the old collect.sh copied its stale tracked kernels over newer files here (attn_qs_c.hip, ht_gemv_b.hip, attn_qs_c_3_0.json). Restored from HEAD (sha1 now equal to Ai-core). collect.sh now copies only files the agent changed (git status of the worktree). A full sha1 sweep of rewrite/kernels vs Ai-core found expert.hip, deq_aff.hip, i4r_fold.hip differing by g22's two comment lines only; synced.
+
+## g24 (NaN sign: dnc_ut, dnc_ut3, ht_deq, i4r_gu, vis_rope), s7 2026-10-11
+
+Collected by cherry-pick of the agent commit 72fde97 (f39fae7 here); table g24.md 522 MATCH, 0 MISMATCH. Re-run on Ai-core (~/re-halogen after rsync of this tree, CMP_TMP ~/orch-s7/tmp), fresh seeds 41,42, fixed copy vs the same spec repointed at the ORIGINAL kernel (negative control):
+
+| spec | instance | fixed (_c) | original |
+| --- | --- | --- | --- |
+| dnc_ut_nan.json N=2 | k_dnc_ut | MATCH x2 | MISMATCH diff=1393 |
+| dnc_ut3_nan.json N=2 | k_dnc_ut3 | MATCH x2 | MISMATCH diff=3928 |
+| i4r_gu_epi_nan.json N=8 | k_i4r_gu_epi | MATCH x2 | MISMATCH diff=8 |
+| vis_rope_b64_nan.json N=64 | k_vis_rope | MATCH x2 | MISMATCH diff=12 |
+| ht_deq_orig_b3_f0_t512_nan.json N=3 | ht_deq_orig<3,0,16> | MATCH x2 | MATCH (sparse NaN does not reach the bug) |
+| ht_deq_orig_b3_f0_t256_nan.json N=3 | ht_deq_orig<3,0,8> | MATCH | MATCH (same) |
+| ht_deq_orig_b3_f0_t256_nan_dense.json N=3 | ht_deq_orig<3,0,8> | MATCH | MISMATCH diff=14 |
+| ht_deq_orig_b4_f1_t512_nan_dense.json N=3 | ht_deq_orig<4,1,16> | MATCH | MISMATCH diff=17 |
+
+Every family's NaN specs include one that fails on the original and passes on the fix. The sparse ht_deq NaN specs are kept as extra coverage, not as the proof.
+
+## g33 (integer-bound review: sampling, ix, gather/embed/hyper, argmax, route_logits), s7 2026-10-11
+
+182 pairs, all EQUIVALENT (rewrite/const-audit-exceptions.d/g33.tsv), 0 REAL. Cites re-read in kernels-disasm-v2/codeobj_53000.s: :1213 `v_cmp_gt_f32_e64 s0, 0x7f800000, v6` (a float compare against +inf, rewrite smpg_common.h:189 `0x7f800000 > fabsf(l2)` folded to v_cmp_class 0x1f8), :45383 `v_add_nc_u32 v7, -4, v7` (the blockDim==1 unrolled-loop counter), :894540 `s_lshr_b32 s2, s2, 27` (K/32 round-toward-zero bias). All as the rows say. New blockDim-1 specs re-run, fresh seeds: gather_slots_h_b1 seeds 51,52 x N 5,17 4 of 4 MATCH; hyper_seed_b1 seed 51 N=17 MATCH.
+
+## g31 (integer-bound review: dnc scan/ut/att/prep), s7 2026-10-11
+
+240 pairs, all EQUIVALENT (const-audit-exceptions.d/g31.tsv), 0 REAL; agent QA PASS. Cite fix: report row scan3x_b cited :256907 (the s_load of k); the unsigned compare `s_cmp_gt_u32 s87, 59` is codeobj_1146000.s:257010 (re-read), corrected. Re-run, fresh seed 61, dnc_scan3x_b_a4t.json on k_dnc_scan3x<4,4,1,0,1,1,0,0,0> at k = 18, 19 (first-chunk guard edge) and 82, 83 (second 64-token chunk, the QA minor): 4 of 4 MATCH.
+
+## g25 (attn_fa2 block-wide tile bound, attn_fa2_c.hip), s7 2026-10-11
+
+Collected by cherry-pick (18f7124, e12321c); agent QA PASS; g25.md 1,578 MATCH rows over 26 instances. 174 rows had run 29 committed specs with `--rewrite-src ../kernels/attn_fa2_c.hip`; to keep each row reproducible from its spec file, the orchestrator wrote copies `attn_fa2_c_<name>.json` (identical but for rewrite_src) and renamed those rows to the copies. superseded.tsv: attn_fa2.hip > attn_fa2_c.hip. Re-run, seed 71, N=48, k_attn_fa2<2,1,1,5,1,1>: g25_c2e29 MATCH, g25_vinf MATCH; g25_c2e29 repointed at the ORIGINAL attn_fa2.hip MISMATCH diff=86016 (negative control). Renamed copy attn_fa2_c_1_1_0_0_0_0.json on k_attn_fa2<1,1,0,0,0,0>, seed 72, N=48: MATCH.
+
+## g30 (integer-bound review: lq4w/lq6k/lq8*/linear*/deq_q4cp/q4moe/expert/exp_gu), s7 2026-10-11
+
+835 pairs, all EQUIVALENT (const-audit-exceptions.d/g30.tsv, per-instance cites after the QA fix b6fcfa8), 0 REAL; agent QA PASS twice. Cites re-read: codeobj_53000.s:873341 and :876929 are `v_add_co_u32 v3, s1, 0x700, v3` as the k_linear_f32_q4_mt<8,2,4,256> and <8,4,4,256> rows say. Re-run, fresh seeds 81,82: lq4w_g30_thr_c5.json on k_lq4w<5,16,1,0,0,1> (flags -DLQ_N=5 ...) N=1: 2 of 2 MATCH; same spec built with -DLQ_N=4 (negative control): MISMATCH diff=24.
+
+## g32 (integer-bound review: ht_moe, ht_gemv, ht_tg, hc8, hcup8, hcup4w), s7 2026-10-11
+
+172 pairs EQUIVALENT (const-audit-exceptions.d/g32.tsv), 30 REAL: k_ht_gemv_gu_t<B,8,T,U> (T=1,2,4) send blocks wg >= n to a dense job over HtSd (shifts 28/29 at codeobj_53000.s:1211322-1211323); ht_gemv.hip had only the token path and left `outd` untouched there. Fix: rewrite/kernels/ht_gemv_c.hip (dense path from ht_gemv_b.hip). The agent edited 57 committed specs in place to point at the copy; the orchestrator restored them and wrote identical copies ht_gemv_c_*.json instead (old rows stay reproducible). Family re-run by the orchestrator on Ai-core (~/orch-s7/run_list.sh, seeds 1,2,3, the rows' sizes): every ht_gemv.hip instance's MATCH specs as _c copies (180 spec-instance pairs, 64 instances) plus the 4-bit dense specs on all 15 4-bit gu_t instances (30 pairs): rewrite/tables/g32b.md 1,170 MATCH, 0 other. ht_moe token-tile specs (counts 1..200, clamps 64/128) and ht_tg3 sizes 5..300, which the agent had run with --no-table: rewrite/tables/g32c.md 222 MATCH, 0 other. Negative control, seed 91, N=140, k_ht_gemv_gu_t<4,8,2,3>: dense_s5bm on ht_gemv_c.hip MATCH; same spec on the ORIGINAL ht_gemv.hip kernel k_ht_gemv_gu_t_4_8_0_0 (the one its old rows ran): UNTOUCHED outd, MISMATCH. superseded.tsv: ht_gemv.hip > ht_gemv_c.hip.
+
+## g34 (integer-bound review: attn_fa2, attn_qs, vis_attn, dn_*, rope, qk), s7 2026-10-11
+
+REAL: attn_fa2 ignored FaSel (sparse ids column mask and tilemask tile skip; vendor default mask 0xffff at codeobj_1513000.s:15462 `v_mov_b32 ... 0xffff`, re-read). Merged with g25's bound into rewrite/kernels/attn_fa2_d.hip; superseded attn_fa2_c.hip > attn_fa2_d.hip; the 0xffff exception was removed (no 0xffff line in any exceptions.d file). g34b.md 1,914 MATCH, 0 MISMATCH; agent negctl 12 MISMATCH. 45 other instances EQUIVALENT (exceptions.d/g34.tsv, QA PASS twice). Orchestrator re-run on k_attn_fa2<2,1,1,5,1,1>, seed 93, N=100: d copies of _sp, _sp2, g25_c2e29, g25_vinf: 4 of 4 MATCH; _sp on attn_fa2_c.hip (negative control): MISMATCH diff=614032. Collected by merge (e7d4916); the agent's work/ca-g34.md was dropped from the index (work/ is local).
+
+## g14n (ht_gemv NaN sign: ht_gemv_b_c.hip, ht_gemv_c.hip), s7 2026-10-11
+
+Collected by merge (f44fe87); agent QA PASS; g14n.md 5,133 MATCH, 0 MISMATCH over 94 instances (existing specs + 420 NaN specs). superseded.tsv: ht_gemv_b.hip > ht_gemv_b_c.hip (ht_gemv_c.hip was fixed in place; it is new in s7). Orchestrator re-run, fresh seeds 95/96: dn_g<3,8,2,2> dense_s2b_nanxsv N=40 on ht_gemv_b_c.hip 2 of 2 MATCH, on the ORIGINAL ht_gemv_b.hip MISMATCH diff=82; gu_gs<3,8,2> nanxsv N=320 MATCH x2 (it also MATCHes on the pre-fix ht_gemv_c.hip from 4635a99, as the report says: gu_gs differs only with NaN in sv alone); gu_gs nansv N=320: fixed MATCH, pre-fix MISMATCH diff=212. g32's dense path still intact after the in-place edit: gu_t<4,8,2,3> dense_s5bm seed 97 N=140 MATCH.

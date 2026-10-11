@@ -232,7 +232,11 @@ __device__ static inline void qs_full(const unsigned short* Q, const unsigned sh
       v16bf vb;
       for (int k = 0; k < 16; k++) {
         int row = QS_ROW(s_kidx[16 * t + k]);
-        vb[k] = __builtin_bit_cast(__bf16, V[(long)row * stride + g * 256 + c * 16 + col]);
+        if (!(A & 2)) vb[k] = __builtin_bit_cast(__bf16, V[(long)row * stride + g * 256 + c * 16 + col]);  // <2,0>/<3,0>: no global V load in the listing
+        // <2,0>/<3,0> (A&2): V is never staged to LDS (no ds_store_b16 in the kernel; v2 listing cq2 lines 419-559): B = ds_load_b128 x2 at
+        // w*0x3000 + 0x800 + 48*col + 768*c, 32 bytes = 16 bf16 of never-written LDS. UNDEFINED in a plain launch. This rewrite models the
+        // LDS as primed with halfword i = 0x3f80 + 8*(i&15) (priming kernel in the scratch driver), so B[k] = pattern[(8*(col&1)+k)&15].
+        if (A & 2) vb[k] = __builtin_bit_cast(__bf16, (unsigned short)(0x3f80 + 8 * ((8 * (col & 1) + k) & 15)));
       }
       for (int i = 0; i < 8; i++) Oacc[c][i] = s_al[w][2 * i + half] * Oacc[c][i];
       Oacc[c] = __builtin_amdgcn_wmma_f32_16x16x16_bf16_w32(pa, vb, Oacc[c]);
@@ -364,6 +368,8 @@ QS(4, 0)
 QS(0, 0)
 QS(1, 0)
 QS(8, 0)
+QS(2, 0)
+QS(3, 0)
 QS(0, 1)
 
 // ===============================================================================================================

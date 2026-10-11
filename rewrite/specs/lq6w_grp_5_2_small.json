@@ -1,0 +1,63 @@
+{
+  "grid": ["=ceil_div(N,4)+5+3+3", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "w0": {"bytes": "=N*1040+64", "fill": {"kind": "rand", "dtype": "u8", "seed": "=SEED*10+0", "lo": 0, "hi": 255}},
+    "y0a": {"bytes": "=N*5*4+256", "fill": {"kind": "const", "dtype": "u32", "value": 3735928559}},
+    "y0b": {"bytes": "=N*5*4+256", "fill": {"kind": "const", "dtype": "u32", "value": 3735928559}},
+    "w1": {"bytes": "=5*1040+64", "fill": {"kind": "rand", "dtype": "u8", "seed": "=SEED*10+1", "lo": 0, "hi": 255}},
+    "y1a": {"bytes": "=5*5*4+256", "fill": {"kind": "const", "dtype": "u32", "value": 3735928559}},
+    "y1b": {"bytes": "=5*5*4+256", "fill": {"kind": "const", "dtype": "u32", "value": 3735928559}},
+    "w2": {"bytes": "=9*1040+64", "fill": {"kind": "rand", "dtype": "u8", "seed": "=SEED*10+2", "lo": 0, "hi": 255}},
+    "y2a": {"bytes": "=9*5*4+256", "fill": {"kind": "const", "dtype": "u32", "value": 3735928559}},
+    "y2b": {"bytes": "=9*5*4+256", "fill": {"kind": "const", "dtype": "u32", "value": 3735928559}},
+    "w3": {"bytes": "=12*1040+64", "fill": {"kind": "rand", "dtype": "u8", "seed": "=SEED*10+3", "lo": 0, "hi": 255}},
+    "y3a": {"bytes": "=12*5*4+256", "fill": {"kind": "const", "dtype": "u32", "value": 3735928559}},
+    "y3b": {"bytes": "=12*5*4+256", "fill": {"kind": "const", "dtype": "u32", "value": 3735928559}},
+    "x": {"bytes": 12800, "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+100", "lo": -0.000001, "hi": 0.000001}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "w0"},
+    {"offset": 8, "buffer": "y0a"},
+    {"offset": 16, "buffer": "y0b"},
+    {"offset": 48, "type": "i64", "value": "=N"},
+    {"offset": 56, "type": "f32", "value": "=0.5+SEED*0.25"},
+    {"offset": 60, "type": "i32", "value": 4},
+    {"offset": 64, "type": "i32", "value": 0},
+    {"offset": 72, "buffer": "w1"},
+    {"offset": 80, "buffer": "y1a"},
+    {"offset": 88, "buffer": "y1b"},
+    {"offset": 120, "type": "i64", "value": 5},
+    {"offset": 128, "type": "f32", "value": "=0.5+SEED*0.25"},
+    {"offset": 132, "type": "i32", "value": 3},
+    {"offset": 136, "type": "i32", "value": "=ceil_div(N,4)"},
+    {"offset": 144, "buffer": "w2"},
+    {"offset": 152, "buffer": "y2a"},
+    {"offset": 160, "buffer": "y2b"},
+    {"offset": 192, "type": "i64", "value": 9},
+    {"offset": 200, "type": "f32", "value": "=0.5+SEED*0.25"},
+    {"offset": 204, "type": "i32", "value": 1},
+    {"offset": 208, "type": "i32", "value": "=ceil_div(N,4)+5"},
+    {"offset": 216, "buffer": "w3"},
+    {"offset": 224, "buffer": "y3a"},
+    {"offset": 232, "buffer": "y3b"},
+    {"offset": 264, "type": "i64", "value": 12},
+    {"offset": 272, "type": "f32", "value": "=0.5+SEED*0.25"},
+    {"offset": 276, "type": "i32", "value": 2},
+    {"offset": 280, "type": "i32", "value": "=ceil_div(N,4)+5+3"},
+    {"offset": 288, "type": "i32", "value": 4},
+    {"offset": 296, "buffer": "x"},
+    {"offset": 304, "type": "i64", "value": 1280}
+  ],
+  "dump": ["y0a", "y0b", "y1a", "y1b", "y2a", "y2b", "y3a", "y3b"],
+  "compare": {
+    "rewrite_src": "../kernels/lq6w.hip",
+    "rewrite_kernel": "lq6w_grp_5_2",
+    "outputs": [
+      {"buffer": "y0a", "dtype": "u8"},
+      {"buffer": "y1a", "dtype": "u8"},
+      {"buffer": "y2a", "dtype": "u8"},
+      {"buffer": "y3a", "dtype": "u8"}
+    ]
+  }
+}

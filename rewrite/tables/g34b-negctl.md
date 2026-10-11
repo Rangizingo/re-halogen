@@ -1,0 +1,16 @@
+# Kernel match table (U22, PLAN.md p7-12)
+
+| instance | family | test spec | result | tolerance | date |
+| --- | --- | --- | --- | --- | --- |
+| _ZN7halogen12_GLOBAL__N_110k_attn_fa2ILi1ELi1ELb1ELi5ELi1ELb1EEEvPKtS3_S3_lS3_PtPKiiiNS_5FaSelE | attn_fa2 | attn_fa2_d_1_1_1_5_1_1_sp.json seed=1 N=48 | MISMATCH n=295040 diff=276139 max_abs=inf max_ulp=65536 first_diff=18432 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_110k_attn_fa2ILi1ELi1ELb1ELi5ELi1ELb1EEEvPKtS3_S3_lS3_PtPKiiiNS_5FaSelE | attn_fa2 | attn_fa2_d_1_1_1_5_1_1_sp.json seed=2 N=48 | MISMATCH n=295040 diff=294559 max_abs=inf max_ulp=65536 first_diff=0 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_110k_attn_fa2ILi1ELi1ELb1ELi5ELi1ELb1EEEvPKtS3_S3_lS3_PtPKiiiNS_5FaSelE | attn_fa2 | attn_fa2_d_1_1_1_5_1_1_sp.json seed=3 N=48 | MISMATCH n=295040 diff=294538 max_abs=inf max_ulp=65536 first_diff=0 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_110k_attn_fa2ILi1ELi1ELb1ELi5ELi1ELb1EEEvPKtS3_S3_lS3_PtPKiiiNS_5FaSelE | attn_fa2 | attn_fa2_d_1_1_1_5_1_1_sp.json seed=1 N=100 | MISMATCH n=688256 diff=595355 max_abs=inf max_ulp=65536 first_diff=18432 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_110k_attn_fa2ILi1ELi1ELb1ELi5ELi1ELb1EEEvPKtS3_S3_lS3_PtPKiiiNS_5FaSelE | attn_fa2 | attn_fa2_d_1_1_1_5_1_1_sp.json seed=2 N=100 | MISMATCH n=688256 diff=613830 max_abs=inf max_ulp=65536 first_diff=0 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_110k_attn_fa2ILi1ELi1ELb1ELi5ELi1ELb1EEEvPKtS3_S3_lS3_PtPKiiiNS_5FaSelE | attn_fa2 | attn_fa2_d_1_1_1_5_1_1_sp.json seed=3 N=100 | MISMATCH n=688256 diff=613739 max_abs=inf max_ulp=65536 first_diff=0 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_110k_attn_fa2ILi2ELi1ELb1ELi5ELi1ELb1EEEvPKtS3_S3_lS3_PtPKiiiNS_5FaSelE | attn_fa2 | attn_fa2_d_2_1_1_5_1_1_g25_c2e29.json seed=1 N=48 | MISMATCH n=393344 diff=98304 max_abs=inf max_ulp=65536 first_diff=0 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_110k_attn_fa2ILi2ELi1ELb1ELi5ELi1ELb1EEEvPKtS3_S3_lS3_PtPKiiiNS_5FaSelE | attn_fa2 | attn_fa2_d_2_1_1_5_1_1_g25_c2e29.json seed=2 N=48 | MISMATCH n=393344 diff=79872 max_abs=inf max_ulp=65536 first_diff=18432 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_110k_attn_fa2ILi2ELi1ELb1ELi5ELi1ELb1EEEvPKtS3_S3_lS3_PtPKiiiNS_5FaSelE | attn_fa2 | attn_fa2_d_2_1_1_5_1_1_g25_c2e29.json seed=3 N=48 | MISMATCH n=393344 diff=61440 max_abs=inf max_ulp=65536 first_diff=36864 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_110k_attn_fa2ILi2ELi1ELb1ELi5ELi1ELb1EEEvPKtS3_S3_lS3_PtPKiiiNS_5FaSelE | attn_fa2 | attn_fa2_d_2_1_1_5_1_1_g25_c2e29.json seed=1 N=100 | MISMATCH n=786560 diff=294912 max_abs=inf max_ulp=65536 first_diff=0 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_110k_attn_fa2ILi2ELi1ELb1ELi5ELi1ELb1EEEvPKtS3_S3_lS3_PtPKiiiNS_5FaSelE | attn_fa2 | attn_fa2_d_2_1_1_5_1_1_g25_c2e29.json seed=2 N=100 | MISMATCH n=786560 diff=239616 max_abs=inf max_ulp=65536 first_diff=18432 | bitwise | 2026-10-11 |
+| _ZN7halogen12_GLOBAL__N_110k_attn_fa2ILi2ELi1ELb1ELi5ELi1ELb1EEEvPKtS3_S3_lS3_PtPKiiiNS_5FaSelE | attn_fa2 | attn_fa2_d_2_1_1_5_1_1_g25_c2e29.json seed=3 N=100 | MISMATCH n=786560 diff=208896 max_abs=inf max_ulp=65536 first_diff=36864 | bitwise | 2026-10-11 |

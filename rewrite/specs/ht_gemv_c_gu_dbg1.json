@@ -1,0 +1,28 @@
+{
+  "grid": ["=N", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "w": {"bytes": 3276800, "fill": {"kind": "rand", "dtype": "u8", "seed": "=SEED", "lo": 0, "hi": 256}},
+    "x": {"bytes": 40960, "fill": {"kind": "rand", "dtype": "f16", "seed": "=SEED+100", "lo": -0.15, "hi": 0.15}},
+    "items": {"bytes": 1280, "fill": {"kind": "file", "path": "/tmp/g14/gu_items_b.bin"}},
+    "tok": {"bytes": 64, "fill": {"kind": "rand", "dtype": "i32", "seed": "=SEED+300", "lo": 0, "hi": 8}},
+    "sv": {"bytes": 5120, "fill": {"kind": "rand", "dtype": "f16", "seed": "=SEED+200", "lo": -2, "hi": 2}},
+    "su": {"bytes": 2560, "fill": {"kind": "const", "dtype": "f16", "value": 1}},
+    "out": {"bytes": 20480, "fill": {"kind": "const", "dtype": "f16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "w"},
+    {"offset": 8, "buffer": "x"},
+    {"offset": 16, "buffer": "items"},
+    {"offset": 24, "buffer": "tok"},
+    {"offset": 32, "buffer": "sv"},
+    {"offset": 40, "buffer": "su"},
+    {"offset": 48, "buffer": "out"}
+  ],
+  "dump": ["out"],
+  "compare": {
+    "rewrite_src": "../kernels/ht_gemv_c.hip",
+    "rewrite_kernel": "k_ht_gemv_gu_4_8_1",
+    "outputs": [{"buffer": "out", "dtype": "f16"}]
+  }
+}

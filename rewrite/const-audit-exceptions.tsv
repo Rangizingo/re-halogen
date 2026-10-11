@@ -1,0 +1,2 @@
+# instance substring<TAB>vendor FLOAT value<TAB>reason (explained exception to const_audit.py; see rewrite/reports/p712c.md)
+k_dv_quantEPKtPKiS3_iPhli	0xbd4ccccd	compile-time folded: rewrite unrolls fmaf(i,-0.05f,1.0f) i=0..7; its ISA holds the results 1.0,0.95,0.9,0.85,0.8,0.75,0.7,0.65 (0x3f733333..0x3f266666), equal to the exact fma in double rounded to f32; bitwise MATCH on dv_quant8 specs

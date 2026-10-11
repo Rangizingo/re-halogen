@@ -1,0 +1,87 @@
+{
+ "grid": [
+  "=N",
+  2,
+  1
+ ],
+ "block": [
+  512,
+  1,
+  1
+ ],
+ "buffers": {
+  "w": {
+   "bytes": "=256*128*N*3//8",
+   "fill": {
+    "kind": "rand",
+    "dtype": "u32",
+    "seed": "=SEED+0",
+    "lo": 0,
+    "hi": 4294967296
+   }
+  },
+  "a": {
+   "bytes": "=128*N*2",
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g24_data/ht_deq_nan_dense_a.bin"
+   }
+  },
+  "b": {
+   "bytes": "=256*2",
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g24_data/ht_deq_nan_dense_b.bin"
+   }
+  },
+  "out": {
+   "bytes": "=(256*128*N+64)*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "u16",
+    "value": 12345
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "w"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": "=128*N"
+  },
+  {
+   "offset": 16,
+   "buffer": "a"
+  },
+  {
+   "offset": 24,
+   "buffer": "b"
+  },
+  {
+   "offset": 32,
+   "buffer": "out"
+  },
+  {
+   "offset": 40,
+   "type": "i32",
+   "value": 1
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ht_deq_c.hip",
+  "rewrite_kernel": "k_ht_deq_orig_b3",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

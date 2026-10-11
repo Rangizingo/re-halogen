@@ -242,7 +242,7 @@ Sources: `analysis/npu-engine.md`, `closure/npu-closure.md`, `closure/npu-closur
 
 ## 11. Proven versus inferred: what a rebuild can rely on
 
-Unknowns ledger counts from `analysis/unknowns.md` (27 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 24, PARTIAL 0, OPEN-BOUNDED 2, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 27.
+Unknowns ledger counts from `analysis/unknowns.md` (27 rows). Command: `for s in CLOSED PARTIAL OPEN-BOUNDED UNOBSERVABLE; do echo -n "$s "; grep -c "^| U[0-9]* .*| $s |\$" analysis/unknowns.md; done` printed CLOSED 25, PARTIAL 0, OPEN-BOUNDED 1, UNOBSERVABLE 1; `grep -c '^| U[0-9]' analysis/unknowns.md` printed 27.
 
 Can rely on [proven]:
 - The `.hgn` container: header, table, checksums, size rules, dtype codes, `verify` and `inspect` behavior (169 vendor-checked files, round trips).
@@ -267,11 +267,11 @@ Cannot rely on (PARTIAL, OPEN-BOUNDED, UNOBSERVABLE rows; what is missing):
 - U18 is CLOSED (moved out of this list): the draft-vocab table feeds the draft-vocab lm_head GEMV then `k_dv_scatter`; 4-bit NF4 is the default, 8-bit needs `HALOGEN_DRAFT_VOCAB_Q8=1` (`closure/dv-quant-r4.md`). Not decoded: nibble order inside a 16-byte block.
 - U19 is CLOSED (moved out of this list): `scripts/ht_decode.py` decodes real 3 and 4 bit HT weights, Pearson 0.98 to 0.99 against q4c references (`closure/ht-decode.md`). qparam is a fixed tag 0x1200 plus bits << 1 (loader check). gate_up experts use their own tile walk (`decode_codes_gate_up`, 0.9922 measured).
 - U21 is CLOSED (moved out of this list): token-count to kernel tables for HT, i4r and plain experts, k_q4moe arguments, the hipBLASLt library arm (`closure/expert-dispatch-r4.md`, `-r5.md`, `-r5b.md`).
-- U22 OPEN-BOUNDED: Ghidra has no AMDGCN module, so device code stays at disassembly level; rebuilding kernels means writing from instruction listings.
+- U22 CLOSED: every kernel instance has a matched HIP rewrite (`rewrite/match-table.md`, `rewrite/kernels/`, harness in `rewrite/harness/`); a rebuild can start from those sources instead of instruction listings.
 - U23 is CLOSED (moved out of this list): the wire seed reaches SampleRow+0x10 unchanged; the splitmix64 counter is the token's sequence position (`closure/sampler-seed-r3.md`).
 - U26 is CLOSED (moved out of this list): one connection is served at a time; a waiting connection gets only exact `INFO\n`/`PING\n` first lines answered inline (FUN_01844d50), everything else waits and is released in order when the served connection closes, not when its GEN ends (`runtime-run-0.17.3-r3.md`, `closure/serve-pending-fd-r4.md`).
 - U27 is CLOSED (moved out of this list): i4r (dtype 23) decodes as planar signed nibbles times one fp16 scale per 128, then the HT rotation (`decode_codes_i4r`, 0.9876 and 0.9885 measured, `closure/ht-decode.md`).
-- CLOSED rows (U01, U02, U03, U04, U07, U08, U09, U10, U11, U12, U13, U14, U15, U16, U17, U18, U19, U20, U21, U23, U24, U25, U26, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
+- CLOSED rows (U01, U02, U03, U04, U07, U08, U09, U10, U11, U12, U13, U14, U15, U16, U17, U18, U19, U20, U21, U22, U23, U24, U25, U26, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
 
 Other gaps a rebuild hits (request-trace.md "Gaps" and the closure reports):
 - MTP head: fc_embedding/fc_hidden fusion, router top-k and the greedy draft step are CLOSED (`closure/mtp-head-r5.md`); the head step's ordered kernels (39 launches at decode width 1, 78 over the prompt rows), its Linear kernels and router path are CLOSED from the run 4 launch trace (`closure/mtp-head-r6.md`); each request is prefill, a head step over the prompt, then rounds of [head step, target verify step], then a trailing head step.

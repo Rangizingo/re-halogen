@@ -1,0 +1,149 @@
+{
+ "grid": [
+  "=N//128",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "w": {
+   "bytes": "=N//128*64*1024",
+   "fill": {
+    "kind": "rand",
+    "dtype": "u8",
+    "seed": "=SEED",
+    "lo": 0,
+    "hi": 256
+   }
+  },
+  "x": {
+   "bytes": "=2048",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+10",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "su": {
+   "bytes": "=2048",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+20",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "sv": {
+   "bytes": "=N*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+30",
+    "lo": 0.5,
+    "hi": 2
+   }
+  },
+  "y": {
+   "bytes": "=N*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 0
+   }
+  },
+  "cnt": {
+   "bytes": 1024,
+   "fill": {
+    "kind": "zero"
+   }
+  },
+  "out": {
+   "bytes": "=N*2*1",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "w"
+  },
+  {
+   "offset": 8,
+   "buffer": "su"
+  },
+  {
+   "offset": 16,
+   "buffer": "sv"
+  },
+  {
+   "offset": 24,
+   "buffer": "out"
+  },
+  {
+   "offset": 40,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 44,
+   "type": "i32",
+   "value": 1
+  },
+  {
+   "offset": 48,
+   "type": "i32",
+   "value": 8
+  },
+  {
+   "offset": 288,
+   "type": "i32",
+   "value": 1
+  },
+  {
+   "offset": 408,
+   "buffer": "x"
+  },
+  {
+   "offset": 416,
+   "type": "i32",
+   "value": 1
+  },
+  {
+   "offset": 420,
+   "type": "i32",
+   "value": 1024
+  },
+  {
+   "offset": 424,
+   "buffer": "y"
+  },
+  {
+   "offset": 432,
+   "buffer": "cnt"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ht_lin.hip",
+  "rewrite_kernel": "ht_grp_b4_s1",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

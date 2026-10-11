@@ -145,13 +145,11 @@ dflash2 (`dflash2-probe.md`). Phase 7: function maps of all three binaries
 0.17.3 engine run (`runtime-run-0.17.3.md`), 17 closure reports
 (`closure/`) and a rebuild guide (`rebuild-guide.md`).
 
-Residual unknowns, counted from the table in `unknowns.md`: CLOSED 24,
-PARTIAL 0, OPEN-BOUNDED 2, UNOBSERVABLE 1 (27 rows). What stays open and why:
+Residual unknowns, counted from the table in `unknowns.md`: CLOSED 25,
+PARTIAL 0, OPEN-BOUNDED 1, UNOBSERVABLE 1 (27 rows). What stays open and why:
 
 - U06 0.14.x and 0.15.x patch deltas: those tags were not pulled (no
   downloads in scope).
-- U22 AMDGCN pseudocode: Ghidra has no shader-ISA module; device code stays
-  at disassembly level.
 - U05 a future flip of the dflash2 literal: not observable from shipped
   releases.
 

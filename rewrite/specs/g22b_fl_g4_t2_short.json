@@ -1,0 +1,193 @@
+{
+ "grid": [
+  240,
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "w": {
+   "bytes": 3145728,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+2",
+    "lo": 0.01,
+    "hi": 0.5
+   }
+  },
+  "x": {
+   "bytes": 25600,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "items": {
+   "bytes": 480,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g22b_data/fl_g4_t2_items.bin"
+   }
+  },
+  "ids": {
+   "bytes": 80,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g22b_data/fl_g4_t2_ids.bin"
+   }
+  },
+  "cnt": {
+   "bytes": 16,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g22b_data/fl_g4_t2_cnt_short.bin"
+   }
+  },
+  "y": {
+   "bytes": 205056,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  },
+  "wt": {
+   "bytes": 80,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+3",
+    "lo": 0.05,
+    "hi": 1
+   }
+  },
+  "h": {
+   "bytes": 5120,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+4",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "r": {
+   "bytes": 10240,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+5",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "z": {
+   "bytes": 8,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+6",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "out": {
+   "bytes": 10368,
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "ctr": {
+   "bytes": 224,
+   "fill": "zero"
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "w"
+  },
+  {
+   "offset": 8,
+   "type": "i64",
+   "value": 2097152
+  },
+  {
+   "offset": 16,
+   "buffer": "x"
+  },
+  {
+   "offset": 24,
+   "buffer": "items"
+  },
+  {
+   "offset": 32,
+   "buffer": "ids"
+  },
+  {
+   "offset": 40,
+   "buffer": "cnt"
+  },
+  {
+   "offset": 48,
+   "buffer": "y"
+  },
+  {
+   "offset": 56,
+   "buffer": "wt"
+  },
+  {
+   "offset": 64,
+   "buffer": "h"
+  },
+  {
+   "offset": 72,
+   "buffer": "r"
+  },
+  {
+   "offset": 80,
+   "buffer": "z"
+  },
+  {
+   "offset": 88,
+   "buffer": "out"
+  },
+  {
+   "offset": 96,
+   "buffer": "ctr"
+  }
+ ],
+ "dump": [
+  "y",
+  "out",
+  "ctr"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/i4r_rows_b.hip",
+  "rewrite_kernel": "k_i4r_rows_fl_g4",
+  "outputs": [
+   {
+    "buffer": "y",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "out",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "ctr",
+    "dtype": "u32"
+   }
+  ]
+ }
+}

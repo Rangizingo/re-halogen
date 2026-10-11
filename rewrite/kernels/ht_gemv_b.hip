@@ -144,24 +144,25 @@ __device__ static inline void dn_store(const float (&s)[8], const _Float16* svp,
 
 // ---------------------------------------------------------------------------------------------------------------------------
 // k_ht_gemv_dn_t<BITS,8,T,true>(W@0, x@8, ids@16, sv@24, out@32, HtFold@40): the dn_t partial (g14: out + pos*2560 + tile*128, pos = wg/20)
-// followed by a fold of 10 partial rows per token. HtFold (40 B, five pointers, decoded from the kernarg loads in dn_t<4,8,1,true>,
-// codeobj_53000 kernels-disasm-v2 line 1217782 `s_load_b512 s[4:19], 0` and line 1218351 `s_load_b128 s[4:7], 0x40`):
-//   q0@40 const float*  fw[tok*10 + k]   slot weight (line 1218790 `global_load_b32 v7, v6, s[10:11]`, s[10:11] = q0 + 40*tok at 1218760-1218762)
-//   q1@48 const bf16*   resid[tok*2560 + e]  (line 1218796 `v_add_co_u32 v2, s16, v0`, s16:17 = kernarg 48)
-//   q2@56 const float*  scal[tok]            (line 1218797 `global_load_b32 v3, v6, s[8:9]`, s[8:9] = s18:19 + 4*tok at 1218789-1218791)
-//   q3@64 bf16*         fout[tok*2560 + e]   (line 1218802 `v_add_co_u32 v0, s4, v0`, s[4:5] = kernarg 64; store at line 1218927)
-//   q4@72 unsigned*     cnt[tok*20 + tile]   (atomic add line 1218751, s[6:7] = kernarg 72, s20 = s[6:7] + 4*(tok*20 + tile))
-// tok = wg/200 (@983FC8 mul_hi 0x51eb851f >> 6), tile = wg - 20*(wg/20). After its partial every block adds 1 to cnt[tok*20+tile] (thread 0,
-// line 1218751 `global_atomic_add_u32 ... glc`); the block that sees old == 9 (@984078 v_cmp_eq 9) runs the fold with threads 0..63
-// (@9840CC v_cmpx_gt_u32 64), 2 elements each (e = tile*128 + 2*tid), then thread 0 resets the counter to 0 (line 1218956).
-// Fold math, per element pair (lo, hi) of the 10 slot rows at out[(10*tok + k)*2560 + e] (stride 0x1400 B, @984100-98412C):
-//   m_k = fw[k] * slot_k (v_mul_f32, bf16 widened by shift/mask), sums run k = 0..9 as 0 + m_0, + m_1, ..., + m_9 in f32 (v_add_f32; line 1218790-1218920),
-//   each sum rounded to bf16 (v_bfe_u32 16,1 ; v_add3_u32 0x7fff ; and 0xffff0000, @984418-984490), then fma(scal[tok], resid, rounded) (v_fmac_f32 @9844B0/9844B4),
-//   rounded to bf16 RNE (@9844BC-9844F0) and stored as one dword.
-// The weights stored by the partial pass are those of dn_t<false> (the T template argument does not change the math, g14).
+// followed by a fold of the 10 partial rows of a token. Cites are addresses in kernels-disasm-v2/codeobj_53000.s of dn_t<4,8,1,true> (@982500);
+// the other T and the 3-bit kernels are covered by their own rows in tables/g14b.md.
+// HtFold (40 B by value at kernarg 40, five pointers) from the kernarg loads `s_load_b512 s[4:19], 0` (@982500: s14:15 = kernarg 40, s16:17 = 48,
+// s18:19 = 56) and `s_load_b128 s[4:7], 0x40` (@98369C: s4:5 = kernarg 64, s6:7 = 72):
+//   q0@40 const float*  fw[tok*10 + k]   slot weight: s[10:11] = s14:15 + 40*tok (@98413C-@984140), global_load_b32 offsets 0..36 (@984148-@9843B8)
+//   q1@48 const bf16*   resid[tok*2560 + e]  s16:17 + 2*(tok*2560 + e) (@9843DC-@9843E8, load @9843FC; v0 = e + tok*0xa00 from @984100)
+//   q2@56 const float*  scal[tok]            s[8:9] = s18:19 + 4*tok (@984160-@984164), load @984404
+//   q3@64 bf16*         fout[tok*2560 + e]   s4:5 + 2*(tok*2560 + e) (@984410-@984420), store @984500
+//   q4@72 unsigned*     cnt[tok*20 + tile]   s20:21 = s6:7 + 4*(tok*20 + tile) (@984040-@984044), atomic add @984058, reset store @98452C
+// tok = wg/200 (@983FC8 s_mul_hi_i32 0x51eb851f ; @983FE8 s_ashr 6), tile = wg - 20*(wg/20) (@98258C). After the partial every block adds 1 to
+// cnt[tok*20 + tile] (thread 0, @984058 global_atomic_add_u32 ... glc); the block that gets old == 9 (@984078 v_cmp_eq_u32 9) runs the fold with
+// threads 0..63 (@9840CC v_cmpx_gt_u32 64), 2 bf16 each (e = tile*128 + 2*tid, @9840E8), then thread 0 resets the counter to 0 (@98452C).
+// Fold math per element pair (lo, hi) of the 10 slot rows at out[(10*tok + k)*2560 + e] (slot stride 0x1400 B, @984100-@98412C):
+//   m_k = fw[k] * slot_k (v_mul_f32 on the bf16 widened by shift / mask; @984190-@984198 ...), f32 sums k = 0..9 as 0 + m_0, + m_1, ... + m_9
+//   (v_add_f32 chain, lo @98440C-@98446C, hi @9841AC-@9843F8), each sum rounded to bf16 (v_bfe_u32 16,1 ; v_add3_u32 0x7fff ; and 0xffff0000,
+//   hi @984418-@984450, lo @984478-@984490), then fma(scal[tok], resid, rounded) (v_fmac_f32 @9844B0 lo, @9844B4 hi), rounded to bf16 RNE
+//   (@9844BC-@9844F0) and stored as one dword. The counters end at 0 (not compared: compare.py refuses an unchanged output).
 struct HtFold { const float* fw; const unsigned short* resid; const float* scal; unsigned short* fout; unsigned* cnt; };
 
-__device__ static inline float bf2f(unsigned short b) { return __uint_as_float((unsigned)b << 16); }
 __device__ static inline float bf_round(float f) {  // sum rounded to bf16 and kept as f32 (@984418-984490)
   unsigned u = __float_as_uint(f);
   return __uint_as_float((u + ((u >> 16) & 1u) + 0x7fffu) & 0xffff0000u);
@@ -217,7 +218,6 @@ DN_T_FOLD(3, 0) DN_T_FOLD(3, 1) DN_T_FOLD(3, 2) DN_T_FOLD(3, 3) DN_T_FOLD(3, 4)
 // x row pos staged in LDS (0x500 B, @95E784-95E7AC), W + expert*0xc8000 + tile*0xa000 (@95E7F4-95E810), out + pos*0x1400 + tile*256
 // (@95FFF8-960014), sv + expert*0x1400 + tile*256 (@95FECC-95FEE0), same WHT and 0x3db504f3 scale and bf16 RNE as dn_t (@95FF84 v_mul_f32 0x3db504f3).
 // HtFold is not read on the token path (no s_load at kernarg 0x88 in @95E728-@960150).
-struct HtSd { long raw[11]; };
 template <int BITS>
 __device__ static inline void ht_dn_ts_tok(const unsigned* W, const _Float16* x, const int* ids, const _Float16* sv, unsigned short* out) {
   const int pos = blockIdx.x / 20, tile = blockIdx.x - 20 * pos, e = ids[pos];
@@ -226,10 +226,158 @@ __device__ static inline void ht_dn_ts_tok(const unsigned* W, const _Float16* x,
   if (dn_core<BITS>(tb, x + (long)pos * 640, s, true))
     dn_store(s, sv + (long)e * 2560 + tile * 128, out + (long)pos * 2560 + tile * 128);
 }
+
+// ---------------------------------------------------------------------------------------------------------------------------
+// HtSd (88 B by value, kernarg 40 in dn_ts, 48 in dn_g): the "dense" job that rides in the same launch as extra blocks (wg >= n).
+// Decoded from k_ht_gemv_dn_ts<4,8,1,false> (codeobj_53000 @95C400-@95E728, dense path; kernarg loads @95C404 s_load_b32 0x80, @95C40C s_load_b512 0,
+// @95C42C s_load_b64 0x74, @95C43C s_load_b128 0x68, @95C444 s_load_b64 0x60, @95C44C s_load_b256 0x40). Field = register use:
+//   +0  w     const unsigned*  HT weights [rb][K/16 col tiles][8 row tiles], tile = 8*BITS words (s22:23, @95CD64-@95CD68, tile base << 10 for 4 bit)
+//   +8  su    const half*      per-column scale [K] (s24:25: global_load_b32 + d16 at +4 / +6, @95C95C-@95C970, @95C600)
+//   +16 sv    const half*      per-row scale [N] (s26:27, @95E4D0-@95E4D8, offsets 32 apart = rows 16 j + r)
+//   +24 a     const ushort*    activations, bf16 [M][K] (s36:37, @95C920, row stride s30 = K, row clamp min(row, m - 1) @95C8D4)
+//   +32 b     const ushort*    second operand, bf16 [M][K], may be null (s38:39, null test @95C51C s_cmp_lg_u64 -> s48)
+//   +40 out   ushort*          bf16 [M][N] (s40:41, @95E5D8-@95E5E4; stores @95E6E0-@95E718)
+//   +48 part  float*           split partials [nsplit][stride] (s42:43, @95DFC8-@95DFE4 store, @95E0F4-@95E11C loads)
+//   +56 cnt   unsigned*        split counters [N/128] (s34:35, @95E044 atomic add)
+//   +64 m (s28), +68 stride (s29), +72 K (s30), +76 cpb = chunks of 128 columns per block (s8), +80 nsplit = blocks per row block (s9), +84 pad
+// Dense block id d = wg - n (@95C4... s3 = s2 - s3): rb = d / nsplit (@95C460-@95C4CC integer division), sp = d - rb*nsplit (s31),
+// first chunk c0 = sp*cpb (s33 = s31*s8), chunk count nch = min(K/128, c0 + cpb) - c0 (s45, @95C4F4-@95C504).
+struct HtSdD { const unsigned* w; const unsigned short* su; const _Float16* sv; const unsigned short* a; const unsigned short* b;
+               unsigned short* out; float* part; unsigned* cnt; int m, stride, K, cpb, nsplit, pad; };
+
+// Rotation of one 128-column activation chunk (wave-wide, lane L owns columns 4L..4L+3): x = a (or bf16(silu(a) * b)), * su, 128-point WHT,
+// * 0x3db504f3 stored as f16 (@95C614-@95C860, ds_store_b64 offset 9728 + chunk*256 + lane*8 = chunk-major f16 [128]).
+// First stage (fused): p_k = x_k * su_k (v_fma_mix ... neg(0) = rounded product) for k = 0..2, q3 = x3 * su3 kept exact in a fma:
+//   A = p0 + p1, B = p0 - p1, C = fma(x3, su3, p2), D = fma(-x3, su3, p2); h00 = A + C, h10 = A - C, h01 = B + D, h11 = B - D (@95C614-@95C63C).
+// Then the lane stages 1,2,4,8 (row_xmask) and lane ^ 16 (permlanex16): lane with the bit set computes partner - own, else own + partner.
+// silu(a) = a / (1 + exp2(a * -1.442695)) with IEEE division (@95C998-@95CB98), product with b, bf16 RNE without NaN handling (@95CBB4-@95CC08).
+__device__ static inline float bf16f(unsigned short v) { return __uint_as_float((unsigned)v << 16); }
+__device__ static inline void rot_chunk(const unsigned short* a, const unsigned short* b, const unsigned short* su, _Float16* dst, int lane) {
+  float x[4];
+  for (int k = 0; k < 4; k++) {
+    float av = bf16f(a[4 * lane + k]);
+    if (b) {
+      float e = __builtin_amdgcn_exp2f(av * -1.44269502162933349609375f);
+      float q = av / (1.0f + e);
+      float y = q * bf16f(b[4 * lane + k]);
+      av = __uint_as_float((unsigned)f2bf_rne(y) << 16);
+    }
+    x[k] = av;
+  }
+  float s0 = (float)__builtin_bit_cast(_Float16, su[4 * lane]), s1 = (float)__builtin_bit_cast(_Float16, su[4 * lane + 1]);
+  float s2 = (float)__builtin_bit_cast(_Float16, su[4 * lane + 2]), s3 = (float)__builtin_bit_cast(_Float16, su[4 * lane + 3]);
+  float p0 = x[0] * s0, p1 = x[1] * s1, p2 = x[2] * s2;
+  float A = p0 + p1, B = p0 - p1, C = __builtin_fmaf(x[3], s3, p2), D = __builtin_fmaf(-x[3], s3, p2);
+  float h[4] = {A + C, B + D, A - C, B - D};  // columns 4L + {0,1,2,3} = Hadamard bits (c1 c0) = 00, 01, 10, 11
+  for (int bit = 1; bit <= 8; bit <<= 1)
+    for (int k = 0; k < 4; k++) {
+      float p = __shfl_xor(h[k], bit, 32);
+      h[k] = (lane & bit) ? (p - h[k]) : (h[k] + p);
+    }
+  for (int k = 0; k < 4; k++) {
+    float p = __shfl_xor(h[k], 16, 32);
+    h[k] = (lane & 16) ? (p - h[k]) : (h[k] + p);
+  }
+  for (int k = 0; k < 4; k++) {
+    unsigned hh;
+    asm("v_fma_mixlo_f16 %0, %1, %2, 0" : "=v"(hh) : "v"(h[k]), "v"(INV_SQRT128));
+    dst[4 * lane + k] = __builtin_bit_cast(_Float16, (unsigned short)hh);
+  }
+}
+
+// One dense block for T activation rows (dn_ts template argument T = 1, 2, 4; m <= T rows are real, row t reads activation row min(t, m - 1),
+// @95C8D4 / T=2 @9624E4 `v_mad_i64_i32 ..., s29, v11` and `v_min_i32 s47`). See the HtSd comment for the block mapping.
+// Rotated rows are kept per token. Each wave w owns nch consecutive 16-column tiles [w*nch, (w+1)*nch) of the block's chunks (@95CD04-@95CD60:
+// per-wave tile count = s45, base tile s33*8) and decodes each weight tile once for all T rows. Wave partials go to P[w][t][j][r]; element e = t*128 + 16 j + r
+// of the block result is the sum over waves 0..7 from `0 + P0` (T=1 @95DF38-95DF74; T=2 @961F14-961F6C stride 1024 B = 2 tokens x 128 floats;
+// T=4 @966310-966374 stride 2048 B, two passes e = tid, tid + 256).
+// nsplit >= 2: the block stores its sums to part[(sp*T + t)*stride + rb*128 + (e & 127)] (T=1 @95DFB0-95DFE4; T=2 @961FA0-96203C `v_lshl_or_b32 s31, 1, v1`;
+// T=4 @9663B4-9664B0), takes ticket old = atomicAdd(cnt[rb]) (@95E058, @9620B0, @96653C); the block with old == nsplit - 1 re-reads
+// planes c = 0..nsplit-1 (plane c*T + t) in order summing from 0 (T=1 @95E0F4-95E13C, T=2 @962130-9621D0, T=4 @9665BC-966680) and resets cnt[rb] to 0
+// (@95E168, @9621FC, @9666DC). Waves t < min(T, m) then finish token t: WHT-128, * 0x3db504f3, * sv[rb*128 + 16 j + r], bf16 RNE (dn_store),
+// out[t*stride + rb*128 + ...] (T=2 @9625E4 `v_mad_i64_i32 ..., s29, v11` ; wave gate T=2 @962214 `v_cmp_gt_i32 s28, v11`, T=4 @9666F8).
+template <int BITS, int T>
+__device__ static inline void ht_dense(const HtSdD& S, int d) {
+  __shared__ _Float16 R[T][20 * 128];
+  __shared__ float P[8][T][8][16];
+  __shared__ float Z[T * 128];
+  __shared__ int last;
+  const int tid = threadIdx.x, w = tid >> 5, lane = tid & 31, r = lane & 15, hh = lane >> 4;
+  const int rb = d / S.nsplit, sp = d - rb * S.nsplit, c0 = sp * S.cpb;
+  const int kc = S.K / 128;
+  const int nch = (kc < c0 + S.cpb ? kc : c0 + S.cpb) - c0;
+  // Vendor bound: the rotated rows live in LDS at row*5120 B + chunk*256 B (T=2: `ds_load_b128 ... offset:5120` @960F48, T=4: offsets 5120/10240/15360
+  // @965194-@965240; g22b i4r gl<2> `:1875202` confirms), so at most 5120/256 = 20 chunks per row fit. The host must keep cpb <= 20 (and K/128 per block);
+  // the vendor code has no check, so an over-large chunk count is outside the kernel's contract. Trap instead of writing out of bounds.
+  if (nch > 20) __builtin_trap();
+  constexpr int NW = 8 * BITS;
+  for (int idx = w; idx < nch * T; idx += 8) {
+    const int t = idx / nch, ci = idx - t * nch;
+    const int row = t < S.m - 1 ? t : S.m - 1;
+    rot_chunk(S.a + (long)row * S.K + (c0 + ci) * 128, S.b ? S.b + (long)row * S.K + (c0 + ci) * 128 : nullptr, S.su + (c0 + ci) * 128, R[t] + ci * 128, lane);
+  }
+  __syncthreads();
+  const unsigned* tb = S.w + ((long)rb * (S.K / 16) + c0 * 8) * (8 * NW);
+  float acc[T][8];
+  for (int t = 0; t < T; t++) for (int j = 0; j < 8; j++) acc[t][j] = 0.f;
+  for (int i = 0; i < nch; i++) {
+    const int ct = w * nch + i;
+    _Float16 xv[T][8];
+    for (int t = 0; t < T; t++) for (int c = 0; c < 8; c++) xv[t][c] = R[t][16 * ct + 8 * hh + c];
+    for (int j = 0; j < 8; j++) {
+      const unsigned* tp = tb + ct * (8 * NW) + j * NW;
+      _Float16 wt[8];
+      ht_dec<BITS>(tp, lane, wt);
+      for (int t = 0; t < T; t++) acc[t][j] = dot8(wt, xv[t], acc[t][j]);
+    }
+  }
+  for (int t = 0; t < T; t++)
+    for (int j = 0; j < 8; j++) {
+      float o = __shfl_xor(acc[t][j], 16, 32);
+      if (hh == 0) P[w][t][j][r] = acc[t][j] + o;
+    }
+  __syncthreads();
+  for (int e = tid; e < T * 128; e += 256) {
+    const int t = e >> 7, j = (e >> 4) & 7, rr = e & 15;
+    float sum = 0.f + P[0][t][j][rr];
+    for (int q = 1; q < 8; q++) sum = sum + P[q][t][j][rr];
+    Z[e] = sum;
+  }
+  __syncthreads();
+  if (S.nsplit >= 2) {
+    for (int e = tid; e < T * 128; e += 256)
+      S.part[((long)sp * T + (e >> 7)) * S.stride + rb * 128 + (e & 127)] = Z[e];
+    __threadfence();
+    __syncthreads();
+    if (tid == 0) last = (atomicAdd(S.cnt + rb, 1u) == (unsigned)(S.nsplit - 1));
+    __syncthreads();
+    if (!last) return;
+    __threadfence();
+    for (int e = tid; e < T * 128; e += 256) {
+      float s = 0.f;
+      for (int c = 0; c < S.nsplit; c++) s = s + __builtin_nontemporal_load(S.part + ((long)c * T + (e >> 7)) * S.stride + rb * 128 + (e & 127));
+      Z[e] = s;
+    }
+    if (tid == 0) S.cnt[rb] = 0;
+    __syncthreads();
+  }
+  if (w < T && w < S.m) {
+    float s[8];
+    for (int j = 0; j < 8; j++) s[j] = Z[w * 128 + 16 * j + r];
+    wht128(s, r);
+    if (hh == 0) dn_store(s, S.sv + rb * 128, S.out + (long)w * S.stride + rb * 128);
+  }
+}
+
+template <int BITS, int T>
+__device__ static inline void ht_dn_ts(const unsigned* W, const _Float16* x, const int* ids, const _Float16* sv, unsigned short* out, const HtSdD& S, int n) {
+  if (T == 0 || (int)blockIdx.x < n) { ht_dn_ts_tok<BITS>(W, x, ids, sv, out); return; }
+  if constexpr (T >= 1) ht_dense<4, T>(S, blockIdx.x - n);  // the dense matrix is 4-bit for both BITS (3-bit kernel @94EBB0.. uses bfe 12/8/4/0 and 1024 B tile groups)
+}
 #define DN_TS(B, T)                                                                                                                         \
   extern "C" __global__ void k_b_dn_ts_##B##_8_##T(const unsigned* W, const _Float16* x, const int* ids, const _Float16* sv,                    \
-                                                  unsigned short* out, HtSd sd, int n, HtFold F) {                                         \
-    ht_dn_ts_tok<B>(W, x, ids, sv, out);                                                                                                    \
+                                                  unsigned short* out, HtSdD sd, int n, HtFold F) {                                        \
+    ht_dn_ts<B, T>(W, x, ids, sv, out, sd, n);                                                                                              \
   }
 DN_TS(4, 0) DN_TS(4, 1) DN_TS(4, 2) DN_TS(4, 4)
 DN_TS(3, 0) DN_TS(3, 1) DN_TS(3, 2) DN_TS(3, 4)
@@ -245,7 +393,6 @@ DN_TS(3, 0) DN_TS(3, 1) DN_TS(3, 2) DN_TS(3, 4)
 // (@92AC18-@92AC34). Waves 5w..5w+4 column tiles as in dn, but the decoded weights feed G accumulator sets. Per-wave partials go to LDS
 // ([w][g][j][r]); wave g < n = min(end - begin, G) (@92BF28-@92BF44 s_sub s15 s14 ; s_min_i32 2 ; v_cmpx_gt_i32 s0, v11) sums the 8 wave partials from 0 +
 // (@92BF98 `v_add_f32 v5, 0, v5` then adds in ds_load order), runs the WHT-128 and dn_store for row begin + g.
-struct HtSdB { long raw[11]; };
 template <int BITS, int G>
 __device__ static inline void ht_dn_g_item(const unsigned* W, const _Float16* x, const HtItem* A, const int* cnt, const _Float16* sv, unsigned short* out) {
   __shared__ float P[8][G][8][16];
@@ -290,10 +437,18 @@ __device__ static inline void ht_dn_g_item(const unsigned* W, const _Float16* x,
     if (hh == 0) dn_store(s, sv + (long)it.expert * 2560 + it.tile * 128, out + (long)(it.begin + w) * 2560 + it.tile * 128);
   }
 }
+// K = 2, 4: blocks wg >= n run the dense job (HtSd layout identical to dn_ts: dn_g loads the same fields at kernarg 48 + offset, e.g. @922134
+// s_load_b256 s[44:51], 0x60 = part, cnt, m, stride, K, cpb and @922124 s_load_b64 0x7c = cpb, nsplit; int n at 0x88 @922104), for K tokens.
+template <int BITS, int G, int K>
+__device__ static inline void ht_dn_g(const unsigned* W, const _Float16* x, const HtItem* A, const int* cnt, const _Float16* sv, unsigned short* out,
+                                      const HtSdD& S, int n) {
+  if (K == 0 || (int)blockIdx.x < n) { ht_dn_g_item<BITS, G>(W, x, A, cnt, sv, out); return; }
+  if constexpr (K >= 1) ht_dense<4, K>(S, blockIdx.x - n);
+}
 #define DN_G(B, G, K)                                                                                                                       \
   extern "C" __global__ void k_b_dn_g_##B##_8_##G##_##K(const unsigned* W, const _Float16* x, const HtItem* A, const int* cnt,                   \
-                                                       const _Float16* sv, unsigned short* out, HtSdB sd, int n) {                         \
-    ht_dn_g_item<B, G>(W, x, A, cnt, sv, out);                                                                                              \
+                                                       const _Float16* sv, unsigned short* out, HtSdD sd, int n) {                         \
+    ht_dn_g<B, G, K>(W, x, A, cnt, sv, out, sd, n);                                                                                         \
   }
 DN_G(4, 2, 0) DN_G(4, 2, 2) DN_G(4, 2, 4) DN_G(4, 4, 0) DN_G(4, 4, 2) DN_G(4, 4, 4)
 DN_G(3, 2, 0) DN_G(3, 2, 2) DN_G(3, 2, 4) DN_G(3, 4, 0) DN_G(3, 4, 2) DN_G(3, 4, 4)

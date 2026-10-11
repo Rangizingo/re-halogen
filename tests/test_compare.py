@@ -271,3 +271,34 @@ def test_mask_excluded_overlap_counts_each_element_once_and_short_b_is_a_mismatc
     assert c.mask_excluded(a, a, 'f32', [[0, 2], [1, 3]])[2] == 3
     ma, mb, _ = c.mask_excluded(a, f32s(1.0), 'f32', [[2, 4]])
     assert not c.compare_bytes(ma, mb, 'f32')['match']
+
+
+def test_prime_src_path_relative_to_spec_and_override(tmp_path, monkeypatch):
+    t = {'prime': {'src': '../kernels/p.hip', 'kernel': 'p'}}
+    spec = tmp_path / 'specs' / 's.json'
+    spec.parent.mkdir()
+    assert c.prime_src_path(t, spec) == (tmp_path / 'kernels' / 'p.hip').resolve()
+    monkeypatch.chdir(tmp_path)
+    assert c.prime_src_path(t, spec, 'x/q.hip') == (tmp_path / 'x' / 'q.hip').resolve()
+    assert c.prime_src_path({'grid': [1, 1, 1]}, spec) is None
+
+
+def test_build_run_spec_keeps_prime_with_absolute_src():
+    t = {'grid': [1, 1, 1], 'prime': {'src': 'p.hip', 'kernel': 'p', 'grid': ['=N', 1, 1], 'block': [256, 1, 1], 'lds_bytes': 64340, 'args': []}}
+    lay = {'kernarg_size': 8, 'args': []}
+    s = c.build_run_spec(t, 'k', lay, {'N': 7}, '/abs/p.hip')
+    assert s['prime']['src'] == '/abs/p.hip' and s['prime']['grid'] == [7, 1, 1] and s['prime']['lds_bytes'] == 64340
+    assert 'prime' not in c.build_run_spec({'grid': [1, 1, 1]}, 'k', lay, {'N': 7})
+    with pytest.raises(ValueError):
+        c.build_run_spec(t, 'k', lay, {'N': 7})
+
+
+def test_primed_in_result_text_and_table_row():
+    r = {'match': True, 'n': 10, 'n_diff': 0, 'max_abs': 0.0, 'max_ulp': 0, 'first_diff': None, 'excluded': 0, 'primed': True}
+    assert c.result_text(r).split()[-1] == 'primed'
+    row = c.format_row('k', 'f', 'case', c.result_text(r), 'bitwise', '2026-10-11')
+    assert 'primed' in row
+    r['primed'] = False
+    assert 'primed' not in c.result_text(r)
+    r['match'], r['n_diff'], r['primed'] = False, 3, True
+    assert c.result_text(r).startswith('MISMATCH') and c.result_text(r).endswith('primed')
