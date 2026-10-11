@@ -1,0 +1,30 @@
+{
+  "grid": ["=24", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "blobA": {"bytes": "=256+24*16*N+24*(2*N+16)+64", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED", "lo": -2, "hi": 2}},
+    "blobB": {"bytes": "=256+24*16*N+24*(2*N+16)+64", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+50", "lo": -2, "hi": 2}},
+    "x": {"bytes": "=2*32*N*2", "fill": {"kind": "rand", "dtype": "bf16", "seed": "=SEED+100", "lo": -2, "hi": 2}},
+    "out": {"bytes": "=24*2*2", "fill": {"kind": "const", "dtype": "bf16", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "blobA"},
+    {"offset": 8, "type": "i64", "value": 256},
+    {"offset": 16, "type": "i64", "value": "=256+24*16*N"},
+    {"offset": 24, "type": "i64", "value": "=2*N+16"},
+    {"offset": 32, "buffer": "blobB"},
+    {"offset": 40, "type": "i64", "value": 256},
+    {"offset": 48, "type": "i64", "value": "=256+24*16*N"},
+    {"offset": 56, "type": "i64", "value": "=2*N+16"},
+    {"offset": 64, "buffer": "x"},
+    {"offset": 72, "buffer": "out"},
+    {"offset": 80, "type": "i64", "value": "=32*N"},
+    {"offset": 88, "type": "i64", "value": "=24"}
+  ],
+  "dump": ["out"],
+  "compare": {
+    "rewrite_src": "../kernels/lq4w.hip",
+    "rewrite_kernel": "lq4w_pair_sel",
+    "outputs": [{"buffer": "out", "dtype": "bf16"}]
+  }
+}
