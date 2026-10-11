@@ -1,3 +1,4 @@
+// ht_gemv_c.hip = ht_gemv.hip with the NaN-sign fixes of g14n (see rewrite/reports/g14n.md). Original header follows.
 // Rewrites of the "ht_gemv" family from the vendor code object codeobj_53000 (flash_serve, gfx1151).
 // Build: hipcc --genco --no-gpu-bundle-output --offload-arch=gfx1151 -O3 -o ht_gemv.co ht_gemv.hip
 // Listing: kernels-disasm/codeobj_53000.s (not in git). Cites are code-object addresses (@A84E00 = 0xa84e00) read from a
@@ -134,11 +135,19 @@ __device__ static inline bool dn_core(const unsigned* tb, const _Float16* xrow, 
   wht128(s, r);
   return hh == 0;
 }
+// sv * y as the vendor's v_fma_mix_f32 d, sv(f16, src0), y, neg(0): with two NaN operands the hardware returns src0 (the sv NaN), and the
+// compiler folds fma(sv, y, -0) into a commuted v_mul_f32, so the instruction is emitted by asm (g14n; vendor kernels-disasm-v2/codeobj_53000.s:1151876).
+__device__ static inline float mulsv(_Float16 sv, float y) {
+  unsigned sh = __builtin_bit_cast(unsigned short, sv);
+  float o;
+  asm("v_fma_mix_f32 %0, %1, %2, neg(0) op_sel_hi:[1,0,0]" : "=v"(o) : "v"(sh), "v"(y));
+  return o;
+}
 __device__ static inline void dn_store(const float (&s)[8], const _Float16* svp, unsigned short* op) {
   const int r = threadIdx.x & 15;
   for (int j = 0; j < 8; j++) {
     float y = s[j] * INV_SQRT128;  // 0x3db504f3
-    y = (float)svp[16 * j + r] * y;
+    y = mulsv(svp[16 * j + r], y);
     op[16 * j + r] = f2bf_rne(y);
   }
 }
@@ -211,7 +220,34 @@ __device__ static inline void gu_wave_acc(const unsigned* tb, const _Float16* xr
   }
   for (int k = 0; k < 16; k++) acc[k] = acc[k] + __shfl_xor(acc[k], 16, 32);  // lanes < 16: own (h0) + other (h1)
 }
+// gu_gs order (codeobj_53000.s:1142333 `v_mul_f32 v30, 0x3db504f3, v30` then 1142335 `v_mul_f32 v30, v30, v8`): y first, sv (as f32) second.
+__device__ static inline float mul_asm(float a, float b) {
+  float o;
+  asm("v_mul_f32 %0, %1, %2" : "=v"(o) : "v"(a), "v"(b));
+  return o;
+}
+__device__ static inline float add_asm(float a, float b) {
+  float o;
+  asm("v_add_f32 %0, %1, %2" : "=v"(o) : "v"(a), "v"(b));
+  return o;
+}
+__device__ static inline float sub_asm(float a, float b) {
+  float o;
+  asm("v_sub_f32 %0, %1, %2" : "=v"(o) : "v"(a), "v"(b));
+  return o;
+}
+__device__ static inline float fma_asm(float a, float b, float c) {
+  float o;
+  asm("v_fma_f32 %0, %1, %2, %3" : "=v"(o) : "v"(a), "v"(b), "v"(c));
+  return o;
+}
+__device__ static inline float fmaneg_asm(float a, float b, float c) {
+  float o;
+  asm("v_fma_f32 %0, %1, %2, -%3" : "=v"(o) : "v"(a), "v"(b), "v"(c));
+  return o;
+}
 // Wave 0 finish: P is [wave 0..7][k 0..15][r 0..15]; sums waves in order from 0 + P0, then WHT / SiLU / second WHT as documented above.
+template <bool GS>
 __device__ static inline void gu_finish(const volatile float* P, const _Float16* svg, const _Float16* sus, _Float16* op) {
   const int r = threadIdx.x & 15, hh = (threadIdx.x >> 4) & 1;
   float g[8], u[8];
@@ -224,20 +260,48 @@ __device__ static inline void gu_finish(const volatile float* P, const _Float16*
   wht128(u, r);
   float z[8], zs[8];
   for (int j = 0; j < 8; j++) {
-    float G = (float)svg[16 * j + r] * (g[j] * INV_SQRT128);
-    float U = (float)svg[640 + 16 * j + r] * (u[j] * INV_SQRT128);
+    float G, U;
+    if (GS) {
+      G = mul_asm(g[j] * INV_SQRT128, (float)svg[16 * j + r]);
+      U = mul_asm(u[j] * INV_SQRT128, (float)svg[640 + 16 * j + r]);
+    } else {
+      G = mulsv(svg[16 * j + r], g[j] * INV_SQRT128);
+      U = mulsv(svg[640 + 16 * j + r], u[j] * INV_SQRT128);
+    }
     float e = __builtin_amdgcn_exp2f(G * -1.44269502162933349609375f);
     float q = G / (1.0f + e);
-    z[j] = U * q;
+    z[j] = GS ? mul_asm(U, q) : U * q;
     zs[j] = (float)sus[16 * j + r];
   }
   float t[8], o[8];
-  for (int m = 0; m < 8; m += 2) {
-    float rb = z[m + 1] * zs[m + 1];
-    t[m] = __builtin_fmaf(z[m], zs[m], rb);
-    t[m + 1] = __builtin_fmaf(z[m], zs[m], -rb);
+  if (GS) {
+    // gu_gs vendor order (codeobj_53000.s:1142342-1142348 first stage as v_fma_f32 z, su, +-rb; 1142353-1142370 bit-2 stage): with two NaN
+    // operands the hardware returns the first source, so e1 = t3 + t1 and e5 = t7 + t5 keep the vendor's operand order.
+    for (int m = 0; m < 8; m += 2) {
+      float rb = mul_asm(z[m + 1], zs[m + 1]);
+      t[m] = fma_asm(z[m], zs[m], rb);
+      t[m + 1] = fmaneg_asm(z[m], zs[m], rb);
+    }
+    float e[8];
+    e[0] = add_asm(t[0], t[2]);
+    e[1] = add_asm(t[3], t[1]);
+    e[2] = sub_asm(t[0], t[2]);
+    e[3] = sub_asm(t[1], t[3]);
+    e[4] = add_asm(t[4], t[6]);
+    e[5] = add_asm(t[7], t[5]);
+    e[6] = sub_asm(t[4], t[6]);
+    e[7] = sub_asm(t[5], t[7]);
+    wht_jstage(e, 4);
+    wht_rstages(e, r);
+    for (int j = 0; j < 8; j++) o[j] = e[j];
+  } else {
+    for (int m = 0; m < 8; m += 2) {
+      float rb = z[m + 1] * zs[m + 1];
+      t[m] = __builtin_fmaf(z[m], zs[m], rb);
+      t[m + 1] = __builtin_fmaf(z[m], zs[m], -rb);
+    }
+    wht128_rest(t, o, r);
   }
-  wht128_rest(t, o, r);
   if (hh != 0) return;
   for (int j = 0; j < 8; j++) {
     unsigned h;
@@ -253,7 +317,7 @@ __device__ static inline void gu_core(const unsigned* tb, const _Float16* xrow, 
   gu_wave_acc<BITS>(tb, xrow, w, lane, acc);
   if (hh == 0) for (int k = 0; k < 16; k++) P[w][k][r] = acc[k];
   __syncthreads();
-  if (w == 0 && wr) gu_finish(&P[0][0][0], svg, sus, op);
+  if (w == 0 && wr) gu_finish<false>(&P[0][0][0], svg, sus, op);
 }
 template <int BITS>
 __device__ static inline void ht_gu11(const unsigned* W, const _Float16* x, const HtItem* items, const int* tok, const _Float16* sv,
@@ -317,7 +381,7 @@ __device__ static inline void ht_gu_ts(const unsigned* W, const _Float16* x, con
   __syncthreads();
   if (!last) return;
   __threadfence();
-  if (w == 0) gu_finish(Pf + (long)pt * 8 * 256, sv + (long)e * 1280 + tile * 128, su + (long)e * 640 + tile * 128, out + (long)pos * 640 + tile * 128);
+  if (w == 0) gu_finish<false>(Pf + (long)pt * 8 * 256, sv + (long)e * 1280 + tile * 128, su + (long)e * 640 + tile * 128, out + (long)pos * 640 + tile * 128);
 }
 #define GU_TS(B, S)                                                                                                                         \
   extern "C" __global__ void __launch_bounds__(32 * 8 / S) k_ht_gemv_gu_ts_##B##_##S(const unsigned* W, const _Float16* x, const int* ids,    \
@@ -377,7 +441,7 @@ __device__ static inline void ht_gu_gs(const unsigned* W, const _Float16* x, con
   __threadfence();
   for (int g = 0; g < n; g++) {
     const long pos = it.begin + g;
-    gu_finish(Pf + (pos * 5 + it.tile) * 8 * 256, sv + (long)it.expert * 1280 + it.tile * 128, su + (long)it.expert * 640 + it.tile * 128,
+    gu_finish<true>(Pf + (pos * 5 + it.tile) * 8 * 256, sv + (long)it.expert * 1280 + it.tile * 128, su + (long)it.expert * 640 + it.tile * 128,
               out + pos * 640 + it.tile * 128);
   }
 }
