@@ -402,3 +402,24 @@ def test_exceptions_dir_merged_with_main_file(tmp_path):
     d.mkdir()
     (d / 'g30.tsv').write_text('# group 30\nk_b\t0x3c00\tloop end in bytes\n')
     assert ca.load_exceptions(main) == [('k_a', 0x10, 'main reason'), ('k_b', 0x3c00, 'loop end in bytes')]
+
+
+def test_superseded_chain_and_spec_choice(tmp_path):
+    f = tmp_path / 'superseded.tsv'
+    f.write_text('# original\treplacement\twhy\nattn_qs.hip\tattn_qs_c.hip\tg18c sentinel fix\nx.hip\tx_c.hip\ta\nx_c.hip\tx_d.hip\tb\n')
+    sup = ca.load_superseded(f)
+    assert ca.final_src('attn_qs.hip', sup) == 'attn_qs_c.hip'
+    assert ca.final_src('x.hip', sup) == 'x_d.hip'
+    assert ca.final_src('other.hip', sup) == 'other.hip'
+    src = {'a.json': 'attn_qs.hip', 'a_c.json': 'attn_qs_c.hip', 'o.json': 'other.hip'}.__getitem__
+    assert ca.choose_spec(['a.json', 'a_c.json'], src, sup) == 'a_c.json'
+    assert ca.choose_spec(['o.json'], src, sup) == 'o.json'
+    assert ca.choose_spec(['a.json'], src, sup) is None     # replaced source with no MATCH row on the replacement
+
+
+def test_match_specs_keeps_order(tmp_path):
+    t = tmp_path / 'g.md'
+    t.write_text('| instance | family | test spec | result | tolerance | date |\n| --- | --- | --- | --- | --- | --- |\n'
+                 '| i | f | a.json seed=1 N=7 | MATCH n=1 | bitwise | d |\n| i | f | b.json seed=1 N=7 | MATCH n=1 | bitwise | d |\n'
+                 '| i | f | a.json seed=2 N=7 | MATCH n=1 | bitwise | d |\n| i | f | c.json seed=1 N=7 | MISMATCH n=1 | bitwise | d |\n')
+    assert ca.match_specs([t]) == {'i': ['a.json', 'b.json']}

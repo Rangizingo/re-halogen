@@ -263,10 +263,10 @@ def _sources(m: str, ops: list[str]) -> list[str]:
     return srcs
 
 
-def _readers(parsed, start: int, dest: set[str]) -> list[str]:
-    """Mnemonics of the instructions that read `dest` after instruction `start`, following movs and cndmasks into
-    their destinations; each register's scan stops at its next plain write."""
-    out: list[str] = []
+def _reader_sites(parsed, start: int, dest: set[str]) -> list[tuple[int, str]]:
+    """(index, mnemonic) of the instructions that read `dest` after instruction `start`, following movs and cndmasks
+    into their destinations; each register's scan stops at its next plain write."""
+    out: list[tuple[int, str]] = []
     seen: set[tuple[int, str]] = set()
     work = [(start, frozenset(dest))]
     while work:
@@ -287,12 +287,16 @@ def _readers(parsed, start: int, dest: set[str]) -> list[str]:
                         seen.add(key)
                         work.append((j, frozenset(_regs(o2[0]))))
                 else:
-                    out.append(m2)
+                    out.append((j, m2))
             if not _NO_DEST.match(m2) and o2 and not hit:
                 live -= _regs(o2[0])
             if len(o2) > len(srcs) + 1 and not _NO_DEST.match(m2):
                 live -= set().union(*(_regs(o) for o in o2[1:len(o2) - len(srcs)]))
     return out
+
+
+def _readers(parsed, start: int, dest: set[str]) -> list[str]:
+    return [m for _, m in _reader_sites(parsed, start, dest)]
 
 
 def _consumers(parsed, start: int, dest: set[str]) -> tuple[int, int]:
@@ -307,12 +311,7 @@ def extract_int_role(lines: list[str]) -> set[int]:
     multipliers) or as constants of the compiler's integer-divide expansion; reported under int-only gaps, not as
     float data. A literal moved into a register counts by the instructions that read that register before its next
     write (straight-line scan, through movs and cndmasks): integer readers only means integer."""
-    parsed: list[tuple[str, list[str]] | None] = []
-    for line in lines:
-        code = line.split('//', 1)[0]
-        for part in code.split('::'):
-            parsed.append(_parse(part))
-            parsed[-1] = (parsed[-1], part) if parsed[-1] else None   # keep the text for literal extraction
+    parsed = _parsed(lines)
     int_vals: set[int] = set()
     other: set[int] = set()
     seen_vals: set[int] = set()
@@ -463,34 +462,6 @@ def _roles(lines: list[str], only: set[int] | None = None) -> tuple[set[int], se
                                           and reaches_bound(i, _regs(ops[0]), 1)):
             bound |= vals
     return roled, bound
-
-
-def _reader_sites(parsed, start: int, dest: set[str]) -> list[tuple[int, str]]:
-    """(index, mnemonic) of the non-mover readers of `dest` after `start`, through movs (as _readers)."""
-    out: list[tuple[int, str]] = []
-    work = [(start, frozenset(dest))]
-    seen: set[int] = set()
-    while work:
-        at, regs = work.pop()
-        live = set(regs)
-        for j in range(at + 1, min(len(parsed), at + 1 + _REG_WINDOW)):
-            nxt = parsed[j]
-            if not nxt or not live:
-                continue
-            (m2, o2), _ = nxt
-            srcs = _sources(m2, o2)
-            reads = set().union(*(_regs(o) for o in srcs)) if srcs else set()
-            hit = live & reads
-            if hit:
-                if m2.endswith(('_mov_b32', '_cndmask_b32')) or _PASSTHROUGH.search(m2 + '_'):
-                    if j not in seen and o2 and not _NO_DEST.match(m2):
-                        seen.add(j)
-                        work.append((j, frozenset(_regs(o2[0]))))
-                elif o2:
-                    out.append((j, m2))
-            if not _NO_DEST.match(m2) and o2 and not hit:
-                live -= _regs(o2[0])
-    return out
 
 
 def range_role(lines: list[str]) -> set[int]:
@@ -668,14 +639,48 @@ def compact(path: Path) -> None:
 
 # ---- instance to spec and compile flags -----------------------------------
 
-def spec_map(tables: list[Path], exists=None) -> dict[str, str]:
-    """instance -> first spec named by a MATCH row (that `exists(name)` accepts, when given)."""
-    m: dict[str, str] = {}
+def match_specs(tables: list[Path], exists=None) -> dict[str, list[str]]:
+    """instance -> specs named by its MATCH rows, first-seen order, no repeats."""
+    m: dict[str, list[str]] = {}
     for t in tables:
         for r in _rows(t):
-            if len(r) >= 4 and r[3].startswith('MATCH') and r[0] not in m and (exists is None or exists(r[2].split()[0])):
-                m[r[0]] = r[2].split()[0]
-    return m
+            if len(r) >= 4 and r[3].startswith('MATCH'):
+                sp = r[2].split()[0]
+                if (exists is None or exists(sp)) and sp not in m.setdefault(r[0], []):
+                    m[r[0]].append(sp)
+    return {k: v for k, v in m.items() if v}
+
+
+def spec_map(tables: list[Path], exists=None) -> dict[str, str]:
+    """instance -> first spec named by a MATCH row (that `exists(name)` accepts, when given)."""
+    return {k: v[0] for k, v in match_specs(tables, exists).items()}
+
+
+def load_superseded(path: Path) -> dict[str, str]:
+    """TSV: original kernel file, replacement file, reason. A replaced file stays in the tree with its old MATCH rows;
+    the audit follows the chain and audits the replacement."""
+    out: dict[str, str] = {}
+    if Path(path).exists():
+        for line in Path(path).read_text().splitlines():
+            if line.strip() and not line.startswith('#'):
+                a, b = line.split('\t')[:2]
+                out[a.strip()] = b.strip()
+    return out
+
+
+def final_src(name: str, sup: dict[str, str]) -> str:
+    seen = set()
+    while name in sup and name not in seen:
+        seen.add(name)
+        name = sup[name]
+    return name
+
+
+def choose_spec(specs: list[str], src_of, sup: dict[str, str]) -> str | None:
+    """The first MATCH spec whose rewrite file is the end of its replacement chain; None if the instance's file was
+    replaced but no MATCH row runs the replacement."""
+    want = final_src(src_of(specs[0]), sup)
+    return next((sp for sp in specs if src_of(sp) == want), None)
 
 
 _LQ = re.compile(r'k_lq4wILi(\d+)ELi(\d+)ELi(\d+)ELb(\d)ELi(\d)ELi(\d+)E')
@@ -789,7 +794,8 @@ def main(argv: list[str] | None = None) -> int:
     out = Path(a.out)
     dis = Path(a.disasm_dir or repo / 'kernels-disasm-v2')
     kargs = json.loads((repo / 'rewrite/harness/kernargs.json').read_text())['kernels']
-    specs = spec_map(sorted((repo / 'rewrite/tables').glob('*.md')) + [repo / 'rewrite/match-table.md'], lambda sp: (repo / 'rewrite/specs' / sp).exists())
+    specs = match_specs(sorted((repo / 'rewrite/tables').glob('*.md')) + [repo / 'rewrite/match-table.md'], lambda sp: (repo / 'rewrite/specs' / sp).exists())
+    sup = load_superseded(repo / 'rewrite/superseded.tsv')
     exceptions = load_exceptions(Path(a.exceptions or repo / 'rewrite/const-audit-exceptions.tsv'))
     done = done_instances(out)
     todo = [n for n in load_instances(a.instances, repo) if n not in done]
@@ -802,6 +808,17 @@ def main(argv: list[str] | None = None) -> int:
         with lock:
             append_row(out, row)
 
+    def compare_of(spec: str) -> dict:
+        return json.loads((repo / 'rewrite/specs' / spec).read_text())['compare']
+
+    def src_path(sp: dict) -> Path:
+        src = (repo / 'rewrite/specs' / sp['rewrite_src']).resolve()
+        if not src.exists():   # path written from the repo root (rewrite/kernels/scale.hip)
+            src = (repo / sp['rewrite_src']).resolve()
+        if Path(sp['rewrite_src']).is_absolute():   # path from the Ai-core checkout: same file name in rewrite/kernels
+            src = (repo / 'rewrite/kernels' / Path(sp['rewrite_src']).name).resolve()
+        return src
+
     jobs: dict[tuple[str, str], list[tuple[str, str, str]]] = {}
     for n in todo:
         k = kargs.get(n)
@@ -809,19 +826,17 @@ def main(argv: list[str] | None = None) -> int:
             write(error_row(n, '?', 'not in kernargs.json'))
             continue
         obj = k['object']
-        spec = specs.get(n)
-        if not spec:
+        if not specs.get(n):
             write(error_row(n, obj, 'no MATCH row names a spec'))
             continue
         try:
-            sp = json.loads((repo / 'rewrite/specs' / spec).read_text())['compare']
-            src = (repo / 'rewrite/specs' / sp['rewrite_src']).resolve()
-            if not src.exists():   # path written from the repo root (rewrite/kernels/scale.hip)
-                src = (repo / sp['rewrite_src']).resolve()
-            if Path(sp['rewrite_src']).is_absolute():   # path from the Ai-core checkout: same file name in rewrite/kernels
-                src = (repo / 'rewrite/kernels' / Path(sp['rewrite_src']).name).resolve()
+            spec = choose_spec(specs[n], lambda x: src_path(compare_of(x)).name, sup)
+            if spec is None:
+                raise ValueError(f'rewrite replaced ({final_src(src_path(compare_of(specs[n][0])).name, sup)}) but no MATCH row runs it')
+            sp = compare_of(spec)
+            src = src_path(sp)
         except (OSError, KeyError, ValueError) as e:
-            write(error_row(n, obj, f'spec {spec}: {e}'))
+            write(error_row(n, obj, f'spec: {e}'))
             continue
         jobs.setdefault((str(src), extra_flags(n, spec)), []).append((n, obj, sp['rewrite_kernel']))
 

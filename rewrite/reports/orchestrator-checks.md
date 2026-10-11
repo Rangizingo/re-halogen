@@ -171,3 +171,32 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 
 - P5 and P8 are defined; g19b's caveats came from the old listing's hidden `.long` instructions. P5: the prologue zero-fills LDS [0x2800, 0x3200) before the first barrier (kernels-disasm-v2/codeobj_1146000.s:176815-176816 `v_mov_b16 v2.l, 0` / `ds_store_b16 v3, v2 offset:10240`, :176821-176822 offset:10496, `s_barrier` :176828; orchestrator re-read). P8: v10..v13 = 0.125 times defined data (`v_pk_mul_f16 ..., 0x3000`, :188337 onward; orchestrator re-read). Rows g19d.md all MATCH, controls 3 of 3 MISMATCH.
 - collect.sh incident: the g19d worktree was made from an older commit; the old collect.sh copied its stale tracked kernels over newer files here (attn_qs_c.hip, ht_gemv_b.hip, attn_qs_c_3_0.json). Restored from HEAD (sha1 now equal to Ai-core). collect.sh now copies only files the agent changed (git status of the worktree). A full sha1 sweep of rewrite/kernels vs Ai-core found expert.hip, deq_aff.hip, i4r_fold.hip differing by g22's two comment lines only; synced.
+
+## g24 (NaN sign: dnc_ut, dnc_ut3, ht_deq, i4r_gu, vis_rope), s7 2026-10-11
+
+Collected by cherry-pick of the agent commit 72fde97 (f39fae7 here); table g24.md 522 MATCH, 0 MISMATCH. Re-run on Ai-core (~/re-halogen after rsync of this tree, CMP_TMP ~/orch-s7/tmp), fresh seeds 41,42, fixed copy vs the same spec repointed at the ORIGINAL kernel (negative control):
+
+| spec | instance | fixed (_c) | original |
+| --- | --- | --- | --- |
+| dnc_ut_nan.json N=2 | k_dnc_ut | MATCH x2 | MISMATCH diff=1393 |
+| dnc_ut3_nan.json N=2 | k_dnc_ut3 | MATCH x2 | MISMATCH diff=3928 |
+| i4r_gu_epi_nan.json N=8 | k_i4r_gu_epi | MATCH x2 | MISMATCH diff=8 |
+| vis_rope_b64_nan.json N=64 | k_vis_rope | MATCH x2 | MISMATCH diff=12 |
+| ht_deq_orig_b3_f0_t512_nan.json N=3 | ht_deq_orig<3,0,16> | MATCH x2 | MATCH (sparse NaN does not reach the bug) |
+| ht_deq_orig_b3_f0_t256_nan.json N=3 | ht_deq_orig<3,0,8> | MATCH | MATCH (same) |
+| ht_deq_orig_b3_f0_t256_nan_dense.json N=3 | ht_deq_orig<3,0,8> | MATCH | MISMATCH diff=14 |
+| ht_deq_orig_b4_f1_t512_nan_dense.json N=3 | ht_deq_orig<4,1,16> | MATCH | MISMATCH diff=17 |
+
+Every family's NaN specs include one that fails on the original and passes on the fix. The sparse ht_deq NaN specs are kept as extra coverage, not as the proof.
+
+## g33 (integer-bound review: sampling, ix, gather/embed/hyper, argmax, route_logits), s7 2026-10-11
+
+182 pairs, all EQUIVALENT (rewrite/const-audit-exceptions.d/g33.tsv), 0 REAL. Cites re-read in kernels-disasm-v2/codeobj_53000.s: :1213 `v_cmp_gt_f32_e64 s0, 0x7f800000, v6` (a float compare against +inf, rewrite smpg_common.h:189 `0x7f800000 > fabsf(l2)` folded to v_cmp_class 0x1f8), :45383 `v_add_nc_u32 v7, -4, v7` (the blockDim==1 unrolled-loop counter), :894540 `s_lshr_b32 s2, s2, 27` (K/32 round-toward-zero bias). All as the rows say. New blockDim-1 specs re-run, fresh seeds: gather_slots_h_b1 seeds 51,52 x N 5,17 4 of 4 MATCH; hyper_seed_b1 seed 51 N=17 MATCH.
+
+## g31 (integer-bound review: dnc scan/ut/att/prep), s7 2026-10-11
+
+240 pairs, all EQUIVALENT (const-audit-exceptions.d/g31.tsv), 0 REAL; agent QA PASS. Cite fix: report row scan3x_b cited :256907 (the s_load of k); the unsigned compare `s_cmp_gt_u32 s87, 59` is codeobj_1146000.s:257010 (re-read), corrected. Re-run, fresh seed 61, dnc_scan3x_b_a4t.json on k_dnc_scan3x<4,4,1,0,1,1,0,0,0> at k = 18, 19 (first-chunk guard edge) and 82, 83 (second 64-token chunk, the QA minor): 4 of 4 MATCH.
+
+## g25 (attn_fa2 block-wide tile bound, attn_fa2_c.hip), s7 2026-10-11
+
+Collected by cherry-pick (18f7124, e12321c); agent QA PASS; g25.md 1,578 MATCH rows over 26 instances. 174 rows had run 29 committed specs with `--rewrite-src ../kernels/attn_fa2_c.hip`; to keep each row reproducible from its spec file, the orchestrator wrote copies `attn_fa2_c_<name>.json` (identical but for rewrite_src) and renamed those rows to the copies. superseded.tsv: attn_fa2.hip > attn_fa2_c.hip. Re-run, seed 71, N=48, k_attn_fa2<2,1,1,5,1,1>: g25_c2e29 MATCH, g25_vinf MATCH; g25_c2e29 repointed at the ORIGINAL attn_fa2.hip MISMATCH diff=86016 (negative control). Renamed copy attn_fa2_c_1_1_0_0_0_0.json on k_attn_fa2<1,1,0,0,0,0>, seed 72, N=48: MATCH.

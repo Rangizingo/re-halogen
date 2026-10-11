@@ -1,0 +1,79 @@
+{
+ "grid": [
+  "=ceil_div(N*5,8)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "g": {
+   "bytes": "=N*1280*4",
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g24_data/i4r_gu_nan_dense_g.bin"
+   }
+  },
+  "a": {
+   "bytes": 2560,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g24_data/i4r_gu_nan_dense_a.bin"
+   }
+  },
+  "b": {
+   "bytes": 1280,
+   "fill": {
+    "kind": "file",
+    "path": "/home/rangizingo/re-halogen/rewrite/specs/g24_data/i4r_gu_nan_dense_b.bin"
+   }
+  },
+  "out": {
+   "bytes": "=N*640*2+128",
+   "fill": {
+    "kind": "const",
+    "dtype": "f16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "g"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 16,
+   "buffer": "a"
+  },
+  {
+   "offset": 24,
+   "buffer": "b"
+  },
+  {
+   "offset": 32,
+   "buffer": "out"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/i4r_gu_c.hip",
+  "rewrite_kernel": "k_i4r_gu_epi",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "f16"
+   }
+  ]
+ }
+}
