@@ -216,3 +216,8 @@ def test_wait_for_host_waits_while_service_unhealthy(tmp_path, monkeypatch):
 def test_service_healthy_false_when_unreachable():
     assert c.service_healthy('http://127.0.0.1:9/health') is False
     assert c.service_healthy('') is True
+
+
+def test_service_healthy_rejects_non_http_urls():
+    with pytest.raises(ValueError):
+        c.service_healthy('file:///etc/passwd')

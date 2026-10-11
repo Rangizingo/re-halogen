@@ -249,8 +249,10 @@ def service_healthy(url=None):
     url = os.environ.get('CMP_HEALTH_URL', 'http://127.0.0.1:8307/health') if url is None else url
     if not url:
         return True
+    if not url.startswith(('http://', 'https://')):
+        raise ValueError(f'CMP_HEALTH_URL must be http(s): {url!r}')
     try:
-        with urllib.request.urlopen(url, timeout=5) as r:
+        with urllib.request.urlopen(url, timeout=5) as r:  # nosemgrep: scheme checked above
             return r.status == 200
     except OSError:
         return False
