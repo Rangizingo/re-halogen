@@ -1,0 +1,93 @@
+{
+ "grid": [
+  2,
+  "=N",
+  1
+ ],
+ "block": [
+  512,
+  1,
+  1
+ ],
+ "buffers": {
+  "w": {
+   "bytes": "=256*128*N*3//8",
+   "fill": {
+    "kind": "rand",
+    "dtype": "u32",
+    "seed": "=SEED+0",
+    "lo": 0,
+    "hi": 4294967296
+   }
+  },
+  "a": {
+   "bytes": "=128*N*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+11",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "b": {
+   "bytes": "=256*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+23",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "out": {
+   "bytes": "=(256*128*N+64)*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "u16",
+    "value": 12345
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "w"
+  },
+  {
+   "offset": 8,
+   "type": "i32",
+   "value": "=128*N"
+  },
+  {
+   "offset": 16,
+   "buffer": "a"
+  },
+  {
+   "offset": 24,
+   "buffer": "b"
+  },
+  {
+   "offset": 32,
+   "buffer": "out"
+  },
+  {
+   "offset": 40,
+   "type": "i32",
+   "value": 0
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ht_deq.hip",
+  "rewrite_kernel": "k_ht_deq_orig_b3",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

@@ -98,3 +98,9 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 
 - 8 of 8 instances MATCH (240 rows, 0 MISMATCH); specs committed (48). Re-run seeds 7 and 11: probe P8 at N 128, 2 of 2 MATCH.
 - Caveats carried into match-table.md for these two rows: P5 reads LDS 0x2800.. that the kernel never writes; the vendor output equals the rewrite with that table = 0 in every run here, which is empirical (LDS is not zeroed by hardware in general). P8 uses VGPRs v10..v13 that the listing never writes; their content was measured on the hardware (a fixed pattern) and the rewrite reproduces it. Both are debug probes (HALOGEN_DN_PROBE timing decomposition) whose outputs are not meaningful values.
+
+## g15 (linear_q4, linear_q8, linear_q8s32), g17 (ht_moe, ht_deq, ht_rot, ht_items, ht_tg, ht_tg3), g19c (dn_fused16), 2026-10-11
+
+- g15: 74 instances MATCH, 0 MISMATCH; negctl 45. g17: 71 MATCH, 0 MISMATCH; negctl 16. g19c: 17 MATCH, 0 MISMATCH; negctl 10 (agent wrote into the main checkout). Specs all committed; sha1 Mac equals Ai-core for g15 (1 .hip) and g17 (5 .hip).
+- Re-runs seeds 7 and 11 (2 of 2 MATCH each): k_linear_q4 on linear_q4_single_small.json N 1024; k_ht_items_group<2> on ht_items_group2.json N 100; k_dn_fused16<1,F,F,F> on dn_fused16_base.json N 100.
+- Control, RNE bias 0x7fff to 0 (dn_fused16.hip:42): MISMATCH, 307,007 of 1,400,832 outputs differ.
