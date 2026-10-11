@@ -1,0 +1,180 @@
+{
+ "grid": [
+  48,
+  "=ceil_div(N,64)",
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "qkv": {
+   "bytes": "=ceil_div(N,64)*64*10240*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*10+1",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "beta": {
+   "bytes": "=ceil_div(N,64)*64*48*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*10+2",
+    "lo": 0.05,
+    "hi": 1.0
+   }
+  },
+  "k": {
+   "bytes": "=ceil_div(N,64)*64*48*128*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*10+3",
+    "lo": -0.2,
+    "hi": 0.2
+   }
+  },
+  "a": {
+   "bytes": "=ceil_div(N,64)*64*48*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED*10+4",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "u": {
+   "bytes": "=ceil_div(N,64)*64*48*128*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  },
+  "w": {
+   "bytes": "=ceil_div(N,64)*64*48*128*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  },
+  "wh": {
+   "bytes": "=ceil_div(N,64)*64*48*128*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "u16",
+    "value": 1
+   }
+  },
+  "x8": {
+   "bytes": 4096,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 0
+   }
+  },
+  "x9": {
+   "bytes": 4096,
+   "fill": {
+    "kind": "const",
+    "dtype": "u16",
+    "value": 0
+   }
+  },
+  "x10": {
+   "bytes": 4096,
+   "fill": {
+    "kind": "const",
+    "dtype": "u16",
+    "value": 0
+   }
+  },
+  "x11": {
+   "bytes": 4096,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 0
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "qkv"
+  },
+  {
+   "offset": 8,
+   "buffer": "beta"
+  },
+  {
+   "offset": 16,
+   "buffer": "k"
+  },
+  {
+   "offset": 24,
+   "buffer": "a"
+  },
+  {
+   "offset": 32,
+   "buffer": "u"
+  },
+  {
+   "offset": 40,
+   "buffer": "w"
+  },
+  {
+   "offset": 48,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 56,
+   "type": "i64",
+   "value": 0
+  },
+  {
+   "offset": 64,
+   "buffer": "x8"
+  },
+  {
+   "offset": 72,
+   "buffer": "x9"
+  },
+  {
+   "offset": 80,
+   "buffer": "x10"
+  },
+  {
+   "offset": 88,
+   "buffer": "x11"
+  }
+ ],
+ "dump": [
+  "u",
+  "w"
+ ],
+ "compare": {
+  "rewrite_src": "../../kernels/dnc_ut5.hip",
+  "rewrite_kernel": "dnc_ut5_n0_r1_a0_k0",
+  "outputs": [
+   {
+    "buffer": "u",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "w",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

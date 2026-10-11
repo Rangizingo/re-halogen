@@ -9,3 +9,4 @@ attn_fa2.hip	attn_fa2_c.hip	g25: tile loop bound per block, clamped to n-1 (rewr
 ht_gemv.hip	ht_gemv_c.hip	g32: gu_t dense job for blocks wg >= n was missing (rewrite/reports/g32.md)
 attn_fa2_c.hip	attn_fa2_d.hip	g34: sparse FaSel ids/tilemask
 ht_gemv_b.hip	ht_gemv_b_c.hip	g14n: NaN sign (rewrite/reports/g14n.md)
+attn_fa2_s.hip	attn_fa2_d.hip	g34: intermediate sparse-only copy, merged into attn_fa2_d.hip

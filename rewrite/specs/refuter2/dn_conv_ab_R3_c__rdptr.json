@@ -1,0 +1,318 @@
+{
+ "grid": [
+  "=ceil_div(N,16)+5+40",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "xc": {
+   "bytes": 61440,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+1",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "wc": {
+   "bytes": 81920,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+2",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "stA": {
+   "bytes": 655360,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+3",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "y": {
+   "bytes": 61504,
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "xa": {
+   "bytes": 15360,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+4",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "blobA": {
+   "bytes": "=256+N*1280+16+N*176+64",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+5",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "blobB": {
+   "bytes": 7616,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+6",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "oA": {
+   "bytes": "=3*N*4+64",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  },
+  "oB": {
+   "bytes": 124,
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  },
+  "stR": {
+   "bytes": 655360,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED*16+9",
+    "lo": -4,
+    "hi": 4
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "xc"
+  },
+  {
+   "offset": 8,
+   "buffer": "wc"
+  },
+  {
+   "offset": 272,
+   "buffer": "y"
+  },
+  {
+   "offset": 16,
+   "buffer": "stA",
+   "byte_offset": 0
+  },
+  {
+   "offset": 24,
+   "buffer": "stA",
+   "byte_offset": 81920
+  },
+  {
+   "offset": 32,
+   "buffer": "stA",
+   "byte_offset": 163840
+  },
+  {
+   "offset": 40,
+   "buffer": "stA",
+   "byte_offset": 245760
+  },
+  {
+   "offset": 48,
+   "buffer": "stA",
+   "byte_offset": 327680
+  },
+  {
+   "offset": 56,
+   "buffer": "stA",
+   "byte_offset": 409600
+  },
+  {
+   "offset": 64,
+   "buffer": "stA",
+   "byte_offset": 491520
+  },
+  {
+   "offset": 72,
+   "buffer": "stA",
+   "byte_offset": 573440
+  },
+  {
+   "offset": 280,
+   "buffer": "blobA"
+  },
+  {
+   "offset": 288,
+   "buffer": "oA"
+  },
+  {
+   "offset": 296,
+   "buffer": "oA"
+  },
+  {
+   "offset": 304,
+   "type": "i64",
+   "value": 256
+  },
+  {
+   "offset": 312,
+   "type": "i64",
+   "value": "=256+N*1280"
+  },
+  {
+   "offset": 320,
+   "type": "i64",
+   "value": 176
+  },
+  {
+   "offset": 328,
+   "type": "i64",
+   "value": "=N"
+  },
+  {
+   "offset": 336,
+   "type": "f32",
+   "value": "=0.5+SEED*0.25"
+  },
+  {
+   "offset": 340,
+   "type": "i32",
+   "value": 3
+  },
+  {
+   "offset": 344,
+   "type": "i32",
+   "value": 0
+  },
+  {
+   "offset": 352,
+   "buffer": "blobB"
+  },
+  {
+   "offset": 360,
+   "buffer": "oB"
+  },
+  {
+   "offset": 368,
+   "buffer": "oB"
+  },
+  {
+   "offset": 376,
+   "type": "i64",
+   "value": 256
+  },
+  {
+   "offset": 384,
+   "type": "i64",
+   "value": 6656
+  },
+  {
+   "offset": 392,
+   "type": "i64",
+   "value": 176
+  },
+  {
+   "offset": 400,
+   "type": "i64",
+   "value": 5
+  },
+  {
+   "offset": 408,
+   "type": "f32",
+   "value": "=0.75+SEED*0.125"
+  },
+  {
+   "offset": 412,
+   "type": "i32",
+   "value": 4
+  },
+  {
+   "offset": 416,
+   "type": "i32",
+   "value": "=ceil_div(N,16)"
+  },
+  {
+   "offset": 568,
+   "type": "i32",
+   "value": 2
+  },
+  {
+   "offset": 576,
+   "type": "i32",
+   "value": "=ceil_div(N,16)+5"
+  },
+  {
+   "offset": 584,
+   "buffer": "xa"
+  },
+  {
+   "offset": 592,
+   "type": "i64",
+   "value": 2560
+  },
+  {
+   "offset": 80,
+   "buffer": "stR",
+   "byte_offset": 0
+  },
+  {
+   "offset": 88,
+   "buffer": "stR",
+   "byte_offset": 81920
+  },
+  {
+   "offset": 96,
+   "buffer": "stR",
+   "byte_offset": 163840
+  }
+ ],
+ "dump": [
+  "y",
+  "stA",
+  "oA",
+  "oB"
+ ],
+ "compare": {
+  "rewrite_src": "../../kernels/dn_conv.hip",
+  "rewrite_kernel": "k_dn_conv_ab_rows_3",
+  "outputs": [
+   {
+    "buffer": "y",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "stA",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "oA",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "oB",
+    "dtype": "f32"
+   }
+  ]
+ }
+}
