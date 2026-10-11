@@ -88,3 +88,8 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 
 - With g09: 21 of 21 dnc_scan3x instances have MATCH rows (`awk` over g09.md + g09b.md). g09b.md 0 MISMATCH; negctl 24 MISMATCH rows; specs all committed. Agent wrote into the main checkout; tables copied from Ai-core. The i2 = 4, 5, 6 instances are state-update ablations, not clock probes; no bytes excluded.
 - Gap closed by orchestrator: the b2=T k-bound guards were tested only at N 128 and 100 (report g09b.md:22). Re-run k_dnc_scan3x<2,4,T,T,T,0,0,0,F> on dnc_scan3x_b_b2t_b3t.json seed 7 at N 1, 37, 63, 64, 65: 5 of 5 MATCH.
+
+## g20 (dnc_att, att2, att6, att7, att8, att9, ut, ut2, ut3, cmp), 2026-10-10
+
+- 24 distinct instances with MATCH, 0 MISMATCH; negctl 13 MISMATCH rows; specs all committed; sha1 of 10 .hip Mac equals Ai-core.
+- Re-run seeds 7 and 11: k_dnc_att9 m8 on dnc_att9_m8.json at N 2 and 5, 4 of 4 MATCH. Control, causal mask `j <= row` to `j < row` (dnc_att9.hip:64): MISMATCH, 14,544 outputs differ.

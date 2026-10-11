@@ -1,0 +1,23 @@
+{
+  "grid": ["=2*N", 48, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "q": {"bytes": "=N*64*48*128*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED", "lo": -0.05, "hi": 0.05}},
+    "k": {"bytes": "=N*64*48*128*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED+100", "lo": -0.05, "hi": 0.05}},
+    "g": {"bytes": "=N*64*48*4", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED+200", "lo": -150, "hi": 150}},
+    "out": {"bytes": "=N*48*4096*4", "fill": {"kind": "const", "dtype": "f32", "value": -99}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "q"},
+    {"offset": 8, "buffer": "k"},
+    {"offset": 16, "buffer": "g"},
+    {"offset": 24, "buffer": "out"},
+    {"offset": 32, "type": "i32", "value": "=N*64"}
+  ],
+  "dump": ["out"],
+  "compare": {
+    "rewrite_src": "../kernels/dnc_att7.hip",
+    "rewrite_kernel": "k_dnc_att7_4",
+    "outputs": [{"buffer": "out", "dtype": "f32"}]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "grid": [7, 1, 1],
+  "block": [128, 1, 1],
+  "buffers": {
+    "a": {"bytes": "=N*4", "fill": {"kind": "rand", "dtype": "u32", "seed": "=SEED", "lo": 0, "hi": 5}},
+    "b": {"bytes": "=N*4", "fill": {"kind": "rand", "dtype": "u32", "seed": "=SEED+100", "lo": 0, "hi": 5}},
+    "out": {"bytes": 8, "fill": "zero"}
+  },
+  "args": [
+    {"offset": 0, "buffer": "a"},
+    {"offset": 8, "buffer": "b"},
+    {"offset": 16, "type": "i64", "value": "=N"},
+    {"offset": 24, "buffer": "out"}
+  ],
+  "dump": ["out"],
+  "compare": {
+    "rewrite_src": "../kernels/dnc_cmp.hip",
+    "rewrite_kernel": "k_dnc_cmp_words",
+    "outputs": [{"buffer": "out", "dtype": "u64"}]
+  }
+}
