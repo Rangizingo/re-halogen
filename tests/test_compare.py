@@ -241,3 +241,26 @@ def test_service_down_marker_skips_the_host_gate(tmp_path, monkeypatch):
     (tmp_path / 'repo' / 'work' / 'cmp' / '.service-down').touch()
     with pytest.raises(RuntimeError, match='compiled'):
         c.main(args)
+
+
+def test_mask_excluded_blanks_ranges_in_both_and_counts():
+    a = f32s(1.0, 2.0, 3.0, 4.0)
+    b = f32s(1.0, 9.0, 8.0, 4.0)
+    ma, mb, n = c.mask_excluded(a, b, 'f32', [[1, 3]])
+    assert n == 2
+    assert c.compare_bytes(ma, mb, 'f32')['match']
+    assert not c.compare_bytes(*c.mask_excluded(a, b, 'f32', [[2, 3]])[:2], 'f32')['match']
+
+
+def test_mask_excluded_rejects_bad_ranges():
+    with pytest.raises(ValueError):
+        c.mask_excluded(f32s(1.0), f32s(1.0), 'f32', [[0, 5]])
+    with pytest.raises(ValueError):
+        c.mask_excluded(f32s(1.0, 2.0), f32s(1.0, 2.0), 'f32', [[1, 1]])
+
+
+def test_result_text_shows_excluded_count():
+    r = {'match': True, 'n': 10, 'n_diff': 0, 'max_abs': 0.0, 'max_ulp': 0, 'first_diff': None, 'excluded': 3}
+    assert c.result_text(r).split()[0] == 'MATCH' and 'excluded=3' in c.result_text(r)
+    r['excluded'] = 0
+    assert 'excluded' not in c.result_text(r)

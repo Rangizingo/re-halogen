@@ -194,10 +194,29 @@ def append_row(table_path, row):
         f.write(row)
 
 
+def mask_excluded(a, b, dtype, ranges):
+    """Zero element ranges [start, end) in both buffers; returns (a, b, n_excluded).
+
+    For outputs that depend on state the vendor kernel never writes (stale LDS, unset VGPRs),
+    stated per spec in "exclude" and reported as excluded=N in every result line.
+    """
+    w = 2 if dtype in ('bf16', 'f16') else (FLOAT_FMT.get(dtype) or INT_FMT[dtype])[1]
+    n_el = len(a) // w
+    a, b, n = bytearray(a), bytearray(b), 0
+    for lo, hi in ranges or []:
+        if not 0 <= lo < hi <= n_el:
+            raise ValueError(f'exclude range [{lo}, {hi}) outside 0..{n_el}')
+        a[lo * w:hi * w] = bytes((hi - lo) * w)
+        b[lo * w:min(hi * w, len(b))] = bytes(min(hi * w, len(b)) - lo * w)
+        n += hi - lo
+    return bytes(a), bytes(b), n
+
+
 def result_text(r):
     word = 'MATCH' if r['match'] else 'MISMATCH'
     return (f"{word} n={r['n']} diff={r['n_diff']} max_abs={r['max_abs']:g} max_ulp={r['max_ulp']:g}"
-            + (f" first_diff={r['first_diff']}" if r['first_diff'] is not None else ''))
+            + (f" first_diff={r['first_diff']}" if r['first_diff'] is not None else '')
+            + (f" excluded={r['excluded']}" if r.get('excluded') else ''))
 
 
 def _load_gen_kernargs():
@@ -346,11 +365,13 @@ def _run(a, template, cmp_cfg, vend, gk, work):
             vdir, rdir = work / f'v_{seed}_{size}', work / f'r_{seed}_{size}'
             run_kernel(vco.resolve(), build_run_spec(template, a.kernel, vend, env), vdir)
             run_kernel(rco.resolve(), build_run_spec(template, rname, rlay, env), rdir)
-            res = {'match': True, 'n': 0, 'n_diff': 0, 'max_abs': 0.0, 'max_ulp': 0, 'first_diff': None}
+            res = {'match': True, 'n': 0, 'n_diff': 0, 'max_abs': 0.0, 'max_ulp': 0, 'first_diff': None, 'excluded': 0}
             for out in cmp_cfg['outputs']:
                 name = out['buffer']
                 vb, rb = (vdir / f'{name}.bin').read_bytes(), (rdir / f'{name}.bin').read_bytes()
-                r = compare_bytes(vb, rb, out['dtype'], max_abs, max_ulp)
+                cvb, crb, nx = mask_excluded(vb, rb, out['dtype'], out.get('exclude'))
+                res['excluded'] += nx
+                r = compare_bytes(cvb, crb, out['dtype'], max_abs, max_ulp)
                 # Agreeing on an output neither kernel wrote proves nothing.
                 for side, d, b in (('vendor', vdir, vb), ('rewrite', rdir, rb)):
                     if untouched(b, (d / f'{name}.pre.bin').read_bytes()):
