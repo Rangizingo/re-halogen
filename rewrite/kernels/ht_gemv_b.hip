@@ -233,3 +233,67 @@ __device__ static inline void ht_dn_ts_tok(const unsigned* W, const _Float16* x,
   }
 DN_TS(4, 0) DN_TS(4, 1) DN_TS(4, 2) DN_TS(4, 4)
 DN_TS(3, 0) DN_TS(3, 1) DN_TS(3, 2) DN_TS(3, 4)
+
+// ---------------------------------------------------------------------------------------------------------------------------
+// k_ht_gemv_dn_g<BITS,8,G,K>(W@0, x@8, A@16 (HtItem), cnt@24 (int), sv@32, out@40, HtSd@48 (88 B), int n@136): grouped down GEMV.
+// K = 0: only the item path (codeobj_53000 dn_g<4,8,2,0> @92AB00-@92C788; the kernel ends at @92C788 s_endpgm when wg >= 20*cnt, no HtSd/int read).
+// K = 2, 4: the same item path (blocks wg < n, @922120 s_cmp_lt_i32 s2, s3 with s3 = int@0x88 ; @92470C item path start, which repeats
+// `wg >= 20*cnt[0]` -> exit at @924728-@924738) preceded by a dense path over HtSd for wg >= n.
+// Item path (K = 0 listing): block wg < 20*cnt[0] (@92AB0C-@92AB24 s_load_b32 cnt ; s_mul_i32 20) reads A[wg] = {expert, tile, begin, end}
+// (@92AB30-@92AB44 s_lshl_b64 4 ; s_load_b128), stages G x rows min(begin + g, end - 1) in LDS (640 halves each; @92AB50 v_cmpx 0xa0 = 160 threads x 16 B
+// = 2 rows, g = v0 >= 80, row = min(begin + g, end - 1), @92AB68 s_add_i32 s15 -1, @92AB90 v_mad_i64_i32 0x500), W + expert*0xc8000 + tile*0xa000
+// (@92AC18-@92AC34). Waves 5w..5w+4 column tiles as in dn, but the decoded weights feed G accumulator sets. Per-wave partials go to LDS
+// ([w][g][j][r]); wave g < n = min(end - begin, G) (@92BF28-@92BF44 s_sub s15 s14 ; s_min_i32 2 ; v_cmpx_gt_i32 s0, v11) sums the 8 wave partials from 0 +
+// (@92BF98 `v_add_f32 v5, 0, v5` then adds in ds_load order), runs the WHT-128 and dn_store for row begin + g.
+struct HtSdB { long raw[11]; };
+template <int BITS, int G>
+__device__ static inline void ht_dn_g_item(const unsigned* W, const _Float16* x, const HtItem* A, const int* cnt, const _Float16* sv, unsigned short* out) {
+  __shared__ float P[8][G][8][16];
+  if (blockIdx.x >= 20 * cnt[0]) return;
+  const HtItem it = A[blockIdx.x];
+  const int tid = threadIdx.x, w = tid >> 5, lane = tid & 31, r = lane & 15, hh = lane >> 4;
+  constexpr int NW = 8 * BITS;
+  const unsigned* tb = W + ((long)it.expert * (2560 * 640 / 8 * BITS) + (long)it.tile * (128 * 640 / 8 * BITS)) / 4;
+  const _Float16* xr[G];
+  for (int g = 0; g < G; g++) {
+    int p = it.begin + g; if (p > it.end - 1) p = it.end - 1;
+    xr[g] = x + (long)p * 640;
+  }
+  float acc[G][8];
+  for (int g = 0; g < G; g++) for (int j = 0; j < 8; j++) acc[g][j] = 0.f;
+  for (int i = 0; i < 5; i++) {
+    const int ct = 5 * w + i;
+    _Float16 xv[G][8];
+    for (int g = 0; g < G; g++) for (int c = 0; c < 8; c++) xv[g][c] = xr[g][16 * ct + 8 * hh + c];
+    for (int j = 0; j < 8; j++) {
+      const unsigned* tp = tb + ct * (8 * NW) + j * NW;
+      _Float16 wt[8];
+      ht_dec<BITS>(tp, lane, wt);
+      for (int g = 0; g < G; g++) acc[g][j] = dot8(wt, xv[g], acc[g][j]);
+    }
+  }
+  for (int g = 0; g < G; g++)
+    for (int j = 0; j < 8; j++) {
+      float o = __shfl_xor(acc[g][j], 16, 32);
+      if (hh == 0) P[w][g][j][r] = acc[g][j] + o;
+    }
+  __syncthreads();
+  const int n = (it.end - it.begin) < G ? (it.end - it.begin) : G;
+  if (w < n) {
+    float s[8];
+    for (int j = 0; j < 8; j++) {
+      float a = 0.f + P[0][w][j][r];
+      for (int q = 1; q < 8; q++) a = a + P[q][w][j][r];
+      s[j] = a;
+    }
+    wht128(s, r);
+    if (hh == 0) dn_store(s, sv + (long)it.expert * 2560 + it.tile * 128, out + (long)(it.begin + w) * 2560 + it.tile * 128);
+  }
+}
+#define DN_G(B, G, K)                                                                                                                       \
+  extern "C" __global__ void k_b_dn_g_##B##_8_##G##_##K(const unsigned* W, const _Float16* x, const HtItem* A, const int* cnt,                   \
+                                                       const _Float16* sv, unsigned short* out, HtSdB sd, int n) {                         \
+    ht_dn_g_item<B, G>(W, x, A, cnt, sv, out);                                                                                              \
+  }
+DN_G(4, 2, 0) DN_G(4, 2, 2) DN_G(4, 2, 4) DN_G(4, 4, 0) DN_G(4, 4, 2) DN_G(4, 4, 4)
+DN_G(3, 2, 0) DN_G(3, 2, 2) DN_G(3, 2, 4) DN_G(3, 4, 0) DN_G(3, 4, 2) DN_G(3, 4, 4)

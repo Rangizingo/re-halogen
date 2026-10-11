@@ -271,7 +271,7 @@ Cannot rely on (PARTIAL, OPEN-BOUNDED, UNOBSERVABLE rows; what is missing):
 - U23 is CLOSED (moved out of this list): the wire seed reaches SampleRow+0x10 unchanged; the splitmix64 counter is the token's sequence position (`closure/sampler-seed-r3.md`).
 - U26 is CLOSED (moved out of this list): one connection is served at a time; a waiting connection gets only exact `INFO\n`/`PING\n` first lines answered inline (FUN_01844d50), everything else waits and is released in order when the served connection closes, not when its GEN ends (`runtime-run-0.17.3-r3.md`, `closure/serve-pending-fd-r4.md`).
 - U27 is CLOSED (moved out of this list): i4r (dtype 23) decodes as planar signed nibbles times one fp16 scale per 128, then the HT rotation (`decode_codes_i4r`, 0.9876 and 0.9885 measured, `closure/ht-decode.md`).
-- CLOSED rows (U01, U02, U03, U04, U07, U08, U09, U10, U11, U13, U14, U15, U16, U17, U18, U19, U20, U21, U23, U24, U25, U26, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
+- CLOSED rows (U01, U02, U03, U04, U07, U08, U09, U10, U11, U12, U13, U14, U15, U16, U17, U18, U19, U20, U21, U23, U24, U25, U26, U27) can mean kernel level only (U17, U24, U25) or one half (U13, U15); read the row text.
 
 Other gaps a rebuild hits (request-trace.md "Gaps" and the closure reports):
 - MTP head: fc_embedding/fc_hidden fusion, router top-k and the greedy draft step are CLOSED (`closure/mtp-head-r5.md`); the head step's ordered kernels (39 launches at decode width 1, 78 over the prompt rows), its Linear kernels and router path are CLOSED from the run 4 launch trace (`closure/mtp-head-r6.md`); each request is prefill, a head step over the prompt, then rounds of [head step, target verify step], then a trailing head step.

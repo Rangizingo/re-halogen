@@ -390,7 +390,7 @@ __device__ static inline int pg_at(int len, int bb, const int* trow, int i) { re
 __shared__ float s_s2[4][8][32];
 __shared__ unsigned short s_pb2[4][16][16];
 
-template <int A, int B, int NW, int SM = 0>
+template <int A, int B, int NW, int SM = 0, int ST = 0>
 __device__ static inline void qs_bt_body(const unsigned short* Q, const unsigned short* Kp, const unsigned short* Vp,
                                           const unsigned short* gate, unsigned short* O, const int* sel, int n, const int* tbl,
                                           const int* nblk, int tstride) {
@@ -482,8 +482,15 @@ __device__ static inline void qs_bt_body(const unsigned short* Q, const unsigned
       } else {
         float mo = mrun[i];
         float mn = fmaxf(fmaxf(mo, mx), mx);
-        p = valid ? expf_v(s - mn) : 0.0f;
-        al[i] = (mo > __uint_as_float(NEG29)) ? expf_v(mo - mn) : 0.0f;
+        if (ST == 1) {
+          // style B (bt4 @1d2000 lines 266-360 of the v2 listing, no 0xefa18f08 in the kernel): masked lanes keep the -1e30 sentinel and go through
+          // the same exp (p = expf(sm - mn), 1.0 when mn is also -1e30), and alpha = expf(mo - mn) with no validity test.
+          p = expf_v(sm - mn);
+          al[i] = expf_v(mo - mn);
+        } else {
+          p = valid ? expf_v(s - mn) : 0.0f;
+          al[i] = (mo > __uint_as_float(NEG29)) ? expf_v(mo - mn) : 0.0f;
+        }
         lrun[i] = __builtin_fmaf(lrun[i], al[i], p);
         mrun[i] = mn;
       }
@@ -537,7 +544,7 @@ __device__ static inline void qs_bt_body(const unsigned short* Q, const unsigned
   extern "C" __global__ void k_attn_qs_bt2_##A##_##B(                                                                \
       const unsigned short* Q, const unsigned short* Kp, const unsigned short* Vp, const unsigned short* gate,       \
       unsigned short* O, const int* sel, int n, const int* tbl, const int* nblk, int tstride) {                      \
-    qs_bt_body<A, B, 2>(Q, Kp, Vp, gate, O, sel, n, tbl, nblk, tstride);                                              \
+    qs_bt_body<A, B, 2, 0, (B == 1 || B == 3 || B == 7 || B == 9 || B == 11) ? 1 : 0>(Q, Kp, Vp, gate, O, sel, n, tbl, nblk, tstride);                                              \
   }
 QSBT2(0, 0)
 QSBT2(1, 0)
@@ -560,7 +567,7 @@ QSBT2(0, 11)
   extern "C" __global__ void k_attn_qs_bt2w_##A##_##B(                                                               \
       const unsigned short* Q, const unsigned short* Kp, const unsigned short* Vp, const unsigned short* gate,       \
       unsigned short* O, const int* sel, int n, const int* tbl, const int* nblk, int tstride) {                      \
-    qs_bt_body<0, 0, 2>(Q, Kp, Vp, gate, O, sel, n, tbl, nblk, tstride);                                              \
+    qs_bt_body<0, 0, 2, 0, 1>(Q, Kp, Vp, gate, O, sel, n, tbl, nblk, tstride);                                              \
   }
 QSBT2W(3, 6)
 QSBT2W(7, 6)
@@ -574,7 +581,7 @@ QSBT2W(7, 8)
   extern "C" __global__ void k_attn_qs_bt4_##A(                                                                      \
       const unsigned short* Q, const unsigned short* Kp, const unsigned short* Vp, const unsigned short* gate,       \
       unsigned short* O, const int* sel, int n, const int* tbl, const int* nblk, int tstride) {                      \
-    qs_bt_body<0, 0, 4>(Q, Kp, Vp, gate, O, sel, n, tbl, nblk, tstride);                                            \
+    qs_bt_body<0, 0, 4, 0, 1>(Q, Kp, Vp, gate, O, sel, n, tbl, nblk, tstride);                                            \
   }
 QSBT4(0)
 QSBT4(1)
@@ -592,7 +599,7 @@ QSBT4(5)
   extern "C" __global__ void k_attn_qs_bt4x_##A(                                                                     \
       const unsigned short* Q, const unsigned short* Kp, const unsigned short* Vp, const unsigned short* gate,       \
       unsigned short* O, const int* sel, int n, const int* tbl, const int* nblk, int tstride) {                      \
-    qs_bt_body<0, 0, 4, SMX>(Q, Kp, Vp, gate, O, sel, n, tbl, nblk, tstride);                                            \
+    qs_bt_body<0, 0, 4, SMX, 1>(Q, Kp, Vp, gate, O, sel, n, tbl, nblk, tstride);                                            \
   }
 QSBT4X(0)
 QSBT4X(1)

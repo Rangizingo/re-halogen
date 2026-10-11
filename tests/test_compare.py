@@ -264,3 +264,10 @@ def test_result_text_shows_excluded_count():
     assert c.result_text(r).split()[0] == 'MATCH' and 'excluded=3' in c.result_text(r)
     r['excluded'] = 0
     assert 'excluded' not in c.result_text(r)
+
+
+def test_mask_excluded_overlap_counts_each_element_once_and_short_b_is_a_mismatch():
+    a = f32s(1.0, 2.0, 3.0, 4.0)
+    assert c.mask_excluded(a, a, 'f32', [[0, 2], [1, 3]])[2] == 3
+    ma, mb, _ = c.mask_excluded(a, f32s(1.0), 'f32', [[2, 4]])
+    assert not c.compare_bytes(ma, mb, 'f32')['match']

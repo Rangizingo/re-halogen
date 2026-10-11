@@ -36,7 +36,7 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 
 ## g09 (dnc_scan3x), 2026-10-10, partial
 
-- 8 of 21 instances MATCH; 13 BLOCKED (b1=F, i2 4-6 timing probes, b2=T, A=4), continued by agent g09b. The 6 MISMATCH rows in g09.md are diff=0 UNTOUCHED results on the i32 spec (n3 returns to 0 after two arrivals, report g09.md table), not value differences; the instance has MATCH rows on sel/out outputs.
+- 8 of 21 instances MATCH; 13 BLOCKED (b1=F, i2 4-6 timing probes, b2=T, A=4), continued by agent g09b. The 6 MISMATCH rows in g09.md (g09.md:41-46, dnc_scan3x_i32.json, n=1,572,960, diff=0) are from a spec version that also compared the n3 counter, which returns to 0 after two arrivals and so reads as UNTOUCHED (report g09.md table); the later rows of that spec compare sel/out only (n=1,572,864) and MATCH (QA on PR #23).
 - B, C, D, G (ledger U12) are k_dnc_scan3 template args, not scan3x (report g09.md "Template args"); they go to agent g16 (dnc_scan3).
 
 ## g11 (hc8, hcup4, hcup4w, hc_scatter, hc_mixed, hc_di, hyper, split, block, inject, hc_fold), 2026-10-10

@@ -198,18 +198,22 @@ def mask_excluded(a, b, dtype, ranges):
     """Zero element ranges [start, end) in both buffers; returns (a, b, n_excluded).
 
     For outputs that depend on state the vendor kernel never writes (stale LDS, unset VGPRs),
-    stated per spec in "exclude" and reported as excluded=N in every result line.
+    stated per spec in "exclude" and reported as excluded=N in every result line. Ranges are
+    checked against the vendor buffer; overlapping ranges count each element once.
     """
     w = 2 if dtype in ('bf16', 'f16') else (FLOAT_FMT.get(dtype) or INT_FMT[dtype])[1]
     n_el = len(a) // w
-    a, b, n = bytearray(a), bytearray(b), 0
+    idx = set()
     for lo, hi in ranges or []:
         if not 0 <= lo < hi <= n_el:
             raise ValueError(f'exclude range [{lo}, {hi}) outside 0..{n_el}')
-        a[lo * w:hi * w] = bytes((hi - lo) * w)
-        b[lo * w:min(hi * w, len(b))] = bytes(min(hi * w, len(b)) - lo * w)
-        n += hi - lo
-    return bytes(a), bytes(b), n
+        idx.update(range(lo, hi))
+    a, b = bytearray(a), bytearray(b)
+    for k in idx:
+        a[k * w:(k + 1) * w] = bytes(w)
+        if (k + 1) * w <= len(b):
+            b[k * w:(k + 1) * w] = bytes(w)
+    return bytes(a), bytes(b), len(idx)
 
 
 def result_text(r):
@@ -293,6 +297,7 @@ def host_slot(lock_path, min_free_gib):
             free = mem_available_gib()
             if free is None or (free >= min_free_gib and service_healthy()):
                 break
+            print(f'host_slot: waiting (free {free:.1f} GiB, need {min_free_gib}; or service not healthy)', file=sys.stderr, flush=True)
             time.sleep(30)
         try:
             yield
@@ -329,7 +334,8 @@ def main(argv=None):
         base.mkdir(parents=True, exist_ok=True)
     work = Path(a.workdir or tempfile.mkdtemp(prefix='cmp_', dir=base)).resolve()
     lock = HERE.parent.parent / 'work' / 'cmp' / '.host.lock'
-    # work/cmp/.service-down marks a window where Peter approved halogen-swift being stopped: no gate, runs in parallel.
+    # work/cmp/.service-down marks a window where Peter approved halogen-swift being stopped (ruling 5):
+    # no lock, no /health or free-memory wait; runs go in parallel.
     gate = contextlib.nullcontext() if (lock.parent / '.service-down').exists() else \
         host_slot(lock, float(os.environ.get('CMP_MIN_FREE_GIB', '8')))
     try:
