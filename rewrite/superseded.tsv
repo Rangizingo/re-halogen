@@ -1,0 +1,7 @@
+# original<TAB>replacement<TAB>why (const_audit.py audits the end of each chain; the original keeps its old MATCH rows)
+attn_qs.hip	attn_qs_c.hip	g18c: softmax wrong near the -1e29/-1e30 sentinels (rewrite/reports/g18c.md)
+dnc_ut.hip	dnc_ut_c.hip	g24: NaN sign (rewrite/reports/g24.md)
+dnc_ut3.hip	dnc_ut3_c.hip	g24: NaN sign
+ht_deq.hip	ht_deq_c.hip	g24: NaN sign
+i4r_gu.hip	i4r_gu_c.hip	g24: NaN sign (operand order in the epilogue)
+vis_rope.hip	vis_rope_c.hip	g24: NaN sign
