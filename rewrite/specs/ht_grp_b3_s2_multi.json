@@ -1,0 +1,311 @@
+{
+ "grid": [
+  "=N//128*(3+2)+3",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "w0": {
+   "bytes": "=N//128*160*768",
+   "fill": {
+    "kind": "rand",
+    "dtype": "u8",
+    "seed": "=SEED",
+    "lo": 0,
+    "hi": 256
+   }
+  },
+  "w1": {
+   "bytes": "=N//128*160*768",
+   "fill": {
+    "kind": "rand",
+    "dtype": "u8",
+    "seed": "=SEED+1",
+    "lo": 0,
+    "hi": 256
+   }
+  },
+  "x": {
+   "bytes": "=10240",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED+10",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "su0": {
+   "bytes": "=5120",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+20",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "su1": {
+   "bytes": "=5120",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+21",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "rsu": {
+   "bytes": "=5120",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+22",
+    "lo": -1,
+    "hi": 1
+   }
+  },
+  "sv0": {
+   "bytes": "=N*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+30",
+    "lo": 0.5,
+    "hi": 2
+   }
+  },
+  "sv1": {
+   "bytes": "=N*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+31",
+    "lo": 0.5,
+    "hi": 2
+   }
+  },
+  "y": {
+   "bytes": "=N*4*10",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": 0
+   }
+  },
+  "cnt": {
+   "bytes": 1024,
+   "fill": {
+    "kind": "zero"
+   }
+  },
+  "out0": {
+   "bytes": "=N*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "out20": {
+   "bytes": "=N*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "out1": {
+   "bytes": "=N*2*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "rout": {
+   "bytes": "=5120",
+   "fill": {
+    "kind": "const",
+    "dtype": "f16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "w0"
+  },
+  {
+   "offset": 8,
+   "buffer": "su0"
+  },
+  {
+   "offset": 16,
+   "buffer": "sv0"
+  },
+  {
+   "offset": 24,
+   "buffer": "out0"
+  },
+  {
+   "offset": 32,
+   "buffer": "out20"
+  },
+  {
+   "offset": 40,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 44,
+   "type": "i32",
+   "value": 3
+  },
+  {
+   "offset": 48,
+   "type": "i32",
+   "value": 8
+  },
+  {
+   "offset": 52,
+   "type": "i32",
+   "value": 0
+  },
+  {
+   "offset": 56,
+   "type": "i32",
+   "value": 0
+  },
+  {
+   "offset": 64,
+   "type": "i64",
+   "value": 0
+  },
+  {
+   "offset": 72,
+   "buffer": "w1"
+  },
+  {
+   "offset": 80,
+   "buffer": "su1"
+  },
+  {
+   "offset": 88,
+   "buffer": "sv1"
+  },
+  {
+   "offset": 96,
+   "buffer": "out1"
+  },
+  {
+   "offset": 112,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 116,
+   "type": "i32",
+   "value": 2
+  },
+  {
+   "offset": 120,
+   "type": "i32",
+   "value": 10
+  },
+  {
+   "offset": 124,
+   "type": "i32",
+   "value": "=N//128*3"
+  },
+  {
+   "offset": 128,
+   "type": "i32",
+   "value": "=N//128"
+  },
+  {
+   "offset": 136,
+   "type": "i64",
+   "value": "=N*6"
+  },
+  {
+   "offset": 288,
+   "type": "i32",
+   "value": 2
+  },
+  {
+   "offset": 296,
+   "buffer": "rsu"
+  },
+  {
+   "offset": 304,
+   "buffer": "rout"
+  },
+  {
+   "offset": 312,
+   "type": "i32",
+   "value": "=N//128*(3+2)"
+  },
+  {
+   "offset": 408,
+   "buffer": "x"
+  },
+  {
+   "offset": 416,
+   "type": "i32",
+   "value": 1
+  },
+  {
+   "offset": 420,
+   "type": "i32",
+   "value": 2560
+  },
+  {
+   "offset": 424,
+   "buffer": "y"
+  },
+  {
+   "offset": 432,
+   "buffer": "cnt"
+  }
+ ],
+ "dump": [
+  "out0",
+  "out20",
+  "out1",
+  "y",
+  "rout"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/ht_lin.hip",
+  "rewrite_kernel": "ht_grp_b3_s2",
+  "outputs": [
+   {
+    "buffer": "out0",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "out20",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "out1",
+    "dtype": "bf16"
+   },
+   {
+    "buffer": "y",
+    "dtype": "f32"
+   },
+   {
+    "buffer": "rout",
+    "dtype": "f16"
+   }
+  ]
+ }
+}
