@@ -1,0 +1,20 @@
+{
+  "grid": ["=ceil_div(N*24,256)", 1, 1],
+  "block": [256, 1, 1],
+  "buffers": {
+    "src": {"bytes": "=N*(768*13/16)+64", "fill": {"kind": "rand", "dtype": "u8", "seed": "=SEED", "lo": 0, "hi": 255}},
+    "dst": {"bytes": "=N*768*2+64", "fill": {"kind": "const", "dtype": "u32", "value": 3735928559}}
+  },
+  "args": [
+    {"offset": 0, "buffer": "src"},
+    {"offset": 8, "buffer": "dst"},
+    {"offset": 16, "type": "i64", "value": "=N"},
+    {"offset": 24, "type": "i64", "value": 768}
+  ],
+  "dump": ["dst"],
+  "compare": {
+    "rewrite_src": "../kernels/deq_q6g64.hip",
+    "rewrite_kernel": "k_deq_q6g64",
+    "outputs": [{"buffer": "dst", "dtype": "u16"}]
+  }
+}

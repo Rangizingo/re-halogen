@@ -161,3 +161,8 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 - Agent result: 1,616 AUDIT OK (227 via sign-flipped twin, 1 explained exception: k_dv_quant -0.05 folded to the eight fma results), 0 GAP, 122 ERROR (the q6 instances without MATCH rows yet). 39 tests pass. Cause of most first-pass gaps: rewrite helpers called through s_swappc_b64 were not scanned; now resolved transitively for both sides.
 - Orchestrator check: compiled rewrite/kernels/attn_fa2.hip on Ai-core: 0x42b17218 and 0xc2ce8ed0 appear 17 times each, s_swappc_b64 26 times (the first pass flagged 22 attn_fa2 instances for these). The vendor k_ht_gemv_gu_t<3,8,1,1> body (kernels-disasm-v2/codeobj_53000.s:1204106-1207447) has none of the clamp constants, so its first-pass gaps were the helper constants (1.0, -log2e, 1/sqrt(128)), consistent with the agent.
 - Limit (report p712c.md): presence of a constant does not prove it is used the same way; MATCH rows and edge specs carry that.
+
+## g03 (lq6k, lq6w, lq6w_grp, deq_q6k, deq_q6g64), 2026-10-11
+
+- 122 of 122 MATCH, 0 MISMATCH; negctl 5; sha1 of 4 .hip Mac equals Ai-core; specs clean.
+- Re-run seeds 7 and 11: lq6k_1_32_1_1.json N 4096, 2 of 2 MATCH. Control, RNE bias 0x7fff to 0 (lq6k.hip:13): MISMATCH, 3,536 of 4,096 outputs differ.
