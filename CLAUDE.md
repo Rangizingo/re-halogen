@@ -15,6 +15,7 @@ Read order: `start-here.md` (state of play, what remains) > `PLAN.md` (7-phase p
 - `work/fatbin/` holds the 4 AMDGCN code objects carved from `flash_serve`'s clang offload bundle v2 (`scripts/carve_fatbin.py`). `analysis/kernels-disasm/` (299 MB, 3.34M lines) is their `llvm-objdump --mattr=+gfx1151` output. `work/kernels*/` holds per-kernel `.s` slices cut by `scripts/slice_kernels.py`; `tmp/stats-*.csv` has per-kernel instruction-class counts from `scripts/kernel_stats.py`.
 - `work/hgn/hgnpy.py` is the `.hgn` container parser/builder; its docstring is the spec draft, formalized in `analysis/hgn-format.md`. `work/hgn/files/` has 169 crafted test containers.
 - `work/versions/<ver>/` has the 9 pulled releases (0.11.10 to 0.17.3), diffed by `scripts/version_deltas.py`.
+- `rewrite/` (U22): one HIP rewrite per kernel family in `rewrite/kernels/`, specs in `rewrite/specs/`, per-group result tables in `rewrite/tables/` merged into `rewrite/match-table.md`. A fixed kernel is a copy (`<family>_c.hip`, `_d`), never an edit of the original; `rewrite/superseded.tsv` lists original > replacement, and the constant audit (`rewrite/harness/const_audit.py`, output `rewrite/const-audit.md`) and coverage checks use the end of each chain. Per-instance audit exceptions live in `rewrite/const-audit-exceptions.d/<group>.tsv` and must cite the vendor listing line and the rewrite line.
 - `analysis/*.md` are the writeups. `analysis/kernels-indexer.md` is the format template for kernel-family writeups.
 
 ## Commands
