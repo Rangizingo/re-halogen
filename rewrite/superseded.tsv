@@ -7,3 +7,4 @@ i4r_gu.hip	i4r_gu_c.hip	g24: NaN sign (operand order in the epilogue)
 vis_rope.hip	vis_rope_c.hip	g24: NaN sign
 attn_fa2.hip	attn_fa2_c.hip	g25: tile loop bound per block, clamped to n-1 (rewrite/reports/g25.md)
 ht_gemv.hip	ht_gemv_c.hip	g32: gu_t dense job for blocks wg >= n was missing (rewrite/reports/g32.md)
+attn_fa2_c.hip	attn_fa2_d.hip	g34: sparse FaSel ids/tilemask
