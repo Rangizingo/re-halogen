@@ -310,8 +310,11 @@ def main(argv=None):
         base.mkdir(parents=True, exist_ok=True)
     work = Path(a.workdir or tempfile.mkdtemp(prefix='cmp_', dir=base)).resolve()
     lock = HERE.parent.parent / 'work' / 'cmp' / '.host.lock'
+    # work/cmp/.service-down marks a window where Peter approved halogen-swift being stopped: no gate, runs in parallel.
+    gate = contextlib.nullcontext() if (lock.parent / '.service-down').exists() else \
+        host_slot(lock, float(os.environ.get('CMP_MIN_FREE_GIB', '8')))
     try:
-        with host_slot(lock, float(os.environ.get('CMP_MIN_FREE_GIB', '8'))):
+        with gate:
             return _run(a, template, cmp_cfg, vend, gk, work)
     finally:
         if auto:

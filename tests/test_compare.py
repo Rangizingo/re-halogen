@@ -221,3 +221,23 @@ def test_service_healthy_false_when_unreachable():
 def test_service_healthy_rejects_non_http_urls():
     with pytest.raises(ValueError):
         c.service_healthy('file:///etc/passwd')
+
+
+def test_service_down_marker_skips_the_host_gate(tmp_path, monkeypatch):
+    here = tmp_path / 'repo' / 'rewrite' / 'harness'
+    (tmp_path / 'repo' / 'work' / 'cmp').mkdir(parents=True)
+    monkeypatch.setattr(c, 'HERE', here)
+    monkeypatch.setattr(c, '_load_gen_kernargs', lambda: None)
+    monkeypatch.setenv('CMP_TMP', str(tmp_path / 'base'))
+
+    def no_gate(*a, **k):
+        raise AssertionError('host_slot used')
+    monkeypatch.setattr(c, 'host_slot', no_gate)
+    monkeypatch.setattr(c, 'compile_rewrite', lambda src, out: (_ for _ in ()).throw(RuntimeError('compiled')))
+    spec, ka = _spec_and_kernargs(tmp_path)
+    args = [str(spec), '--kernel', 'K', '--kernargs', str(ka), '--no-table']
+    with pytest.raises(AssertionError):
+        c.main(args)
+    (tmp_path / 'repo' / 'work' / 'cmp' / '.service-down').touch()
+    with pytest.raises(RuntimeError, match='compiled'):
+        c.main(args)
