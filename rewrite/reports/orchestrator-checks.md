@@ -171,3 +171,20 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 
 - P5 and P8 are defined; g19b's caveats came from the old listing's hidden `.long` instructions. P5: the prologue zero-fills LDS [0x2800, 0x3200) before the first barrier (kernels-disasm-v2/codeobj_1146000.s:176815-176816 `v_mov_b16 v2.l, 0` / `ds_store_b16 v3, v2 offset:10240`, :176821-176822 offset:10496, `s_barrier` :176828; orchestrator re-read). P8: v10..v13 = 0.125 times defined data (`v_pk_mul_f16 ..., 0x3000`, :188337 onward; orchestrator re-read). Rows g19d.md all MATCH, controls 3 of 3 MISMATCH.
 - collect.sh incident: the g19d worktree was made from an older commit; the old collect.sh copied its stale tracked kernels over newer files here (attn_qs_c.hip, ht_gemv_b.hip, attn_qs_c_3_0.json). Restored from HEAD (sha1 now equal to Ai-core). collect.sh now copies only files the agent changed (git status of the worktree). A full sha1 sweep of rewrite/kernels vs Ai-core found expert.hip, deq_aff.hip, i4r_fold.hip differing by g22's two comment lines only; synced.
+
+## g24 (NaN sign: dnc_ut, dnc_ut3, ht_deq, i4r_gu, vis_rope), s7 2026-10-11
+
+Collected by cherry-pick of the agent commit 72fde97 (f39fae7 here); table g24.md 522 MATCH, 0 MISMATCH. Re-run on Ai-core (~/re-halogen after rsync of this tree, CMP_TMP ~/orch-s7/tmp), fresh seeds 41,42, fixed copy vs the same spec repointed at the ORIGINAL kernel (negative control):
+
+| spec | instance | fixed (_c) | original |
+| --- | --- | --- | --- |
+| dnc_ut_nan.json N=2 | k_dnc_ut | MATCH x2 | MISMATCH diff=1393 |
+| dnc_ut3_nan.json N=2 | k_dnc_ut3 | MATCH x2 | MISMATCH diff=3928 |
+| i4r_gu_epi_nan.json N=8 | k_i4r_gu_epi | MATCH x2 | MISMATCH diff=8 |
+| vis_rope_b64_nan.json N=64 | k_vis_rope | MATCH x2 | MISMATCH diff=12 |
+| ht_deq_orig_b3_f0_t512_nan.json N=3 | ht_deq_orig<3,0,16> | MATCH x2 | MATCH (sparse NaN does not reach the bug) |
+| ht_deq_orig_b3_f0_t256_nan.json N=3 | ht_deq_orig<3,0,8> | MATCH | MATCH (same) |
+| ht_deq_orig_b3_f0_t256_nan_dense.json N=3 | ht_deq_orig<3,0,8> | MATCH | MISMATCH diff=14 |
+| ht_deq_orig_b4_f1_t512_nan_dense.json N=3 | ht_deq_orig<4,1,16> | MATCH | MISMATCH diff=17 |
+
+Every family's NaN specs include one that fails on the original and passes on the fix. The sparse ht_deq NaN specs are kept as extra coverage, not as the proof.
