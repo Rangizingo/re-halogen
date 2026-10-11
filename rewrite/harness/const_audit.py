@@ -15,6 +15,10 @@ SOPK immediates. Ignored: decimal integers (inline ints, branch offsets), s_wait
 instruction (offsets), modifiers (offset:, row_shr:, op_sel:), registers, text after '//'. 64-bit values split into halves.
 f32 inline constants become f32 bits, f16 ops f16 bits, f64 ops the high word. A vendor value whose sign-flipped twin is
 in the rewrite is 'sign-flipped', not missing.
+Literals are collected over the kernel plus every device function it calls (pc-relative s_getpc/s_swappc calls), plus the
+rewrite object's .rodata words. Integer-role operands (masks, v_perm/v_permlane selectors, mul_hi magic, compiler udiv/logf
+expansions) are reported under int-only gaps, not as float gaps. rewrite/const-audit-exceptions.tsv (substring, hex, reason)
+turns a recorded explanation into 'AUDIT OK (exception: ...)'.
 """
 import argparse
 import concurrent.futures as cf
@@ -76,6 +80,7 @@ class Listing:
     def __init__(self, path: Path):
         self.path = path
         self._idx: dict[str, tuple[int, int]] | None = None
+        self.addr: dict[int, str] = {}
         self._lock = threading.Lock()
 
     def index(self) -> dict[str, tuple[int, int]]:
@@ -87,8 +92,13 @@ class Listing:
                     for i, m in enumerate(ms):
                         end = ms[i + 1].start() if i + 1 < len(ms) else len(mm)
                         idx[m.group(1).decode()] = (m.end(), end)
+                        self.addr[int(mm[m.start():m.start() + 16], 16)] = m.group(1).decode()
                 self._idx = idx
             return self._idx
+
+    def addr_map(self) -> dict[int, str]:
+        self.index()
+        return self.addr
 
     def kernel_lines(self, name: str) -> list[str]:
         idx = self.index()
@@ -97,6 +107,49 @@ class Listing:
         s, e = idx[name]
         with open(self.path, 'rb') as f, mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ) as mm:
             return mm[s:e].decode().splitlines()
+
+
+
+# ---- device-function calls -------------------------------------------------
+
+_ADDR = re.compile(r'//\s*([0-9A-Fa-f]{12}):')
+_LASTOP = re.compile(r'(?:lit\()?(-?(?:0x[0-9a-fA-F]+|\d+))\)?\s*$')
+
+
+def call_targets(lines: list[str]) -> set[int]:
+    """Absolute addresses of pc-relative calls: s_getpc_b64; s_add_u32 sN, sN, lo; s_addc_u32 sM, sM, hi; s_swappc_b64."""
+    out: set[int] = set()
+    for i, line in enumerate(lines):
+        if 's_getpc_b64' not in line.split('//', 1)[0]:
+            continue
+        m = _ADDR.search(line)
+        if not m or i + 2 >= len(lines):
+            continue
+        lo = _LASTOP.search(lines[i + 1].split('//', 1)[0].rstrip())
+        hi = _LASTOP.search(lines[i + 2].split('//', 1)[0].rstrip())
+        if not (lo and hi and 's_add_u32' in lines[i + 1] and 's_addc_u32' in lines[i + 2]):
+            continue
+        off = ((int(hi.group(1), 0) & 0xffffffff) << 32) | (int(lo.group(1), 0) & 0xffffffff)
+        if off >= 1 << 63:
+            off -= 1 << 64
+        out.add(int(m.group(1), 16) + 4 + off)
+    return out
+
+
+def with_callees(name: str, get_lines, addr_to_name: dict[int, str]) -> list[str]:
+    """Lines of `name` plus those of every device function it calls, transitively."""
+    seen: set[str] = set()
+    todo = [name]
+    lines: list[str] = []
+    while todo:
+        n = todo.pop()
+        if n in seen:
+            continue
+        seen.add(n)
+        ls = get_lines(n)
+        lines += ls
+        todo += [addr_to_name[a] for a in call_targets(ls) if a in addr_to_name]
+    return lines
 
 
 # ---- literal extraction ----------------------------------------------------
@@ -154,6 +207,137 @@ def _instr_literals(part: str) -> set[int]:
     return out
 
 
+# Operand roles that carry integers whatever their bit pattern looks like as f32: any instruction whose source type
+# (last mnemonic token) is an integer type (masks, shifts, integer add/mul, v_perm and v_permlane selectors, mul_hi
+# magic multipliers, v_cvt_f32_u32 sources), except plain data movers, which carry either kind.
+_INT_TYPES = {'b32', 'b64', 'b16', 'b8', 'u32', 'i32', 'u16', 'i16', 'u64', 'i64', 'u8', 'i8', 'u24', 'i24'}
+_PASSTHROUGH = re.compile(r'_(?:mov|cndmask|cselect|readlane|readfirstlane|writelane|movk|movrel\w*)_|^s_(?:mov|movk|cselect)')
+_INT_NAMES = re.compile(r'^v_permlane\w*$')
+
+
+def is_int_role_mnemonic(mnem: str) -> bool:
+    base = _base_mnemonic(mnem)
+    if _INT_NAMES.match(base):
+        return True
+    if _PASSTHROUGH.search(base + '_') or base.endswith('_mov_b32') or base.endswith('_mov_b64'):
+        return False
+    return base.rsplit('_', 1)[-1] in _INT_TYPES
+
+
+# Compiler expansions (integer divide, logf denormal prescale). Compiler 32-bit unsigned divide: v_rcp_iflag_f32, * 0x4f7ffffe, v_cvt_u32_f32. 64-bit divide: 2^32, 2^-32, 2^64-2^40, -2^32.
+_UDIV32 = {0x4f7ffffe}
+_UDIV64 = {0x4f800000, 0x2f800000, 0x5f7ffffc, 0xcf800000}
+
+
+def _parse(part: str) -> tuple[str, list[str]] | None:
+    bits = part.strip().split(None, 1)
+    if len(bits) < 2 or bits[0].startswith(('.', '<')):
+        return None
+    ops = [o.strip() for o in re.split(r',(?![^\[]*\])', _MOD_BRACKET.sub(' ', bits[1]))]
+    return _base_mnemonic(bits[0]), ops
+
+
+def _regs(op: str) -> set[str]:
+    out = set()
+    for m in re.finditer(r'\b([sv])(\d+)\b|\b([sv])\[(\d+):(\d+)\]', op):
+        if m.group(1):
+            out.add(m.group(1) + m.group(2))
+        else:
+            out.update(f'{m.group(3)}{i}' for i in range(int(m.group(4)), int(m.group(5)) + 1))
+    return out
+
+
+_NO_DEST = re.compile(r'^(?:s_cmp|s_bitcmp|buffer_|global_store|flat_store|scratch_store|ds_store|ds_write)')
+_REG_WINDOW = 30000
+
+
+def _sources(m: str, ops: list[str]) -> list[str]:
+    """Operands an instruction reads: all but the destination; a second destination (carry out of v_add_co_u32,
+    v_div_scale_f32, v_mad_u64_u32) is not a read either."""
+    if _NO_DEST.match(m):
+        return ops
+    srcs = ops[1:]
+    if len(ops) > 2 and re.match(r'^v_(?:add|sub|subrev)_co_u32|^v_div_scale_|^v_mad_[iu]64_[iu]32', m):
+        srcs = ops[2:]
+    return srcs
+
+
+def _consumers(parsed, start: int, dest: set[str]) -> tuple[int, int]:
+    """Count integer-role and other readers of `dest` after instruction `start`, following movs and cndmasks into
+    their destinations; each register's scan stops at its next plain write."""
+    ints = floats = 0
+    seen: set[tuple[int, str]] = set()
+    work = [(start, frozenset(dest))]
+    while work:
+        at, regs = work.pop()
+        live = set(regs)
+        for j in range(at + 1, min(len(parsed), at + 1 + _REG_WINDOW)):
+            nxt = parsed[j]
+            if not nxt or not live:
+                continue
+            (m2, o2), _ = nxt
+            srcs = _sources(m2, o2)
+            reads = set().union(*(_regs(o) for o in srcs)) if srcs else set()
+            hit = live & reads
+            if hit:
+                if m2.endswith(('_mov_b32', '_cndmask_b32')) or _PASSTHROUGH.search(m2 + '_'):
+                    key = (j, ','.join(sorted(hit)))
+                    if key not in seen and o2 and not _NO_DEST.match(m2):
+                        seen.add(key)
+                        work.append((j, frozenset(_regs(o2[0]))))
+                elif is_int_role_mnemonic(m2):
+                    ints += 1
+                else:
+                    floats += 1
+            if not _NO_DEST.match(m2) and o2 and not hit:
+                live -= _regs(o2[0])
+            if len(o2) > len(srcs) + 1 and not _NO_DEST.match(m2):
+                live -= set().union(*(_regs(o) for o in o2[1:len(o2) - len(srcs)]))
+    return ints, floats
+
+
+def extract_int_role(lines: list[str]) -> set[int]:
+    """Literals that only ever appear as integer-role operands (masks, v_perm/v_permlane selectors, mul_hi magic
+    multipliers) or as constants of the compiler's integer-divide expansion; reported under int-only gaps, not as
+    float data. A literal moved into a register counts by the instructions that read that register before its next
+    write (straight-line scan, through movs and cndmasks): integer readers only means integer."""
+    parsed: list[tuple[str, list[str]] | None] = []
+    for line in lines:
+        code = line.split('//', 1)[0]
+        for part in code.split('::'):
+            parsed.append(_parse(part))
+            parsed[-1] = (parsed[-1], part) if parsed[-1] else None   # keep the text for literal extraction
+    int_vals: set[int] = set()
+    other: set[int] = set()
+    seen_vals: set[int] = set()
+    text = '\n'.join(lines)
+    udiv: set[int] = set()
+    if 'v_rcp_iflag_f32' in text:
+        udiv |= _UDIV32
+    if 'v_rcp_f32' in text and '0x5f7ffffc' in text:
+        udiv |= _UDIV64
+    if 'v_log_f32' in text and re.search(r'v_cmp_\w+_f32\w*\s+\w+,\s*0x800000,', text):
+        udiv.add(0x4f800000)     # logf: inputs below 2^-126 are scaled by 2^32 first (and 32*ln2 subtracted)
+    for i, item in enumerate(parsed):
+        if not item:
+            continue
+        (mnem, ops), part = item
+        vals = _instr_literals(part)
+        if not vals:
+            continue
+        seen_vals |= vals
+        if mnem.endswith(('_mov_b32', '_cndmask_b32')) or mnem == 's_movk_i32':
+            ints, floats = _consumers(parsed, i, _regs(ops[0]))
+            # byte-selector shape (every byte 0..7) with an integer reader tolerates register-reuse noise in `floats`
+            if ints and (not floats or all(v & 0xf8f8f8f8 == 0 and v > 0xffff for v in vals)):
+                int_vals.update(vals)
+            elif floats:
+                other.update(vals)       # a mov nothing reads (overwritten at once) says nothing about the role
+        else:
+            (int_vals if is_int_role_mnemonic(mnem) else other).update(vals)
+    return (int_vals - other) | (udiv & seen_vals)
+
+
 def extract_literals(lines: list[str]) -> set[int]:
     out: set[int] = set()
     for line in lines:
@@ -199,17 +383,22 @@ class Cmp:
     int_missing: list[int] = field(default_factory=list)   # INT, informational
     extra: list[int] = field(default_factory=list)
     flipped: list[int] = field(default_factory=list)
+    excused: dict[int, str] = field(default_factory=dict)  # vendor-only FLOAT with a recorded explanation
 
 
-def compare_sets(vendor: set[int], rewrite: set[int]) -> Cmp:
+def compare_sets(vendor: set[int], rewrite: set[int], int_role: set[int] = frozenset(),
+                 excused: dict[int, str] | None = None) -> Cmp:
     c = Cmp(set(vendor), set(rewrite))
     partners: set[int] = set()
     for v in sorted(vendor - rewrite):
         if _flip(v) in rewrite:
             c.flipped.append(v)
             partners.add(_flip(v))
-        elif is_float(v):
-            c.missing.append(v)
+        elif is_float(v) and v not in int_role:
+            if excused and v in excused:
+                c.excused[v] = excused[v]
+            else:
+                c.missing.append(v)
         else:
             c.int_missing.append(v)
     c.extra = sorted(rewrite - vendor - partners)
@@ -225,7 +414,24 @@ def verdict(c: Cmp) -> str:
     v = 'AUDIT GAP ' + _cap(c.missing) if c.missing else 'AUDIT OK'
     if c.flipped:
         v += ('; ' if c.missing else ' ') + f'(sign-flipped: {_cap(c.flipped)})'
+    if c.excused:
+        v += ('; ' if c.missing else ' ') + '(exception: ' + '; '.join(f'{fmt_val(k)} {r}' for k, r in c.excused.items()) + ')'
     return v
+
+
+def load_exceptions(path: Path) -> list[tuple[str, int, str]]:
+    """TSV: mangled-name substring, hex value, reason. '#' lines ignored."""
+    out = []
+    if Path(path).exists():
+        for line in Path(path).read_text().splitlines():
+            if line.strip() and not line.startswith('#'):
+                sub, val, reason = (line.split('\t') + ['', ''])[:3]
+                out.append((sub, int(val, 16), reason.strip().replace('|', '/')))
+    return out
+
+
+def excused_for(instance: str, exceptions: list[tuple[str, int, str]]) -> dict[int, str]:
+    return {v: r for sub, v, r in exceptions if sub in instance}
 
 
 def format_row(instance: str, obj: str, c: Cmp) -> str:
@@ -348,9 +554,23 @@ class Remote:
             self._ssh(f'rm -rf ~/{self.dir}')
 
 
-def disassemble(co: Path) -> dict[str, list[str]]:
+def rodata_words(co: Path) -> set[int]:
+    """32-bit little-endian words of .rodata (static __device__ tables compile to data, not immediates)."""
+    r = subprocess.run([OBJDUMP, '-s', '-j', '.rodata', str(co)], capture_output=True, text=True, check=False)
+    out: set[int] = set()
+    for line in r.stdout.splitlines():
+        m = re.match(r'^ [0-9a-f]+ ((?:[0-9a-f]{1,8} ?){1,4})', line)
+        if m:
+            for w in m.group(1).split():
+                if len(w) == 8:
+                    out.add(int.from_bytes(bytes.fromhex(w), 'little'))
+    return out
+
+
+def disassemble(co: Path) -> tuple[dict[str, list[str]], dict[int, str]]:
     r = subprocess.run([OBJDUMP, '-d', '--mcpu=gfx1151', str(co)], capture_output=True, text=True, check=True)
-    return split_kernels(r.stdout)
+    addr = {int(m.group(1), 16): m.group(2) for m in re.finditer(r'^([0-9a-f]{16}) <(.+)>:\s*$', r.stdout, re.MULTILINE)}
+    return split_kernels(r.stdout), addr
 
 
 # ---- driver ---------------------------------------------------------------
@@ -373,12 +593,14 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument('--jobs', type=int, default=4)
     ap.add_argument('--repo', default=str(REPO), help='checkout holding kernels-disasm-v2, rewrite/tables, kernargs')
     ap.add_argument('--disasm-dir', help='default <repo>/kernels-disasm-v2')
+    ap.add_argument('--exceptions', help='default <repo>/rewrite/const-audit-exceptions.tsv')
     a = ap.parse_args(argv)
     repo = Path(a.repo)
     out = Path(a.out)
     dis = Path(a.disasm_dir or repo / 'kernels-disasm-v2')
     kargs = json.loads((repo / 'rewrite/harness/kernargs.json').read_text())['kernels']
-    specs = spec_map(sorted((repo / 'rewrite/tables').glob('*.md')), lambda sp: (repo / 'rewrite/specs' / sp).exists())
+    specs = spec_map(sorted((repo / 'rewrite/tables').glob('*.md')) + [repo / 'rewrite/match-table.md'], lambda sp: (repo / 'rewrite/specs' / sp).exists())
+    exceptions = load_exceptions(Path(a.exceptions or repo / 'rewrite/const-audit-exceptions.tsv'))
     done = done_instances(out)
     todo = [n for n in load_instances(a.instances, repo) if n not in done]
     print(f'{len(todo)} instances to audit', flush=True)
@@ -404,6 +626,8 @@ def main(argv: list[str] | None = None) -> int:
         try:
             sp = json.loads((repo / 'rewrite/specs' / spec).read_text())['compare']
             src = (repo / 'rewrite/specs' / sp['rewrite_src']).resolve()
+            if not src.exists():   # path written from the repo root (rewrite/kernels/scale.hip)
+                src = (repo / sp['rewrite_src']).resolve()
             if Path(sp['rewrite_src']).is_absolute():   # path from the Ai-core checkout: same file name in rewrite/kernels
                 src = (repo / 'rewrite/kernels' / Path(sp['rewrite_src']).name).resolve()
         except (OSError, KeyError, ValueError) as e:
@@ -420,7 +644,8 @@ def main(argv: list[str] | None = None) -> int:
             if Path(src).parent != (repo / 'rewrite/kernels').resolve():
                 raise RuntimeError(f'rewrite_src outside rewrite/kernels: {src}')
             co = remote.compile(Path(src).name, flags, uuid.uuid4().hex[:10], local)
-            syms = disassemble(co)
+            syms, raddr = disassemble(co)
+            rdata = rodata_words(co)
             co.unlink(missing_ok=True)
         except Exception as e:  # noqa: BLE001 - reported per instance
             for n, obj, _ in members:
@@ -432,8 +657,10 @@ def main(argv: list[str] | None = None) -> int:
                     raise KeyError(f'rewrite kernel {rk} not in object (has {sorted(syms)[:4]})')
                 with lock:
                     listing = listings.setdefault(obj, Listing(dis / f'{obj}.s'))
-                vl = extract_literals(listing.kernel_lines(n))
-                write(format_row(n, obj, compare_sets(vl, extract_literals(syms[rk]))))
+                vlines = with_callees(n, listing.kernel_lines, listing.addr_map())
+                vl = extract_literals(vlines)
+                rlines = with_callees(rk, syms.__getitem__, raddr)
+                write(format_row(n, obj, compare_sets(vl, extract_literals(rlines) | rdata, extract_int_role(vlines), excused_for(n, exceptions))))
             except Exception as e:  # noqa: BLE001
                 write(error_row(n, obj, str(e)))
 

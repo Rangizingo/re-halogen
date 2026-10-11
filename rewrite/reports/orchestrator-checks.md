@@ -155,3 +155,9 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 
 - 30 of 30 MATCH (528 rows, 0 MISMATCH); with g14: ht_gemv 94 of 94. Spec check clean; ht_gemv_b.hip sha1 Mac equals Ai-core. HtFold (40 B, five pointers) and HtSd (88 B, same as g22b's I4rSd) decoded. Vendor has no chunk-count check (5120 B of LDS per rotated row, at most 20 chunks); the rewrite traps above and specs sit at the limit. negctl 58 MISMATCH, 37 MATCH from four weak mutants (named in the report).
 - Re-run seeds 7 and 11: ht_gemv_b_dn_g_3_8_2_0.json N 200, 2 of 2 MATCH.
+
+## p7-12c constant audit triage, 2026-10-11
+
+- Agent result: 1,616 AUDIT OK (227 via sign-flipped twin, 1 explained exception: k_dv_quant -0.05 folded to the eight fma results), 0 GAP, 122 ERROR (the q6 instances without MATCH rows yet). 39 tests pass. Cause of most first-pass gaps: rewrite helpers called through s_swappc_b64 were not scanned; now resolved transitively for both sides.
+- Orchestrator check: compiled rewrite/kernels/attn_fa2.hip on Ai-core: 0x42b17218 and 0xc2ce8ed0 appear 17 times each, s_swappc_b64 26 times (the first pass flagged 22 attn_fa2 instances for these). The vendor k_ht_gemv_gu_t<3,8,1,1> body (kernels-disasm-v2/codeobj_53000.s:1204106-1207447) has none of the clamp constants, so its first-pass gaps were the helper constants (1.0, -log2e, 1/sqrt(128)), consistent with the agent.
+- Limit (report p712c.md): presence of a constant does not prove it is used the same way; MATCH rows and edge specs carry that.

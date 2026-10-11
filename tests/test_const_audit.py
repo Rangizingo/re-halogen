@@ -167,3 +167,148 @@ def test_spec_mapping_from_match_rows(tmp_path):
                  '| inst_a | f | good2.json seed=1 N=7 | MATCH n=1 diff=0 | bitwise | d |\n')
     m = ca.spec_map([t])
     assert m == {'inst_a': 'good.json'}
+
+
+def test_perm_selector_is_int_role():
+    lines = ['v_perm_b32 v1, v2, v3, 0x07060302', 'v_mul_f32 v0, 0x3e22f983, v1']
+    assert ca.extract_int_role(lines) == {0x07060302}
+    c = ca.compare_sets(lits('\n'.join(lines)), set(), int_role=ca.extract_int_role(lines))
+    assert c.missing == [0x3e22f983]
+    assert 0x07060302 in c.int_missing
+
+
+def test_mulhi_magic_is_int_role():
+    lines = ['v_mul_hi_i32 v2, 0x66666667, v0', 's_mul_hi_i32 s20, s20, 0x66666667', 's_mul_hi_u32 s1, s2, 0x4ec4ec4f']
+    assert ca.extract_int_role(lines) == {0x66666667, 0x4ec4ec4f}
+
+
+def test_value_also_used_as_float_stays_float():
+    lines = ['v_perm_b32 v1, v2, v3, 0x3f000000', 'v_mul_f32 v0, 0x3f000000, v1']
+    assert ca.extract_int_role(lines) == set()
+
+
+def test_udiv_expansion_constants_with_rcp_iflag():
+    lines = ['v_rcp_iflag_f32_e32 v1, v1', 'v_mul_f32_e32 v1, 0x4f7ffffe, v1', 'v_cvt_u32_f32_e32 v1, v1']
+    assert ca.extract_int_role(lines) == {0x4f7ffffe}
+    assert ca.extract_int_role(['v_mul_f32_e32 v1, 0x4f7ffffe, v1']) == set()
+
+
+def test_permlane_selector_moved_through_register():
+    lines = ['s_mov_b32 s52, 0x76543210', 's_mov_b32 s57, 0x3db504f3',
+             'v_permlanex16_b32 v11, v11, s52, 0xfedcba98', 'v_mul_f32 v1, s57, v1']
+    assert ca.extract_int_role(lines) == {0x76543210, 0xfedcba98}
+
+
+def test_integer_typed_instructions_are_int_role():
+    lines = ['v_and_b32 v1, 0x0ffffffe, v2', 'v_or_b32 v1, 0x64006400, v1', 's_and_b32 s1, s2, 0xff000000',
+             'v_and_or_b32 v1, v2, 0x1fff0000, v3']
+    assert ca.extract_int_role(lines) == {0x0ffffffe, 0x64006400, 0xff000000, 0x1fff0000}
+
+
+def test_float_typed_and_movers_stay_float():
+    lines = ['v_mul_f32 v1, 0x3e800000, v2', 'v_dual_mov_b32 v3, 0x3da30000 :: v_dual_mul_f32 v4, 0.5, v0',
+             'v_cndmask_b32 v1, 0x3f000000, v2, vcc_lo', 'v_cvt_u32_f32 v1, 0x4f000000']
+    assert ca.extract_int_role(lines) == set()
+    assert ca.extract_int_role(['v_cvt_f32_u32 v1, 0x3f000001']) == {0x3f000001}
+
+
+def test_mov_literal_read_by_float_instruction_stays_float():
+    lines = ['s_mov_b32 s4, 0x3e800000', 'v_mul_f32 v1, s4, v2', 'v_and_b32 v3, s4, v3']
+    assert ca.extract_int_role(lines) == set()
+
+
+def test_dual_mov_selector_and_redefinition():
+    lines = ['v_dual_mov_b32 v146, 0x1000504 :: v_dual_mov_b32 v75, v1', 'v_perm_b32 v3, v4, v5, v146',
+             's_mov_b32 s3, 0x01010101', 'v_and_b32 v1, s3, v2', 's_mov_b32 s3, 0x3e800000', 'v_mul_f32 v1, s3, v1']
+    assert ca.extract_int_role(lines) == {0x01000504, 0x01010101}
+
+
+def test_selector_chosen_by_cndmask_then_used_by_perm():
+    lines = ['v_cndmask_b32 v54, 0x5040100, v146, vcc_lo', 'v_perm_b32 v1, v2, v3, v54']
+    assert ca.extract_int_role(lines) == {0x05040100}
+
+
+def test_selector_through_two_cndmasks():
+    lines = ['v_mov_b32 v142, 0x1000504', 'v_cndmask_b32 v11, 0x7060302, v142, vcc_lo', 'v_perm_b32 v1, v2, v3, v11']
+    assert ca.extract_int_role(lines) == {0x01000504, 0x07060302}
+
+
+def test_unread_mov_does_not_make_literal_float():
+    lines = ['v_mov_b32 v72, 0x1000504', 'v_mov_b32 v72, 0x1000504', 'v_perm_b32 v1, v2, v3, v72']
+    assert ca.extract_int_role(lines) == {0x01000504}
+
+
+def test_logf_denormal_prescale_and_udiv64_markers():
+    log = ['v_cmp_gt_f32_e32 vcc_lo, 0x800000, v0', 'v_cndmask_b32_e64 v1, 1.0, 0x4f800000, vcc_lo', 'v_log_f32_e32 v0, v0']
+    assert ca.extract_int_role(log) == {0x4f800000}
+    d64 = ['s_fmamk_f32 s2, s12, 0x4f800000, s2', 'v_rcp_f32_e32 v2, s2', 's_mul_f32 s2, s2, 0x5f7ffffc',
+           's_mul_f32 s12, s2, 0x2f800000', 's_fmamk_f32 s2, s12, 0xcf800000, s2']
+    assert ca.extract_int_role(d64) == {0x4f800000, 0x5f7ffffc, 0x2f800000, 0xcf800000}
+
+
+def test_selector_shape_tolerates_register_reuse():
+    lines = ['v_mov_b32 v1, 0x3020706', 'v_perm_b32 v5, v2, v3, v1', 'v_mul_f32 v6, v1, v1']
+    assert ca.extract_int_role(lines) == {0x03020706}
+    lines = ['v_mov_b32 v1, 0x3e800000', 'v_perm_b32 v5, v2, v3, v1', 'v_mul_f32 v6, v1, v1']
+    assert ca.extract_int_role(lines) == set()
+
+
+CALLS = (
+    '0000000000001000 <_Z6kernelv>:\n'
+    '\ts_getpc_b64 s[2:3]    // 000000001000: BE824700\n'
+    '\ts_add_u32 s2, s2, 0x100    // 000000001004: 8002FF02 00000100\n'
+    '\ts_addc_u32 s3, s3, 0    // 00000000100C: 8203FF03 00000000\n'
+    '\ts_swappc_b64 s[30:31], s[2:3]    // 000000001014: BE9E4902\n'
+    '\ts_endpgm    // 000000001018: BFB00000\n'
+    '\n'
+    '0000000000001104 <_ZL6helperv>:\n'
+    '\tv_mul_f32 v0, 0x3e800000, v0    // 000000001104: 100000FF 3E800000\n'
+    '\n'
+    '0000000000002000 <_ZL5otherv>:\n'
+    '\tv_mul_f32 v0, 0x40400000, v0    // 000000002000: 100000FF 40400000\n'
+)
+
+
+def test_callee_literals_included_and_negative_offset():
+    ks = ca.split_kernels(CALLS)
+    addr = {0x1000: '_Z6kernelv', 0x1104: '_ZL6helperv', 0x2000: '_ZL5otherv'}
+    assert ca.call_targets(ks['_Z6kernelv']) == {0x1104}
+    lines = ca.with_callees('_Z6kernelv', ks.__getitem__, addr)
+    got = ca.extract_literals(lines)
+    assert 0x3e800000 in got and 0x40400000 not in got
+    back = ['s_getpc_b64 s[2:3]  // 000000009000: BE824700', 's_add_u32 s2, s2, 0xffffff00  // 000000009004: X',
+            's_addc_u32 s3, s3, lit(0xffffffff)  // 00000000900C: Y']
+    assert ca.call_targets(back) == {0x9004 - 0x100}
+
+
+def test_carry_out_register_is_not_a_read():
+    lines = ['s_mov_b32 s5, 0x76543210', 'v_permlanex16_b32 v1, v1, s5, 0xfedcba98',
+             'v_div_scale_f32 v86, s5, v68, v67, v68', 'v_mul_f32 v1, s5, v1']
+    assert 0x76543210 in ca.extract_int_role(lines)
+    lines = ['s_mov_b32 s5, 0x76543210', 'v_div_scale_f32 v86, s5, v68, v67, v68', 'v_mul_f32 v1, s5, v1']
+    assert ca.extract_int_role(lines) == set()
+
+
+def test_rodata_words_parse(monkeypatch):
+    text = ('x.co:\tfile format elf64-amdgpu\nContents of section .rodata:\n'
+            ' 0940 000080bf 000032bf 000006bf 0000cabe  ......2.........\n'
+            ' 0950 0000a33d 00000000                    ...=....\n')
+
+    class R:
+        stdout = text
+
+    monkeypatch.setattr(ca.subprocess, 'run', lambda *a, **k: R())
+    assert ca.rodata_words(Path('x.co')) == {0xbf800000, 0xbf320000, 0xbf060000, 0xbeca0000, 0x3da30000, 0}
+
+
+def test_exception_turns_gap_into_ok_with_reason(tmp_path):
+    f = tmp_path / 'ex.tsv'
+    f.write_text('# c\nk_dv_quant\t0xbd4ccccd\tunrolled fma folded\n')
+    ex = ca.load_exceptions(f)
+    assert ca.excused_for('_ZN7halogen10k_dv_quantEPKt', ex) == {0xbd4ccccd: 'unrolled fma folded'}
+    assert ca.excused_for('_ZN7halogen5k_foo', ex) == {}
+    c = ca.compare_sets({0xbd4ccccd, 0x358637bd}, set(), excused={0xbd4ccccd: 'unrolled fma folded'})
+    assert c.missing == [0x358637bd]
+    assert ca.verdict(c).startswith('AUDIT GAP 0x358637bd')
+    c2 = ca.compare_sets({0xbd4ccccd}, set(), excused={0xbd4ccccd: 'unrolled fma folded'})
+    assert ca.verdict(c2) == 'AUDIT OK (exception: 0xbd4ccccd (-0.05) unrolled fma folded)'
