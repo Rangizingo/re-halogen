@@ -188,3 +188,7 @@ Collected by cherry-pick of the agent commit 72fde97 (f39fae7 here); table g24.m
 | ht_deq_orig_b4_f1_t512_nan_dense.json N=3 | ht_deq_orig<4,1,16> | MATCH | MISMATCH diff=17 |
 
 Every family's NaN specs include one that fails on the original and passes on the fix. The sparse ht_deq NaN specs are kept as extra coverage, not as the proof.
+
+## g33 (integer-bound review: sampling, ix, gather/embed/hyper, argmax, route_logits), s7 2026-10-11
+
+182 pairs, all EQUIVALENT (rewrite/const-audit-exceptions.d/g33.tsv), 0 REAL. Cites re-read in kernels-disasm-v2/codeobj_53000.s: :1213 `v_cmp_gt_f32_e64 s0, 0x7f800000, v6` (a float compare against +inf, rewrite smpg_common.h:189 `0x7f800000 > fabsf(l2)` folded to v_cmp_class 0x1f8), :45383 `v_add_nc_u32 v7, -4, v7` (the blockDim==1 unrolled-loop counter), :894540 `s_lshr_b32 s2, s2, 27` (K/32 round-toward-zero bias). All as the rows say. New blockDim-1 specs re-run, fresh seeds: gather_slots_h_b1 seeds 51,52 x N 5,17 4 of 4 MATCH; hyper_seed_b1 seed 51 N=17 MATCH.

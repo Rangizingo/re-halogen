@@ -1,0 +1,84 @@
+{
+ "grid": [
+  "=N",
+  1,
+  1
+ ],
+ "block": [
+  1,
+  1,
+  1
+ ],
+ "buffers": {
+  "out": {
+   "bytes": "=(N*2560+64)*2",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  },
+  "tab": {
+   "bytes": 256000,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED",
+    "lo": -4,
+    "hi": 4
+   }
+  },
+  "ids": {
+   "bytes": "=(N+0)*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED+7",
+    "lo": -3,
+    "hi": 54
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "out"
+  },
+  {
+   "offset": 8,
+   "buffer": "tab"
+  },
+  {
+   "offset": 16,
+   "buffer": "ids"
+  },
+  {
+   "offset": 24,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 28,
+   "type": "i32",
+   "value": "=N-1"
+  },
+  {
+   "offset": 32,
+   "type": "i32",
+   "value": 50
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/embed.hip",
+  "rewrite_kernel": "k_embed_image",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "u16"
+   }
+  ]
+ }
+}
