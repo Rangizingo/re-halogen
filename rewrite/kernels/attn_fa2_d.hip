@@ -1,0 +1,263 @@
+// g34 sparse FaSel (ids/cnt column mask, tilemask tile skip, A=2 OPT&2 staged K/V) merged into g25's attn_fa2_c.hip (block-wide tile bound).
+// 0xffff = default all-columns mask of a row (kernels-disasm-v2/codeobj_1513000.s:15462). Sparse notes: see attn_fa2_s.hip.
+// g25 copy of attn_fa2.hip: the key-tile loop bound is the vendor's block-wide bound (see the "bound" comment in fa_core).
+// Rewrites of the "attn_fa2" family: halogen::(anonymous)::k_attn_fa2<A,B,C,OPT,X,Y> (codeobj_1513000, flash_serve, gfx1151).
+// Build: hipcc --genco --no-gpu-bundle-output --offload-arch=gfx1151 -O3 -o attn_fa2.co attn_fa2.hip
+// Listing: kernels-disasm/codeobj_1513000.s (not in git); the default decode/prefill instance <2,1,true,5,1,true> is lines
+// 130254-139054. Cites are file lines of that listing.
+#include <hip/hip_runtime.h>
+// No mul+add fusion: every fma below is written out explicitly (the vendor uses v_fma/v_fmac where it fuses).
+#pragma clang fp contract(off)
+
+typedef __bf16 v16bf __attribute__((ext_vector_type(16)));
+typedef float v8f __attribute__((ext_vector_type(8)));
+
+__device__ static inline float bf2f(unsigned short b) { return __uint_as_float((unsigned)b << 16); }
+// bf16 RNE, no NaN special case: v_bfe_u32 x,v,16,1 ; v_add3_u32 v,v,x,0x7fff, high half kept (:131575-131577).
+__device__ static inline unsigned short f2bf_rne(float f) {
+  unsigned u = __float_as_uint(f);
+  return (unsigned short)((u + ((u >> 16) & 1u) + 0x7fffu) >> 16);
+}
+
+// 2^x the way the kernel does it (:131563-131572): if x < -126 (0xc2fc0000) add 64 first, v_exp_f32, then v_ldexp_f32(-64).
+__device__ static inline float exp2s(float x) {
+  bool small = x < __uint_as_float(0xc2fc0000u);
+  float y = small ? x + __uint_as_float(0x42800000u) : x;
+  float e = __builtin_amdgcn_exp2f(y);
+  return small ? __builtin_amdgcn_ldexpf(e, -64) : e;
+}
+
+// expf(x) as expanded in the X=0 instances (listing :211503-211520 for <2,1,true,0,0,false>): t = x*log2e ; lo = fma(log2e, x, -t) ;
+// r = rndne(t) ; f = (t - r) + fma(0x32a5705f, x, lo) ; e = ldexp(v_exp_f32(f), (int)r) ; x < -103.28 -> 0 ; x > 88.72 -> +inf.
+__device__ static inline float expf_v(float x) {
+  const float L2E = __uint_as_float(0x3fb8aa3bu);
+  float t = x * L2E;
+  float lo = __builtin_fmaf(L2E, x, -t);
+  float r = __builtin_rintf(t);
+  float f = t - r;
+  lo = __builtin_fmaf(__uint_as_float(0x32a5705fu), x, lo);
+  f = f + lo;
+  float e = __builtin_amdgcn_ldexpf(__builtin_amdgcn_exp2f(f), (int)r);
+  e = !(__uint_as_float(0xc2ce8ed0u) > x) ? e : 0.0f;
+  e = !(__uint_as_float(0x42b17218u) < x) ? e : __uint_as_float(0x7f800000u);
+  return e;
+}
+
+// expf(-g) as expanded in the epilogue (:132395-132412): t = g * -log2e ; lo = fma(-log2e, g, -t) ; r = rndne(t) ;
+// f = (t - r) + fma(g, -1.9e-8 (0xb2a5705f), lo) ; e = ldexp(v_exp_f32(f), (int)r) ; g > 104.56 -> 0 ; g < -88.72 -> +inf.
+__device__ static inline float expneg(float g) {
+  const float NL2E = __uint_as_float(0xbfb8aa3bu);
+  float t = g * NL2E;
+  float lo = __builtin_fmaf(NL2E, g, -t);
+  float r = __builtin_rintf(t);
+  float f = t - r;
+  lo = __builtin_fmaf(g, __uint_as_float(0xb2a5705fu), lo);
+  f = f + lo;
+  float e = __builtin_amdgcn_ldexpf(__builtin_amdgcn_exp2f(f), (int)r);
+  e = !(__uint_as_float(0x42ce8ed0u) < g) ? e : 0.0f;
+  e = !(__uint_as_float(0xc2b17218u) > g) ? e : __uint_as_float(0x7f800000u);
+  return e;
+}
+
+struct FaSel {
+  const unsigned* tilemask;  // +0x00, null in dense mode
+  const int* ids;            // +0x08
+  const int* cnt;            // +0x10
+  unsigned words;            // +0x18
+  unsigned stride;           // +0x1c
+};
+
+// One wave handles one 16-row query tile of one q head:
+//   S = sum over 16 k-chunks of wmma(Q[:, 16kc..], K^T) (starting from 0, :130824-130929), s = S * 0x3db8aa3b (= 0.0625*log2e, :130931)
+//   masked (key > row + sel[0], or key >= m) -> -inf
+//   per row: m_new = max(m_old, s_0..s_15) ; p_j = exp2s(s_j - m_new) ; P_j = bf16_rne(p_j) ; l_tile = ((p_0+p_1)+p_2)+... ;
+//   alpha = exp2s(m_old - m_new) if m_old > -1e29 else 0 (:132214-132229) ; l = fma(alpha, l_old, l_tile) ; O *= alpha (:132278-132341)
+//   O += wmma(P, V tile) per 16-wide d chunk (:130660-130720), C input = alpha * O.
+//   end: out = bf16_rne( (O * (1.0f / l)) / (1.0f + expneg(gate)) ) (:132359-132434), gate at row*12288 + head*512 + 256 + d.
+__shared__ float sc[24][16][17];
+__shared__ unsigned short pb[24][16][16];
+__shared__ float mrow[24][16], lrow[24][16], arow[24][16];
+__shared__ unsigned msk[24][16];
+
+// Column mask of key tile t for one query row (vendor :15462-15790 for <1,1,true,5,1,true>, v158 = cnt, v161 = lim, v144 = idx):
+// nibble k (4 keys, block 4t+k) is set when block 4t+k >= lim (the row's current partial block and later) or the row's sorted id list holds it.
+__device__ static inline unsigned sp_mask(const int* idl, int cnt, int lim, int t, int& idx) {
+  const int b0 = 4 * t;
+  while (idx < cnt && idl[idx] < b0) idx++;
+  unsigned mk = 0;
+  int j = idx;
+  for (int k = 0; k < 4; k++) {
+    const int b = b0 + k;
+    if (b >= lim) { mk |= 0xfu << (4 * k); continue; }
+    while (j < cnt && idl[j] < b) j++;
+    if (j < cnt && idl[j] == b) mk |= 0xfu << (4 * k);
+  }
+  return mk;
+}
+
+
+template <int E, int PF, int MM = 0>
+__device__ static inline void fa_core(const unsigned short* Q, const unsigned short* K, const unsigned short* V, long stride,
+                                      const unsigned short* gate, unsigned short* O, int base, int n, int m, int g, int head,
+                                      int row0, int w, int blast, const FaSel& fs, int tile) {
+  const int lane = threadIdx.x & 31;
+  const int col = lane & 15, half = lane >> 4;
+  // E = 1 (the X=1 instances): s = S * (0.0625*log2e) and exp2s ; E = 0: s = S * 0.0625 and expf_v (:210860, :211503).
+  const float SC = E ? __uint_as_float(0x3db8aa3bu) : __uint_as_float(0x3d800000u);
+  const float NEG_INF = __uint_as_float(0xff800000u);
+
+  if (lane < 16) {
+    mrow[w][lane] = __uint_as_float(0xf149f2cau);
+    lrow[w][lane] = 0.0f;
+  }
+  v8f Oacc[16];
+  for (int c = 0; c < 16; c++)
+    for (int i = 0; i < 8; i++) Oacc[c][i] = 0.0f;
+  const unsigned short* qrow = Q + (long)(row0 + col) * 6144 + head * 256;
+
+  // sparse state of this lane's row (:14773-14860): s26 = ids != null && row < n ; v158 = cnt[row] ; v140 = ids + row * stride ;
+  // s[24:25] = tilemask + tile * words ; v161 = (row + sel[0] + 1) / 4 (signed, toward zero).
+  const int lrow_i = row0 + (lane & 15);
+  const bool sp = fs.ids != nullptr && lrow_i < n;
+  const int cnt = sp ? fs.cnt[lrow_i] : 0;
+  const int* idl = fs.ids ? fs.ids + (long)lrow_i * (int)fs.stride : nullptr;
+  const unsigned* tm = fs.tilemask ? fs.tilemask + (long)tile * (int)fs.words : nullptr;
+  const int p1 = lrow_i + base + 1;
+  const int lim = (p1 + ((p1 >> 31) & 3)) >> 2;
+  int sidx = 0;
+  // bound (k_attn_fa2<2,1,true,5,1,true>, kernels-disasm-v2/codeobj_1513000.s): the trip count is per BLOCK, not per 16-row sub-tile.
+  //   :126412 s_or_b32 s27, s27, 31      s27 = (tile << 5) | 31, the last query row of the whole block (A=1 instances: (tile << 4) | 15)
+  //   :126413-126416 s_add_i32 s0, s18, -1 ; s_min_i32 s0, s27, s0      clamp to n - 1 (s18 = n, kernarg +0x38)
+  //   :126418 s_add_i32 s0, s0, s28      + sel[0] (s28 = sel[0])
+  //   :126419 s_cmp_lt_i32 s0, -15 ; :126553 s_cbranch_scc1 -> epilogue   below -15: no tile at all
+  //   :126559-126561 s_add_i32 s0, s0, ((s0 >> 31) >>> 28) ; s_ashr_i32 s16, s0, 4      s16 = trunc(s0 / 16), the LAST tile index
+  //   :126786-126789 s_cmp_eq_u32 s11, s16 ; s_cbranch_scc1 -> exit      tiles 0..s16 inclusive (do-while)
+  // Every sub-tile of the block therefore runs the same tiles, including tiles fully masked for its own rows.
+  int lastpos = min(blast, n - 1) + base;
+  int ntiles = lastpos < -15 ? 0 : (lastpos + ((lastpos >> 31) & 15)) / 16 + 1;
+  int ktile = 0;   // tile whose K/V are staged for the next executed iteration (PF)
+  for (int t = 0; t < ntiles; t++) {
+    if (tm && !((tm[t >> 5] >> (t & 31)) & 1u)) continue;   // :15225-15236 tile not selected
+    v8f S;
+    for (int i = 0; i < 8; i++) S[i] = 0.0f;
+    int kidx = min(16 * (PF ? ktile : t) + col, m - 1);   // PF: A=2 OPT&2 stage the next tile's K/V in the previous executed iteration (1513000.s:161090-161121)
+    const unsigned short* krow = K + (long)kidx * stride + g * 256;
+    for (int kc = 0; kc < 16; kc++) {
+      v16bf a = *(const v16bf*)(qrow + kc * 16);
+      v16bf b = *(const v16bf*)(krow + kc * 16);
+      S = __builtin_amdgcn_wmma_f32_16x16x16_bf16_w32(a, b, S);
+    }
+    if (lane < 16) msk[w][lane] = sp ? sp_mask(idl, cnt, lim, t, sidx) : 0xffffu;
+    __builtin_amdgcn_wave_barrier();
+    __builtin_amdgcn_fence(__ATOMIC_SEQ_CST, "wavefront");
+    for (int i = 0; i < 8; i++) {
+      int r = 2 * i + half;
+      int key = 16 * t + col;
+      float s = S[i] * SC;
+      bool ok = (key <= row0 + r + base) && (!MM || key < m) && ((msk[w][r] >> col) & 1u);
+      sc[w][r][col] = ok ? s : NEG_INF;
+    }
+    __builtin_amdgcn_wave_barrier();
+    __builtin_amdgcn_fence(__ATOMIC_SEQ_CST, "wavefront");
+    if (lane < 16) {
+      float sv[16];
+      for (int j = 0; j < 16; j++) sv[j] = sc[w][lane][j];
+      float mo = mrow[w][lane];
+      float mn = fmaxf(fmaxf(mo, sv[0]), sv[1]);
+      for (int j = 2; j < 16; j += 2) mn = fmaxf(fmaxf(mn, sv[j]), sv[j + 1]);
+      float lt = 0.0f;
+      float pv[16];
+      for (int j = 0; j < 16; j++) {
+        pv[j] = E ? exp2s(sv[j] - mn) : expf_v(sv[j] - mn);
+        pb[w][lane][j] = f2bf_rne(pv[j]);
+      }
+      lt = pv[0] + pv[1];
+      for (int j = 2; j < 16; j++) lt = lt + pv[j];
+      float al = (mo > __uint_as_float(0xefa18f08u)) ? (E ? exp2s(mo - mn) : expf_v(mo - mn)) : 0.0f;
+      lrow[w][lane] = __builtin_fmaf(al, lrow[w][lane], lt);
+      mrow[w][lane] = mn;
+      arow[w][lane] = al;
+    }
+    __builtin_amdgcn_wave_barrier();
+    __builtin_amdgcn_fence(__ATOMIC_SEQ_CST, "wavefront");
+    v16bf pa;
+    for (int k = 0; k < 16; k++) pa[k] = __builtin_bit_cast(__bf16, pb[w][col][k]);
+    for (int c = 0; c < 16; c++) {
+      for (int i = 0; i < 8; i++) Oacc[c][i] = Oacc[c][i] * arow[w][2 * i + half];
+      v16bf vb;
+      for (int k = 0; k < 16; k++) {
+        int vk = min(16 * (PF ? ktile : t) + k, m - 1);
+        vb[k] = __builtin_bit_cast(__bf16, V[(long)vk * stride + g * 256 + c * 16 + col]);
+      }
+      Oacc[c] = __builtin_amdgcn_wmma_f32_16x16x16_bf16_w32(pa, vb, Oacc[c]);
+    }
+    ktile = t + 1;
+  }
+  __builtin_amdgcn_wave_barrier();
+  for (int i = 0; i < 8; i++) {
+    int r = 2 * i + half;
+    int grow = row0 + r;
+    float inv = 1.0f / lrow[w][r];
+    if (grow < n) {
+      for (int c = 0; c < 16; c++) {
+        int d = c * 16 + col;
+        float x = Oacc[c][i] * inv;
+        float gv = bf2f(gate[(long)grow * 12288 + head * 512 + 256 + d]);
+        float den = 1.0f + expneg(gv);
+        O[(long)grow * 6144 + head * 256 + d] = f2bf_rne(x / den);
+      }
+    }
+  }
+}
+
+template <int NSUB, int E, int PF>
+__device__ static inline void fa2_body(const unsigned short* Q, const unsigned short* K, const unsigned short* V, long stride,
+                                       const unsigned short* gate, unsigned short* O, const int* sel, int n, int m, int g,
+                                       int tile, const FaSel& fs) {
+  const int w = threadIdx.x >> 5;
+  const int sub = w / 12, hig = w % 12;
+  if (sub >= NSUB) return;
+  fa_core<E, PF>(Q, K, V, stride, gate, O, sel[0], n, m, g, g * 12 + hig, (tile * NSUB + sub) * 16, w, (tile * NSUB + NSUB) * 16 - 1, fs, tile);
+}
+
+// Launch shapes (host, indexer-attn-host-r2.md section 1): A = q-tile multiplicity per block (block 384*A threads). The Y=true
+// variants (OPT 5, X 1) use a flat 1-D grid (2*T, 1): tile group = blockIdx.x >> 1, kv head = blockIdx.x & 1; every other
+// instance uses grid (T, 2): tile group = blockIdx.x, kv head = blockIdx.y.
+template <int A, int B, int C, int D, int E, int F>
+__device__ static inline void fa2_dispatch(const unsigned short* Q, const unsigned short* K, const unsigned short* V, long stride,
+                                           const unsigned short* gate, unsigned short* O, const int* sel, int n, int m, const FaSel& fs) {
+  if (F) fa2_body<A, E, (A == 2 && ((D >> 1) & 1))>(Q, K, V, stride, gate, O, sel, n, m, blockIdx.x & 1, blockIdx.x >> 1, fs);
+  else fa2_body<A, E, (A == 2 && ((D >> 1) & 1))>(Q, K, V, stride, gate, O, sel, n, m, blockIdx.y, blockIdx.x, fs);
+}
+#define FA2(A, B, C, D, E, F)                                                                                       \
+  extern "C" __global__ void k_attn_fa2_##A##_##B##_##C##_##D##_##E##_##F(                                           \
+      const unsigned short* Q, const unsigned short* K, const unsigned short* V, long stride,                       \
+      const unsigned short* gate, unsigned short* O, const int* sel, int n, int m, FaSel fs) {                      \
+    fa2_dispatch<A, B, C, D, E, F>(Q, K, V, stride, gate, O, sel, n, m, fs);                                            \
+  }
+FA2(1, 1, 0, 0, 0, 0)
+FA2(1, 0, 1, 0, 0, 0)
+FA2(1, 0, 0, 0, 0, 0)
+FA2(1, 1, 1, 5, 1, 1)
+FA2(1, 1, 1, 5, 1, 0)
+FA2(1, 1, 1, 1, 0, 0)
+FA2(1, 1, 1, 2, 0, 0)
+FA2(1, 1, 1, 3, 0, 0)
+FA2(1, 1, 1, 4, 0, 0)
+FA2(1, 1, 1, 5, 0, 0)
+FA2(1, 1, 1, 6, 0, 0)
+FA2(1, 1, 1, 7, 0, 0)
+FA2(1, 1, 1, 0, 0, 0)
+FA2(2, 1, 0, 0, 0, 0)
+FA2(2, 0, 1, 0, 0, 0)
+FA2(2, 0, 0, 0, 0, 0)
+FA2(2, 1, 1, 5, 1, 1)
+FA2(2, 1, 1, 5, 1, 0)
+FA2(2, 1, 1, 1, 0, 0)
+FA2(2, 1, 1, 2, 0, 0)
+FA2(2, 1, 1, 3, 0, 0)
+FA2(2, 1, 1, 4, 0, 0)
+FA2(2, 1, 1, 5, 0, 0)
+FA2(2, 1, 1, 6, 0, 0)
+FA2(2, 1, 1, 7, 0, 0)
+FA2(2, 1, 1, 0, 0, 0)
