@@ -312,3 +312,93 @@ def test_exception_turns_gap_into_ok_with_reason(tmp_path):
     assert ca.verdict(c).startswith('AUDIT GAP 0x358637bd')
     c2 = ca.compare_sets({0xbd4ccccd}, set(), excused={0xbd4ccccd: 'unrolled fma folded'})
     assert ca.verdict(c2) == 'AUDIT OK (exception: 0xbd4ccccd (-0.05) unrolled fma folded)'
+
+
+# ---- integer literals (QA on PR #24: ruling 4c covers every literal, integer and float) ----
+
+def test_int_present_reads_inline_ints_offsets_and_hex():
+    got = ca.int_present(['v_add_nc_u32 v1, 0x7e0, v2', 'v_cmp_gt_u32 vcc_lo, 32, v0', 'ds_load_b32 v1, v2 offset:2016',
+                          'ds_load_2addr_b32 v[0:1], v2 offset0:4 offset1:8', 'global_load_b32 v1, v[2:3], off offset:-64',
+                          's_waitcnt vmcnt(7)', 's_cbranch_scc1 99'])
+    assert {0x7e0, 32, 2016, 4, 16, 8, 32, (-64) & 0xffffffff} <= got
+    assert 7 not in got and 99 not in got
+
+
+def test_inline_int_is_a_vendor_literal_except_memory_and_counters():
+    got = ca.inline_ints(['v_cmp_gt_u32 vcc_lo, 48, v0', 'v_lshlrev_b32 v1, 2, v1', 'ds_load_b32 v1, v2 offset:40',
+                          's_waitcnt vmcnt(3)', 'v_mul_f32 v0, 0.5, v1', 'v_add_nc_u32 v1, -16, v1'])
+    assert got == {48, 2, (-16) & 0xffffffff}
+
+
+def test_range_role_direct_and_through_mov():
+    lines = ['v_cmp_gt_u32 vcc_lo, 0x1ff, v0', 's_mov_b32 s4, 0x3c00', 'v_min_u32 v1, s4, v1', 'v_med3_i32 v2, v2, 0x7f, -16',
+             'v_and_b32 v3, 0xffff, v3', 's_movk_i32 s7, 0x4460', 's_cselect_b32 s8, 0x60, 0x70']
+    assert ca.range_role(lines) == {0x1ff, 0x3c00, 0x7f, (-16) & 0xffffffff}
+
+
+def test_range_role_through_bound_arithmetic():
+    lines = ['s_add_i32 s5, s2, 0xfffff800', 'v_cmp_gt_i32 vcc_lo, s5, v0']
+    assert ca.range_role(lines) == {0xfffff800}
+
+
+def test_unread_literal_has_no_role():
+    lines = ['v_mov_b32 v9, 0xf004', 'v_add_nc_u32 v1, 0x60, v2', 'global_store_b32 v[4:5], v1, off']
+    assert ca.roled(lines) == {0x60}
+
+
+def _ints(vendor, rewrite, rng=frozenset(), roled=None, excused=None):
+    return ca.compare_sets(vendor, rewrite, int_role=set(vendor), range_vals=set(rng),
+                           roled=set(vendor) if roled is None else set(roled), excused=excused)
+
+
+def test_data_path_int_gap_is_explained_by_role():
+    c = _ints({0x7e0, 0xffff0000}, {0x10})
+    assert c.int_missing == [0x7e0, 0xffff0000] and c.int_gap == []
+    assert ca.verdict(c) == 'AUDIT OK'
+
+
+def test_bound_gap_fails_unless_equal_adjacent_or_complement():
+    c = _ints({0x1ff, 0x400, 0x3c00, 0x10}, {0x200, 0xfffffc00}, rng={0x1ff, 0x400, 0x3c00, 0x10})
+    assert c.int_gap == [0x10, 0x3c00]
+    assert ca.verdict(c) == 'AUDIT GAP int 0x10 (bound), int 0x3c00 (bound)'
+
+
+def test_unknown_role_gap_fails():
+    c = _ints({0xf004}, set(), roled=set())
+    assert c.int_gap == [0xf004]
+    assert ca.verdict(c) == 'AUDIT GAP int 0xf004 (no reader)'
+
+
+def test_bound_not_excused_by_sign_flip_twin():
+    c = _ints({0x7f}, {0x807f}, rng={0x7f})
+    assert c.int_gap == [0x7f] and c.flipped == []
+
+
+def test_int_exception_explains_bound():
+    c = _ints({0x3c00}, set(), rng={0x3c00}, excused={0x3c00: 'loop end in bytes; rewrite counts rows'})
+    assert c.int_gap == []
+    assert ca.verdict(c) == 'AUDIT OK (exception: 0x3c00 loop end in bytes; rewrite counts rows)'
+
+
+def test_row_lists_bound_gaps():
+    c = _ints({0x3c00, 0x7e0}, set(), rng={0x3c00})
+    assert ca.format_row('i', 'o', c) == '| i | o | 2 | 0 |  |  | 0x7e0 | AUDIT GAP int 0x3c00 (bound) |'
+
+
+def test_audit_end_to_end_bound_offset_and_complement():
+    vendor = ['v_cmp_gt_u32 vcc_lo, 0x1ff, v0', 'v_add_nc_u32 v1, 0x7e0, v2', 'ds_store_b32 v1, v3',
+              'v_and_b32 v4, 0xffffff00, v4', 'v_cmp_lt_i32 vcc_lo, 0x3c00, v5', 'v_mul_f32 v6, 0x3e22f983, v6']
+    rewrite = ['v_cmp_lt_u32 vcc_lo, 0x200, v0', 'ds_store_b32 v2, v3 offset:64', 'v_and_b32 v4, -0x100, v4',
+               'v_mul_f32 v6, 0.15915494, v6']
+    c = ca.audit(vendor, rewrite)
+    assert c.int_missing == [0x7e0] and c.int_gap == [0x3c00] and c.missing == []
+    assert ca.verdict(c) == 'AUDIT GAP int 0x3c00 (bound)'
+
+
+def test_exceptions_dir_merged_with_main_file(tmp_path):
+    main = tmp_path / 'ex.tsv'
+    main.write_text('k_a\t0x10\tmain reason\n')
+    d = tmp_path / 'const-audit-exceptions.d'
+    d.mkdir()
+    (d / 'g30.tsv').write_text('# group 30\nk_b\t0x3c00\tloop end in bytes\n')
+    assert ca.load_exceptions(main) == [('k_a', 0x10, 'main reason'), ('k_b', 0x3c00, 'loop end in bytes')]

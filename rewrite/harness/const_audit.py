@@ -11,14 +11,15 @@ disassembled with the same llvm-objdump), and reports vendor values the rewrite 
 Rerunning skips instances already in --out (AUDIT ERROR rows are retried).
 
 Extracted: hex literals (0x...), inline float constants (0.5, -4.0, 0.15915494) as bit patterns, K of fmaak/madak/fmamk,
-SOPK immediates. Ignored: decimal integers (inline ints, branch offsets), s_waitcnt/s_delay_alu operands, every SMEM/VMEM/DS
+SOPK immediates, decimal inline integers. Ignored: branch offsets, s_waitcnt/s_delay_alu operands, every SMEM/VMEM/DS
 instruction (offsets), modifiers (offset:, row_shr:, op_sel:), registers, text after '//'. 64-bit values split into halves.
 f32 inline constants become f32 bits, f16 ops f16 bits, f64 ops the high word. A vendor value whose sign-flipped twin is
 in the rewrite is 'sign-flipped', not missing.
 Literals are collected over the kernel plus every device function it calls (pc-relative s_getpc/s_swappc calls), plus the
 rewrite object's .rodata words. Integer-role operands (masks, v_perm/v_permlane selectors, mul_hi magic, compiler udiv/logf
-expansions) are reported under int-only gaps, not as float gaps. rewrite/const-audit-exceptions.tsv (substring, hex, reason)
-turns a recorded explanation into 'AUDIT OK (exception: ...)'.
+expansions) are integers, accounted for by the integer rule (see the block above inline_ints): complement, bound +-1, or
+data-path role; a bound or an unread literal with no twin is 'AUDIT GAP int'. rewrite/const-audit-exceptions.tsv
+(substring, hex, reason) turns a recorded explanation of a float or integer into 'AUDIT OK (exception: ...)'.
 """
 import argparse
 import concurrent.futures as cf
@@ -40,7 +41,7 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parent.parent
 OBJDUMP = '/opt/homebrew/opt/llvm/bin/llvm-objdump'
 HEADER = ('| instance | object | vendor literals | rewrite literals | missing (vendor-only FLOAT) | extra (rewrite-only) '
-          '| int-only gaps (info) | verdict |\n'
+          '| int explained by data-path role | verdict |\n'
           '| --- | --- | --- | --- | --- | --- | --- | --- |\n')
 MAX_LIST = 40
 
@@ -262,10 +263,10 @@ def _sources(m: str, ops: list[str]) -> list[str]:
     return srcs
 
 
-def _consumers(parsed, start: int, dest: set[str]) -> tuple[int, int]:
-    """Count integer-role and other readers of `dest` after instruction `start`, following movs and cndmasks into
+def _readers(parsed, start: int, dest: set[str]) -> list[str]:
+    """Mnemonics of the instructions that read `dest` after instruction `start`, following movs and cndmasks into
     their destinations; each register's scan stops at its next plain write."""
-    ints = floats = 0
+    out: list[str] = []
     seen: set[tuple[int, str]] = set()
     work = [(start, frozenset(dest))]
     while work:
@@ -285,15 +286,20 @@ def _consumers(parsed, start: int, dest: set[str]) -> tuple[int, int]:
                     if key not in seen and o2 and not _NO_DEST.match(m2):
                         seen.add(key)
                         work.append((j, frozenset(_regs(o2[0]))))
-                elif is_int_role_mnemonic(m2):
-                    ints += 1
                 else:
-                    floats += 1
+                    out.append(m2)
             if not _NO_DEST.match(m2) and o2 and not hit:
                 live -= _regs(o2[0])
             if len(o2) > len(srcs) + 1 and not _NO_DEST.match(m2):
                 live -= set().union(*(_regs(o) for o in o2[1:len(o2) - len(srcs)]))
-    return ints, floats
+    return out
+
+
+def _consumers(parsed, start: int, dest: set[str]) -> tuple[int, int]:
+    """Count integer-role and other readers of `dest` after instruction `start` (see _readers)."""
+    rs = _readers(parsed, start, dest)
+    ints = sum(1 for m in rs if is_int_role_mnemonic(m))
+    return ints, len(rs) - ints
 
 
 def extract_int_role(lines: list[str]) -> set[int]:
@@ -347,6 +353,164 @@ def extract_literals(lines: list[str]) -> set[int]:
     return out
 
 
+# Integer literals (ruling 4c, every literal). A vendor integer the rewrite does not carry is accounted for in one of
+# three ways: the rewrite has its two's complement or bit complement (add vs sub, and vs andn2); it is a bound (read by a
+# compare, min, max or med3, directly, through movs, or through up to two add/sub/shift steps) and the rewrite has it
+# plus or minus one (x > 127 vs x >= 128); or it is a data-path operand (address offset, mask, shift, stride, selector,
+# multiplier) whose wrong value would change the bits of every lane that executes it, so the instance's bitwise MATCH
+# rows cover it. A bound or a literal nothing reads gets no role explanation: it fails unless the exceptions file
+# records why it differs. Memory-instruction offset fields and counters are encoding, not operands, on the vendor side;
+# on the rewrite side they count as places a vendor value can appear.
+
+_NOISE = ('s_waitcnt', 's_wait', 's_delay_alu', 's_branch', 's_cbranch', 's_clause', 's_nop', 's_sendmsg', 's_endpgm',
+          's_setprio', 's_sleep', 's_trap', 's_code_end', 's_inst_prefetch', 's_set_inst_prefetch', 's_getpc', 's_setpc',
+          's_swappc', 's_call', 's_barrier')
+_MEM = ('s_load', 's_buffer_load', 's_store', 's_buffer_store', 's_prefetch', 's_atc', 's_dcache', 'global_', 'flat_',
+        'scratch_', 'buffer_', 'ds_', 'image_', 'tbuffer_')
+_INT_TOK = re.compile(r'(?<![\w.:])-?\d+(?![\w.])')
+_OFFSET = re.compile(r'\boffset(\d?):(-?(?:0x[0-9a-fA-F]+|\d+))')
+_RANGE = re.compile(r'cmp|_min_|_max_|_med3_|_minmax|_maxmin')
+_BOUND_STEP = re.compile(r'^[vs]_(?:add|sub|subrev|lshl|lshr|ashr)\w*')
+
+
+def _code_parts(lines: list[str]):
+    for line in lines:
+        for part in line.split('//', 1)[0].split('::'):
+            bits = part.strip().split(None, 1)
+            if len(bits) == 2 and not bits[0].startswith(('.', '<')):
+                yield bits[0], bits[1]
+
+
+def inline_ints(lines: list[str]) -> set[int]:
+    """Vendor decimal integer operands (inline constants -16..64), outside memory instructions and counters."""
+    out: set[int] = set()
+    for mnem, ops in _code_parts(lines):
+        if mnem.startswith(_NOISE + _MEM):
+            continue
+        for t in _INT_TOK.findall(_REG_RANGE.sub('R', _MOD_PLAIN.sub(' ', _MOD_BRACKET.sub(' ', ops)))):
+            out.add(int(t) & 0xffffffff)
+    return out
+
+
+def int_present(lines: list[str]) -> set[int]:
+    """Every integer the rewrite ISA carries: hex and decimal operands, and memory offset fields (offset0/offset1 also
+    scaled by the element sizes 4 and 8 and the stride64 forms 256 and 512)."""
+    out: set[int] = set()
+    for mnem, ops in _code_parts(lines):
+        if mnem.startswith(_NOISE):
+            continue
+        for m in _OFFSET.finditer(ops):
+            v = int(m.group(2), 0)
+            out |= {(v * k) & 0xffffffff for k in ((1, 4, 8, 256, 512) if m.group(1) else (1,))}
+        for t in _operand_tokens(_REG_RANGE.sub('R', ops)):
+            if _HEX.match(t) or re.fullmatch(r'\d+', t):
+                v = int(t, 0)
+                out |= {v >> 32, v & 0xffffffff} if v > 0xffffffff else {v}
+        for t in _INT_TOK.findall(_MOD_PLAIN.sub(' ', _MOD_BRACKET.sub(' ', _REG_RANGE.sub('R', ops)))):
+            out.add(int(t) & 0xffffffff)
+    return out
+
+
+def _parsed(lines: list[str]):
+    out = []
+    for line in lines:
+        for part in line.split('//', 1)[0].split('::'):
+            p = _parse(part)
+            out.append((p, part) if p else None)
+    return out
+
+
+def _int_vals(part: str, mnem: str) -> set[int]:
+    vals = _instr_literals(part)
+    if not mnem.startswith(_NOISE + _MEM):
+        vals |= inline_ints([part])
+    return vals
+
+
+def _roles(lines: list[str], only: set[int] | None = None) -> tuple[set[int], set[int]]:
+    """(values with any reader or a direct non-mover use, values that reach a bound); `only` limits the trace to
+    those values (the audit traces just the vendor integers the rewrite lacks)."""
+    parsed = _parsed(lines)
+    roled: set[int] = set()
+    bound: set[int] = set()
+
+    def reaches_bound(i: int, dest: set[str], depth: int) -> bool:
+        for j, m in _reader_sites(parsed, i, dest):
+            if _RANGE.search(m + '_'):
+                return True
+            if depth < 2 and _BOUND_STEP.match(m) and reaches_bound(j, _regs(parsed[j][0][1][0]), depth + 1):
+                return True
+        return False
+
+    for i, item in enumerate(parsed):
+        if not item:
+            continue
+        (mnem, ops), part = item
+        vals = _int_vals(part, mnem)
+        if only is not None:
+            vals &= only
+        if not vals:
+            continue
+        mover = mnem.endswith(('_mov_b32', '_cndmask_b32', '_mov_b64')) or _PASSTHROUGH.search(mnem + '_')
+        if mover:
+            if ops and _readers(parsed, i, _regs(ops[0])):
+                roled |= vals
+                if reaches_bound(i, _regs(ops[0]), 0):
+                    bound |= vals
+            continue
+        roled |= vals
+        if _RANGE.search(mnem + '_') or (ops and not _NO_DEST.match(mnem) and _BOUND_STEP.match(mnem)
+                                          and reaches_bound(i, _regs(ops[0]), 1)):
+            bound |= vals
+    return roled, bound
+
+
+def _reader_sites(parsed, start: int, dest: set[str]) -> list[tuple[int, str]]:
+    """(index, mnemonic) of the non-mover readers of `dest` after `start`, through movs (as _readers)."""
+    out: list[tuple[int, str]] = []
+    work = [(start, frozenset(dest))]
+    seen: set[int] = set()
+    while work:
+        at, regs = work.pop()
+        live = set(regs)
+        for j in range(at + 1, min(len(parsed), at + 1 + _REG_WINDOW)):
+            nxt = parsed[j]
+            if not nxt or not live:
+                continue
+            (m2, o2), _ = nxt
+            srcs = _sources(m2, o2)
+            reads = set().union(*(_regs(o) for o in srcs)) if srcs else set()
+            hit = live & reads
+            if hit:
+                if m2.endswith(('_mov_b32', '_cndmask_b32')) or _PASSTHROUGH.search(m2 + '_'):
+                    if j not in seen and o2 and not _NO_DEST.match(m2):
+                        seen.add(j)
+                        work.append((j, frozenset(_regs(o2[0]))))
+                elif o2:
+                    out.append((j, m2))
+            if not _NO_DEST.match(m2) and o2 and not hit:
+                live -= _regs(o2[0])
+    return out
+
+
+def range_role(lines: list[str]) -> set[int]:
+    return _roles(lines)[1]
+
+
+def roled(lines: list[str]) -> set[int]:
+    return _roles(lines)[0]
+
+
+def audit(vlines: list[str], rlines: list[str], rdata: set[int] = frozenset(), excused: dict[int, str] | None = None) -> 'Cmp':
+    """Vendor literals (hex, inline float, inline int) against everything the rewrite carries."""
+    vendor = extract_literals(vlines) | inline_ints(vlines)
+    rewrite = extract_literals(rlines) | int_present(rlines) | set(rdata)
+    int_role = extract_int_role(vlines)
+    todo = {v for v in vendor - rewrite if not (is_float(v) and v not in int_role)}
+    has_reader, bound = _roles(vlines, todo)
+    return compare_sets(vendor, rewrite, int_role, excused, range_vals=bound, roled=has_reader | (vendor - todo))
+
+
 # ---- comparison and report -------------------------------------------------
 
 def fmt_val(v: int) -> str:
@@ -380,25 +544,41 @@ class Cmp:
     vendor: set[int] = field(default_factory=set)
     rewrite: set[int] = field(default_factory=set)
     missing: list[int] = field(default_factory=list)       # FLOAT only
-    int_missing: list[int] = field(default_factory=list)   # INT, informational
+    int_missing: list[int] = field(default_factory=list)   # INT, explained by data-path role
     extra: list[int] = field(default_factory=list)
     flipped: list[int] = field(default_factory=list)
-    excused: dict[int, str] = field(default_factory=dict)  # vendor-only FLOAT with a recorded explanation
+    excused: dict[int, str] = field(default_factory=dict)  # vendor-only value with a recorded explanation
+    int_gap: list[int] = field(default_factory=list)       # INT bound or unread literal with no twin
+    bound: set[int] = field(default_factory=set)
 
 
 def compare_sets(vendor: set[int], rewrite: set[int], int_role: set[int] = frozenset(),
-                 excused: dict[int, str] | None = None) -> Cmp:
-    c = Cmp(set(vendor), set(rewrite))
+                 excused: dict[int, str] | None = None, range_vals: set[int] = frozenset(),
+                 roled: set[int] | None = None) -> Cmp:
+    """roled None means every vendor value has a reader (callers without role data)."""
+    c = Cmp(set(vendor), set(rewrite), bound=set(range_vals))
     partners: set[int] = set()
+    excused = excused or {}
     for v in sorted(vendor - rewrite):
-        if _flip(v) in rewrite:
+        is_f = is_float(v) and v not in int_role
+        strict = not is_f and (v in range_vals or (roled is not None and v not in roled))
+        if not strict and _flip(v) in rewrite:
             c.flipped.append(v)
             partners.add(_flip(v))
-        elif is_float(v) and v not in int_role:
-            if excused and v in excused:
+        elif is_f:
+            if v in excused:
                 c.excused[v] = excused[v]
             else:
                 c.missing.append(v)
+        elif (~v) & 0xffffffff in rewrite or (-v) & 0xffffffff in rewrite:
+            continue
+        elif v in range_vals and ((v + 1) & 0xffffffff in rewrite or (v - 1) & 0xffffffff in rewrite):
+            continue
+        elif strict:
+            if v in excused:
+                c.excused[v] = excused[v]
+            else:
+                c.int_gap.append(v)
         else:
             c.int_missing.append(v)
     c.extra = sorted(rewrite - vendor - partners)
@@ -411,19 +591,29 @@ def _cap(vals: list[int]) -> str:
 
 
 def verdict(c: Cmp) -> str:
-    v = 'AUDIT GAP ' + _cap(c.missing) if c.missing else 'AUDIT OK'
+    gaps = [fmt_val(v) for v in c.missing[:MAX_LIST]]
+    gaps += [f'int {fmt_val(v)} ({"bound" if v in c.bound else "no reader"})' for v in c.int_gap[:MAX_LIST]]
+    if len(c.missing) + len(c.int_gap) > len(gaps):
+        gaps.append(f'+{len(c.missing) + len(c.int_gap) - len(gaps)} more')
+    bad = bool(c.missing or c.int_gap)
+    v = 'AUDIT GAP ' + ', '.join(gaps) if bad else 'AUDIT OK'
     if c.flipped:
-        v += ('; ' if c.missing else ' ') + f'(sign-flipped: {_cap(c.flipped)})'
+        v += ('; ' if bad else ' ') + f'(sign-flipped: {_cap(c.flipped)})'
     if c.excused:
-        v += ('; ' if c.missing else ' ') + '(exception: ' + '; '.join(f'{fmt_val(k)} {r}' for k, r in c.excused.items()) + ')'
+        v += ('; ' if bad else ' ') + '(exception: ' + '; '.join(f'{fmt_val(k)} {r}' for k, r in c.excused.items()) + ')'
     return v
 
 
 def load_exceptions(path: Path) -> list[tuple[str, int, str]]:
-    """TSV: mangled-name substring, hex value, reason. '#' lines ignored."""
+    """TSV: mangled-name substring, hex value, reason. '#' lines ignored. Also reads every *.tsv in the sibling
+    directory const-audit-exceptions.d/ (one file per review group)."""
+    path = Path(path)
+    files = [path] + sorted((path.parent / 'const-audit-exceptions.d').glob('*.tsv'))
     out = []
-    if Path(path).exists():
-        for line in Path(path).read_text().splitlines():
+    for f in files:
+        if not f.exists():
+            continue
+        for line in f.read_text().splitlines():
             if line.strip() and not line.startswith('#'):
                 sub, val, reason = (line.split('\t') + ['', ''])[:3]
                 out.append((sub, int(val, 16), reason.strip().replace('|', '/')))
@@ -658,9 +848,8 @@ def main(argv: list[str] | None = None) -> int:
                 with lock:
                     listing = listings.setdefault(obj, Listing(dis / f'{obj}.s'))
                 vlines = with_callees(n, listing.kernel_lines, listing.addr_map())
-                vl = extract_literals(vlines)
-                rlines = with_callees(rk, syms.__getitem__, raddr)
-                write(format_row(n, obj, compare_sets(vl, extract_literals(rlines) | rdata, extract_int_role(vlines), excused_for(n, exceptions))))
+                write(format_row(n, obj, audit(vlines, with_callees(rk, syms.__getitem__, raddr), rdata,
+                                               excused_for(n, exceptions))))
             except Exception as e:  # noqa: BLE001
                 write(error_row(n, obj, str(e)))
 
