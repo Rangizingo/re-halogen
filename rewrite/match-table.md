@@ -2,7 +2,7 @@
 
 What a MATCH row proves: the rewrite and the vendor kernel wrote identical output bytes (raw bits, NaN payloads included, plus a guard region past the end) for that spec, and both wrote it (an output equal to its pre-launch fill fails as UNTOUCHED). It does not prove identical intermediate math: a change that disappears in the output rounding (for example a 1-ulp change of an f32 constant before a bf16 store) still matches (refuter on PR #19). Element-wise kernels should also run an exhaustive input spec (every bf16 bit pattern) where the input type allows.
 
-Rows below are merged verbatim from the per-group tables in rewrite/tables/ (written by compare.py; negative-control tables excluded, see rewrite/tables/*-negctl.md). Per-group orchestrator checks: rewrite/reports/orchestrator-checks.md. Caveats: see "Caveats" at the end.
+Rows below are the original k_scale_silu rows (commit a006eed) plus rows merged verbatim from the per-group tables in rewrite/tables/ (written by compare.py; negative-control tables excluded, see rewrite/tables/*-negctl.md). Per-group orchestrator checks: rewrite/reports/orchestrator-checks.md. Caveats: see "Caveats" at the end.
 
 | instance | family | test spec | result | tolerance | date |
 | --- | --- | --- | --- | --- | --- |
@@ -19416,5 +19416,6 @@ Rows below are merged verbatim from the per-group tables in rewrite/tables/ (wri
 - MISMATCH rows above are earlier runs kept as compare.py wrote them (older spec versions, the vis_bias_gelu run before `fp contract(off)`, UNTOUCHED counter outputs); each such instance has later MATCH rows (orchestrator-checks.md g09, g10, g18).
 - k_lq4w (g01): rows need the per-instance compile flags set by rewrite/specs/lq4w_run_all.sh, lq4w_pair_run_all.sh and lq4w_grp_run_all.sh (HIPCC_COMPILE_FLAGS_APPEND, rewrite/reports/g01.md:14).
 - k_attn_qs bt4, bt4x, bt2w and bt2<0,x>: the g18b rows (rewrite/kernels/attn_qs.hip) pass only on their own specs; that rewrite is wrong near the -1e29 sentinel range (18,432 differing outputs on attn_qs_c_bt4_0_mid.json). The evidence for these instances is the g18c rows (rewrite/kernels/attn_qs_c.hip).
+- Rows marked `primed`: k_attn_qs<2,0> and <3,0> (below) and 6 supporting dnc_scan3w P5 rows (g19d, which is defined without priming).
 - k_attn_qs<2,0> and <3,0>: rows carry `primed`. The vendor kernel reads 48 KiB of LDS it never writes, so its output is defined only after a priming kernel (rewrite/reports/g18d.md); without priming five vendor runs differ from each other.
 - dnc_scan3w probes P5 and P8: defined (rewrite/reports/g19d.md); g19b's caveats came from the old listing.
