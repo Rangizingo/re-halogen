@@ -111,3 +111,9 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 - g10: 35 of 35 MATCH; the one MISMATCH row (dnc_ut5_norm_rs3.json seed 2 N 1000, n=12,582,912, max_abs inf with diff 0) is from an earlier spec version (later rows of the same case have n=18,874,368 and MATCH); negctl 8.
 - Re-runs seeds 7 and 11 (2 of 2 MATCH each): k_pen_scatter_rows_f32 on pen_scatter_rows.json N 100003; k_dnc_ut4<4,4,F,F,F> on dnc_ut4_base.json N 1000.
 - Control on pen_scatter: my first attempt edited 0x3ca00, which appears only in a comment (no-op, MATCH); the code constant 248320 to 248319: MISMATCH, 6 of 1,489,920 outputs differ (only rows whose ids land past the shifted slot change).
+
+## g18b (attn_qs), 2026-10-11, partial
+
+- 27 of 32 MATCH (331 rows, 0 MISMATCH), negctl 128 rows; specs committed. 5 BLOCKED (qs<2,0>, qs<3,0> stale LDS with run-to-run vendor variation; bt2<2,0>, <32,0>, <64,0> unset VGPRs) and weak controls (bt2<4,0>, sentinels) go to agent g18c, with the new compare.py per-output exclude option (BRIEF fourth addendum).
+- Re-run seeds 7 and 11: attn_qs_0_1.json at N 203: see next line.
+- MATCH seed=7 N=203 diff=0;MATCH seed=11 N=203 diff=0;
