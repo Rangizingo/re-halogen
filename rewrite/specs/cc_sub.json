@@ -1,0 +1,74 @@
+{
+ "grid": [
+  "=ceil_div(N,512)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "y": {
+   "bytes": "=(N+64)*4",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  },
+  "a": {
+   "bytes": "=N*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED",
+    "lo": -1000,
+    "hi": 1000
+   }
+  },
+  "b": {
+   "bytes": "=N*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+7",
+    "lo": -1000,
+    "hi": 1000
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "y"
+  },
+  {
+   "offset": 8,
+   "buffer": "a"
+  },
+  {
+   "offset": 16,
+   "buffer": "b"
+  },
+  {
+   "offset": 24,
+   "type": "i64",
+   "value": "=N"
+  }
+ ],
+ "dump": [
+  "y"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/cc.hip",
+  "rewrite_kernel": "k_cc_sub",
+  "outputs": [
+   {
+    "buffer": "y",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

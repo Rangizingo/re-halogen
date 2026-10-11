@@ -1,0 +1,83 @@
+{
+ "grid": [
+  "=N",
+  8,
+  1
+ ],
+ "block": [
+  16,
+  16,
+  1
+ ],
+ "buffers": {
+  "out": {
+   "bytes": "=N*65536+256",
+   "fill": {
+    "kind": "const",
+    "dtype": "f32",
+    "value": -99
+   }
+  },
+  "a": {
+   "bytes": "=N*65536",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "b": {
+   "bytes": "=N*65536",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+11",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "c": {
+   "bytes": "=N*65536",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+23",
+    "lo": -5,
+    "hi": 5
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "out"
+  },
+  {
+   "offset": 8,
+   "buffer": "a"
+  },
+  {
+   "offset": 16,
+   "buffer": "b"
+  },
+  {
+   "offset": 24,
+   "buffer": "c"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/cc.hip",
+  "rewrite_kernel": "k_cc_affine",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "f32"
+   }
+  ]
+ }
+}

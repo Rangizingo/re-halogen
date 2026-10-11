@@ -1,0 +1,112 @@
+{
+ "grid": [
+  2560,
+  "=N",
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "h": {
+   "bytes": "=N*10*640*2",
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED",
+    "lo": -2,
+    "hi": 2
+   }
+  },
+  "wq": {
+   "bytes": 3145728,
+   "fill": {
+    "kind": "rand",
+    "dtype": "f16",
+    "seed": "=SEED+3",
+    "lo": -0.5,
+    "hi": 0.5
+   }
+  },
+  "sel": {
+   "bytes": "=N*10*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED+1",
+    "lo": 0,
+    "hi": 2
+   }
+  },
+  "rw": {
+   "bytes": "=N*10*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "f32",
+    "seed": "=SEED+3",
+    "lo": 0.1,
+    "hi": 1
+   }
+  },
+  "out": {
+   "bytes": "=N*2560*2+128",
+   "fill": {
+    "kind": "const",
+    "dtype": "bf16",
+    "value": -99
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "h"
+  },
+  {
+   "offset": 8,
+   "buffer": "wq"
+  },
+  {
+   "offset": 16,
+   "buffer": "sel"
+  },
+  {
+   "offset": 24,
+   "buffer": "rw"
+  },
+  {
+   "offset": 32,
+   "type": "i64",
+   "value": 64
+  },
+  {
+   "offset": 40,
+   "type": "i64",
+   "value": 2097152
+  },
+  {
+   "offset": 48,
+   "type": "i64",
+   "value": 40
+  },
+  {
+   "offset": 56,
+   "buffer": "out"
+  }
+ ],
+ "dump": [
+  "out"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/expert.hip",
+  "rewrite_kernel": "k_expert_out_q4",
+  "outputs": [
+   {
+    "buffer": "out",
+    "dtype": "bf16"
+   }
+  ]
+ }
+}

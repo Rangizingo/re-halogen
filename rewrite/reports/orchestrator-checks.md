@@ -117,3 +117,8 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 - 27 of 32 MATCH (331 rows, 0 MISMATCH), negctl 128 rows; specs committed. 5 BLOCKED (qs<2,0>, qs<3,0> stale LDS with run-to-run vendor variation; bt2<2,0>, <32,0>, <64,0> unset VGPRs) and weak controls (bt2<4,0>, sentinels) go to agent g18c, with the new compare.py per-output exclude option (BRIEF fourth addendum).
 - Re-run seeds 7 and 11: attn_qs_0_1.json at N 203: see next line.
 - MATCH seed=7 N=203 diff=0;MATCH seed=11 N=203 diff=0;
+
+## g22 (i4r_rows, i4r_fold, i4r_gu, expert, moe, deq_aff, dv, cc, scatter, esc, sel), 2026-10-11, partial
+
+- 33 of 44 MATCH, 0 MISMATCH; negctl 52; specs committed. Worktree i4r_gu.hip / i4r_rows.hip differed from the Ai-core copies that produced the rows by two comment lines only (diff), synced. In-kernel :NNNNN cites may be off by tens of lines (agent note). 11 left (HtItem group, gl/gl_o, k_dv_quant) to agent g22b using committed file fills.
+- Re-run seeds 7 and 11 on dv_scatter.json N 100003: MATCH seed=7 N=100003 diff=0;MATCH seed=11 N=100003 diff=0;

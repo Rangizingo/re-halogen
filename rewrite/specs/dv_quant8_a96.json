@@ -1,0 +1,92 @@
+{
+ "grid": [
+  "=ceil_div(N*3,256)",
+  1,
+  1
+ ],
+ "block": [
+  256,
+  1,
+  1
+ ],
+ "buffers": {
+  "x": {
+   "bytes": 3072,
+   "fill": {
+    "kind": "rand",
+    "dtype": "bf16",
+    "seed": "=SEED",
+    "lo": -3,
+    "hi": 3
+   }
+  },
+  "dst": {
+   "bytes": "=N*4",
+   "fill": {
+    "kind": "iota",
+    "dtype": "i32",
+    "start": "=N-1",
+    "step": -1
+   }
+  },
+  "src": {
+   "bytes": "=N*4",
+   "fill": {
+    "kind": "rand",
+    "dtype": "i32",
+    "seed": "=SEED+1",
+    "lo": 0,
+    "hi": 16
+   }
+  },
+  "q": {
+   "bytes": "=N*102+64",
+   "fill": {
+    "kind": "const",
+    "dtype": "u8",
+    "value": 77
+   }
+  }
+ },
+ "args": [
+  {
+   "offset": 0,
+   "buffer": "x"
+  },
+  {
+   "offset": 8,
+   "buffer": "dst"
+  },
+  {
+   "offset": 16,
+   "buffer": "src"
+  },
+  {
+   "offset": 24,
+   "type": "i32",
+   "value": "=N"
+  },
+  {
+   "offset": 32,
+   "buffer": "q"
+  },
+  {
+   "offset": 40,
+   "type": "i32",
+   "value": 96
+  }
+ ],
+ "dump": [
+  "q"
+ ],
+ "compare": {
+  "rewrite_src": "../kernels/dv.hip",
+  "rewrite_kernel": "k_dv_quant8",
+  "outputs": [
+   {
+    "buffer": "q",
+    "dtype": "u8"
+   }
+  ]
+ }
+}
