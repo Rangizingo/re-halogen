@@ -263,8 +263,8 @@
   "out"
  ],
  "compare": {
-  "rewrite_src": "../kernels/dnc_scan3x.hip",
-  "rewrite_kernel": "k_s3x_b0_i30",
+  "rewrite_src": "../kernels/dnc_scan3x_b.hip",
+  "rewrite_kernel": "k_s3x_b0_i2_5",
   "outputs": [
    {
     "buffer": "sel",

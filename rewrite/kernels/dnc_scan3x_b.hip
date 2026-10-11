@@ -52,10 +52,11 @@ struct Lds {
 };
 
 // Default path (A = 2, b1 = T, b2 = F, b3 = T, i1 = 1, i2 = 0, i3 = 1, b4 = F).
-template <int A, bool B3, int I3>
+template <int A, bool B3, int I3, int I2 = 0, bool B1 = true>
 __device__ static inline void scan3x_body(
     const u16* qkv, const float* kf, const float* g, const float* vv, float* out, const int* idx, long n, u16* sel, int k,
-    const u16* m0, const u16* m1, const u16* m2, const float* kinv, DncTapArgs tap, DncNormFold nf) {
+    const u16* m0, const u16* m1, const u16* m2, const float* kinv, DncTapArgs tap, DncNormFold nf,
+    const float* f0 = nullptr, const float* f1 = nullptr, const float* f2 = nullptr) {
   constexpr int NC = 128 / A;     // slab width
   constexpr int NG = NC / 16;     // 16-column groups
   __shared__ Lds<A> L;
@@ -84,7 +85,7 @@ __device__ static inline void scan3x_body(
     }
     __syncthreads();
     // Kt[d][t]: thread = d (128 threads)                                     (231675-232268)
-    {
+    if (I2 == 0) {
       const int d = tid;
       for (int t = 0; t < 64; ++t) {
         int tok = min(base + t, k - 1);
@@ -107,7 +108,7 @@ __device__ static inline void scan3x_body(
       for (int gI = 0; gI < NG; ++gI) acc1[gI] = (f8){0, 0, 0, 0, 0, 0, 0, 0};
       for (int i = 0; i < 8; ++i) {
         h16 a;
-        for (int e = 0; e < 16; ++e) a[e] = (trow < k) ? ((const _Float16*)rp)[16 * i + e] : (_Float16)0.0f;
+        for (int e = 0; e < 16; ++e) a[e] = (trow < k) ? (B1 ? ((const _Float16*)rp)[16 * i + e] : to_h16x16(f1[((long)min(trow, k - 1) * 48 + head) * 128 + 16 * i + e])) : (_Float16)0.0f;
         for (int gI = 0; gI < NG; ++gI) {
           h16 b;
           for (int e = 0; e < 16; ++e) b[e] = to_h16x16(L.St[16 * gI + l16][16 * i + e]);
@@ -136,7 +137,7 @@ __device__ static inline void scan3x_body(
       for (int gI = 0; gI < NG; ++gI) acc2[gI] = (f8){0, 0, 0, 0, 0, 0, 0, 0};
       for (int i = 0; i < 8; ++i) {
         h16 a;
-        for (int e = 0; e < 16; ++e) a[e] = (trow < k) ? ((const _Float16*)rp)[16 * i + e] : (_Float16)0.0f;
+        for (int e = 0; e < 16; ++e) a[e] = (trow < k) ? (B1 ? ((const _Float16*)rp)[16 * i + e] : to_h16x16(f0[((long)min(trow, k - 1) * 48 + head) * 128 + 16 * i + e])) : (_Float16)0.0f;
         for (int gI = 0; gI < NG; ++gI) {
           h16 b;
           for (int e = 0; e < 16; ++e) b[e] = to_h16x16(L.St[16 * gI + l16][16 * i + e]);
@@ -150,7 +151,7 @@ __device__ static inline void scan3x_body(
       for (int gI = 0; gI < NG; ++gI) acc3[gI] = (f8){0, 0, 0, 0, 0, 0, 0, 0};
       for (int j = 0; j <= w; ++j) {
         h16 a;
-        for (int e = 0; e < 16; ++e) a[e] = rp[16 * j + e];
+        for (int e = 0; e < 16; ++e) a[e] = B1 ? rp[16 * j + e] : to_h16x16(f2[(((long)ch * 48 + head) * 64 + 16 * w + l16) * 64 + 16 * j + e]);
         for (int gI = 0; gI < NG; ++gI) {
           h16 b;
           for (int e = 0; e < 16; ++e) b[e] = L.Ut[16 * gI + l16][16 * j + e];
@@ -169,10 +170,25 @@ __device__ static inline void scan3x_body(
       }
     __syncthreads();   // 234618
     // state update                                                                      (234628-234986)
-    {
+    if (I2 != 0) {
+      // i2 = 4, 5, 6 (g09b): no Kt build and no Kt^T.U chain; the state only decays by exp(G).
+      // i2=4: fma(El, S, 0), unrolled (codeobj_1146000.s:217934-218000 region)
+      // i2=5: chain present in the listing but Kt never written (no K load, 218565-222130); modeled as acc = 0
+      // i2=6: v_mul_f32 loop over the whole slab (224734-224770)
       const float El = expf(Gl);
-      const int cc = 16 * w + l16;
-      for (int i = 0; i < 8; ++i) {
+      for (int it = 0; it < NC * 128 / 128; ++it) {
+        int i2 = tid + it * 128, r = i2 / NC, c = i2 % NC;
+        float old = L.St[c][r];
+        L.St[c][r] = (I2 == 4) ? __builtin_fmaf(El, old, 0.0f)
+                   : (I2 == 5) ? __builtin_fmaf(0.00390625f, 0.0f, El * old) : El * old;
+      }
+    } else {
+      const float El = expf(Gl);
+      // 8 d-blocks x NG column groups = tiles; wave w takes tiles w, w+4, ... (A=2: 8 tiles per wave, A=4: 4).
+      // Each tile is an independent 4-step WMMA chain, so the wave-to-tile map does not change any result
+      // (A=4 listing: 16 WMMA per wave in 292885-293028 = 4 tiles x 4 token blocks).
+      for (int tl = w; tl < 8 * NG; tl += 4) {
+        const int i = tl & 7, cc = 16 * (tl >> 3) + l16;
         f8 acc = (f8){0, 0, 0, 0, 0, 0, 0, 0};
         for (int tb = 0; tb < 4; ++tb) {
           h16 a, b;
@@ -248,15 +264,23 @@ __device__ static inline void scan3x_body(
   }
 }
 
-#define S3X(NAME, B3, I3)                                                                                   \
+#define S3X(NAME, B3, I3, I2) S3XA(NAME, 2, B3, I3, I2)
+#define S3XA(NAME, A, B3, I3, I2) S3XB(NAME, A, B3, I3, I2, true)
+#define S3XB(NAME, A, B3, I3, I2, B1)                                                                                  \
   extern "C" __global__ __launch_bounds__(128) void NAME(                                                    \
       const u16* qkv, const float* a1, const float* kf, const float* g, const float* vv, const float* a5,   \
       const float* a6, float* out, const int* idx, long n, u16* sel, int k, const u16* m0, const u16* m1,   \
       const u16* m2, const float* kinv, DncTapArgs tap, DncNormFold nf) {                                   \
-    scan3x_body<2, B3, I3>(qkv, kf, g, vv, out, idx, n, sel, k, m0, m1, m2, kinv, tap, nf);                  \
+    scan3x_body<A, B3, I3, I2, B1>(qkv, kf, g, vv, out, idx, n, sel, k, m0, m1, m2, kinv, tap, nf, a1, a5, a6);                  \
   }
 // i1 (0/1/2) and b4 change only code shape in the emulated listings (same sel/state/n2), see report.
-S3X(k_dnc_scan3x_def, true, 1)     // <2,4,T,F,T,1,0,1,F>
-S3X(k_s3x_b1_i30, true, 0)         // b3 = T, i3 = 0 (also b4 = T, i1 = 0/1)
-S3X(k_s3x_b0_i30, false, 0)        // b3 = F, i3 = 0 (i1 = 0/1/2)
-S3X(k_s3x_b1_i32, true, 2)         // i3 = 2: n3 flag only
+S3X(k_dnc_scan3x_def, true, 1, 0)     // <2,4,T,F,T,1,0,1,F>
+S3X(k_s3x_b1_i30, true, 0, 0)         // b3 = T, i3 = 0 (also b4 = T, i1 = 0/1)
+S3X(k_s3x_b0_i30, false, 0, 0)        // b3 = F, i3 = 0 (i1 = 0/1/2)
+S3X(k_s3x_b1_i32, true, 2, 0)         // i3 = 2: n3 flag only
+S3X(k_s3x_b0_i2_4, false, 0, 4)
+S3X(k_s3x_b0_i2_5, false, 0, 5)
+S3X(k_s3x_b0_i2_6, false, 0, 6)
+S3XA(k_s3x_a4_b1, 4, true, 0, 0)    // <4,4,T,F,T,1|0,0,0,F>
+S3XA(k_s3x_a4_b0, 4, false, 0, 0)   // <4,4,T,F,F,0|1|2,0,0,F>
+S3XB(k_s3x_b1f, 2, false, 0, 0, false)   // <2,4,F,F,F,0,0,0,F>: mir0/mir1/mir2 as f32 at +0x08/+0x28/+0x30, x16 -> f16

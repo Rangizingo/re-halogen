@@ -83,3 +83,8 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 - 21 of 53 instances MATCH; 32 attn_qs not started (agent g18b). Specs all committed. The 2 MISMATCH rows (k_vis_bias_gelu, vis_bias_gelu.json seeds 1 and 3, N 100003, 1-2 ulp on 1-2 outputs) predate the agent's `fp contract(off)` fix; the same spec MATCHes afterwards (g18.md:59-64), and a 1e6-point sweep MATCHes.
 - Re-run seed 7: k_vis_bias_gelu on vis_bias_gelu_sweep.json, 1,000,064 outputs, MATCH.
 - BRIEF.md second addendum: fp contract(off) and dense sweeps for element-wise f32 kernels.
+
+## g09b (dnc_scan3x remaining 13), 2026-10-10
+
+- With g09: 21 of 21 dnc_scan3x instances have MATCH rows (`awk` over g09.md + g09b.md). g09b.md 0 MISMATCH; negctl 24 MISMATCH rows; specs all committed. Agent wrote into the main checkout; tables copied from Ai-core. The i2 = 4, 5, 6 instances are state-update ablations, not clock probes; no bytes excluded.
+- Gap closed by orchestrator: the b2=T k-bound guards were tested only at N 128 and 100 (report g09b.md:22). Re-run k_dnc_scan3x<2,4,T,T,T,0,0,0,F> on dnc_scan3x_b_b2t_b3t.json seed 7 at N 1, 37, 63, 64, 65: 5 of 5 MATCH.
