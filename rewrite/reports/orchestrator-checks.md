@@ -150,3 +150,8 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 ## g18d (prime option; attn_qs qs<2,0>, qs<3,0>), 2026-10-11
 
 - compare.py/run_kernel.cpp "prime" option (spec field, `primed` in every row, --prime-src for controls); tests/test_compare.py 39 pass; run_kernel.cpp sha1 Mac equals Ai-core. 18 MATCH and 24 MISMATCH control rows, all primed. Negctl priming sources copied from Ai-core into rewrite/specs/g18d_negctl/. Re-run seed 7: attn_qs_d_2_0.json N 40 primed MATCH. attn_qs now 32 of 32 (2 conditional on priming).
+
+## g14b (ht_gemv 30: dn_t fold, dn_ts, dn_g), 2026-10-11
+
+- 30 of 30 MATCH (528 rows, 0 MISMATCH); with g14: ht_gemv 94 of 94. Spec check clean; ht_gemv_b.hip sha1 Mac equals Ai-core. HtFold (40 B, five pointers) and HtSd (88 B, same as g22b's I4rSd) decoded. Vendor has no chunk-count check (5120 B of LDS per rotated row, at most 20 chunks); the rewrite traps above and specs sit at the limit. negctl 58 MISMATCH, 37 MATCH from four weak mutants (named in the report).
+- Re-run seeds 7 and 11: ht_gemv_b_dn_g_3_8_2_0.json N 200, 2 of 2 MATCH.
