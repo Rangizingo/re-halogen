@@ -503,6 +503,9 @@ __device__ static inline void qs_bt_body(const unsigned short* Q, const unsigned
         // (page j = k>>2, 4 rows r = k&3 per b64) and reused by every tile; the page list is not used for V.
         if (A & 2) vpg = k >> 2;
         vb[k] = __builtin_bit_cast(__bf16, Vp[(long)vpg * 2048 + g * 1024 + 4 * dcol + (k & 3)]);
+        // probe 64 (bt2<64,0>, v2 listing: s_mov_b32 s5/s7/s9/s11 = 0x3f803f80, s4..s29 = 0x3f803f80 | (u+q)&7, v77-v180 copies, 8 wmma):
+        // no V loads; chunk c B element k is 0x3f80 | ((t+c+(k>>2))&7) when k%4==0, else 0x3f80, same in every lane (u = tile counter s18).
+        if (A & 64) vb[k] = __builtin_bit_cast(__bf16, (unsigned short)((k & 3) == 0 ? (0x3f80 | ((t + c + (k >> 2)) & 7)) : 0x3f80));
       }
       for (int i = 0; i < 8; i++) Oacc[c][i] = al[i] * Oacc[c][i];
       Oacc[c] = __builtin_amdgcn_wmma_f32_16x16x16_bf16_w32(pa, vb, Oacc[c]);

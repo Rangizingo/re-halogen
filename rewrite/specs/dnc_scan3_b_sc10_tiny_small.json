@@ -1,0 +1,34 @@
+{
+  "grid": [48, 8, 1],
+  "block": [128, 1, 1],
+  "buffers": {
+    "q":  {"bytes": "=ceil_div(N,64)*64*24576", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED", "lo": -1e-6, "hi": 1e-6}},
+    "kk": {"bytes": "=ceil_div(N,64)*64*24576", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED+10", "lo": -1e-6, "hi": 1e-6}},
+    "g":  {"bytes": "=ceil_div(N,64)*64*192", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED+20", "lo": -1e-4, "hi": 1e-4}},
+    "v":  {"bytes": "=ceil_div(N,64)*64*24576", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED+30", "lo": -1e-6, "hi": 1e-6}},
+    "w":  {"bytes": "=ceil_div(N,64)*64*24576", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED+40", "lo": -1e-6, "hi": 1e-6}},
+    "a":  {"bytes": "=ceil_div(N,64)*786432", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED+50", "lo": -1e-6, "hi": 1e-6}},
+    "st": {"bytes": "=3145728+4096", "fill": {"kind": "rand", "dtype": "f32", "seed": "=SEED+60", "lo": -1e-6, "hi": 1e-6}},
+    "idx": {"bytes": 16, "fill": {"kind": "const", "dtype": "i32", "value": 0}},
+    "o":  {"bytes": "=ceil_div(N,64)*64*12288", "fill": {"kind": "const", "dtype": "u16", "value": 12345}}
+  },
+  "args": [
+    {"offset": 8, "buffer": "q"},
+    {"offset": 16, "buffer": "kk"},
+    {"offset": 24, "buffer": "g"},
+    {"offset": 32, "buffer": "v"},
+    {"offset": 40, "buffer": "w"},
+    {"offset": 48, "buffer": "a"},
+    {"offset": 56, "buffer": "st"},
+    {"offset": 64, "buffer": "idx"},
+    {"offset": 72, "type": "i64", "value": 1024},
+    {"offset": 80, "buffer": "o"},
+    {"offset": 88, "type": "i32", "value": "=N"}
+  ],
+  "dump": ["st", "o"],
+  "compare": {
+    "rewrite_src": "../kernels/dnc_scan3_b.hip",
+    "rewrite_kernel": "sc10_f15",
+    "outputs": [{"buffer": "st", "dtype": "f32"}, {"buffer": "o", "dtype": "u16"}]
+  }
+}

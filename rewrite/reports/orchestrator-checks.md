@@ -128,3 +128,9 @@ Each group: files copied from the agent worktree into the main checkout, sha1 co
 - g05b: 20 of 20 MATCH (207 rows), negctl 22; sha1 Mac equals Ai-core. Re-run seeds 7 and 11: q4moe_a1b2e0_128.json N 16 (1,779,200 outputs), 2 of 2 MATCH. Control, RNE bias 0x7fff to 0 (q4moe.hip:65): MISMATCH, 142,375 outputs differ (a first sed matched nothing because the literal has no `u` suffix; checked with diff before running).
 - g14: 64 of 94 MATCH (1,082 rows, 0 MISMATCH), negctl 36; agent wrote into the main checkout. Re-run seeds 7 and 11: ht_gemv_gu_t_4_8_0_0.json N 400, 2 of 2 MATCH. 30 BLOCKED (HtFold, HtSd layouts) to agent g14b.
 - Listing defect found by g18c: old kernels-disasm has 212,067 `.long` lines; kernels-disasm-v2 (llvm-objdump 23.1.3) has 0. BRIEF fifth addendum.
+
+## g16b (dnc_scan3 family, U12 B, C, D, G), 2026-10-11
+
+- 83 of 83 MATCH (882 rows, 0 MISMATCH), including g16's 20 re-run from committed specs dnc_scan3_sw_A*.json; negctl 18 MISMATCH and 8 designed-insensitive MATCH rows. sha1 Mac equals Ai-core.
+- Listing cites re-checked in kernels-disasm-v2/codeobj_1146000.s: :139471 and :146343 are the <8,8,8,F> and <8,8,8,T> kernel starts; global_load count 14 and 14 in their ranges; G=1 range :149995-152141 has 22 v_movrel and 16 global_load; :150241-150245 `s_mov_b32 m0, s11` ... `v_movreld_b32 v3, v44`, :150267-150269 `v_movrels_b32 v46, v3`.
+- Re-run seeds 7 and 11 at N 1 and 300 on dnc_scan3_b_base.json: <8,8,8,T,0,15,0> and <8,8,8,T,0,15,1>, 8 of 8 MATCH.
