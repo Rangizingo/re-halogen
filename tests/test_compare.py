@@ -182,3 +182,37 @@ def test_given_workdir_is_kept(tmp_path, monkeypatch):
     with pytest.raises(RuntimeError):
         c.main([str(spec), '--kernel', 'K', '--kernargs', str(ka), '--no-table', '--workdir', str(wd)])
     assert wd.is_dir()
+
+
+def test_mem_available_parses_meminfo(tmp_path):
+    p = tmp_path / 'meminfo'
+    p.write_text('MemTotal:       126877820 kB\nMemAvailable:    15474356 kB\n')
+    assert abs(c.mem_available_gib(str(p)) - 15474356 / 1048576) < 1e-9
+    assert c.mem_available_gib(str(tmp_path / 'missing')) is None
+
+
+def test_wait_for_host_waits_until_memory_is_free(tmp_path, monkeypatch):
+    seen = iter([10.0, 12.0, 30.0])
+    monkeypatch.setattr(c, 'mem_available_gib', lambda path='/proc/meminfo': next(seen))
+    monkeypatch.setattr(c, 'service_healthy', lambda url=None: True)
+    slept = []
+    monkeypatch.setattr(c.time, 'sleep', slept.append)
+    with c.host_slot(tmp_path / 'lock', min_free_gib=20.0):
+        pass
+    assert len(slept) == 2
+
+
+def test_wait_for_host_waits_while_service_unhealthy(tmp_path, monkeypatch):
+    health = iter([False, False, True])
+    monkeypatch.setattr(c, 'mem_available_gib', lambda path='/proc/meminfo': 50.0)
+    monkeypatch.setattr(c, 'service_healthy', lambda url=None: next(health))
+    slept = []
+    monkeypatch.setattr(c.time, 'sleep', slept.append)
+    with c.host_slot(tmp_path / 'lock', min_free_gib=8.0):
+        pass
+    assert len(slept) == 2
+
+
+def test_service_healthy_false_when_unreachable():
+    assert c.service_healthy('http://127.0.0.1:9/health') is False
+    assert c.service_healthy('') is True

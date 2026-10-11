@@ -15,6 +15,8 @@ import ast
 import datetime
 import importlib.util
 import json
+import contextlib
+import fcntl
 import operator
 import os
 import shutil
@@ -22,6 +24,8 @@ import struct
 import subprocess
 import sys
 import tempfile
+import time
+import urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -229,6 +233,52 @@ def run_kernel(co, spec, outdir):
         raise RuntimeError(f'run_kernel rc={r.returncode}: {r.stderr.strip()}')
 
 
+def mem_available_gib(path='/proc/meminfo'):
+    """MemAvailable in GiB, or None where /proc/meminfo does not exist."""
+    try:
+        for line in open(path):
+            if line.startswith('MemAvailable:'):
+                return int(line.split()[1]) / 1048576
+    except OSError:
+        return None
+    return None
+
+
+def service_healthy(url=None):
+    """True when the live service answers /health with 200 (or CMP_HEALTH_URL is set to empty)."""
+    url = os.environ.get('CMP_HEALTH_URL', 'http://127.0.0.1:8307/health') if url is None else url
+    if not url:
+        return True
+    try:
+        with urllib.request.urlopen(url, timeout=5) as r:
+            return r.status == 200
+    except OSError:
+        return False
+
+
+@contextlib.contextmanager
+def host_slot(lock_path, min_free_gib):
+    """One compare run per host at a time, started only while the live service is healthy and
+    min_free_gib of host memory is free (no run competes with a service start).
+
+    Ai-core shares its memory with the live halogen-swift service, which refuses to start under
+    16 GiB MemAvailable; parallel agent runs pushed it below that (p7-12, 2026-10-11).
+    """
+    lock_path = Path(lock_path)
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(lock_path, 'w') as f:
+        fcntl.flock(f, fcntl.LOCK_EX)
+        while True:
+            free = mem_available_gib()
+            if free is None or (free >= min_free_gib and service_healthy()):
+                break
+            time.sleep(30)
+        try:
+            yield
+        finally:
+            fcntl.flock(f, fcntl.LOCK_UN)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument('spec')
@@ -257,8 +307,10 @@ def main(argv=None):
         base = Path(os.environ.get('CMP_TMP') or HERE.parent.parent / 'work' / 'cmp')
         base.mkdir(parents=True, exist_ok=True)
     work = Path(a.workdir or tempfile.mkdtemp(prefix='cmp_', dir=base)).resolve()
+    lock = HERE.parent.parent / 'work' / 'cmp' / '.host.lock'
     try:
-        return _run(a, template, cmp_cfg, vend, gk, work)
+        with host_slot(lock, float(os.environ.get('CMP_MIN_FREE_GIB', '8'))):
+            return _run(a, template, cmp_cfg, vend, gk, work)
     finally:
         if auto:
             shutil.rmtree(work, ignore_errors=True)
