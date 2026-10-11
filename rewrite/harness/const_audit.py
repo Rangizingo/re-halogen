@@ -263,10 +263,10 @@ def _sources(m: str, ops: list[str]) -> list[str]:
     return srcs
 
 
-def _readers(parsed, start: int, dest: set[str]) -> list[str]:
-    """Mnemonics of the instructions that read `dest` after instruction `start`, following movs and cndmasks into
-    their destinations; each register's scan stops at its next plain write."""
-    out: list[str] = []
+def _reader_sites(parsed, start: int, dest: set[str]) -> list[tuple[int, str]]:
+    """(index, mnemonic) of the instructions that read `dest` after instruction `start`, following movs and cndmasks
+    into their destinations; each register's scan stops at its next plain write."""
+    out: list[tuple[int, str]] = []
     seen: set[tuple[int, str]] = set()
     work = [(start, frozenset(dest))]
     while work:
@@ -287,12 +287,16 @@ def _readers(parsed, start: int, dest: set[str]) -> list[str]:
                         seen.add(key)
                         work.append((j, frozenset(_regs(o2[0]))))
                 else:
-                    out.append(m2)
+                    out.append((j, m2))
             if not _NO_DEST.match(m2) and o2 and not hit:
                 live -= _regs(o2[0])
             if len(o2) > len(srcs) + 1 and not _NO_DEST.match(m2):
                 live -= set().union(*(_regs(o) for o in o2[1:len(o2) - len(srcs)]))
     return out
+
+
+def _readers(parsed, start: int, dest: set[str]) -> list[str]:
+    return [m for _, m in _reader_sites(parsed, start, dest)]
 
 
 def _consumers(parsed, start: int, dest: set[str]) -> tuple[int, int]:
@@ -307,12 +311,7 @@ def extract_int_role(lines: list[str]) -> set[int]:
     multipliers) or as constants of the compiler's integer-divide expansion; reported under int-only gaps, not as
     float data. A literal moved into a register counts by the instructions that read that register before its next
     write (straight-line scan, through movs and cndmasks): integer readers only means integer."""
-    parsed: list[tuple[str, list[str]] | None] = []
-    for line in lines:
-        code = line.split('//', 1)[0]
-        for part in code.split('::'):
-            parsed.append(_parse(part))
-            parsed[-1] = (parsed[-1], part) if parsed[-1] else None   # keep the text for literal extraction
+    parsed = _parsed(lines)
     int_vals: set[int] = set()
     other: set[int] = set()
     seen_vals: set[int] = set()
@@ -463,34 +462,6 @@ def _roles(lines: list[str], only: set[int] | None = None) -> tuple[set[int], se
                                           and reaches_bound(i, _regs(ops[0]), 1)):
             bound |= vals
     return roled, bound
-
-
-def _reader_sites(parsed, start: int, dest: set[str]) -> list[tuple[int, str]]:
-    """(index, mnemonic) of the non-mover readers of `dest` after `start`, through movs (as _readers)."""
-    out: list[tuple[int, str]] = []
-    work = [(start, frozenset(dest))]
-    seen: set[int] = set()
-    while work:
-        at, regs = work.pop()
-        live = set(regs)
-        for j in range(at + 1, min(len(parsed), at + 1 + _REG_WINDOW)):
-            nxt = parsed[j]
-            if not nxt or not live:
-                continue
-            (m2, o2), _ = nxt
-            srcs = _sources(m2, o2)
-            reads = set().union(*(_regs(o) for o in srcs)) if srcs else set()
-            hit = live & reads
-            if hit:
-                if m2.endswith(('_mov_b32', '_cndmask_b32')) or _PASSTHROUGH.search(m2 + '_'):
-                    if j not in seen and o2 and not _NO_DEST.match(m2):
-                        seen.add(j)
-                        work.append((j, frozenset(_regs(o2[0]))))
-                elif o2:
-                    out.append((j, m2))
-            if not _NO_DEST.match(m2) and o2 and not hit:
-                live -= _regs(o2[0])
-    return out
 
 
 def range_role(lines: list[str]) -> set[int]:
