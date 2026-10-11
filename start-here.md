@@ -29,7 +29,7 @@ left needs data that is not in this workspace (see "Open" below).
 ## Open
 
 - U12 CLOSED in s6 (run 5 Tap payload, dnc-scan3-r6 n1/n2, scan3 B, C, D, G value-neutral by the rewrites).
-- U22 CLOSED in s6: all 1,738 kernel instances rewritten in HIP and matched bitwise (`rewrite/match-table.md`).
+- U22 CLOSED in s6, merged in s7 (PR #24, e662a3f): all 1,738 kernel instances rewritten in HIP and matched bitwise (`rewrite/match-table.md`); constant audit with integer bounds 1,738 AUDIT OK (`rewrite/const-audit.md`); replaced rewrites in `rewrite/superseded.tsv`.
 - U06 old patch releases, U05 future releases: named limits by decision.
 - The inferred steps of the request trace are listed in its Gaps section.
 
