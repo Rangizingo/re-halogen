@@ -26,7 +26,7 @@ Claims in the docs carry a label: **proven** (the cited line or byte was read), 
 | Path | What it is |
 | --- | --- |
 | `binaries/` | The three vendor programs: `flash_serve` (the GPU engine), `halogen-tools` (verify, inspect and repack model files), `halogen-npu` (the NPU engine). Linux x86-64. |
-| `image/` | Vendor files pulled from the container image: entrypoint, Python front end, EULA. |
+| `image/` | Vendor files pulled from the container image: entrypoint, Python front end, bench and record tools, and the vendor's license texts under `image/licenses/`. |
 | `analysis/` | The writeups. `analysis/function-map*.tsv` name every function in the three binaries. |
 | `rewrite/` | The HIP rewrite of every GPU kernel, its test specs, result tables and the constant audit. |
 | `scripts/` | Extraction and decoding tools. |
@@ -103,4 +103,8 @@ Two items, both by decision (`analysis/unknowns.md`):
 
 ## License
 
-EULA v1.0 section 3 permits unrestricted reverse engineering (`image/EULA.md`). Original material in this repo is CC0 (`LICENSE`). Vendor binaries and image files keep their own licenses. The repo is private for now.
+Material authored in this repo (the writeups, specs, scripts, tests, and the HIP kernel rewrites) is dedicated to the public domain under CC0 1.0 (`LICENSE`): take it, reuse it, ship something better, no conditions.
+
+The vendor material is not ours to license. `binaries/` and the vendor files in `image/` are Peonist, LLC's, redistributed under their own EULA, **Version 0.1, Effective 25 August 2026**, reproduced with the trademark policy and the third-party notices in `image/licenses/`. That Agreement allows running the software for any purpose and redistributing it unmodified with the notices attached. Read it before you reuse those files. `NOTICE` lists what came from where.
+
+One caveat worth your time: this repo's docs earlier cited an "EULA v1.0" granting unrestricted reverse engineering as an open community challenge. No published image contains that text; it was added here by an agent and never by the vendor. `start-here.md` and `analysis/report.md` now state the real terms.

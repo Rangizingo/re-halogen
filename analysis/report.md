@@ -86,12 +86,25 @@ verify/walk paths (getenv wrappers at 0x1883020 / 0x184bd90 Ghidra-space).
   "the token protocol has no auth; keep this port unpublished"). None in the
   front either — documented; request records (`HALOGEN_RECORD_DIR`) store
   message text and the docs warn about shared hosts.
-- **EULA** (image copy, `image/EULA.md`, revised to v1.0 2026-10-10): free
-  use incl. commercial; RE expressly permitted without limitation and
-  encouraged as an open community challenge (findings, specs, and derived
-  implementations publishable, attribution per §2); redistribution of
-  modified/derived works permitted under attribution conditions; benchmark
-  publication expressly permitted (ask: name the version + prompt set).
+- **EULA** (Peonist, LLC, **v0.1 effective 2026-08-25**; read 2026-10-15 from
+  `/licenses/EULA.md` inside a container created from
+  `ghcr.io/peonist-ai/halogen-flash-server:0.17.3`, sha256
+  `58f970ff94fb67d41146f1551a83fb208b5aee4d087224e2097b92850404f53b`, and the
+  same v0.1 in 0.17.2, 0.15.0 and 0.13.1; copy at `image/licenses/EULA.md`):
+  free use incl. commercial, unlimited machines, no key; redistribution of
+  **unmodified** copies with the Agreement and `THIRD-PARTY-NOTICES.md` intact;
+  reverse engineering not prohibited, with the ask not to redistribute derived
+  source or kernels as your own work; no distributing a modified image as
+  halogen; benchmark publication expressly permitted (ask: name the version +
+  prompt set); no telemetry; Florida law.
+- **EULA v1.0 correction.** An earlier finding in this report, carried from
+  2026-10-10 through the p7 kernel-rewrite run, described a "v1.0, effective
+  2026-10-10" with an unconditional RE grant, an open community challenge, and
+  publish-findings-freely terms. No published image contains that text; it was
+  committed into this workspace at 7af991f and treated as the vendor's word.
+  The p7 work is unaffected in substance: v0.1 permits the runs, the
+  disassembly and the analysis, and asks only that derived kernels not be
+  passed off as original work, which `rewrite/` does not do.
 
 ## 5. Checkpoint format (.hgn) — recovered, round-trip implemented
 

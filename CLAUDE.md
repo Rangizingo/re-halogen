@@ -11,7 +11,7 @@ Read order: `start-here.md` (state of play, what remains) > `PLAN.md` (7-phase p
 ## Layout that needs several files to understand
 
 - `binaries/`: the three shipped ELFs (`flash_serve` engine, `halogen-tools` verify/inspect/repack, `halogen-npu` XRT engine). Stripped, so work by address, not symbol.
-- `image/`: vendor files extracted from the container image layers (entrypoint, `serve_api.py`, EULA).
+- `image/`: vendor files extracted from the container image layers (entrypoint, `serve_api.py`, and `/licenses/` under `image/licenses/`: EULA v0.1, trademark policy, third-party and XRT/NPU notices).
 - `work/fatbin/` holds the 4 AMDGCN code objects carved from `flash_serve`'s clang offload bundle v2 (`scripts/carve_fatbin.py`). `analysis/kernels-disasm/` (299 MB, 3.34M lines) is their `llvm-objdump --mattr=+gfx1151` output. `work/kernels*/` holds per-kernel `.s` slices cut by `scripts/slice_kernels.py`; `tmp/stats-*.csv` has per-kernel instruction-class counts from `scripts/kernel_stats.py`.
 - `work/hgn/hgnpy.py` is the `.hgn` container parser/builder; its docstring is the spec draft, formalized in `analysis/hgn-format.md`. `work/hgn/files/` has 169 crafted test containers.
 - `work/versions/<ver>/` has the 9 pulled releases (0.11.10 to 0.17.3), diffed by `scripts/version_deltas.py`.
@@ -55,6 +55,6 @@ There is no CI config. Do not add a CLAUDE.md "Stack" or web conventions here; n
 ## Ground rules
 
 - Never run `flash_serve` or run `halogen-tools` beyond `verify`/`inspect`, and only on files created in this workspace.
-- EULA v1.0 section 3 permits unrestricted reverse engineering; original repo material is CC0 (`LICENSE`). Vendor binaries and image files keep their own licenses. The repo stays private for now.
+- Vendor EULA in force: **v0.1, 2026-08-25**, verbatim at `image/licenses/EULA.md` (from the 0.17.3 image). Grants use for any purpose and redistribution unmodified with notices intact; RE not prohibited, derived kernels must not be passed off as one's own. There is no vendor v1.0 EULA: the "v1.0" text at 7af991f came from this repo, not Peonist; never cite it as the vendor's terms. Repo material is CC0 (`LICENSE`); `NOTICE` lists third-party provenance. The repo is public.
 - Mutations outside this repo need the user's go first. Commit with detailed bodies; push to `https://github.com/Rangizingo/re-halogen` via `gh auth setup-git` (the SSH key is deploy-key-bound, SSH push fails).
 - Done means: every section in `PLAN.md` has an evidence-backed writeup, the unknowns ledger is closed or explicitly bounded, and `analysis/report.md` section 6 is empty.

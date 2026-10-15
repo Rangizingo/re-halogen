@@ -15,3 +15,9 @@ f32report.txt
 .claude/blueprint.hash
 .claude/rules/blueprint-*.md
 kernels-disasm-v2/
+
+# Local harness artifacts, never published (added 2026-10-15 before the repo went public)
+kernels-disasm/
+.wrangler/
+.claude/*
+!.claude/autonomy.json

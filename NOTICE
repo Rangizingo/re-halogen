@@ -1,0 +1,53 @@
+# NOTICE
+
+This repository contains reverse-engineering work on **halogen-flash-server**
+by **Peonist, LLC** (`ghcr.io/peonist-ai/halogen-flash-server`, target build
+0.17.3, manifest sha256:3bca0132db3c…). halogen and Peonist are trademarks of
+Peonist, LLC; this repository is named re-halogen, not halogen, and makes no
+endorsement claim.
+
+The vendor's license, Version 0.1, licenses use and running for any purpose
+and redistribution of the Software **unmodified** with the Agreement and
+`THIRD-PARTY-NOTICES.md` travelling intact. The binaries under `binaries/` and
+the vendor files under `image/` are carried here unmodified, with those notices
+alongside them. Nothing in this repository is offered as a halogen build.
+
+The kernel rewrites under `rewrite/` are reimplementations of vendor kernels,
+written from disassembly. Each file names the vendor kernel, code object and
+listing lines it reproduces. They are not vendor code and are not offered as
+the Software.
+
+It is not a Peonist project and is not endorsed by Peonist, LLC.
+
+## Material not authored in this repository
+
+Redistributed under the terms of the vendor's End User License Agreement
+(`image/licenses/EULA.md`, Version 0.1, Effective 25 August 2026) and the
+respective licenses of their authors:
+
+- `binaries/flash_serve`, `binaries/halogen-tools`, `binaries/halogen-npu`:
+  Peonist, LLC binaries, verbatim from image layers.
+- `image/entrypoint.sh`, `image/halogen-healthcheck`, `image/serve_api.py`,
+  `image/tool_parse.py`, `image/halogen_tools.py`, `image/halogen-bench.py`,
+  `image/bench-serving.py`, `image/request_records.py`, `image/npu-models.txt`:
+  vendor scripts and data, verbatim from image layers.
+- `image/licenses/`: the vendor's EULA, trademark policy, and third-party
+  notices (AMD ROCm, XRT/AIE, Python and packages), verbatim from
+  `/licenses/` in the 0.17.3 image.
+
+Derived material authored in this repository, attributed to its origin per
+the vendor's request that derived source and kernels not be passed off as
+original work:
+
+- `rewrite/`: HIP rewrites of halogen GPU kernels. Each is a reimplementation
+  of a specific vendor kernel, verified bitwise against it, and cites the
+  vendor kernel it reproduces.
+
+## Material authored in this repository
+
+Everything not listed above (the analysis writeups, notes, specifications,
+scripts, tests, and tooling) is original work by Peter Blanco, dedicated to
+the public domain under CC0 1.0 Universal (see `LICENSE`).
+
+Model weights are not included in this repository and no rights to any
+weights are granted here.

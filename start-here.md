@@ -42,14 +42,32 @@ A test engine run deleted the live service's 60 GiB disk prompt cache
 `/srv/halogen-cache`; they get their own cache dir and
 `HALOGEN_CACHE_PRUNE_OLD=0`.
 
-## Licensing (2026-10-10, commit 7af991f)
+## Licensing (vendor texts re-extracted from the image, 2026-10-15)
 
-- `image/EULA.md` v1.0: section 3 grants reverse engineering without
-  limitation; findings and derived implementations are publishable
-  (attribution per section 2).
-- `LICENSE`: CC0 1.0 for all original repo material. Vendor binaries and
-  image files keep their own licenses.
-- The repo stays private (Peter's call, 2026-10-10).
+**The vendor ships EULA v0.1, effective 25 August 2026.** Verified by creating
+a container from `ghcr.io/peonist-ai/halogen-flash-server:0.17.3` and reading
+`/licenses/` (sha256 `58f970ff94fb67d4…`), and the same version in 0.17.2,
+0.15.0 and 0.13.1. Copies of all six vendor license files are in
+`image/licenses/` (`EULA.md`, `THIRD-PARTY-NOTICES.md`, `TRADEMARKS.md`,
+`npu/NPU-NOTICES.md`, `npu/XRT-LICENSE`, `npu/XRT-NOTICE`).
+
+What v0.1 grants: use and run for any purpose including commercial, unlimited
+machines, no key. Redistribute the Software **unmodified**, with this
+Agreement and `THIRD-PARTY-NOTICES.md` travelling intact. On reverse
+engineering it does not prohibit it and asks that derived source or kernels
+not be redistributed as your own work. It bars distributing a modified image
+as halogen, removing notices, and endorsing with the Peonist/halogen marks.
+
+**There is no vendor EULA v1.0.** A text headed "Version 1.0 · Effective 10
+October 2026" was committed here at 7af991f by this repo's own account, with
+an unconditional RE grant, an "open community challenge" framing, and
+publish-findings-freely terms. No image contains it. It is not a Peonist
+statement. The text stays in git history as this repo's file; it is no longer
+in the working tree, and no doc cites it as the vendor's word.
+
+`LICENSE`: CC0 1.0 over all original material authored in this repo. Vendor
+binaries and extracted image files keep their own licenses. The repo is
+public (Peter's call, 2026-10-15).
 
 ## Ground rules
 

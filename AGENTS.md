@@ -23,8 +23,9 @@ PARTIAL 0, OPEN-BOUNDED 1 (U06), UNOBSERVABLE 1 (U05).
   - `halogen-npu` (1.1 MB) — XRT/AIE NPU engine (source-extracted copy)
 - `image/` — deployment-surface files extracted from image layers (entrypoint,
   healthcheck, npu models manifest, `serve_api.py`, `tool_parse.py`,
-  `halogen_tools.py`, request_records, bench tools, EULA). These are the
-  vendor's own files, comments stripped, shipped in the image.
+  `halogen_tools.py`, request_records, bench tools) and the vendor's
+  `licenses/` (EULA v0.1, trademark policy, third-party and XRT/NPU notices).
+  These are the vendor's own files, comments stripped, shipped in the image.
 - `analysis/` — REA output:
   - `report.md` — the findings report (start here)
   - `main_pseudo.c` — Ghidra decompile of engine `main()` (0x182ba00 in Ghidra's PIE space)
@@ -82,8 +83,20 @@ Ghidra 12.1.2 lives at `~/.hermes/tools/ghidra-12.1.2` (JAVA_HOME=
   `analysis/evidence/`. Hermes on Ai-core may be taken down for the work.
 - Still binding: no money spent without Peter's yes, nothing destructive or
   outside Ai-core and this repo, no real user data in runs.
-- EULA v1.0 section 3 permits reverse engineering without limitation and
-  encourages it as an open community challenge: findings, specs,
-  disassemblies, and derived implementations may be published and shared
-  freely (attribution per section 2). Our own repo material is CC0
-  (`LICENSE`). The repo stays private until Peter says otherwise.
+- The vendor EULA in force is **v0.1, effective 2026-08-25**
+  (`image/licenses/EULA.md`, sha256 `58f970ff94fb67d4…`, re-extracted from the
+  0.17.3 image; v0.1 also in 0.17.2, 0.15.0, 0.13.1). It licenses use and
+  running for any purpose including commercial, and redistribution of the
+  Software **unmodified** with the Agreement and `THIRD-PARTY-NOTICES.md`
+  intact. On reverse engineering it does not prohibit it and asks that
+  derived source or kernels not be redistributed as your own work. It bars
+  modified builds passed off as halogen and bars removing notices. So:
+  the analysis is publishable, `rewrite/` names the vendor kernel each
+  rewrite reproduces, and the vendor binaries travel with their notices.
+- Do not treat any other EULA text as the vendor's word. The "v1.0, effective
+  2026-10-10" text granting unrestricted RE as an open community challenge
+  was committed at 7af991f by this repo's git author and appears in no
+  published image. If a future release ships a v1.0, re-extract it and cite
+  the image digest.
+- `LICENSE` is CC0 1.0 for material authored in this repo; `NOTICE` gives
+  provenance for everything else. The repo is public (Peter, 2026-10-15).
